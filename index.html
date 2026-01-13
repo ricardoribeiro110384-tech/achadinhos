@@ -15,113 +15,35 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 .wrap{max-width:1100px;margin:auto;padding:16px}
-
-/* topo */
 .top{background:var(--yellow);border-radius:var(--radius);padding:22px;text-align:center;box-shadow:var(--shadow)}
 .logo{width:320px;max-width:90%}
-
-/* card */
 .poster{background:var(--card);margin-top:14px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
 .title{text-align:center;padding:18px}
 .title h1{margin:0;font-size:26px;font-weight:900}
-
-/* faixa vermelha */
 .redbar{background:#c62828;color:#fff;margin:0 14px;border-radius:16px;padding:14px}
 .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-weight:bold}
 @media(max-width:700px){.qgrid{grid-template-columns:1fr}}
-
-/* texto */
 .lead{text-align:center;padding:14px;font-weight:bold}
-
-/* seções */
 .section{padding:14px 18px}
 .section h2{text-align:center;font-size:22px;margin-bottom:8px}
 .hint{text-align:center;font-weight:bold;margin-bottom:10px}
-
-/* ===== CARROSSEL (base) ===== */
-.carousel{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding: 2px 4px 10px;
-}
-.carousel::-webkit-scrollbar{height:8px}
-.carousel::-webkit-scrollbar-thumb{background:#bbb;border-radius:999px}
-
-.carditem{
-  flex:0 0 82%;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 10px 20px rgba(0,0,0,.2);
-  text-decoration:none;
-  color:#000;
-  scroll-snap-align:start;
-  overflow:hidden;
-}
-
-/* IMAGENS SEM CORTE */
-.carditem img{
-  width:100%;
-  height:260px;
-  object-fit:contain;
-  background:#fff;
-  display:block;
-}
-
+.carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 4px 10px}
+.carditem{flex:0 0 82%;background:#fff;border-radius:16px;box-shadow:0 10px 20px rgba(0,0,0,.2);scroll-snap-align:start;overflow:hidden;text-decoration:none;color:#000}
+.carditem img{width:100%;height:260px;object-fit:contain;background:#fff}
 .cardinfo{padding:12px}
-.cardinfo strong{display:block;margin-bottom:6px}
 .price{font-weight:900}
 .off{background:#dff3e1;color:#1b5e20;padding:4px 8px;border-radius:999px;font-size:12px;margin-left:6px}
-
-/* botões rolar */
-.carousel-controls{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-top:8px;
-}
-.cbtn{
-  padding:10px 14px;
-  border-radius:12px;
-  border:none;
-  background:var(--yellow);
-  font-weight:900;
-  cursor:pointer;
-}
-.cbtn:active{transform:translateY(1px)}
-
-/* ✅ SOMENTE "OFERTAS" vira grade no PC */
+.carousel-controls{display:flex;justify-content:center;gap:10px;margin-top:8px}
+.cbtn{padding:10px 14px;border-radius:12px;border:none;background:var(--yellow);font-weight:900;cursor:pointer}
+.notice{margin:10px 14px 0;padding:10px;border-radius:14px;background:#eee;text-align:center;font-weight:900}
 @media(min-width:900px){
-  .offers-grid{
-    display:grid !important;
-    grid-template-columns:repeat(3,1fr);
-    overflow:visible !important;
-    padding: 0 !important;
-  }
+  .offers-grid{display:grid!important;grid-template-columns:repeat(3,1fr);overflow:visible!important}
   .offers-grid .carditem{flex:initial}
 }
-
-/* status */
-.notice{
-  margin: 10px 14px 0;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: rgba(0,0,0,.08);
-  font-weight: 900;
-  text-align:center;
-  color:#222;
-}
-
-/* atenção */
 .attention{margin:14px;border-radius:16px;overflow:hidden}
 .att-top{background:#ffb300;text-align:center;font-weight:900;padding:12px}
 .att-body{background:#222;color:#fff;text-align:center;padding:14px}
-.cta{
-  display:inline-block;margin-top:10px;background:var(--yellow);color:#000;
-  padding:12px 18px;border-radius:14px;font-weight:900;text-decoration:none
-}
+.cta{display:inline-block;margin-top:10px;background:var(--yellow);color:#000;padding:12px 18px;border-radius:14px;font-weight:900;text-decoration:none}
 footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
 </style>
 </head>
@@ -129,13 +51,11 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
 <body>
 <div class="wrap">
   <div class="top">
-    <img src="logo.png" class="logo" alt="Achadinhos ML">
+    <img src="logo.png" class="logo">
   </div>
 
   <main class="poster">
-    <div class="title">
-      <h1>Descubra como comprar online com segurança, pagando menos e sem cair em golpes</h1>
-    </div>
+    <div class="title"><h1>Descubra como comprar online com segurança, pagando menos e sem cair em golpes</h1></div>
 
     <div class="redbar">
       <div class="qgrid">
@@ -146,206 +66,55 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
       </div>
     </div>
 
-    <div class="lead">
-      Isso acontece com milhares de mulheres todos os dias. A boa notícia? Agora existe uma forma simples e segura de comprar.
-    </div>
+    <div class="lead">Agora você encontra ofertas reais todos os dias com segurança.</div>
+    <div id="status" class="notice">Carregando dados da planilha…</div>
 
-    <div id="status" class="notice">Carregando ofertas da planilha…</div>
-
-    <!-- OFERTAS PRINCIPAIS (auto) -->
-    <section class="section" id="ofertas">
-      <h2>Ofertas principais 🔥</h2>
-      <p class="hint">Arraste para o lado e entre no grupo para pegar o link</p>
-
-      <div class="carousel offers-grid" id="trackOfertas"></div>
-
-      <div class="carousel-controls">
-        <button class="cbtn" type="button" onclick="rolar('trackOfertas', -1)">⬅️</button>
-        <button class="cbtn" type="button" onclick="rolar('trackOfertas', 1)">➡️</button>
-      </div>
+    <section class="section">
+      <h2>Ofertas 🔥</h2>
+      <div class="carousel offers-grid" id="ofertas"></div>
     </section>
 
-    <!-- PROMOÇÕES DO DIA (auto, sempre carrossel) -->
-    <section class="section" id="promocoes">
+    <section class="section">
       <h2>Promoções do dia ⏰</h2>
-      <p class="hint">Atualize só a planilha e o site muda sozinho</p>
-
-      <div class="carousel" id="trackPromos"></div>
-
-      <div class="carousel-controls">
-        <button class="cbtn" type="button" onclick="rolar('trackPromos', -1)">⬅️</button>
-        <button class="cbtn" type="button" onclick="rolar('trackPromos', 1)">➡️</button>
-      </div>
+      <div class="carousel" id="promos"></div>
     </section>
 
     <div class="attention">
       <div class="att-top">⚠️ Atenção!</div>
       <div class="att-body">
-        As melhores ofertas acabam rápido.<br>
-        <a class="cta" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          Entrar no grupo do WhatsApp →
-        </a>
+        <a class="cta" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank">Entrar no grupo do WhatsApp →</a>
       </div>
     </div>
   </main>
-
-  <footer>© <span id="year"></span> Achadinhos ML</footer>
+  <footer>© 2026 Achadinhos</footer>
 </div>
 
 <script>
-/**
- * ✅ SUA PLANILHA
- * Você enviou o link pubhtml. Para o código funcionar, usamos output=csv.
- * Então convertemos seu link para CSV automaticamente abaixo.
- */
-const SHEET_PUBHTML_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx2cVNJMmKpEk0z6OjR9G5EN-5OEKhWPVDPyejNMNoBwu0MLhypjJ0spEnrqGu_PLR6fVRgArpARWp/pubhtml";
-const SHEET_CSV_URL = SHEET_PUBHTML_URL.replace("/pubhtml", "/pub?output=csv");
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
+const WA = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
 
-/** ✅ SEU GRUPO WHATSAPP */
-const WA_GROUP = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-
-document.getElementById("year").textContent = new Date().getFullYear();
-
-function rolar(trackId, dir){
-  const t = document.getElementById(trackId);
-  if(!t) return;
-  const amount = Math.min(t.clientWidth * 0.85, 520) * dir;
-  t.scrollBy({ left: amount, behavior: "smooth" });
+function parseCSV(t){
+  return t.trim().split("\n").slice(1).map(r=>r.split(","));
 }
 
-/* CSV parser (vírgula + aspas) */
-function parseCSV(text){
-  const rows = [];
-  let row = [], cur = "", inQuotes = false;
-
-  for (let i=0;i<text.length;i++){
-    const c = text[i];
-    const next = text[i+1];
-
-    if (c === '"'){
-      if (inQuotes && next === '"'){ cur += '"'; i++; }
-      else inQuotes = !inQuotes;
-      continue;
-    }
-
-    if (!inQuotes && (c === ',' || c === '\n' || c === '\r')){
-      if (c === '\r' && next === '\n') continue;
-      row.push(cur.trim());
-      cur = "";
-
-      if (c === '\n'){
-        if (row.some(cell => cell.length > 0)) rows.push(row);
-        row = [];
-      }
-      continue;
-    }
-
-    cur += c;
-  }
-
-  if (cur.length || row.length){
-    row.push(cur.trim());
-    if (row.some(cell => cell.length > 0)) rows.push(row);
-  }
-  return rows;
-}
-
-function el(tag, attrs={}, children=[]){
-  const e = document.createElement(tag);
-  for (const [k,v] of Object.entries(attrs)){
-    if (k === "class") e.className = v;
-    else if (k === "html") e.innerHTML = v;
-    else e.setAttribute(k, v);
-  }
-  children.forEach(ch => e.appendChild(ch));
-  return e;
-}
-
-function safeText(s){ return (s || "").replace(/</g,"&lt;"); }
-
-function cardItem(item){
-  const a = el("a", { class:"carditem", href: WA_GROUP, target:"_blank", rel:"noopener" });
-
-  const img = el("img", { src: item.image, alt: item.title || "Promoção" });
-  img.onerror = () => { img.style.display = "none"; };
-
-  const info = el("div", { class:"cardinfo" });
-  const strong = el("strong", { html: safeText(item.title || "") });
-
-  const priceLine = el("div", { class:"price" });
-  priceLine.textContent = item.price || "Ver no grupo →";
-
-  if (item.badge){
-    const badge = el("span", { class:"off" });
-    badge.textContent = item.badge;
-    priceLine.appendChild(badge);
-  }
-
-  info.appendChild(strong);
-  info.appendChild(priceLine);
-
-  a.appendChild(img);
-  a.appendChild(info);
-  return a;
-}
-
-async function loadFromSheet(){
-  const status = document.getElementById("status");
-  const ofertasWrap = document.getElementById("trackOfertas");
-  const promosWrap  = document.getElementById("trackPromos");
-
-  try{
-    const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error("Falha ao buscar CSV");
-    const csv = await res.text();
-
-    const rows = parseCSV(csv);
-    if (!rows.length){
-      status.textContent = "Planilha vazia. Preencha as linhas com ofertas e promoções.";
-      return;
-    }
-
-    const header = rows[0].map(h => (h || "").toLowerCase());
-    const idx = (name) => header.indexOf(name);
-
-    const sI = idx("section");
-    const iI = idx("image");
-    const tI = idx("title");
-    const pI = idx("price");
-    const bI = idx("badge");
-
-    if (sI < 0 || iI < 0 || tI < 0){
-      status.textContent = "Cabeçalhos inválidos. Use: section | image | title | price | badge";
-      return;
-    }
-
-    const items = rows.slice(1).map(r => ({
-      section: (r[sI] || "").trim().toLowerCase(),
-      image:   (r[iI] || "").trim(),
-      title:   (r[tI] || "").trim(),
-      price:   pI >= 0 ? (r[pI] || "").trim() : "",
-      badge:   bI >= 0 ? (r[bI] || "").trim() : ""
-    })).filter(x => x.section && x.image);
-
-    const ofertas = items.filter(x => x.section === "oferta");
-    const promos  = items.filter(x => x.section === "promo");
-
-    ofertasWrap.innerHTML = "";
-    promosWrap.innerHTML  = "";
-
-    ofertas.forEach(item => ofertasWrap.appendChild(cardItem(item)));
-    promos.forEach(item  => promosWrap.appendChild(cardItem(item)));
-
-    status.textContent = `Atualizado pela planilha ✅ (${ofertas.length} ofertas, ${promos.length} promoções)`;
-
-    if (ofertas.length === 0) status.textContent = "Nenhuma linha com section=oferta encontrada.";
-    if (promos.length === 0)  status.textContent += " | Nenhuma linha com section=promo.";
-  } catch(e){
-    status.textContent = "Não consegui carregar a planilha. Confirme se ela está 'Publicada na web' e se o link está correto.";
-  }
-}
-
-loadFromSheet();
+fetch(CSV_URL)
+.then(r=>r.text())
+.then(t=>{
+  const rows=parseCSV(t);
+  const ofertas=document.getElementById("ofertas");
+  const promos=document.getElementById("promos");
+  rows.forEach(r=>{
+    const [section,image,title,price,badge]=r;
+    if(!image) return;
+    const card=document.createElement("a");
+    card.className="carditem";
+    card.href=WA; card.target="_blank";
+    card.innerHTML=`<img src="${image}"><div class="cardinfo"><strong>${title||""}</strong><div class="price">${price||"Ver no grupo →"} ${badge?`<span class='off'>${badge}</span>`:""}</div></div>`;
+    if(section==="oferta") ofertas.appendChild(card);
+    if(section==="promo") promos.appendChild(card);
+  });
+  document.getElementById("status").innerText="Atualizado automaticamente pela planilha.";
+});
 </script>
 </body>
 </html>
