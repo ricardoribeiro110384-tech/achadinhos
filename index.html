@@ -4,57 +4,422 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Achadinhos ML</title>
+
 <style>
-:root{--yellow:#ffd400;--radius:20px}
-body{margin:0;font-family:Arial;background:#111}
+:root{
+  --yellow:#ffd400;
+  --card: rgba(255,255,255,.9);
+  --shadow:0 18px 40px rgba(0,0,0,.35);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 .wrap{max-width:1100px;margin:auto;padding:16px}
-.top{background:var(--yellow);border-radius:var(--radius);padding:22px;text-align:center}
+
+/* topo */
+.top{background:var(--yellow);border-radius:var(--radius);padding:22px;text-align:center;box-shadow:var(--shadow)}
 .logo{width:320px;max-width:90%}
-.section{padding:14px}
-.carousel{display:flex;gap:12px;overflow-x:auto}
-.carditem{flex:0 0 82%;background:#fff;border-radius:16px;overflow:hidden;text-decoration:none;color:#000}
-.carditem img{width:100%;height:260px;object-fit:contain}
+
+/* card */
+.poster{background:var(--card);margin-top:14px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.title{text-align:center;padding:18px}
+.title h1{margin:0;font-size:26px;font-weight:900}
+
+/* faixa vermelha */
+.redbar{background:#c62828;color:#fff;margin:0 14px;border-radius:16px;padding:14px}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-weight:bold}
+@media(max-width:700px){.qgrid{grid-template-columns:1fr}}
+
+/* texto */
+.lead{text-align:center;padding:14px;font-weight:bold}
+
+/* seções */
+.section{padding:14px 18px}
+.section h2{text-align:center;font-size:22px;margin-bottom:8px}
+.hint{text-align:center;font-weight:bold;margin-bottom:10px}
+
+/* ===== CARROSSEL (base) ===== */
+.carousel{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 4px 10px;
+}
+.carousel::-webkit-scrollbar{height:8px}
+.carousel::-webkit-scrollbar-thumb{background:#bbb;border-radius:999px}
+
+.carditem{
+  flex:0 0 82%;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 10px 20px rgba(0,0,0,.2);
+  text-decoration:none;
+  color:#000;
+  scroll-snap-align:start;
+  overflow:hidden;
+}
+
+/* IMAGENS SEM CORTE */
+.carditem img{
+  width:100%;
+  height:260px;
+  object-fit:contain;
+  background:#fff;
+  display:block;
+}
+
 .cardinfo{padding:12px}
-.old{color:#888;text-decoration:line-through}
-.new{font-size:18px;font-weight:900}
-.off{background:#dff3e1;color:#1b5e20;padding:4px 8px;border-radius:999px;font-size:12px;margin-left:6px}
+.cardinfo strong{display:block;margin-bottom:6px}
+
+/* preço */
+.prices{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.old{
+  color:#777;
+  text-decoration:line-through;
+  font-weight:900;
+}
+.new{
+  font-weight:1000;
+  font-size:18px;
+}
+.off{
+  background:#dff3e1;
+  color:#1b5e20;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:1000;
+}
+
+/* botões rolar */
+.carousel-controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:8px;
+}
+.cbtn{
+  padding:10px 14px;
+  border-radius:12px;
+  border:none;
+  background:var(--yellow);
+  font-weight:900;
+  cursor:pointer;
+}
+.cbtn:active{transform:translateY(1px)}
+
+/* ✅ SOMENTE "OFERTAS" vira grade no PC */
+@media(min-width:900px){
+  .offers-grid{
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr);
+    overflow:visible !important;
+    padding: 0 !important;
+  }
+  .offers-grid .carditem{flex:initial}
+}
+
+/* status */
+.notice{
+  margin: 10px 14px 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(0,0,0,.08);
+  font-weight: 900;
+  text-align:center;
+  color:#222;
+}
+
+/* atenção */
+.attention{margin:14px;border-radius:16px;overflow:hidden}
+.att-top{background:#ffb300;text-align:center;font-weight:900;padding:12px}
+.att-body{background:#222;color:#fff;text-align:center;padding:14px}
+.cta{
+  display:inline-block;margin-top:10px;background:var(--yellow);color:#000;
+  padding:12px 18px;border-radius:14px;font-weight:900;text-decoration:none
+}
+footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
 </style>
 </head>
+
 <body>
 <div class="wrap">
-<div class="top"><img src="logo.png" class="logo"></div>
+  <div class="top">
+    <img src="logo.png" class="logo" alt="Achadinhos ML">
+  </div>
 
-<section class="section"><h2>Ofertas</h2><div class="carousel" id="ofertas"></div></section>
-<section class="section"><h2>Promoções</h2><div class="carousel" id="promos"></div></section>
+  <main class="poster">
+    <div class="title">
+      <h1>Descubra como comprar online com segurança, pagando menos e sem cair em golpes</h1>
+    </div>
 
+    <div class="redbar">
+      <div class="qgrid">
+        <div>✔ E se não chegar?</div>
+        <div>✔ E se eu perder meu dinheiro?</div>
+        <div>✔ E se for falso?</div>
+        <div>✔ E se for golpe?</div>
+      </div>
+    </div>
+
+    <div class="lead">
+      Isso acontece com milhares de mulheres todos os dias. A boa notícia? Agora existe uma forma simples e segura de comprar.
+    </div>
+
+    <div id="status" class="notice">Carregando ofertas da planilha…</div>
+
+    <!-- OFERTAS PRINCIPAIS (auto) -->
+    <section class="section" id="ofertas">
+      <h2>Ofertas principais 🔥</h2>
+      <p class="hint">Arraste para o lado e entre no grupo para pegar o link</p>
+
+      <div class="carousel offers-grid" id="trackOfertas"></div>
+
+      <div class="carousel-controls">
+        <button class="cbtn" type="button" onclick="rolar('trackOfertas', -1)">⬅️</button>
+        <button class="cbtn" type="button" onclick="rolar('trackOfertas', 1)">➡️</button>
+      </div>
+    </section>
+
+    <!-- PROMOÇÕES DO DIA (auto, sempre carrossel) -->
+    <section class="section" id="promocoes">
+      <h2>Promoções do dia ⏰</h2>
+      <p class="hint">Atualize só a planilha e o site muda sozinho</p>
+
+      <div class="carousel" id="trackPromos"></div>
+
+      <div class="carousel-controls">
+        <button class="cbtn" type="button" onclick="rolar('trackPromos', -1)">⬅️</button>
+        <button class="cbtn" type="button" onclick="rolar('trackPromos', 1)">➡️</button>
+      </div>
+    </section>
+
+    <div class="attention">
+      <div class="att-top">⚠️ Atenção!</div>
+      <div class="att-body">
+        As melhores ofertas acabam rápido.<br>
+        <a class="cta" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
+          Entrar no grupo do WhatsApp →
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>© <span id="year"></span> Achadinhos ML</footer>
 </div>
 
 <script>
-const CSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-const WA="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
+/** ✅ SUA PLANILHA (pubhtml -> csv) */
+const SHEET_PUBHTML_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pubhtml";
+const SHEET_CSV_URL = SHEET_PUBHTML_URL.replace("/pubhtml", "/pub?output=csv");
 
-fetch(CSV).then(r=>r.text()).then(t=>{
- const rows=t.trim().split("\n").slice(1);
- rows.forEach(l=>{
-   const [section,image,title,price,discount]=l.split(",");
-   if(!image) return;
-   const p=parseFloat(price);
-   const d=parseFloat(discount||0);
-   const final=d?p-(p*d/100):p;
+/** ✅ SEU GRUPO WHATSAPP */
+const WA_GROUP = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
 
-   const card=document.createElement("a");
-   card.className="carditem";card.href=WA;card.target="_blank";
-   card.innerHTML=`
-    <img src="${image}">
-    <div class="cardinfo">
-      <strong>${title}</strong>
-      ${d?`<div class="old">De: R$ ${p.toFixed(2)}</div>`:""}
-      <div class="new">Por: R$ ${final.toFixed(2)} ${d?`<span class="off">${d}% OFF</span>`:""}</div>
-    </div>`;
-   if(section==="oferta") document.getElementById("ofertas").appendChild(card);
-   if(section==="promo") document.getElementById("promos").appendChild(card);
- });
-});
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function rolar(trackId, dir){
+  const t = document.getElementById(trackId);
+  if(!t) return;
+  const amount = Math.min(t.clientWidth * 0.85, 520) * dir;
+  t.scrollBy({ left: amount, behavior: "smooth" });
+}
+
+/* ✅ CSV parser robusto (aspas + vírgulas) */
+function parseCSV(text){
+  const rows = [];
+  let row = [], cur = "", inQuotes = false;
+
+  for (let i=0;i<text.length;i++){
+    const c = text[i];
+    const next = text[i+1];
+
+    if (c === '"'){
+      if (inQuotes && next === '"'){ cur += '"'; i++; }
+      else inQuotes = !inQuotes;
+      continue;
+    }
+
+    if (!inQuotes && (c === ',' || c === '\n' || c === '\r')){
+      if (c === '\r' && next === '\n') continue;
+      row.push(cur);
+      cur = "";
+
+      if (c === '\n'){
+        if (row.some(cell => String(cell).trim().length)) rows.push(row.map(x => String(x).trim()));
+        row = [];
+      }
+      continue;
+    }
+    cur += c;
+  }
+
+  if (cur.length || row.length){
+    row.push(cur);
+    if (row.some(cell => String(cell).trim().length)) rows.push(row.map(x => String(x).trim()));
+  }
+  return rows;
+}
+
+function safeText(s){ return (s || "").replace(/</g,"&lt;"); }
+
+function toNumberBR(v){
+  // aceita: 191.55 | 191,55 | R$ 191,55 | 1.234,56
+  let s = String(v || "").trim();
+  if(!s) return NaN;
+  s = s.replace(/[^\d,.\-]/g,"");      // tira R$, espaços etc.
+  // se tem vírgula e ponto, assume pt-BR: 1.234,56 -> 1234.56
+  if (s.includes(",") && s.includes(".")) s = s.replace(/\./g,"").replace(",",".");
+  // se só tem vírgula, vira ponto
+  else if (s.includes(",") && !s.includes(".")) s = s.replace(",",".");
+  const n = parseFloat(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function toDiscount(v){
+  // aceita: 15 | 15% | 15 OFF
+  let s = String(v || "").trim();
+  if(!s) return 0;
+  s = s.replace(",",".");
+  const m = s.match(/-?\d+(\.\d+)?/);
+  const n = m ? parseFloat(m[0]) : 0;
+  return Number.isFinite(n) ? n : 0;
+}
+
+function formatBRL(n){
+  try{
+    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+  }catch{
+    return "R$ " + (Math.round(n*100)/100).toFixed(2).replace(".",",");
+  }
+}
+
+function buildCard(item){
+  const a = document.createElement("a");
+  a.className = "carditem";
+  a.href = WA_GROUP;
+  a.target = "_blank";
+  a.rel = "noopener";
+
+  const img = document.createElement("img");
+  img.src = item.image;
+  img.alt = item.title || "Oferta";
+  img.onerror = () => { img.style.display = "none"; };
+
+  const info = document.createElement("div");
+  info.className = "cardinfo";
+
+  const strong = document.createElement("strong");
+  strong.innerHTML = safeText(item.title || "");
+
+  const prices = document.createElement("div");
+  prices.className = "prices";
+
+  const priceNum = toNumberBR(item.price);
+  const disc = toDiscount(item.discount || item.badgeDiscount || "");
+
+  if (Number.isFinite(priceNum) && priceNum > 0 && disc > 0){
+    const old = document.createElement("span");
+    old.className = "old";
+    old.textContent = formatBRL(priceNum);
+
+    const final = priceNum * (1 - disc/100);
+
+    const neu = document.createElement("span");
+    neu.className = "new";
+    neu.textContent = formatBRL(final);
+
+    const off = document.createElement("span");
+    off.className = "off";
+    off.textContent = `${disc}% OFF`;
+
+    prices.appendChild(old);
+    prices.appendChild(neu);
+    prices.appendChild(off);
+  } else {
+    const neu = document.createElement("span");
+    neu.className = "new";
+    // se tiver price válido sem desconto, mostra só ele
+    if (Number.isFinite(priceNum) && priceNum > 0) neu.textContent = formatBRL(priceNum);
+    else neu.textContent = "Ver no grupo →";
+    prices.appendChild(neu);
+
+    // se existir badge textual (ex: "Frete grátis") mostra como pill
+    const badgeTxt = String(item.badge || "").trim();
+    if (badgeTxt && !String(item.discount || "").trim()){
+      const off = document.createElement("span");
+      off.className = "off";
+      off.textContent = badgeTxt;
+      prices.appendChild(off);
+    }
+  }
+
+  info.appendChild(strong);
+  info.appendChild(prices);
+
+  a.appendChild(img);
+  a.appendChild(info);
+  return a;
+}
+
+async function loadFromSheet(){
+  const status = document.getElementById("status");
+  const ofertasWrap = document.getElementById("trackOfertas");
+  const promosWrap  = document.getElementById("trackPromos");
+
+  try{
+    const res = await fetch(SHEET_CSV_URL, { cache:"no-store" });
+    if (!res.ok) throw new Error("Falha ao buscar CSV");
+    const csv = await res.text();
+    const rows = parseCSV(csv);
+
+    if (!rows.length){
+      status.textContent = "Planilha vazia. Preencha as linhas com ofertas e promoções.";
+      return;
+    }
+
+    const header = rows[0].map(h => (h || "").toLowerCase().trim());
+    const idx = (name) => header.indexOf(name);
+
+    const sI = idx("section");
+    const iI = idx("image");
+    const tI = idx("title");
+    const pI = idx("price");
+    const dI = idx("discount");
+    const bI = idx("badge");
+
+    if (sI < 0 || iI < 0 || tI < 0){
+      status.textContent = "Cabeçalhos inválidos. Use: section | image | title | price | discount (e opcional badge)";
+      return;
+    }
+
+    const items = rows.slice(1).map(r => ({
+      section: (r[sI] || "").trim().toLowerCase(),
+      image:   (r[iI] || "").trim(),
+      title:   (r[tI] || "").trim(),
+      price:   pI >= 0 ? (r[pI] || "").trim() : "",
+      discount:dI >= 0 ? (r[dI] || "").trim() : "",
+      badge:   bI >= 0 ? (r[bI] || "").trim() : ""
+    })).filter(x => x.section && x.image);
+
+    const ofertas = items.filter(x => x.section === "oferta");
+    const promos  = items.filter(x => x.section === "promo");
+
+    ofertasWrap.innerHTML = "";
+    promosWrap.innerHTML  = "";
+
+    ofertas.forEach(item => ofertasWrap.appendChild(buildCard(item)));
+    promos.forEach(item  => promosWrap.appendChild(buildCard(item)));
+
+    status.textContent = `Atualizado pela planilha ✅ (${ofertas.length} ofertas, ${promos.length} promoções)`;
+  } catch(e){
+    status.textContent = "Não consegui carregar a planilha. Confirme se ela está 'Publicada na web' e se o link está correto.";
+  }
+}
+
+loadFromSheet();
 </script>
 </body>
 </html>
