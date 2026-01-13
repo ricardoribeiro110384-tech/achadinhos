@@ -12,7 +12,6 @@
   --shadow:0 18px 40px rgba(0,0,0,.35);
   --radius:22px;
 }
-
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 .wrap{max-width:1100px;margin:auto;padding:16px}
@@ -46,7 +45,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 10px;
+  padding: 2px 4px 10px;
 }
 .carousel::-webkit-scrollbar{height:8px}
 .carousel::-webkit-scrollbar-thumb{background:#bbb;border-radius:999px}
@@ -70,7 +69,6 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   background:#fff;
   display:block;
 }
-
 .cardinfo{padding:12px}
 .price{font-weight:900}
 .off{background:#dff3e1;color:#1b5e20;padding:4px 8px;border-radius:999px;font-size:12px;margin-left:6px}
@@ -92,13 +90,13 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 }
 .cbtn:active{transform:translateY(1px)}
 
-/* Desktop: vira grade (opcional) SOMENTE para Ofertas principais.
-   Promoções do dia vai continuar carrossel sempre (mais "dinâmico"). */
+/* ✅ SOMENTE "OFERTAS" vira grade no PC */
 @media(min-width:900px){
   .offers-grid{
     display:grid !important;
     grid-template-columns:repeat(3,1fr);
     overflow:visible !important;
+    padding: 0 !important;
   }
   .offers-grid .carditem{flex:initial}
 }
@@ -111,7 +109,6 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   display:inline-block;margin-top:10px;background:var(--yellow);color:#000;
   padding:12px 18px;border-radius:14px;font-weight:900;text-decoration:none
 }
-
 footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
 </style>
 </head>
@@ -177,34 +174,33 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
       </div>
     </section>
 
-    <!-- PROMOÇÕES DO DIA (SEMPRE carrossel) -->
+    <!-- ✅ PROMOÇÕES DO DIA (SEMPRE carrossel no celular e no PC) -->
     <section class="section" id="promocoes">
       <h2>Promoções do dia ⏰</h2>
-      <p class="hint">Atualize as imagens (promo1/promo2/promo3) e o site fica sempre novo</p>
+      <p class="hint">Clique para entrar no grupo e pegar o link da promoção</p>
 
       <div class="carousel" id="trackPromos">
-        <!-- Basta trocar as imagens (promo1.jpg etc.). Ao clicar, vai pro grupo -->
         <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="promo1.jpg" alt="Promoção do dia 1">
+          <img src="promo1.jpg" alt="Promoção 1">
           <div class="cardinfo">
             <strong>Promoção do dia 1</strong>
-            <span class="price">Clique para pegar no grupo</span>
+            <span class="price">Ver no grupo →</span>
           </div>
         </a>
 
         <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="promo2.jpg" alt="Promoção do dia 2">
+          <img src="promo2.jpg" alt="Promoção 2">
           <div class="cardinfo">
             <strong>Promoção do dia 2</strong>
-            <span class="price">Clique para pegar no grupo</span>
+            <span class="price">Ver no grupo →</span>
           </div>
         </a>
 
         <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="promo3.jpg" alt="Promoção do dia 3">
+          <img src="promo3.jpg" alt="Promoção 3">
           <div class="cardinfo">
             <strong>Promoção do dia 3</strong>
-            <span class="price">Clique para pegar no grupo</span>
+            <span class="price">Ver no grupo →</span>
           </div>
         </a>
       </div>
@@ -224,7 +220,6 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
         </a>
       </div>
     </div>
-
   </main>
 
   <footer>© 2026 Achadinhos ML</footer>
@@ -234,12 +229,8 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
 function rolar(trackId, dir){
   const t = document.getElementById(trackId);
   if(!t) return;
-
-  // Se o carrossel estiver em grade no PC (ofertas-grid), pode não ter scroll
-  const canScroll = t.scrollWidth > t.clientWidth + 5;
-  if(!canScroll) return;
-
-  t.scrollBy({ left: t.clientWidth * 0.8 * dir, behavior: "smooth" });
+  const amount = Math.min(t.clientWidth * 0.85, 520) * dir;
+  t.scrollBy({ left: amount, behavior: "smooth" });
 }
 </script>
 </body>
