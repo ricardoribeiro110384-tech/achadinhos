@@ -69,7 +69,9 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   background:#fff;
   display:block;
 }
+
 .cardinfo{padding:12px}
+.cardinfo strong{display:block;margin-bottom:6px}
 .price{font-weight:900}
 .off{background:#dff3e1;color:#1b5e20;padding:4px 8px;border-radius:999px;font-size:12px;margin-left:6px}
 
@@ -99,6 +101,17 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
     padding: 0 !important;
   }
   .offers-grid .carditem{flex:initial}
+}
+
+/* status */
+.notice{
+  margin: 10px 14px 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(0,0,0,.08);
+  font-weight: 900;
+  text-align:center;
+  color:#222;
 }
 
 /* atenção */
@@ -137,36 +150,14 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
       Isso acontece com milhares de mulheres todos os dias. A boa notícia? Agora existe uma forma simples e segura de comprar.
     </div>
 
-    <!-- OFERTAS PRINCIPAIS (carrossel no celular / grade no PC) -->
+    <div id="status" class="notice">Carregando ofertas da planilha…</div>
+
+    <!-- OFERTAS PRINCIPAIS (auto) -->
     <section class="section" id="ofertas">
       <h2>Ofertas principais 🔥</h2>
       <p class="hint">Arraste para o lado e entre no grupo para pegar o link</p>
 
-      <div class="carousel offers-grid" id="trackOfertas">
-        <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="oferta1.jpg" alt="Oferta 1">
-          <div class="cardinfo">
-            <strong>Jogo de Tigelas / Potes</strong>
-            <span class="price">R$ 191,55 <span class="off">15% OFF</span></span>
-          </div>
-        </a>
-
-        <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="oferta2.jpg" alt="Oferta 2">
-          <div class="cardinfo">
-            <strong>Kit Boleira / Travessas</strong>
-            <span class="price">R$ 59,41 <span class="off">15% OFF</span></span>
-          </div>
-        </a>
-
-        <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="oferta3.jpg" alt="Oferta 3">
-          <div class="cardinfo">
-            <strong>Lancheira Stitch</strong>
-            <span class="price">R$ 75,00 <span class="off">49% OFF</span></span>
-          </div>
-        </a>
-      </div>
+      <div class="carousel offers-grid" id="trackOfertas"></div>
 
       <div class="carousel-controls">
         <button class="cbtn" type="button" onclick="rolar('trackOfertas', -1)">⬅️</button>
@@ -174,36 +165,12 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
       </div>
     </section>
 
-    <!-- ✅ PROMOÇÕES DO DIA (SEMPRE carrossel no celular e no PC) -->
+    <!-- PROMOÇÕES DO DIA (auto, sempre carrossel) -->
     <section class="section" id="promocoes">
       <h2>Promoções do dia ⏰</h2>
-      <p class="hint">Clique para entrar no grupo e pegar o link da promoção</p>
+      <p class="hint">Atualize só a planilha e o site muda sozinho</p>
 
-      <div class="carousel" id="trackPromos">
-        <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="promo1.jpg" alt="Promoção 1">
-          <div class="cardinfo">
-            <strong>Promoção do dia 1</strong>
-            <span class="price">Ver no grupo →</span>
-          </div>
-        </a>
-
-        <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="promo2.jpg" alt="Promoção 2">
-          <div class="cardinfo">
-            <strong>Promoção do dia 2</strong>
-            <span class="price">Ver no grupo →</span>
-          </div>
-        </a>
-
-        <a class="carditem" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          <img src="promo3.jpg" alt="Promoção 3">
-          <div class="cardinfo">
-            <strong>Promoção do dia 3</strong>
-            <span class="price">Ver no grupo →</span>
-          </div>
-        </a>
-      </div>
+      <div class="carousel" id="trackPromos"></div>
 
       <div class="carousel-controls">
         <button class="cbtn" type="button" onclick="rolar('trackPromos', -1)">⬅️</button>
@@ -222,16 +189,163 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
     </div>
   </main>
 
-  <footer>© 2026 Achadinhos ML</footer>
+  <footer>© <span id="year"></span> Achadinhos ML</footer>
 </div>
 
 <script>
+/**
+ * ✅ SUA PLANILHA
+ * Você enviou o link pubhtml. Para o código funcionar, usamos output=csv.
+ * Então convertemos seu link para CSV automaticamente abaixo.
+ */
+const SHEET_PUBHTML_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRx2cVNJMmKpEk0z6OjR9G5EN-5OEKhWPVDPyejNMNoBwu0MLhypjJ0spEnrqGu_PLR6fVRgArpARWp/pubhtml";
+const SHEET_CSV_URL = SHEET_PUBHTML_URL.replace("/pubhtml", "/pub?output=csv");
+
+/** ✅ SEU GRUPO WHATSAPP */
+const WA_GROUP = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
 function rolar(trackId, dir){
   const t = document.getElementById(trackId);
   if(!t) return;
   const amount = Math.min(t.clientWidth * 0.85, 520) * dir;
   t.scrollBy({ left: amount, behavior: "smooth" });
 }
+
+/* CSV parser (vírgula + aspas) */
+function parseCSV(text){
+  const rows = [];
+  let row = [], cur = "", inQuotes = false;
+
+  for (let i=0;i<text.length;i++){
+    const c = text[i];
+    const next = text[i+1];
+
+    if (c === '"'){
+      if (inQuotes && next === '"'){ cur += '"'; i++; }
+      else inQuotes = !inQuotes;
+      continue;
+    }
+
+    if (!inQuotes && (c === ',' || c === '\n' || c === '\r')){
+      if (c === '\r' && next === '\n') continue;
+      row.push(cur.trim());
+      cur = "";
+
+      if (c === '\n'){
+        if (row.some(cell => cell.length > 0)) rows.push(row);
+        row = [];
+      }
+      continue;
+    }
+
+    cur += c;
+  }
+
+  if (cur.length || row.length){
+    row.push(cur.trim());
+    if (row.some(cell => cell.length > 0)) rows.push(row);
+  }
+  return rows;
+}
+
+function el(tag, attrs={}, children=[]){
+  const e = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs)){
+    if (k === "class") e.className = v;
+    else if (k === "html") e.innerHTML = v;
+    else e.setAttribute(k, v);
+  }
+  children.forEach(ch => e.appendChild(ch));
+  return e;
+}
+
+function safeText(s){ return (s || "").replace(/</g,"&lt;"); }
+
+function cardItem(item){
+  const a = el("a", { class:"carditem", href: WA_GROUP, target:"_blank", rel:"noopener" });
+
+  const img = el("img", { src: item.image, alt: item.title || "Promoção" });
+  img.onerror = () => { img.style.display = "none"; };
+
+  const info = el("div", { class:"cardinfo" });
+  const strong = el("strong", { html: safeText(item.title || "") });
+
+  const priceLine = el("div", { class:"price" });
+  priceLine.textContent = item.price || "Ver no grupo →";
+
+  if (item.badge){
+    const badge = el("span", { class:"off" });
+    badge.textContent = item.badge;
+    priceLine.appendChild(badge);
+  }
+
+  info.appendChild(strong);
+  info.appendChild(priceLine);
+
+  a.appendChild(img);
+  a.appendChild(info);
+  return a;
+}
+
+async function loadFromSheet(){
+  const status = document.getElementById("status");
+  const ofertasWrap = document.getElementById("trackOfertas");
+  const promosWrap  = document.getElementById("trackPromos");
+
+  try{
+    const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
+    if (!res.ok) throw new Error("Falha ao buscar CSV");
+    const csv = await res.text();
+
+    const rows = parseCSV(csv);
+    if (!rows.length){
+      status.textContent = "Planilha vazia. Preencha as linhas com ofertas e promoções.";
+      return;
+    }
+
+    const header = rows[0].map(h => (h || "").toLowerCase());
+    const idx = (name) => header.indexOf(name);
+
+    const sI = idx("section");
+    const iI = idx("image");
+    const tI = idx("title");
+    const pI = idx("price");
+    const bI = idx("badge");
+
+    if (sI < 0 || iI < 0 || tI < 0){
+      status.textContent = "Cabeçalhos inválidos. Use: section | image | title | price | badge";
+      return;
+    }
+
+    const items = rows.slice(1).map(r => ({
+      section: (r[sI] || "").trim().toLowerCase(),
+      image:   (r[iI] || "").trim(),
+      title:   (r[tI] || "").trim(),
+      price:   pI >= 0 ? (r[pI] || "").trim() : "",
+      badge:   bI >= 0 ? (r[bI] || "").trim() : ""
+    })).filter(x => x.section && x.image);
+
+    const ofertas = items.filter(x => x.section === "oferta");
+    const promos  = items.filter(x => x.section === "promo");
+
+    ofertasWrap.innerHTML = "";
+    promosWrap.innerHTML  = "";
+
+    ofertas.forEach(item => ofertasWrap.appendChild(cardItem(item)));
+    promos.forEach(item  => promosWrap.appendChild(cardItem(item)));
+
+    status.textContent = `Atualizado pela planilha ✅ (${ofertas.length} ofertas, ${promos.length} promoções)`;
+
+    if (ofertas.length === 0) status.textContent = "Nenhuma linha com section=oferta encontrada.";
+    if (promos.length === 0)  status.textContent += " | Nenhuma linha com section=promo.";
+  } catch(e){
+    status.textContent = "Não consegui carregar a planilha. Confirme se ela está 'Publicada na web' e se o link está correto.";
+  }
+}
+
+loadFromSheet();
 </script>
 </body>
 </html>
