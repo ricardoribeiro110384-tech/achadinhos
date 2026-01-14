@@ -1,708 +1,704 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Achadinhos ML</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Achadinhos Oficial — Ofertas reais todo dia</title>
+  <meta name="description" content="Achadinhos Oficial: ofertas reais todos os dias. Entre no grupo e receba os links com cupom e desconto." />
 
-<style>
-:root{
-  --yellow:#ffd400;
-  --card: rgba(255,255,255,.9);
-  --shadow:0 18px 40px rgba(0,0,0,.35);
-  --radius:22px;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
-.wrap{max-width:1100px;margin:auto;padding:14px}
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --card:#12121a;
+      --text:#f3f4f6;
+      --muted:#a7a7b3;
+      --brand:#ffd400;      /* faixa amarela */
+      --brand2:#ff7a00;     /* destaque */
+      --ok:#19c37d;
+      --danger:#ff4d4d;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --max:1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 50% -10%, rgba(255,212,0,.20), transparent 60%),
+                  radial-gradient(900px 500px at 10% 10%, rgba(255,122,0,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
 
-/* ✅ TOPO MENOR */
-.top{
-  background:var(--yellow);
-  border-radius:var(--radius);
-  padding:14px 16px;           /* antes era maior */
-  text-align:center;
-  box-shadow:var(--shadow);
-}
-.logo{
-  width:260px;                 /* antes 320px */
-  max-width:82%;
-  height:auto;
-}
+    /* 🔝 Topo com promessa (faixa + promessa curta) */
+    .topbar{
+      background: linear-gradient(90deg, var(--brand), #ffe86a);
+      color:#111;
+      position:sticky;
+      top:0;
+      z-index:50;
+      box-shadow: 0 6px 18px rgba(0,0,0,.22);
+    }
+    .topbar .inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0;
+    }
+    .brand-left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .logo{
+      width:40px; height:40px;
+      border-radius:10px;
+      background:#111;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .logo img{width:100%; height:100%; object-fit:contain}
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+      min-width:0;
+    }
+    .brand-text strong{font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .brand-text span{font-size:12px; opacity:.85; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .top-cta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
+    }
+    .pill{
+      font-size:12px;
+      font-weight:700;
+      padding:8px 10px;
+      border-radius:999px;
+      background:#111;
+      color:#fff;
+      white-space:nowrap;
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:800;
+      font-size:13px;
+      background:#111;
+      color:#fff;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      transition:.15s transform ease, .15s opacity ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); opacity:.95}
+    .btn.primary{background: #111; color:#fff}
+    .btn.orange{background: var(--brand2); color:#111}
+    .btn .dot{
+      width:8px;height:8px;border-radius:999px;background:var(--ok);
+      box-shadow:0 0 0 4px rgba(25,195,125,.18);
+    }
 
-/* card */
-.poster{background:var(--card);margin-top:12px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.title{text-align:center;padding:16px}
-.title h1{margin:0;font-size:25px;font-weight:900}
+    /* Hero */
+    .hero{
+      padding:22px 0 8px;
+    }
+    .hero-card{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero-card{grid-template-columns:1fr}
+    }
+    .panel{
+      background: rgba(18,18,26,.92);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    .headline{
+      margin:0 0 10px;
+      font-size:26px;
+      line-height:1.1;
+      letter-spacing:-.2px;
+    }
+    .sub{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+    .trust-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
+    .chip{
+      font-size:12px;
+      color:#eaeaf2;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      padding:8px 10px;
+      border-radius:999px;
+    }
+    .chip strong{color:#fff}
+    .chip.red{border-color: rgba(255,77,77,.35); background: rgba(255,77,77,.10)}
+    .chip.green{border-color: rgba(25,195,125,.35); background: rgba(25,195,125,.10)}
 
-/* ✅ VÍDEO MENOR */
-.videoCard{
-  margin:10px 14px 0;
-  background:#fff;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 12px 26px rgba(0,0,0,.18);
-}
-.videoHead{
-  padding:10px 12px 0;
-  font-weight:1000;
-  text-align:center;
-}
-.videoWrap{
-  background:#000;
-  display:flex;
-  justify-content:center;
-  padding:8px 10px;            /* cria respiro e ajuda a parecer menor */
-}
-.videoWrap video{
-  width:100%;
-  max-width:820px;             /* limita tamanho no PC */
-  height:auto;
-  display:block;
-  border-radius:12px;
-  background:#000;
-}
+    /* video / destaque lateral (sem obrigar) */
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .mini{
+      padding:14px;
+    }
+    .mini h3{
+      margin:0 0 8px;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+    .mini p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .mini .statline{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .stat{
+      flex:1 1 120px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding:10px;
+    }
+    .stat b{display:block; font-size:14px}
+    .stat small{color:var(--muted)}
 
-/* reduz um pouco mais no PC */
-@media(min-width:900px){
-  .videoWrap video{ max-width:740px; }
-}
+    /* 🎁 Destaque ofertas + carrossel */
+    .section{
+      padding:14px 0 22px;
+    }
+    .section-title{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin:6px 0 10px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:18px;
+      letter-spacing:-.2px;
+    }
+    .section-title span{
+      color:var(--muted);
+      font-size:12px;
+    }
 
-.videoControls{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-  padding:10px 12px;
-}
-.vbtn{
-  padding:10px 14px;
-  border-radius:12px;
-  border:1px solid #e6e6e6;
-  background:#fff;
-  font-weight:1000;
-  cursor:pointer;
-}
-.vbtn.primary{
-  background:var(--yellow);
-  border-color:transparent;
-}
+    .carousel{
+      position:relative;
+    }
+    .track{
+      display:flex;
+      gap:12px;
+      overflow:auto;
+      scroll-snap-type:x mandatory;
+      padding:4px 2px 10px;
+      scrollbar-width: thin;
+    }
+    .track::-webkit-scrollbar{height:10px}
+    .track::-webkit-scrollbar-thumb{background: rgba(255,255,255,.16); border-radius:999px}
+    .card{
+      flex: 0 0 260px;
+      scroll-snap-align:start;
+      background: rgba(18,18,26,.92);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 340px;
+    }
+    @media (max-width:520px){
+      .card{flex-basis: 82vw}
+    }
+    .imgbox{
+      width:100%;
+      aspect-ratio: 1 / 1;
+      background: rgba(255,255,255,.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .imgbox img{
+      width:100%;
+      height:100%;
+      object-fit: contain; /* NÃO corta */
+      padding:10px;
+    }
+    .card-body{padding:12px; display:flex; flex-direction:column; gap:10px; flex:1}
+    .title{
+      margin:0;
+      font-size:14px;
+      line-height:1.2;
+      min-height: 34px;
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .badge{
+      font-size:12px;
+      padding:6px 8px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:#f0f0f7;
+    }
+    .badge.orange{background: rgba(255,122,0,.14); border-color: rgba(255,122,0,.28)}
+    .badge.green{background: rgba(25,195,125,.14); border-color: rgba(25,195,125,.28)}
+    .badge.red{background: rgba(255,77,77,.14); border-color: rgba(255,77,77,.28)}
+    .price-row{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:auto;
+    }
+    .prices{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .old{
+      color:var(--muted);
+      font-size:12px;
+      text-decoration:line-through;
+    }
+    .new{
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:-.2px;
+    }
+    .off{
+      font-size:12px;
+      font-weight:900;
+      color:#111;
+      background: var(--brand);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .cta{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+    }
+    .cta a{
+      flex:1;
+      text-align:center;
+      padding:10px 12px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:900;
+      font-size:13px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .cta a.main{
+      background: var(--brand2);
+      border-color: rgba(0,0,0,.0);
+      color:#111;
+    }
 
-/* faixa vermelha */
-.redbar{background:#c62828;color:#fff;margin:12px 14px 0;border-radius:16px;padding:14px}
-.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-weight:bold}
-@media(max-width:700px){.qgrid{grid-template-columns:1fr}}
+    /* setas do carrossel */
+    .navbtn{
+      position:absolute;
+      top:42%;
+      transform:translateY(-50%);
+      width:42px;height:42px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.45);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      z-index:5;
+      box-shadow: 0 10px 20px rgba(0,0,0,.25);
+    }
+    .navbtn:hover{background: rgba(0,0,0,.6)}
+    .navbtn.left{left:-6px}
+    .navbtn.right{right:-6px}
+    @media (max-width: 700px){
+      .navbtn{display:none} /* no celular rola com swipe */
+    }
 
-/* texto */
-.lead{text-align:center;padding:14px;font-weight:bold}
+    /* 🔥 Urgência social */
+    .social{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width: 900px){
+      .social{grid-template-columns:1fr}
+    }
+    .social .box{
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      padding:14px;
+    }
+    .social .box b{display:block; font-size:14px}
+    .social .box small{color:var(--muted)}
 
-/* seções */
-.section{padding:14px 18px}
-.section h2{text-align:center;font-size:22px;margin-bottom:8px}
-.hint{text-align:center;font-weight:bold;margin-bottom:10px}
-.notice{display:none}
+    /* 🟢 Botão WhatsApp fixo */
+    .wa-float{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      font-size: 26px;
+      font-weight:900;
+      background:#25D366;
+      color:#fff;
+      box-shadow: 0 12px 26px rgba(0,0,0,.35);
+      z-index: 9999;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+    .wa-float:hover{transform: translateY(-2px); opacity:.96}
+    .wa-tip{
+      position:fixed;
+      right: 88px;
+      bottom: 24px;
+      background: rgba(0,0,0,.75);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      padding:8px 10px;
+      font-size:12px;
+      z-index:9999;
+      display:none;
+    }
+    @media (min-width: 900px){
+      .wa-float:hover + .wa-tip{display:block}
+    }
 
-/* destaque */
-.featured{
-  margin: 12px 14px 0;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 12px 26px rgba(0,0,0,.18);
-  background:#fff;
-  display:grid;
-  grid-template-columns: 1.1fr 1fr;
-}
-@media(max-width:850px){ .featured{grid-template-columns:1fr} }
-.featured .imgwrap{background:#fff;display:flex;align-items:center;justify-content:center;padding:10px}
-.featured img{width:100%;height:260px;object-fit:contain} /* um pouco menor */
-.featured .content{padding:14px;background:linear-gradient(180deg, rgba(255,212,0,.35), rgba(255,255,255,1))}
-.badgeTop{display:inline-block;background:#111;color:#fff;padding:6px 10px;border-radius:999px;font-weight:1000;font-size:12px}
-.featured h3{margin:10px 0 8px;font-size:20px}
-.pricesLine{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;margin:8px 0 6px}
-.old{color:#777;text-decoration:line-through;font-weight:900}
-.new{font-weight:1000;font-size:20px}
-.offPill{background:#dff3e1;color:#1b5e20;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000}
-.couponPill{background:#e8f0fe;color:#1a73e8;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000}
-.metaLine{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-.soldPill{background:#fff3cd;color:#7a5200;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000;border:1px solid rgba(0,0,0,.06)}
-.ratingPill{background:#f1f3f4;color:#111;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000;border:1px solid rgba(0,0,0,.06)}
-.timer{margin-top:10px;font-weight:900}
-.actionsRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.ctaWide{display:inline-block;background:var(--yellow);color:#000;padding:12px 16px;border-radius:14px;font-weight:1000;text-decoration:none}
-.secondaryBtn{display:inline-block;background:#fff;color:#111;padding:12px 16px;border-radius:14px;font-weight:1000;text-decoration:none;border:1px solid #e6e6e6;cursor:pointer}
-
-/* carrossel */
-.carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:2px 4px 10px}
-.carousel::-webkit-scrollbar{height:8px}
-.carousel::-webkit-scrollbar-thumb{background:#bbb;border-radius:999px}
-.carditem{flex:0 0 82%;background:#fff;border-radius:16px;box-shadow:0 10px 20px rgba(0,0,0,.2);text-decoration:none;color:#000;scroll-snap-align:start;overflow:hidden}
-.carditem img{width:100%;height:250px;object-fit:contain;background:#fff;display:block} /* um pouco menor */
-.cardinfo{padding:12px}
-.cardinfo strong{display:block;margin-bottom:6px}
-.prices{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.newSmall{font-weight:1000;font-size:18px}
-.offSmall{background:#dff3e1;color:#1b5e20;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:1000}
-.couponSmall{background:#e8f0fe;color:#1a73e8;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:1000}
-.metaSmall{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.soldSmall{background:#fff3cd;color:#7a5200;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:1000;border:1px solid rgba(0,0,0,.06)}
-.ratingSmall{background:#f1f3f4;color:#111;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:1000;border:1px solid rgba(0,0,0,.06)}
-.cardActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.cardBtn{border:1px solid #e6e6e6;background:#fff;border-radius:12px;padding:10px 12px;font-weight:1000;cursor:pointer}
-.cardBtn.primary{background:var(--yellow);border-color:transparent}
-
-/* botões rolar */
-.carousel-controls{display:flex;justify-content:center;gap:10px;margin-top:8px}
-.cbtn{padding:10px 14px;border-radius:12px;border:none;background:var(--yellow);font-weight:900;cursor:pointer}
-.cbtn:active{transform:translateY(1px)}
-
-/* PC */
-@media(min-width:900px){
-  .offers-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;overflow:visible!important;padding:0!important}
-  .offers-grid .carditem{flex:initial}
-  #trackPromos .carditem{flex:0 0 340px}
-}
-.carousel.no-scroll{justify-content:center}
-.carousel.no-scroll .carditem{flex:0 0 340px}
-
-/* atenção */
-.attention{margin:14px;border-radius:16px;overflow:hidden}
-.att-top{background:#ffb300;text-align:center;font-weight:900;padding:12px}
-.att-body{background:#222;color:#fff;text-align:center;padding:14px}
-.cta{display:inline-block;margin-top:10px;background:var(--yellow);color:#000;padding:12px 18px;border-radius:14px;font-weight:900;text-decoration:none}
-
-footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
-.toast{
-  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-  background:#111;color:#fff;padding:10px 12px;border-radius:999px;
-  font-weight:900;box-shadow:0 12px 24px rgba(0,0,0,.35);
-  opacity:0;pointer-events:none;transition:opacity .25s ease;
-}
-.toast.show{opacity:1}
-</style>
+    /* Rodapé confiável */
+    footer{
+      margin-top: 18px;
+      padding: 18px 0 28px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    footer .foot{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top:14px;
+    }
+    footer .legal{
+      max-width: 820px;
+      line-height:1.4;
+    }
+    footer .contact{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .link{
+      color:#eaeaf2;
+      text-decoration:none;
+      border-bottom:1px dashed rgba(255,255,255,.25);
+    }
+    .link:hover{border-bottom-color: rgba(255,255,255,.5)}
+  </style>
 </head>
 
 <body>
-<div class="wrap">
-  <div class="top">
-    <img src="logo.png" class="logo" alt="Achadinhos ML">
+  <!-- 🔝 Topo com promessa -->
+  <div class="topbar">
+    <div class="wrap">
+      <div class="inner">
+        <div class="brand-left">
+          <!-- Troque logo.png pelo nome do seu arquivo de logo -->
+          <div class="logo">
+            <img src="logo.png" alt="Achadinhos Oficial" onerror="this.style.display='none'; this.parentElement.style.background='#111';">
+          </div>
+          <div class="brand-text">
+            <strong>Achadinhos Oficial</strong>
+            <span>Ofertas reais • atualizadas diariamente</span>
+          </div>
+        </div>
+
+        <div class="top-cta">
+          <span class="pill"><span class="dot"></span> Entrar e receber os links</span>
+          <a class="btn orange" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">
+            Ver ofertas ➜
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <main class="poster">
-    <div class="title">
-      <h1>Descubra como comprar online com segurança, pagando menos e sem cair em golpes</h1>
-    </div>
+  <!-- Hero / promessa (mantém estrutura de landing) -->
+  <div class="wrap hero">
+    <div class="hero-card">
+      <div class="panel">
+        <h1 class="headline">Pague menos, com segurança — eu mando os achadinhos do dia no grupo.</h1>
+        <p class="sub">
+          Pra quem tem medo de comprar online: aqui você entra no grupo, recebe os links das ofertas e tira dúvidas comigo.
+          <b style="color:#fff">Sem enrolação.</b>
+        </p>
 
-    <!-- ✅ VÍDEO (menor) -->
-    <div class="videoCard">
-      <div class="videoHead">🎥 Assista rapidinho (10 segundos)</div>
-      <div class="videoWrap">
-        <video id="introVideo"
-          src="video.mp4"
-          playsinline
-          muted
-          autoplay
-          loop
-          preload="metadata"
-        ></video>
-      </div>
-      <div class="videoControls">
-        <button class="vbtn primary" id="btnPlayPause" type="button">⏸ Pausar</button>
-        <button class="vbtn" id="btnMute" type="button">🔇 Sem som</button>
-      </div>
-    </div>
-
-    <div class="redbar">
-      <div class="qgrid">
-        <div>✔ E se não chegar?</div>
-        <div>✔ E se eu perder meu dinheiro?</div>
-        <div>✔ E se for falso?</div>
-        <div>✔ E se for golpe?</div>
-      </div>
-    </div>
-
-    <div class="lead">
-      Agora você encontra ofertas reais todos os dias. Entre no grupo e pegue os links.
-    </div>
-
-    <div id="status" class="notice">Carregando…</div>
-
-    <!-- destaque -->
-    <div id="featuredWrap" class="featured" style="display:none;">
-      <div class="imgwrap"><img id="featuredImg" alt="Destaque do dia"></div>
-      <div class="content">
-        <span class="badgeTop">🔥 Melhor oferta do dia</span>
-        <h3 id="featuredTitle"></h3>
-
-        <div class="pricesLine">
-          <span class="old" id="featuredOld" style="display:none;"></span>
-          <span class="new" id="featuredNew"></span>
-          <span class="offPill" id="featuredOff" style="display:none;"></span>
-          <span class="couponPill" id="featuredCoupon" style="display:none;"></span>
+        <div class="hero-actions">
+          <a class="btn orange" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">
+            🔥 Ver ofertas no grupo
+          </a>
+          <a class="btn primary" href="https://wa.me/5589981311034?text=Oi!%20Vim%20pelo%20site%20Achadinhos%20Oficial%20e%20quero%20tirar%20uma%20d%C3%BAvida%20antes%20de%20comprar."
+             target="_blank" rel="noopener noreferrer">
+            💬 Falar comigo
+          </a>
         </div>
 
-        <div class="metaLine">
-          <span class="soldPill" id="featuredSold" style="display:none;"></span>
-          <span class="ratingPill" id="featuredRating" style="display:none;"></span>
+        <div class="trust-row">
+          <span class="chip green"><strong>Links do dia</strong> + cupons quando tiver</span>
+          <span class="chip"><strong>Sem golpe</strong> • curadoria manual</span>
+          <span class="chip red"><strong>Acaba rápido</strong> • estoque muda</span>
+        </div>
+      </div>
+
+      <!-- lateral: urgência social + “atualizado” -->
+      <div class="side">
+        <div class="panel mini">
+          <h3>🔥 Prova social (ajuda a converter)</h3>
+          <p>As ofertas mudam o tempo todo. Quando tiver cupom, eu aviso no card.</p>
+          <div class="statline">
+            <div class="stat">
+              <b id="updatedLabel">Atualizado agora</b>
+              <small id="updatedTime">—</small>
+            </div>
+            <div class="stat">
+              <b>Atendimento</b>
+              <small>WhatsApp: (89) 98131-1034</small>
+            </div>
+          </div>
         </div>
 
-        <div class="timer">⏳ Termina em: <span id="countdown">--:--:--</span></div>
-
-        <div class="actionsRow">
-          <a class="ctaWide" id="featuredCTA" href="#" target="_blank" rel="noopener">Ver no grupo do WhatsApp →</a>
-          <button class="secondaryBtn" id="featuredCopyCoupon" style="display:none;" type="button">Copiar cupom</button>
-          <button class="secondaryBtn" id="featuredShare" type="button">Compartilhar</button>
+        <div class="panel mini">
+          <h3>✅ Como funciona</h3>
+          <p>1) Clique em <b>Ver ofertas</b> → 2) Entre no grupo → 3) Pegue o link + cupom → 4) Compre com segurança.</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <section class="section" id="ofertas">
-      <h2>Ofertas principais 🔥</h2>
-      
-      <div class="carousel offers-grid" id="trackOfertas"></div>
-      <div class="carousel-controls">
-        <button class="cbtn" type="button" onclick="rolar('trackOfertas', -1)">⬅️</button>
-        <button class="cbtn" type="button" onclick="rolar('trackOfertas', 1)">➡️</button>
-      </div>
-    </section>
+  <!-- 🎁 Destaque de ofertas (carrossel) -->
+  <div class="wrap section">
+    <div class="section-title">
+      <h2>🎁 Promoções em destaque</h2>
+      <span>Arraste no celular • use as setas no PC</span>
+    </div>
 
-    <section class="section" id="promocoes">
-      <h2>Promoções do dia ⏰</h2>
-   
-      <div class="carousel" id="trackPromos"></div>
-      <div class="carousel-controls">
-        <button class="cbtn" type="button" onclick="rolar('trackPromos', -1)">⬅️</button>
-        <button class="cbtn" type="button" onclick="rolar('trackPromos', 1)">➡️</button>
-      </div>
-    </section>
+    <div class="carousel">
+      <button class="navbtn left" type="button" aria-label="Voltar" onclick="scrollTrack(-1)">‹</button>
+      <button class="navbtn right" type="button" aria-label="Avançar" onclick="scrollTrack(1)">›</button>
 
-    <div class="attention">
-      <div class="att-top">⚠️ Atenção!</div>
-      <div class="att-body">
-        As melhores ofertas acabam rápido.<br>
-        <a class="cta" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          Entrar no grupo do WhatsApp →
-        </a>
+      <div class="track" id="track">
+        <!-- CARD 1 -->
+        <article class="card">
+          <div class="imgbox">
+            <!-- troque a imagem pelo seu arquivo/URL -->
+            <img src="oferta1.jpg" alt="Oferta 1" onerror="this.src='https://via.placeholder.com/800x800.png?text=Oferta+1';">
+          </div>
+          <div class="card-body">
+            <h3 class="title">Oferta 1 — Nome do produto (edite depois)</h3>
+            <div class="meta">
+              <span class="badge green">⭐ 4,8</span>
+              <span class="badge">+100 vendidos</span>
+              <span class="badge orange">CUPOM: SIM</span>
+              <span class="badge red">Acaba rápido</span>
+            </div>
+            <div class="price-row">
+              <div class="prices">
+                <span class="old">R$ 199,90</span>
+                <span class="new">R$ 149,90</span>
+              </div>
+              <span class="off">-25%</span>
+            </div>
+            <div class="cta">
+              <a class="main" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">Ver no grupo</a>
+              <a href="https://wa.me/5589981311034?text=Oi!%20Vi%20a%20Oferta%201%20no%20site%20Achadinhos%20Oficial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener noreferrer">Tirar dúvida</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 2 -->
+        <article class="card">
+          <div class="imgbox">
+            <img src="oferta2.jpg" alt="Oferta 2" onerror="this.src='https://via.placeholder.com/800x800.png?text=Oferta+2';">
+          </div>
+          <div class="card-body">
+            <h3 class="title">Oferta 2 — Nome do produto (edite depois)</h3>
+            <div class="meta">
+              <span class="badge green">⭐ 4,7</span>
+              <span class="badge">+250 vendidos</span>
+              <span class="badge orange">CUPOM: NÃO</span>
+              <span class="badge">Frete bom</span>
+            </div>
+            <div class="price-row">
+              <div class="prices">
+                <span class="old">R$ 89,90</span>
+                <span class="new">R$ 69,90</span>
+              </div>
+              <span class="off">-22%</span>
+            </div>
+            <div class="cta">
+              <a class="main" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">Ver no grupo</a>
+              <a href="https://wa.me/5589981311034?text=Oi!%20Vi%20a%20Oferta%202%20no%20site%20Achadinhos%20Oficial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener noreferrer">Tirar dúvida</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 3 -->
+        <article class="card">
+          <div class="imgbox">
+            <img src="oferta3.jpg" alt="Oferta 3" onerror="this.src='https://via.placeholder.com/800x800.png?text=Oferta+3';">
+          </div>
+          <div class="card-body">
+            <h3 class="title">Oferta 3 — Nome do produto (edite depois)</h3>
+            <div class="meta">
+              <span class="badge green">⭐ 4,9</span>
+              <span class="badge">+1.000 vendidos</span>
+              <span class="badge orange">CUPOM: SIM</span>
+              <span class="badge red">Últimas unidades</span>
+            </div>
+            <div class="price-row">
+              <div class="prices">
+                <span class="old">R$ 329,90</span>
+                <span class="new">R$ 249,90</span>
+              </div>
+              <span class="off">-24%</span>
+            </div>
+            <div class="cta">
+              <a class="main" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">Ver no grupo</a>
+              <a href="https://wa.me/5589981311034?text=Oi!%20Vi%20a%20Oferta%203%20no%20site%20Achadinhos%20Oficial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener noreferrer">Tirar dúvida</a>
+            </div>
+          </div>
+        </article>
+
       </div>
     </div>
-  </main>
 
-<footer>
-  © <span id="year"></span> Achadinhos ML<br>
-  <span style="font-size:11px;color:#bbb;display:block;margin-top:6px">
-    Este site não possui vínculo oficial com o Mercado Livre. 
-    As marcas e produtos exibidos pertencem aos seus respectivos proprietários.
-    Atuamos como curadoria independente de ofertas.
-  </span>
-</footer>
-</div>
+    <!-- 🔥 Urgência social (sem mudar estrutura: é só um bloco a mais) -->
+    <div class="social">
+      <div class="box">
+        <b>🔥 Ofertas mudam rápido</b>
+        <small>Se acabar, eu posto outra no grupo. Entre e acompanhe.</small>
+      </div>
+      <div class="box">
+        <b>✅ Para quem tem medo</b>
+        <small>Chama no WhatsApp que eu te explico o passo a passo.</small>
+      </div>
+      <div class="box">
+        <b>🏷️ Cupom quando tiver</b>
+        <small>Nos cards aparece “CUPOM: SIM”. No grupo eu mando o código.</small>
+      </div>
+    </div>
 
-<div id="toast" class="toast">Copiado!</div>
+    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+      <a class="btn orange" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">✅ Entrar no grupo agora</a>
+      <a class="btn primary" href="https://wa.me/5589981311034?text=Oi!%20Vim%20pelo%20site%20Achadinhos%20Oficial%20e%20quero%20saber%20como%20aproveitar%20as%20promo%C3%A7%C3%B5es." target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+    </div>
+  </div>
 
-<script>
-const SHEET_PUBHTML_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pubhtml";
-const SHEET_CSV_URL = SHEET_PUBHTML_URL.replace("/pubhtml", "/pub?output=csv");
-const WA_GROUP = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-const AUTO_REFRESH_MS = 60 * 1000;
+  <!-- 🔚 Rodapé confiável -->
+  <div class="wrap">
+    <footer>
+      <div class="foot">
+        <div class="legal">
+          <b style="color:#fff">Achadinhos Oficial</b> — curadoria independente de ofertas.
+          <br />
+          Este site não possui vínculo oficial com o Mercado Livre. As marcas e produtos exibidos pertencem aos seus respectivos proprietários.
+          <br />
+          <span id="year"></span> • Atualizado com base nas ofertas do dia (estoque e preços podem mudar).
+        </div>
+        <div class="contact">
+          <a class="link" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">Entrar no Grupo</a>
+          <a class="link" href="https://wa.me/5589981311034" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </div>
+      </div>
+    </footer>
+  </div>
 
-document.getElementById("year").textContent = new Date().getFullYear();
+  <!-- 🟢 Botão WhatsApp fixo -->
+  <a class="wa-float"
+     href="https://wa.me/5589981311034?text=Oi!%20Vim%20pelo%20site%20Achadinhos%20Oficial%20e%20quero%20aproveitar%20as%20ofertas%20%F0%9F%94%A5"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Falar no WhatsApp">
+    💬
+  </a>
+  <div class="wa-tip">Falar no WhatsApp</div>
 
-/* 🎥 controle do vídeo */
-(function initVideo(){
-  const v = document.getElementById("introVideo");
-  const btnPlayPause = document.getElementById("btnPlayPause");
-  const btnMute = document.getElementById("btnMute");
-
-  v.play().catch(()=>{});
-
-  btnPlayPause.addEventListener("click", ()=>{
-    if (v.paused){
-      v.play().catch(()=>{});
-      btnPlayPause.textContent = "⏸ Pausar";
-    } else {
-      v.pause();
-      btnPlayPause.textContent = "▶️ Reproduzir";
+  <script>
+    // setas do carrossel (PC)
+    function scrollTrack(dir){
+      const el = document.getElementById('track');
+      const step = Math.min(el.clientWidth * 0.85, 520);
+      el.scrollBy({ left: dir * step, behavior: 'smooth' });
     }
-  });
 
-  btnMute.addEventListener("click", ()=>{
-    v.muted = !v.muted;
-    btnMute.textContent = v.muted ? "🔇 Sem som" : "🔊 Com som";
-    if(!v.paused) v.play().catch(()=>{});
-  });
-})();
-
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg || "Feito!";
-  t.classList.add("show");
-  clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(()=>t.classList.remove("show"), 1600);
-}
-function rolar(trackId, dir){
-  const t = document.getElementById(trackId);
-  if(!t) return;
-  const amount = Math.min(t.clientWidth * 0.85, 520) * dir;
-  t.scrollBy({ left: amount, behavior: "smooth" });
-}
-function parseCSV(text){
-  const rows = [];
-  let row = [], cur = "", inQuotes = false;
-  for (let i=0;i<text.length;i++){
-    const c = text[i], next = text[i+1];
-    if (c === '"'){
-      if (inQuotes && next === '"'){ cur += '"'; i++; }
-      else inQuotes = !inQuotes;
-      continue;
-    }
-    if (!inQuotes && (c === ',' || c === '\n' || c === '\r')){
-      if (c === '\r' && next === '\n') continue;
-      row.push(cur); cur = "";
-      if (c === '\n'){
-        if (row.some(cell => String(cell).trim().length)) rows.push(row.map(x => String(x).trim()));
-        row = [];
-      }
-      continue;
-    }
-    cur += c;
-  }
-  if (cur.length || row.length){
-    row.push(cur);
-    if (row.some(cell => String(cell).trim().length)) rows.push(row.map(x => String(x).trim()));
-  }
-  return rows;
-}
-function safeText(s){ return (s || "").replace(/</g,"&lt;"); }
-function toNumberBR(v){
-  let s = String(v || "").trim();
-  if(!s) return NaN;
-  s = s.replace(/[^\d,.\-]/g,"");
-  if (s.includes(",") && s.includes(".")) s = s.replace(/\./g,"").replace(",",".");
-  else if (s.includes(",") && !s.includes(".")) s = s.replace(",",".");
-  const n = parseFloat(s);
-  return Number.isFinite(n) ? n : NaN;
-}
-function toDiscount(v){
-  let s = String(v || "").trim();
-  if(!s) return 0;
-  s = s.replace(",",".");
-  const m = s.match(/-?\d+(\.\d+)?/);
-  const n = m ? parseFloat(m[0]) : 0;
-  return Number.isFinite(n) ? n : 0;
-}
-function toRating(v){
-  let s = String(v || "").trim();
-  if(!s) return 0;
-  s = s.replace(",",".");
-  const n = parseFloat(s);
-  if(!Number.isFinite(n)) return 0;
-  return Math.max(0, Math.min(5, n));
-}
-function formatBRL(n){
-  return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
-}
-function normalizeCoupon(v){
-  let s = String(v || "").trim();
-  if(!s) return "";
-  return s.replace(/^cupom\s*:\s*/i, "").trim();
-}
-function normalizeSold(v){
-  let s = String(v || "").trim();
-  if(!s) return "";
-  if (/^\d+$/g.test(s)) return `+${s} vendidos`;
-  if (/^\+\d+$/g.test(s)) return `${s} vendidos`;
-  return s;
-}
-function ratingText(r){
-  if(!r) return "";
-  const txt = (Math.round(r*10)/10).toString().replace(".",",");
-  return `⭐ ${txt}`;
-}
-async function copyText(text){
-  try{ await navigator.clipboard.writeText(text); toast("Copiado!"); }
-  catch{
-    const ta = document.createElement("textarea");
-    ta.value = text; document.body.appendChild(ta); ta.select();
-    document.execCommand("copy"); document.body.removeChild(ta);
-    toast("Copiado!");
-  }
-}
-function shareWhatsApp(item){
-  const title = item?.title ? item.title : "Achadinho imperdível!";
-  const coupon = normalizeCoupon(item?.coupon);
-  const sold = normalizeSold(item?.sold);
-  const rating = ratingText(toRating(item?.rating));
-  const parts = [
-    "🔥 Achadinho!",
-    title,
-    coupon ? `🏷️ CUPOM: ${coupon}` : "",
-    sold ? `📦 ${sold}` : "",
-    rating ? `${rating}` : "",
-    "👉 Entre no grupo para pegar o link:",
-    location.href
-  ].filter(Boolean);
-  window.open(`https://wa.me/?text=${encodeURIComponent(parts.join("\n"))}`, "_blank", "noopener");
-}
-function buildCard(item){
-  const a = document.createElement("a");
-  a.className = "carditem";
-  a.href = WA_GROUP;
-  a.target = "_blank";
-  a.rel = "noopener";
-
-  const img = document.createElement("img");
-  img.src = item.image;
-  img.alt = item.title || "Oferta";
-  img.onerror = () => { img.style.display = "none"; };
-
-  const info = document.createElement("div");
-  info.className = "cardinfo";
-
-  const strong = document.createElement("strong");
-  strong.innerHTML = safeText(item.title || "");
-
-  const prices = document.createElement("div");
-  prices.className = "prices";
-
-  const p = toNumberBR(item.price);
-  const d = toDiscount(item.discount);
-  const coupon = normalizeCoupon(item.coupon);
-
-  if (Number.isFinite(p) && p > 0 && d > 0){
-    const old = document.createElement("span");
-    old.className = "old";
-    old.textContent = formatBRL(p);
-
-    const final = p * (1 - d/100);
-
-    const neu = document.createElement("span");
-    neu.className = "newSmall";
-    neu.textContent = formatBRL(final);
-
-    const off = document.createElement("span");
-    off.className = "offSmall";
-    off.textContent = `${d}% OFF`;
-
-    prices.appendChild(old);
-    prices.appendChild(neu);
-    prices.appendChild(off);
-  } else {
-    const neu = document.createElement("span");
-    neu.className = "newSmall";
-    neu.textContent = (Number.isFinite(p) && p > 0) ? formatBRL(p) : "Ver no grupo →";
-    prices.appendChild(neu);
-  }
-
-  if (coupon){
-    const cp = document.createElement("span");
-    cp.className = "couponSmall";
-    cp.textContent = `CUPOM: ${coupon}`;
-    prices.appendChild(cp);
-  }
-
-  const meta = document.createElement("div");
-  meta.className = "metaSmall";
-
-  const sold = normalizeSold(item.sold);
-  if (sold){
-    const s = document.createElement("span");
-    s.className = "soldSmall";
-    s.textContent = sold;
-    meta.appendChild(s);
-  }
-
-  const r = toRating(item.rating);
-  if (r){
-    const rr = document.createElement("span");
-    rr.className = "ratingSmall";
-    rr.textContent = ratingText(r);
-    meta.appendChild(rr);
-  }
-
-  const actions = document.createElement("div");
-  actions.className = "cardActions";
-
-  const btnGroup = document.createElement("button");
-  btnGroup.className = "cardBtn primary";
-  btnGroup.type = "button";
-  btnGroup.textContent = "Ver no grupo";
-  btnGroup.onclick = (e)=>{ e.preventDefault(); window.open(WA_GROUP, "_blank", "noopener"); };
-  actions.appendChild(btnGroup);
-
-  if (coupon){
-    const btnCopy = document.createElement("button");
-    btnCopy.className = "cardBtn";
-    btnCopy.type = "button";
-    btnCopy.textContent = "Copiar cupom";
-    btnCopy.onclick = async (e)=>{ e.preventDefault(); await copyText(coupon); };
-    actions.appendChild(btnCopy);
-  }
-
-  const btnShare = document.createElement("button");
-  btnShare.className = "cardBtn";
-  btnShare.type = "button";
-  btnShare.textContent = "Compartilhar";
-  btnShare.onclick = (e)=>{ e.preventDefault(); shareWhatsApp(item); };
-  actions.appendChild(btnShare);
-
-  info.appendChild(strong);
-  info.appendChild(prices);
-  if (meta.childNodes.length) info.appendChild(meta);
-  info.appendChild(actions);
-
-  a.appendChild(img);
-  a.appendChild(info);
-  return a;
-}
-function markScrollable(track){
-  if(!track) return;
-  const needsScroll = track.scrollWidth > (track.clientWidth + 2);
-  track.classList.toggle("no-scroll", !needsScroll);
-}
-let countdownTimer = null;
-function startCountdown(){
-  const el = document.getElementById("countdown");
-  if(!el) return;
-  function tick(){
-    const now = new Date();
-    const end = new Date();
-    end.setHours(23,59,59,999);
-    const diff = Math.max(0, end - now);
-    const h = String(Math.floor(diff/3600000)).padStart(2,"0");
-    const m = String(Math.floor((diff%3600000)/60000)).padStart(2,"0");
-    const s = String(Math.floor((diff%60000)/1000)).padStart(2,"0");
-    el.textContent = `${h}:${m}:${s}`;
-  }
-  tick();
-  if(countdownTimer) clearInterval(countdownTimer);
-  countdownTimer = setInterval(tick, 1000);
-}
-function renderFeatured(best){
-  const wrap = document.getElementById("featuredWrap");
-  if(!best){ wrap.style.display="none"; return; }
-
-  featuredImg.src = best.image;
-  featuredTitle.textContent = best.title || "Destaque do dia";
-  featuredCTA.href = WA_GROUP;
-
-  const oldEl = document.getElementById("featuredOld");
-  const newEl = document.getElementById("featuredNew");
-  const offEl = document.getElementById("featuredOff");
-  const cupEl = document.getElementById("featuredCoupon");
-  const soldEl = document.getElementById("featuredSold");
-  const ratingEl = document.getElementById("featuredRating");
-
-  const p = toNumberBR(best.price);
-  const d = toDiscount(best.discount);
-  const coupon = normalizeCoupon(best.coupon);
-
-  if (Number.isFinite(p) && p > 0 && d > 0){
-    oldEl.style.display = "";
-    offEl.style.display = "";
-    oldEl.textContent = "De: " + formatBRL(p);
-    newEl.textContent = "Por: " + formatBRL(p * (1 - d/100));
-    offEl.textContent = `${d}% OFF`;
-  } else {
-    oldEl.style.display = "none";
-    offEl.style.display = "none";
-    newEl.textContent = (Number.isFinite(p) && p > 0) ? ("Preço: " + formatBRL(p)) : "Ver no grupo →";
-  }
-
-  if (coupon){
-    cupEl.style.display = "";
-    cupEl.textContent = `CUPOM: ${coupon}`;
-  } else { cupEl.style.display = "none"; }
-
-  const sold = normalizeSold(best.sold);
-  if (sold){
-    soldEl.style.display = "";
-    soldEl.textContent = sold;
-  } else { soldEl.style.display = "none"; }
-
-  const r = toRating(best.rating);
-  if (r){
-    ratingEl.style.display = "";
-    ratingEl.textContent = ratingText(r);
-  } else { ratingEl.style.display = "none"; }
-
-  const btnCopy = document.getElementById("featuredCopyCoupon");
-  if (coupon){
-    btnCopy.style.display = "";
-    btnCopy.onclick = async ()=>{ await copyText(coupon); };
-  } else { btnCopy.style.display = "none"; }
-
-  document.getElementById("featuredShare").onclick = ()=> shareWhatsApp(best);
-
-  wrap.style.display = "grid";
-  startCountdown();
-}
-async function fetchCSVNoCache(){
-  const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "cb=" + Date.now();
-  const res = await fetch(url, { cache:"no-store" });
-  if(!res.ok) throw new Error("Falha ao buscar CSV");
-  return res.text();
-}
-async function loadFromSheet(){
-  const ofertasWrap = document.getElementById("trackOfertas");
-  const promosWrap  = document.getElementById("trackPromos");
-  try{
-    const csv = await fetchCSVNoCache();
-    const rows = parseCSV(csv);
-    if (!rows.length) return;
-
-    const header = rows[0].map(h => (h || "").toLowerCase().trim());
-    const idx = (name) => header.indexOf(name);
-
-    const sI = idx("section");
-    const iI = idx("image");
-    const tI = idx("title");
-    const pI = idx("price");
-    const dI = idx("discount");
-    const cI = idx("coupon");
-    const soI = idx("sold");
-    const rI = idx("rating");
-
-    if (sI < 0 || iI < 0 || tI < 0) return;
-
-    const items = rows.slice(1).map(r => ({
-      section: (r[sI] || "").trim().toLowerCase(),
-      image:   (r[iI] || "").trim(),
-      title:   (r[tI] || "").trim(),
-      price:   pI >= 0 ? (r[pI] || "").trim() : "",
-      discount:dI >= 0 ? (r[dI] || "").trim() : "",
-      coupon:  cI >= 0 ? (r[cI] || "").trim() : "",
-      sold:    soI >= 0 ? (r[soI] || "").trim() : "",
-      rating:  rI >= 0 ? (r[rI] || "").trim() : ""
-    })).filter(x => x.section && x.image);
-
-    let best = null;
-    items.forEach(it=>{
-      const disc = toDiscount(it.discount);
-      if(!best || disc > toDiscount(best.discount)) best = it;
-    });
-
-    const ofertas = items.filter(x => x.section === "oferta");
-    const promos  = items.filter(x => x.section === "promo");
-
-    ofertasWrap.innerHTML = "";
-    promosWrap.innerHTML  = "";
-
-    ofertas.forEach(item => ofertasWrap.appendChild(buildCard(item)));
-    promos.forEach(item  => promosWrap.appendChild(buildCard(item)));
-
-    renderFeatured(best);
-
-    requestAnimationFrame(()=>{
-      markScrollable(promosWrap);
-      markScrollable(ofertasWrap);
-    });
-  } catch(e){}
-}
-window.addEventListener("resize", () => {
-  markScrollable(document.getElementById("trackPromos"));
-  markScrollable(document.getElementById("trackOfertas"));
-});
-loadFromSheet();
-setInterval(loadFromSheet, AUTO_REFRESH_MS);
-</script>
+    // "Atualizado agora" + horário
+    (function(){
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2,'0');
+      const mm = String(now.getMinutes()).padStart(2,'0');
+      document.getElementById('updatedTime').textContent = `Última atualização: ${hh}:${mm}`;
+      document.getElementById('year').textContent = `© ${now.getFullYear()}`;
+    })();
+  </script>
 </body>
 </html>
