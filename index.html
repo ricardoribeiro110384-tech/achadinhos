@@ -37,7 +37,6 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
-    /* ===== Header ===== */
     header{
       position:sticky; top:0; z-index:50;
       background: rgba(11,18,32,.86);
@@ -45,7 +44,6 @@
       border-bottom:1px solid var(--border);
     }
 
-    /* ✅ faixa amarela MAIS ALTA */
     .topStrip{
       background: linear-gradient(90deg, var(--yellow), var(--yellow2));
       border-bottom:1px solid rgba(0,0,0,.15);
@@ -53,13 +51,13 @@
     .topStripInner{
       max-width:1100px;
       margin:0 auto;
-      padding:16px 16px;  /* ✅ maior */
+      padding:16px 16px;
       display:flex;
       align-items:center;
       gap:14px;
     }
     .topStripInner img{
-      height:52px;        /* ✅ logo maior */
+      height:52px;
       width:auto;
       display:block;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
@@ -69,7 +67,7 @@
       color:#111;
       letter-spacing:.2px;
       line-height:1.1;
-      font-size:18px;     /* ✅ título maior */
+      font-size:18px;
     }
     .topStripTitle small{
       display:block;
@@ -137,7 +135,6 @@
       flex:0 0 auto;
     }
 
-    /* ===== Hero / vídeo ===== */
     .hero{
       margin-top:16px;
       background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
@@ -235,7 +232,6 @@
       color:#bbf7d0;
     }
 
-    /* ===== Controls ===== */
     .controls{
       margin-top:14px;
       display:flex;gap:10px;flex-wrap:wrap;
@@ -270,7 +266,6 @@
       max-width:100%;
     }
 
-    /* ===== Notices ===== */
     .bar{
       margin-top:14px;
       display:grid;
@@ -297,7 +292,6 @@
     .notice h3{margin:0;font-size:13px}
     .notice p{margin:4px 0 0;color:var(--muted);font-weight:800;font-size:12px;line-height:1.35}
 
-    /* ===== Grid / Cards ===== */
     .grid{
       margin-top:16px;
       display:grid;
@@ -307,7 +301,6 @@
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
 
-    /* ✅ MOBILE: 2 cards por “tela” em carrossel */
     @media (max-width: 620px){
       .grid{
         display:flex;
@@ -319,13 +312,12 @@
       }
       .grid::-webkit-scrollbar{height:8px}
       .grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:999px}
-
       .card{
-        flex:0 0 calc(50vw - 16px);  /* ✅ 2 cards na tela */
+        flex:0 0 calc(50vw - 16px);
         scroll-snap-align:start;
         min-height:unset;
       }
-      .imgbox{aspect-ratio: 1 / 1;} /* fica melhor em 2 cards */
+      .imgbox{aspect-ratio: 1 / 1;}
     }
 
     .card{
@@ -350,7 +342,7 @@
     .imgbox img{
       width:100%;
       height:100%;
-      object-fit:contain;   /* ✅ sem corte */
+      object-fit:contain;
       object-position:center;
       display:block;
       background: rgba(0,0,0,.12);
@@ -428,11 +420,17 @@
       color:#1b1201;
     }
 
-    /* ✅ botão “Entrar no grupo” (dentro do card) bem visível */
     .btnGroup{
       background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
       border:none;
       color:#052014;
+    }
+
+    /* ✅ botão compartilhar (mesmo visual, sem mexer no layout) */
+    .btnShare{
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.18);
+      color: var(--text);
     }
 
     footer{
@@ -484,7 +482,6 @@
 <body>
 
 <header>
-  <!-- faixa amarela maior -->
   <div class="topStrip">
     <div class="topStripInner">
       <img src="logo.png" alt="Logo Achadinhos">
@@ -521,28 +518,29 @@
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <h1>As melhores ofertas do dia — <span style="color:#bbf7d0">com desconto calculado na hora</span>.</h1>
-        <p>Se tiver link na planilha, abre seu link de afiliado. Se não tiver, abre o grupo.</p>
+        <h1>⚠️ Ofertas somem rápido — <span style="color:#bbf7d0">quem chega primeiro leva</span>.</h1>
+        <p>Preço e estoque mudam o tempo todo. Se você gostou, <b>não espera</b>.</p>
 
         <div class="ctaRow">
           <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
           <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
           <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
+          <!-- ✅ NOVO: compartilhar a página -->
+          <button class="btn" onclick="sharePage()">📤 Compartilhar</button>
         </div>
 
         <div class="kpi" style="margin-top:12px">
           <div class="kpiCard">
             <b id="kpi1">0</b>
-            <span>ofertas disponíveis</span>
+            <span>ofertas disponíveis agora</span>
           </div>
           <div class="kpiCard">
             <b id="kpi2">0</b>
-            <span>vendidos hoje (estimativa)</span>
+            <span>itens “rodando” rápido</span>
           </div>
         </div>
       </div>
 
-      <!-- ✅ vídeo voltou -->
       <div class="videoCard">
         <div class="videoWrap">
           <video id="promoVideo" autoplay muted playsinline loop preload="metadata">
@@ -577,16 +575,16 @@
     <div class="notice">
       <div class="badge">🔥</div>
       <div>
-        <h3>Acabando rápido</h3>
-        <p id="urgencyText">Ofertas mudam o tempo todo — se gostou, aproveite agora.</p>
+        <h3>Escassez real</h3>
+        <p id="urgencyText">Se apareceu aqui, pode acabar a qualquer momento. Não deixa pra depois.</p>
       </div>
     </div>
 
     <div class="notice">
       <div class="badge">✅</div>
       <div>
-        <h3>Prova social</h3>
-        <p id="socialText">Hoje já teve várias compras — atualizando em tempo real.</p>
+        <h3>Quem compra, leva</h3>
+        <p id="socialText">As melhores ofertas não duram — estoque some rápido e preço muda sem aviso.</p>
       </div>
     </div>
   </section>
@@ -748,6 +746,44 @@
     return "https://" + u;
   }
 
+  // ✅ compartilhamento: página e item
+  function buildShareTextForItem(it){
+    const p = computePrices(it);
+    const priceLine = (p.mode === "dual")
+      ? `De ${moneyBRL(p.old)} por ${moneyBRL(p.now)} (${it.discount || ""})`
+      : (p.mode === "single" ? `${moneyBRL(p.single)}` : "");
+
+    const couponLine = it.coupon ? `\nCUPOM: ${it.coupon}` : "";
+    const linkLine = it.link ? `\nLink: ${normalizeUrl(it.link)}` : `\nGrupo: ${WA_GROUP_LINK}`;
+
+    return `🔥 OFERTA RÁPIDA: ${it.title}\n${priceLine}${couponLine}${linkLine}\n\n⚠️ Corre porque pode acabar/alterar a qualquer momento.`;
+  }
+
+  async function shareText(text, title="Achadinhos Oficial"){
+    const shareData = { title, text, url: location.href };
+    try{
+      if(navigator.share){
+        await navigator.share(shareData);
+        return true;
+      }
+    }catch(e){ /* cancelado */ }
+
+    // fallback: copia
+    try{
+      await navigator.clipboard.writeText(text);
+      alert("Texto copiado! Agora é só colar no WhatsApp/Instagram.");
+      return true;
+    }catch{
+      prompt("Copie e compartilhe:", text);
+      return false;
+    }
+  }
+
+  function sharePage(){
+    const text = `🔥 Achadinhos Oficial\nOfertas rápidas e cupons.\n⚠️ As melhores somem rápido — entra e aproveita:\n${location.href}`;
+    shareText(text, "Compartilhar Achadinhos");
+  }
+
   let ALL_ITEMS = [];
 
   function forceReload(){ loadSheet(true); }
@@ -796,10 +832,11 @@
     const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
     document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
 
+    // ✅ textos de escassez mais fortes (apenas texto)
     document.getElementById("urgencyText").textContent =
-      "Quando aparece desconto alto, costuma acabar rápido. Se gostou, aproveite agora.";
+      "⚠️ Se você piscou, perdeu: preço muda e estoque some rápido. Aproveita agora.";
     document.getElementById("socialText").textContent =
-      soldToday ? `Hoje já teve ${soldToday} compras somadas nas ofertas da planilha.` : "Ofertas com boa avaliação e desconto tendem a vender mais rápido.";
+      "🔥 As melhores ofertas saem do ar primeiro. Se gostou, clica e garante antes que acabe.";
 
     for(const it of sorted){
       const card = document.createElement("article");
@@ -868,6 +905,7 @@
       `;
       body.appendChild(row2);
 
+      // ✅ 3 botões (sem mexer no layout, só adiciona um)
       const buy = document.createElement("div");
       buy.className = "buy";
 
@@ -882,6 +920,12 @@
       btn2.textContent = "Entrar no grupo";
       btn2.onclick = openGroup;
       buy.appendChild(btn2);
+
+      const btn3 = document.createElement("button");
+      btn3.className = "btnSmall btnShare";
+      btn3.textContent = "Compartilhar";
+      btn3.onclick = () => shareText(buildShareTextForItem(it), "Compartilhar oferta");
+      buy.appendChild(btn3);
 
       body.appendChild(buy);
       card.appendChild(body);
@@ -976,7 +1020,6 @@
     const v = document.getElementById("promoVideo");
     const hint = document.getElementById("soundHint");
     if(!v) return;
-
     v.muted = !v.muted;
     if(!v.muted){
       v.play().catch(()=>{});
