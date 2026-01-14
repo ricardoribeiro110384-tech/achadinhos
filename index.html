@@ -38,7 +38,140 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 .section h2{text-align:center;font-size:22px;margin-bottom:8px}
 .hint{text-align:center;font-weight:bold;margin-bottom:10px}
 
-/* ===== CARROSSEL (base) ===== */
+/* status */
+.notice{
+  margin: 10px 14px 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(0,0,0,.08);
+  font-weight: 900;
+  text-align:center;
+  color:#222;
+}
+
+/* ===== barra de controles (busca/filtros) ===== */
+.controls{
+  margin: 12px 14px 0;
+  background:#fff;
+  border-radius:16px;
+  padding:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+.search{
+  flex:1 1 240px;
+  display:flex;
+  gap:8px;
+}
+.search input{
+  width:100%;
+  padding:12px 12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  outline:none;
+  font-weight:700;
+}
+.filter{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.fbtn{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  background:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+.fbtn.active{
+  border-color:#000;
+  box-shadow:0 6px 14px rgba(0,0,0,.12);
+}
+
+/* ===== destaque ===== */
+.featured{
+  margin: 12px 14px 0;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 12px 26px rgba(0,0,0,.18);
+  background:#fff;
+  display:grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+@media(max-width:850px){ .featured{grid-template-columns:1fr} }
+.featured .imgwrap{
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+}
+.featured img{
+  width:100%;
+  height:280px;
+  object-fit:contain;
+}
+.featured .content{
+  padding:14px;
+  background:linear-gradient(180deg, rgba(255,212,0,.35), rgba(255,255,255,1));
+}
+.badgeTop{
+  display:inline-block;
+  background:#111;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:1000;
+  font-size:12px;
+}
+.featured h3{
+  margin:10px 0 8px;
+  font-size:20px;
+}
+.pricesLine{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:baseline;
+  margin:8px 0 10px;
+}
+.old{color:#777;text-decoration:line-through;font-weight:900}
+.new{font-weight:1000;font-size:20px}
+.offPill{
+  background:#dff3e1;color:#1b5e20;
+  padding:6px 10px;border-radius:999px;
+  font-size:12px;font-weight:1000
+}
+.timer{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.timer .tbox{
+  background:#fff;
+  border:1px solid #e5e5e5;
+  border-radius:12px;
+  padding:8px 10px;
+  font-weight:1000;
+}
+.ctaWide{
+  display:inline-block;
+  margin-top:12px;
+  background:var(--yellow);
+  color:#000;
+  padding:12px 16px;
+  border-radius:14px;
+  font-weight:1000;
+  text-decoration:none;
+}
+
+/* ===== CARROSSEL ===== */
 .carousel{
   display:flex;
   gap:12px;
@@ -50,7 +183,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 .carousel::-webkit-scrollbar{height:8px}
 .carousel::-webkit-scrollbar-thumb{background:#bbb;border-radius:999px}
 
-/* ✅ No celular continua grande */
+/* cards */
 .carditem{
   flex:0 0 82%;
   background:#fff;
@@ -61,8 +194,6 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   scroll-snap-align:start;
   overflow:hidden;
 }
-
-/* IMAGENS SEM CORTE */
 .carditem img{
   width:100%;
   height:260px;
@@ -70,15 +201,11 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   background:#fff;
   display:block;
 }
-
 .cardinfo{padding:12px}
 .cardinfo strong{display:block;margin-bottom:6px}
-
-/* preço */
 .prices{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.old{color:#777;text-decoration:line-through;font-weight:900}
-.new{font-weight:1000;font-size:18px}
-.off{
+.newSmall{font-weight:1000;font-size:18px}
+.offSmall{
   background:#dff3e1;color:#1b5e20;
   padding:4px 8px;border-radius:999px;
   font-size:12px;font-weight:1000
@@ -101,9 +228,8 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 }
 .cbtn:active{transform:translateY(1px)}
 
-/* ✅ PC: cards menores (remove o “buracão”) */
+/* ✅ PC: ofertas em grade bonita; promos carrossel com cards menores */
 @media(min-width:900px){
-  /* ofertas pode virar grade bonita */
   .offers-grid{
     display:grid !important;
     grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
@@ -113,30 +239,14 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   }
   .offers-grid .carditem{flex:initial}
 
-  /* promoções (carrossel) no PC: cards menores */
   #trackPromos .carditem{
-    flex:0 0 340px;  /* 👈 tamanho fixo no PC */
+    flex:0 0 340px;
   }
 }
 
-/* ✅ quando não tiver scroll (poucos itens), centraliza */
-.carousel.no-scroll{
-  justify-content:center;
-}
-.carousel.no-scroll .carditem{
-  flex:0 0 340px;
-}
-
-/* status */
-.notice{
-  margin: 10px 14px 0;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: rgba(0,0,0,.08);
-  font-weight: 900;
-  text-align:center;
-  color:#222;
-}
+/* centraliza quando não precisa rolar */
+.carousel.no-scroll{justify-content:center}
+.carousel.no-scroll .carditem{flex:0 0 340px}
 
 /* atenção */
 .attention{margin:14px;border-radius:16px;overflow:hidden}
@@ -176,8 +286,39 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
 
     <div id="status" class="notice">Carregando ofertas da planilha…</div>
 
-    <!-- OFERTAS PRINCIPAIS -->
-    <section class="section" id="ofertas">
+    <!-- CONTROLES -->
+    <div class="controls">
+      <div class="search">
+        <input id="q" type="text" placeholder="Buscar oferta (ex: fone, airfryer, tênis)..." />
+      </div>
+      <div class="filter">
+        <button class="fbtn active" data-filter="all">Todas</button>
+        <button class="fbtn" data-filter="oferta">Ofertas</button>
+        <button class="fbtn" data-filter="promo">Promoções</button>
+      </div>
+    </div>
+
+    <!-- DESTAQUE AUTOMÁTICO -->
+    <div id="featuredWrap" class="featured" style="display:none;">
+      <div class="imgwrap"><img id="featuredImg" alt="Destaque do dia"></div>
+      <div class="content">
+        <span class="badgeTop" id="featuredTag">🔥 Melhor oferta do dia</span>
+        <h3 id="featuredTitle"></h3>
+        <div class="pricesLine">
+          <span class="old" id="featuredOld" style="display:none;"></span>
+          <span class="new" id="featuredNew"></span>
+          <span class="offPill" id="featuredOff" style="display:none;"></span>
+        </div>
+        <div class="timer">
+          <span class="tbox">⏳ Termina em: <span id="countdown">--:--:--</span></span>
+          <span class="tbox">🔄 Atualiza sozinho</span>
+        </div>
+        <a class="ctaWide" id="featuredCTA" href="#" target="_blank" rel="noopener">Ver no grupo do WhatsApp →</a>
+      </div>
+    </div>
+
+    <!-- OFERTAS -->
+    <section class="section" id="ofertasSec">
       <h2>Ofertas principais 🔥</h2>
       <p class="hint">Arraste para o lado e entre no grupo para pegar o link</p>
 
@@ -189,8 +330,8 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
       </div>
     </section>
 
-    <!-- PROMOÇÕES DO DIA -->
-    <section class="section" id="promocoes">
+    <!-- PROMOÇÕES -->
+    <section class="section" id="promocoesSec">
       <h2>Promoções do dia ⏰</h2>
       <p class="hint">Atualize só a planilha e o site muda sozinho</p>
 
@@ -224,6 +365,9 @@ const SHEET_CSV_URL = SHEET_PUBHTML_URL.replace("/pubhtml", "/pub?output=csv");
 /** ✅ SEU GRUPO WHATSAPP */
 const WA_GROUP = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
 
+/** ✅ AUTO REFRESH (5 minutos) */
+const AUTO_REFRESH_MS = 5 * 60 * 1000;
+
 document.getElementById("year").textContent = new Date().getFullYear();
 
 function rolar(trackId, dir){
@@ -233,7 +377,7 @@ function rolar(trackId, dir){
   t.scrollBy({ left: amount, behavior: "smooth" });
 }
 
-/* ✅ CSV parser robusto */
+/* CSV parser robusto */
 function parseCSV(text){
   const rows = [];
   let row = [], cur = "", inQuotes = false;
@@ -315,31 +459,31 @@ function buildCard(item){
   const prices = document.createElement("div");
   prices.className = "prices";
 
-  const priceNum = toNumberBR(item.price);
-  const disc = toDiscount(item.discount || "");
+  const p = toNumberBR(item.price);
+  const d = toDiscount(item.discount);
 
-  if (Number.isFinite(priceNum) && priceNum > 0 && disc > 0){
+  if (Number.isFinite(p) && p > 0 && d > 0){
     const old = document.createElement("span");
     old.className = "old";
-    old.textContent = formatBRL(priceNum);
+    old.textContent = formatBRL(p);
 
-    const final = priceNum * (1 - disc/100);
+    const final = p * (1 - d/100);
 
     const neu = document.createElement("span");
-    neu.className = "new";
+    neu.className = "newSmall";
     neu.textContent = formatBRL(final);
 
     const off = document.createElement("span");
-    off.className = "off";
-    off.textContent = `${disc}% OFF`;
+    off.className = "offSmall";
+    off.textContent = `${d}% OFF`;
 
     prices.appendChild(old);
     prices.appendChild(neu);
     prices.appendChild(off);
   } else {
     const neu = document.createElement("span");
-    neu.className = "new";
-    if (Number.isFinite(priceNum) && priceNum > 0) neu.textContent = formatBRL(priceNum);
+    neu.className = "newSmall";
+    if (Number.isFinite(p) && p > 0) neu.textContent = formatBRL(p);
     else neu.textContent = "Ver no grupo →";
     prices.appendChild(neu);
   }
@@ -349,14 +493,96 @@ function buildCard(item){
 
   a.appendChild(img);
   a.appendChild(info);
+
+  // para filtro/busca
+  a.dataset.section = item.section;
+  a.dataset.title = (item.title || "").toLowerCase();
+
   return a;
 }
 
-/* ✅ centraliza quando não precisa rolar */
+/* centraliza quando não precisa rolar */
 function markScrollable(track){
   if(!track) return;
   const needsScroll = track.scrollWidth > (track.clientWidth + 2);
   track.classList.toggle("no-scroll", !needsScroll);
+}
+
+/* countdown até 23:59:59 */
+let countdownTimer = null;
+function startCountdown(){
+  const el = document.getElementById("countdown");
+  if(!el) return;
+
+  function tick(){
+    const now = new Date();
+    const end = new Date();
+    end.setHours(23,59,59,999);
+    const diff = Math.max(0, end - now);
+    const h = String(Math.floor(diff/3600000)).padStart(2,"0");
+    const m = String(Math.floor((diff%3600000)/60000)).padStart(2,"0");
+    const s = String(Math.floor((diff%60000)/1000)).padStart(2,"0");
+    el.textContent = `${h}:${m}:${s}`;
+  }
+  tick();
+  if(countdownTimer) clearInterval(countdownTimer);
+  countdownTimer = setInterval(tick, 1000);
+}
+
+/* filtros e busca */
+let currentFilter = "all";
+function applyFilter(){
+  const q = (document.getElementById("q").value || "").trim().toLowerCase();
+  const cards = document.querySelectorAll(".carditem[data-section]");
+
+  cards.forEach(c=>{
+    const okFilter = (currentFilter === "all") || (c.dataset.section === currentFilter);
+    const okSearch = !q || (c.dataset.title || "").includes(q);
+    c.style.display = (okFilter && okSearch) ? "" : "none";
+  });
+
+  // reavaliar centralização depois de esconder
+  requestAnimationFrame(()=>{
+    markScrollable(document.getElementById("trackPromos"));
+    markScrollable(document.getElementById("trackOfertas"));
+  });
+}
+
+/* destaque automático: maior desconto */
+function renderFeatured(best){
+  const wrap = document.getElementById("featuredWrap");
+  if(!best){ wrap.style.display="none"; return; }
+
+  document.getElementById("featuredImg").src = best.image;
+  document.getElementById("featuredTitle").textContent = best.title || "Destaque do dia";
+  document.getElementById("featuredCTA").href = WA_GROUP;
+
+  const p = toNumberBR(best.price);
+  const d = toDiscount(best.discount);
+
+  const oldEl = document.getElementById("featuredOld");
+  const newEl = document.getElementById("featuredNew");
+  const offEl = document.getElementById("featuredOff");
+
+  if (Number.isFinite(p) && p > 0 && d > 0){
+    oldEl.style.display = "";
+    offEl.style.display = "";
+    oldEl.textContent = "De: " + formatBRL(p);
+    const final = p * (1 - d/100);
+    newEl.textContent = "Por: " + formatBRL(final);
+    offEl.textContent = `${d}% OFF`;
+  } else if (Number.isFinite(p) && p > 0){
+    oldEl.style.display = "none";
+    offEl.style.display = "none";
+    newEl.textContent = "Preço: " + formatBRL(p);
+  } else {
+    oldEl.style.display = "none";
+    offEl.style.display = "none";
+    newEl.textContent = "Ver no grupo →";
+  }
+
+  wrap.style.display = "grid";
+  startCountdown();
 }
 
 async function loadFromSheet(){
@@ -365,6 +591,7 @@ async function loadFromSheet(){
   const promosWrap  = document.getElementById("trackPromos");
 
   try{
+    // no-store para evitar cache
     const res = await fetch(SHEET_CSV_URL, { cache:"no-store" });
     if (!res.ok) throw new Error("Falha ao buscar CSV");
     const csv = await res.text();
@@ -397,6 +624,13 @@ async function loadFromSheet(){
       discount:dI >= 0 ? (r[dI] || "").trim() : ""
     })).filter(x => x.section && x.image);
 
+    // destaque: maior desconto
+    let best = null;
+    items.forEach(it=>{
+      const d = toDiscount(it.discount);
+      if(!best || d > toDiscount(best.discount)) best = it;
+    });
+
     const ofertas = items.filter(x => x.section === "oferta");
     const promos  = items.filter(x => x.section === "promo");
 
@@ -408,11 +642,12 @@ async function loadFromSheet(){
 
     status.textContent = `Atualizado pela planilha ✅ (${ofertas.length} ofertas, ${promos.length} promoções)`;
 
-    // marca centralização depois de renderizar
-    requestAnimationFrame(() => {
+    renderFeatured(best);
+
+    requestAnimationFrame(()=>{
       markScrollable(promosWrap);
-      // ofertas vira grade no PC, mas no mobile pode precisar centralizar também
       markScrollable(ofertasWrap);
+      applyFilter();
     });
 
   } catch(e){
@@ -420,12 +655,25 @@ async function loadFromSheet(){
   }
 }
 
+/* eventos */
+document.getElementById("q").addEventListener("input", applyFilter);
+document.querySelectorAll(".fbtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    applyFilter();
+  });
+});
+
 window.addEventListener("resize", () => {
   markScrollable(document.getElementById("trackPromos"));
   markScrollable(document.getElementById("trackOfertas"));
 });
 
+/* start */
 loadFromSheet();
+setInterval(loadFromSheet, AUTO_REFRESH_MS);
 </script>
 </body>
 </html>
