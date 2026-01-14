@@ -20,7 +20,14 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
     }
+
     *{box-sizing:border-box}
+    html, body{
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden; /* ✅ impede “puxar pro lado” e aparecer vazio */
+    }
+
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -39,36 +46,54 @@
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
+
     .headbar{
-      display:flex;gap:12px;align-items:center;justify-content:space-between;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
       padding:12px 0;
+      flex-wrap:wrap;            /* ✅ no celular não estoura */
+      max-width:100%;
     }
+
     .brand{
       display:flex;align-items:center;gap:10px;
       font-weight:800; letter-spacing:.3px;
+      min-width: 220px;
+      max-width: 100%;
     }
+
     .logo{
       width:38px;height:38px;border-radius:12px;
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));
       box-shadow: var(--shadow);
+      flex:0 0 auto;
     }
     .sub{
       font-size:12px;color:var(--muted);margin-top:2px;font-weight:600;
     }
+
     .status{
       display:flex;align-items:center;gap:10px;
       padding:10px 12px;border:1px solid var(--border);
       border-radius:999px;background: rgba(255,255,255,.03);
       font-size:12px;color:var(--muted);
       white-space:nowrap;
+      max-width:100%;            /* ✅ não passa da tela */
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
-    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12)}
+
+    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12); flex:0 0 auto;}
     .status b{color:var(--text)}
     .pill{
       padding:8px 10px;border-radius:999px;
       background: rgba(34,197,94,.12);
       border:1px solid rgba(34,197,94,.25);
       font-size:12px;font-weight:800;color:#bbf7d0;
+      white-space:nowrap;
+      max-width:100%;
     }
 
     /* Hero promise */
@@ -80,6 +105,7 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       position:relative;
+      max-width:100%;
     }
     .hero:before{
       content:"";
@@ -87,7 +113,6 @@
       background: radial-gradient(500px 200px at 20% 10%, rgba(34,197,94,.25), transparent 60%),
                   radial-gradient(450px 220px at 75% 0%, rgba(245,158,11,.22), transparent 55%);
       pointer-events:none;
-      filter: blur(0px);
     }
     .hero-inner{
       position:relative;
@@ -96,6 +121,7 @@
       grid-template-columns: 1.3fr .7fr;
       gap:14px;
       align-items:center;
+      max-width:100%;
     }
     @media (max-width: 860px){
       .hero-inner{grid-template-columns:1fr}
@@ -103,6 +129,7 @@
     .hero h1{margin:0;font-size:22px;line-height:1.2}
     .hero p{margin:8px 0 0;color:var(--muted);font-weight:600}
     .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
     .btn{
       display:inline-flex;align-items:center;gap:10px;
       padding:12px 14px;border-radius:14px;
@@ -112,15 +139,14 @@
       cursor:pointer;
       transition: transform .08s ease;
       user-select:none;
+      max-width:100%;
     }
     .btn:active{transform: translateY(1px)}
     .btnPrimary{
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
       color:#052014;border:none;
     }
-    .kpi{
-      display:grid;gap:10px;
-    }
+    .kpi{display:grid;gap:10px}
     .kpiCard{
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
@@ -135,6 +161,7 @@
       margin-top:14px;
       display:flex;gap:10px;flex-wrap:wrap;
       align-items:center;justify-content:space-between;
+      max-width:100%;
     }
     .search{
       flex:1;
@@ -144,11 +171,13 @@
       border:1px solid var(--border);
       border-radius:14px;
       background: rgba(255,255,255,.03);
+      max-width:100%;
     }
     .search input{
       width:100%;
       background:transparent;border:none;outline:none;color:var(--text);
       font-size:14px;font-weight:700;
+      min-width:0;
     }
     .select{
       min-width:180px;
@@ -159,6 +188,7 @@
       color:var(--text);
       font-weight:800;
       outline:none;
+      max-width:100%;
     }
 
     /* Social proof / urgency */
@@ -167,6 +197,7 @@
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:10px;
+      max-width:100%;
     }
     @media (max-width: 860px){
       .bar{grid-template-columns:1fr}
@@ -177,6 +208,7 @@
       border-radius:14px;
       padding:12px;
       display:flex;gap:10px;align-items:flex-start;
+      max-width:100%;
     }
     .badge{
       width:34px;height:34px;border-radius:12px;
@@ -195,6 +227,7 @@
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:12px;
+      max-width:100%;
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
     @media (max-width: 620px){.grid{grid-template-columns: 1fr}}
@@ -207,19 +240,28 @@
       box-shadow: 0 12px 24px rgba(0,0,0,.25);
       display:flex;flex-direction:column;
       min-height: 410px;
+      max-width:100%;
     }
+
     .imgbox{
       background: rgba(255,255,255,.03);
       border-bottom:1px solid var(--border);
       aspect-ratio: 16 / 11;
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;
+      padding:8px;                 /* ✅ dá “respiro” pra não cortar */
     }
+
     .imgbox img{
-      width:100%;height:100%;object-fit:cover;
+      width:100%;
+      height:100%;
+      object-fit:contain;          /* ✅ NÃO CORTA a imagem */
+      object-position:center;
       display:block;
-      filter:saturate(1.05) contrast(1.03);
+      background: rgba(0,0,0,.12);
+      border-radius: 12px;
     }
+
     .cardBody{padding:12px;display:grid;gap:10px}
     .title{
       margin:0;
@@ -227,10 +269,12 @@
       line-height:1.25;
       font-weight:900;
       min-height: 36px;
+      word-break: break-word;
     }
     .row{
       display:flex;justify-content:space-between;gap:10px;align-items:center;
       flex-wrap:wrap;
+      max-width:100%;
     }
     .price{
       font-size:18px;font-weight:1000;
@@ -242,6 +286,7 @@
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
       font-size:12px;font-weight:900;color:var(--text);
+      max-width:100%;
     }
     .off{
       border:1px solid rgba(239,68,68,.32);
@@ -256,6 +301,7 @@
     .buy{
       margin-top:2px;
       display:flex;gap:10px;
+      max-width:100%;
     }
     .btnSmall{
       flex:1;
@@ -265,6 +311,7 @@
       background: rgba(255,255,255,.03);
       font-weight:1000;
       cursor:pointer;
+      max-width:100%;
     }
     .btnBuy{
       background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
@@ -278,6 +325,7 @@
       background: rgba(255,255,255,.03);
       border-radius: var(--radius);
       padding:14px;
+      max-width:100%;
     }
     footer b{display:block;margin-bottom:6px}
     footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:700;font-size:13px;line-height:1.45}
@@ -294,6 +342,7 @@
       box-shadow: 0 18px 40px rgba(0,0,0,.35);
       border:none;
       cursor:pointer;
+      max-width: calc(100% - 32px);
     }
     .wa small{display:block;font-weight:900;opacity:.9;line-height:1}
     .wa span{display:block;line-height:1}
@@ -302,6 +351,7 @@
       background: rgba(0,0,0,.12);
       display:flex;align-items:center;justify-content:center;
       font-size:18px;
+      flex:0 0 auto;
     }
 
     /* Loading */
@@ -312,6 +362,7 @@
       padding:14px;
       color:var(--muted);
       font-weight:800;
+      max-width:100%;
     }
   </style>
 </head>
@@ -342,7 +393,6 @@
 
 <main class="wrap">
 
-  <!-- 🔝 Topo com promessa -->
   <section class="hero">
     <div class="hero-inner">
       <div>
@@ -367,7 +417,6 @@
     </div>
   </section>
 
-  <!-- Busca / filtro -->
   <section class="controls">
     <div class="search">
       🔎 <input id="q" type="text" placeholder="Buscar produto (ex: tênis, perfume, mesa...)" />
@@ -383,7 +432,6 @@
     </select>
   </section>
 
-  <!-- 🔥 Urgência social / Prova -->
   <section class="bar">
     <div class="notice">
       <div class="badge">🔥</div>
@@ -404,15 +452,13 @@
 
   <div id="loading" class="loading">Carregando ofertas da planilha…</div>
 
-  <!-- 🎁 Destaque de ofertas -->
   <section id="offers" class="grid" aria-live="polite"></section>
 
-  <!-- 🔚 Rodapé confiável (ATUALIZADO) -->
   <footer>
     <b>🔒 Compra com segurança</b>
     <ul>
       <li>Este site divulga ofertas encontradas em marketplaces e grupos parceiros.</li>
-      <li><strong>Não somos uma loja oficial do Mercado Livre</strong> nem representamos a marca.</li>
+      <li><strong>Não somos uma loja oficial do Mercado Livre</strong> e não representamos a marca.</li>
       <li>As compras são finalizadas exclusivamente através dos links divulgados no nosso grupo de WhatsApp.</li>
       <li>Não solicitamos dados bancários ou senhas fora da plataforma de compra.</li>
       <li>Os preços, cupons e estoques podem mudar a qualquer momento sem aviso prévio.</li>
@@ -421,7 +467,6 @@
 
 </main>
 
-<!-- 🟢 Botão WhatsApp fixo -->
 <button class="wa" onclick="openWhatsApp()" aria-label="Falar no WhatsApp">
   <div class="waIcon">🟢</div>
   <div>
@@ -431,23 +476,11 @@
 </button>
 
 <script>
-  // =========================
-  // CONFIG
-  // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-
-  // Seu WhatsApp (somente números) + DDI Brasil
-  const WA_NUMBER = "5589981311034"; // 55 + 89 981311034
-
-  // LINK DO GRUPO WHATSAPP (onde o botão "Ver oferta" deve levar)
+  const WA_NUMBER = "5589981311034";
   const WA_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
+  const REFRESH_MS = 2 * 60 * 1000;
 
-  // Atualização automática da planilha:
-  const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
-
-  // =========================
-  // HELPERS
-  // =========================
   function nowHHMMSS(){
     const d = new Date();
     const hh = String(d.getHours()).padStart(2,'0');
@@ -456,7 +489,6 @@
     return `${hh}:${mm}:${ss}`;
   }
 
-  // Formata corretamente em R$ (pt-BR)
   function moneyBRL(value){
     const n = Number(value);
     if (!isFinite(n)) return "";
@@ -487,7 +519,6 @@
     window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, "_blank");
   }
 
-  // ✅ Agora "Ver oferta" sempre vai para o grupo do WhatsApp (não abre imagem nem link da planilha)
   function openOffer(){
     window.open(WA_GROUP_LINK, "_blank");
   }
@@ -518,11 +549,9 @@
     }
   }
 
-  // Relógio rodando sempre (mesmo enquanto carrega)
   function startLiveClock(){
     const timeEl = document.getElementById("updatedTime");
     if(!timeEl) return;
-
     setInterval(() => {
       if(timeEl.dataset.mode !== "updated"){
         timeEl.textContent = `Verificando: ${nowHHMMSS()}`;
@@ -530,7 +559,6 @@
     }, 1000);
   }
 
-  // CSV parser simples (suporta aspas)
   function parseCSV(text){
     const rows = [];
     let row = [];
@@ -574,9 +602,6 @@
     return rows;
   }
 
-  // =========================
-  // RENDER
-  // =========================
   let ALL_ITEMS = [];
 
   function forceReload(){
@@ -617,7 +642,6 @@
   function filterItems(items){
     const q = getQuery();
     if(!q) return items;
-
     return items.filter(it => {
       const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
       return hay.includes(q);
@@ -627,7 +651,6 @@
   function render(){
     const grid = document.getElementById("offers");
     const loading = document.getElementById("loading");
-
     const sorted = sortItems(filterItems(ALL_ITEMS), getSort());
 
     grid.innerHTML = "";
@@ -666,7 +689,6 @@
 
       const price = document.createElement("div");
       price.className = "price";
-      // ✅ sempre mostrar em reais
       price.textContent = isFinite(it.priceNum) ? moneyBRL(it.priceNum) : (it.price ? it.price : "—");
       row1.appendChild(price);
 
@@ -675,6 +697,7 @@
       right.style.gap="8px";
       right.style.flexWrap="wrap";
       right.style.justifyContent="flex-end";
+      right.style.maxWidth="100%";
 
       if(it.discount){
         const t = document.createElement("span");
@@ -705,7 +728,6 @@
       const btn1 = document.createElement("button");
       btn1.className = "btnSmall btnBuy";
       btn1.textContent = "Ver oferta";
-      // ✅ redireciona para o grupo
       btn1.onclick = () => openOffer();
       buy.appendChild(btn1);
 
@@ -740,13 +762,9 @@
     }
   }
 
-  // =========================
-  // LOAD SHEET
-  // =========================
   async function loadSheet(isManual=false){
     try{
       setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
-
       const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
 
       const res = await fetch(url, { cache:"no-store" });
@@ -754,7 +772,6 @@
 
       const text = await res.text();
       const rows = parseCSV(text);
-
       if(!rows.length) throw new Error("CSV vazio");
 
       const header = rows[0].map(h => safeText(h).toLowerCase());
@@ -802,7 +819,6 @@
       }
 
       ALL_ITEMS = items;
-
       setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
       render();
 
@@ -815,17 +831,11 @@
     }
   }
 
-  // =========================
-  // EVENTS
-  // =========================
   document.getElementById("q").addEventListener("input", () => render());
   document.getElementById("sort").addEventListener("change", () => render());
 
-  // Start
   startLiveClock();
   loadSheet();
-
-  // Auto refresh
   setInterval(() => loadSheet(false), REFRESH_MS);
 </script>
 
