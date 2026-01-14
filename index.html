@@ -32,6 +32,7 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
+    /* Header */
     header{
       position:sticky; top:0; z-index:50;
       background: rgba(11,18,32,.86);
@@ -42,93 +43,276 @@
       display:flex;gap:12px;align-items:center;justify-content:space-between;
       padding:12px 0;
     }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
-    .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));box-shadow:var(--shadow)}
-    .sub{font-size:12px;color:var(--muted);margin-top:2px;font-weight:600}
-    .status{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.03);font-size:12px;color:var(--muted);white-space:nowrap}
-    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow:0 0 0 4px rgba(245,158,11,.12)}
-    .status b{color:var(--text)}
-    .pill{padding:8px 10px;border-radius:999px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);font-size:12px;font-weight:800;color:#bbf7d0}
-
-    .hero{
-      margin-top:16px;background:linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
-      border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:800; letter-spacing:.3px;
     }
-    .hero:before{content:"";position:absolute;inset:-2px;background:radial-gradient(500px 200px at 20% 10%, rgba(34,197,94,.25), transparent 60%),radial-gradient(450px 220px at 75% 0%, rgba(245,158,11,.22), transparent 55%);pointer-events:none}
-    .hero-inner{position:relative;padding:18px;display:grid;grid-template-columns:1.3fr .7fr;gap:14px;align-items:center}
-    @media (max-width: 860px){.hero-inner{grid-template-columns:1fr}}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));
+      box-shadow: var(--shadow);
+    }
+    .sub{
+      font-size:12px;color:var(--muted);margin-top:2px;font-weight:600;
+    }
+    .status{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;border:1px solid var(--border);
+      border-radius:999px;background: rgba(255,255,255,.03);
+      font-size:12px;color:var(--muted);
+      white-space:nowrap;
+    }
+    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12)}
+    .status b{color:var(--text)}
+    .pill{
+      padding:8px 10px;border-radius:999px;
+      background: rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.25);
+      font-size:12px;font-weight:800;color:#bbf7d0;
+    }
+
+    /* Hero promise */
+    .hero{
+      margin-top:16px;
+      background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(500px 200px at 20% 10%, rgba(34,197,94,.25), transparent 60%),
+                  radial-gradient(450px 220px at 75% 0%, rgba(245,158,11,.22), transparent 55%);
+      pointer-events:none;
+      filter: blur(0px);
+    }
+    .hero-inner{
+      position:relative;
+      padding:18px;
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap:14px;
+      align-items:center;
+    }
+    @media (max-width: 860px){
+      .hero-inner{grid-template-columns:1fr}
+    }
     .hero h1{margin:0;font-size:22px;line-height:1.2}
     .hero p{margin:8px 0 0;color:var(--muted);font-weight:600}
     .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-weight:900;cursor:pointer;transition:transform .08s ease;user-select:none}
-    .btn:active{transform:translateY(1px)}
-    .btnPrimary{background:linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));color:#052014;border:none}
-    .kpi{display:grid;gap:10px}
-    .kpiCard{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:14px;padding:12px}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 14px;border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-weight:900;
+      cursor:pointer;
+      transition: transform .08s ease;
+      user-select:none;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btnPrimary{
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
+      color:#052014;border:none;
+    }
+    .kpi{
+      display:grid;gap:10px;
+    }
+    .kpiCard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+    }
     .kpiCard b{font-size:16px}
     .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
 
-    .videoWrap{margin-top:14px;border:1px solid var(--border);border-radius:var(--radius);background:rgba(255,255,255,.03);overflow:hidden;box-shadow:var(--shadow)}
-    .videoTop{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border)}
-    .videoTop b{font-size:13px}
-    .videoTop span{font-size:12px;color:var(--muted);font-weight:800}
-    .videoBox{position:relative;width:100%;aspect-ratio:16/9;background:#000}
-    .videoBox video{width:100%;height:100%;object-fit:cover;display:block}
-    .videoOverlay{position:absolute;inset:auto 12px 12px auto;display:flex;gap:8px;z-index:2}
-    .btnMini{padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.08);color:#fff;font-weight:900;cursor:pointer}
-    .btnMiniPrimary{background:linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));color:#1b1201;border:none}
-    .videoControls{display:flex;gap:10px;flex-wrap:wrap;padding:10px 12px;border-top:1px solid var(--border);background:rgba(0,0,0,.18)}
+    /* Controls */
+    .controls{
+      margin-top:14px;
+      display:flex;gap:10px;flex-wrap:wrap;
+      align-items:center;justify-content:space-between;
+    }
+    .search{
+      flex:1;
+      min-width:240px;
+      display:flex;align-items:center;gap:10px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.03);
+    }
+    .search input{
+      width:100%;
+      background:transparent;border:none;outline:none;color:var(--text);
+      font-size:14px;font-weight:700;
+    }
+    .select{
+      min-width:180px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      font-weight:800;
+      outline:none;
+    }
 
-    .controls{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
-    .search{flex:1;min-width:240px;display:flex;align-items:center;gap:10px;padding:12px 12px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.03)}
-    .search input{width:100%;background:transparent;border:none;outline:none;color:var(--text);font-size:14px;font-weight:700}
-    .select{min-width:180px;padding:12px 12px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.03);color:var(--text);font-weight:800;outline:none}
-
-    .bar{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media (max-width: 860px){.bar{grid-template-columns:1fr}}
-    .notice{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:flex-start}
-    .badge{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(245,158,11,.16);border:1px solid rgba(245,158,11,.28);flex:0 0 auto}
+    /* Social proof / urgency */
+    .bar{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 860px){
+      .bar{grid-template-columns:1fr}
+    }
+    .notice{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+      display:flex;gap:10px;align-items:flex-start;
+    }
+    .badge{
+      width:34px;height:34px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background: rgba(245,158,11,.16);
+      border:1px solid rgba(245,158,11,.28);
+      flex:0 0 auto;
+    }
     .notice h3{margin:0;font-size:13px}
     .notice p{margin:4px 0 0;color:var(--muted);font-weight:700;font-size:12px;line-height:1.35}
     .mini{font-size:12px;color:var(--muted);font-weight:800}
 
-    .grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    @media (max-width: 980px){.grid{grid-template-columns:repeat(2,1fr)}}
-    .card{border:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));border-radius:var(--radius);overflow:hidden;box-shadow:0 12px 24px rgba(0,0,0,.25);display:flex;flex-direction:column;min-height:410px}
-    .imgbox{background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);aspect-ratio:16/11;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:10px}
-    .imgbox img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;filter:saturate(1.05) contrast(1.03)}
-    .cardBody{padding:12px;display:grid;gap:10px}
-    .title{margin:0;font-size:14px;line-height:1.25;font-weight:900;min-height:36px}
-    .row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-    .price{font-size:18px;font-weight:1000}
-    .muted{color:var(--muted);font-weight:800;font-size:12px}
-    .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:12px;font-weight:900;color:var(--text)}
-    .off{border:1px solid rgba(239,68,68,.32);background:rgba(239,68,68,.12);color:#fecaca}
-    .coupon{border:1px solid rgba(34,197,94,.28);background:rgba(34,197,94,.12);color:#bbf7d0}
-    .buy{margin-top:2px;display:flex;gap:10px}
-    .btnSmall{flex:1;display:flex;align-items:center;justify-content:center;padding:11px 12px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-weight:1000;cursor:pointer}
-    .btnBuy{background:linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));color:#1b1201;border:none}
+    /* Grid / cards */
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
+    @media (max-width: 620px){.grid{grid-template-columns: 1fr}}
 
-    @media (max-width: 620px){
-      .grid{
-        display:flex;overflow-x:auto;gap:12px;scroll-snap-type:x mandatory;padding:2px 4px 10px;
-        -webkit-overflow-scrolling: touch;
-      }
-      .grid::-webkit-scrollbar{height:8px}
-      .grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:999px}
-      .card{flex:0 0 82vw;scroll-snap-align:start;min-height:unset}
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: 0 12px 24px rgba(0,0,0,.25);
+      display:flex;flex-direction:column;
+      min-height: 410px;
+    }
+    .imgbox{
+      background: rgba(255,255,255,.03);
+      border-bottom:1px solid var(--border);
+      aspect-ratio: 16 / 11;
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+    }
+    .imgbox img{
+      width:100%;height:100%;object-fit:cover;
+      display:block;
+      filter:saturate(1.05) contrast(1.03);
+    }
+    .cardBody{padding:12px;display:grid;gap:10px}
+    .title{
+      margin:0;
+      font-size:14px;
+      line-height:1.25;
+      font-weight:900;
+      min-height: 36px;
+    }
+    .row{
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      flex-wrap:wrap;
+    }
+    .price{
+      font-size:18px;font-weight:1000;
+    }
+    .muted{color:var(--muted);font-weight:800;font-size:12px}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-size:12px;font-weight:900;color:var(--text);
+    }
+    .off{
+      border:1px solid rgba(239,68,68,.32);
+      background: rgba(239,68,68,.12);
+      color:#fecaca;
+    }
+    .coupon{
+      border:1px solid rgba(34,197,94,.28);
+      background: rgba(34,197,94,.12);
+      color:#bbf7d0;
+    }
+    .buy{
+      margin-top:2px;
+      display:flex;gap:10px;
+    }
+    .btnSmall{
+      flex:1;
+      display:flex;align-items:center;justify-content:center;
+      padding:11px 12px;border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-weight:1000;
+      cursor:pointer;
+    }
+    .btnBuy{
+      background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
+      color:#1b1201;border:none;
     }
 
-    footer{margin:18px 0 100px;border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:var(--radius);padding:14px}
+    /* Footer */
+    footer{
+      margin:18px 0 100px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:14px;
+    }
     footer b{display:block;margin-bottom:6px}
     footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:700;font-size:13px;line-height:1.45}
 
-    .wa{position:fixed;right:16px;bottom:16px;z-index:999;display:flex;align-items:center;gap:10px;padding:14px 14px;border-radius:999px;background:linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));color:#052014;font-weight:1000;box-shadow:0 18px 40px rgba(0,0,0,.35);border:none;cursor:pointer}
+    /* WhatsApp fixed button */
+    .wa{
+      position:fixed;right:16px;bottom:16px;z-index:999;
+      display:flex;align-items:center;gap:10px;
+      padding:14px 14px;
+      border-radius:999px;
+      background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
+      color:#052014;
+      font-weight:1000;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      border:none;
+      cursor:pointer;
+    }
     .wa small{display:block;font-weight:900;opacity:.9;line-height:1}
     .wa span{display:block;line-height:1}
-    .waIcon{width:38px;height:38px;border-radius:999px;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:18px}
+    .waIcon{
+      width:38px;height:38px;border-radius:999px;
+      background: rgba(0,0,0,.12);
+      display:flex;align-items:center;justify-content:center;
+      font-size:18px;
+    }
 
-    .loading{margin-top:16px;border:1px dashed rgba(255,255,255,.18);border-radius:var(--radius);padding:14px;color:var(--muted);font-weight:800}
+    /* Loading */
+    .loading{
+      margin-top:16px;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius: var(--radius);
+      padding:14px;
+      color:var(--muted);
+      font-weight:800;
+    }
   </style>
 </head>
 
@@ -158,6 +342,7 @@
 
 <main class="wrap">
 
+  <!-- 🔝 Topo com promessa -->
   <section class="hero">
     <div class="hero-inner">
       <div>
@@ -182,34 +367,7 @@
     </div>
   </section>
 
-  <section class="videoWrap" aria-label="Vídeo do Achadinhos">
-    <div class="videoTop">
-      <div>
-        <b>🎥 Recado rápido</b>
-        <span>Ative o som se quiser ouvir.</span>
-      </div>
-      <div style="display:flex;gap:8px">
-        <button class="btnMini" id="muteBtn" type="button">🔇 Mutado</button>
-        <button class="btnMini btnMiniPrimary" id="soundBtn" type="button">🔊 Ativar som</button>
-      </div>
-    </div>
-
-    <div class="videoBox">
-      <video id="promoVideo" autoplay muted playsinline webkit-playsinline loop preload="metadata">
-        <source id="videoSrc" src="" type="video/mp4" />
-        Seu navegador não suporta vídeo.
-      </video>
-      <div class="videoOverlay">
-        <button class="btnMini" id="toggleVideoBtn" type="button">⏸ Pausar</button>
-      </div>
-    </div>
-
-    <div class="videoControls">
-      <button class="btnMini" type="button" onclick="scrollToOffers()">🎁 Ver ofertas</button>
-      <button class="btnMini" type="button" onclick="openWhatsApp()">🟢 Tirar dúvida no WhatsApp</button>
-    </div>
-  </section>
-
+  <!-- Busca / filtro -->
   <section class="controls">
     <div class="search">
       🔎 <input id="q" type="text" placeholder="Buscar produto (ex: tênis, perfume, mesa...)" />
@@ -225,6 +383,7 @@
     </select>
   </section>
 
+  <!-- 🔥 Urgência social / Prova -->
   <section class="bar">
     <div class="notice">
       <div class="badge">🔥</div>
@@ -245,19 +404,24 @@
 
   <div id="loading" class="loading">Carregando ofertas da planilha…</div>
 
+  <!-- 🎁 Destaque de ofertas -->
   <section id="offers" class="grid" aria-live="polite"></section>
 
+  <!-- 🔚 Rodapé confiável (ATUALIZADO) -->
   <footer>
-    <b>✅ Compra com mais segurança</b>
+    <b>🔒 Compra com segurança</b>
     <ul>
-      <li>Ofertas exibidas a partir da planilha publicada.</li>
-      <li>Preços podem mudar a qualquer momento no site do vendedor.</li>
-      <li>Se algum item não abrir, atualize a página e tente novamente.</li>
+      <li>Este site divulga ofertas encontradas em marketplaces e grupos parceiros.</li>
+      <li><strong>Não somos uma loja oficial do Mercado Livre</strong> nem representamos a marca.</li>
+      <li>As compras são finalizadas exclusivamente através dos links divulgados no nosso grupo de WhatsApp.</li>
+      <li>Não solicitamos dados bancários ou senhas fora da plataforma de compra.</li>
+      <li>Os preços, cupons e estoques podem mudar a qualquer momento sem aviso prévio.</li>
     </ul>
   </footer>
 
 </main>
 
+<!-- 🟢 Botão WhatsApp fixo -->
 <button class="wa" onclick="openWhatsApp()" aria-label="Falar no WhatsApp">
   <div class="waIcon">🟢</div>
   <div>
@@ -267,232 +431,288 @@
 </button>
 
 <script>
-  // ========= CONFIG =========
+  // =========================
+  // CONFIG
+  // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-  const WA_NUMBER = "5589981311034";
-  const REFRESH_MS = 2 * 60 * 1000;
-  const VIDEO_SRC = "video.mp4";
 
-  // ===== Helpers =====
-  function nowHHMMSS(){const d=new Date();const hh=String(d.getHours()).padStart(2,'0');const mm=String(d.getMinutes()).padStart(2,'0');const ss=String(d.getSeconds()).padStart(2,'0');return `${hh}:${mm}:${ss}`;}
-  function safeText(x){return (x??"").toString().replace(/\s+/g,' ').trim();}
-  function escapeHtml(s){return (s??"").toString().replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");}
+  // Seu WhatsApp (somente números) + DDI Brasil
+  const WA_NUMBER = "5589981311034"; // 55 + 89 981311034
 
-  // ✅ Sempre formata em Real
+  // LINK DO GRUPO WHATSAPP (onde o botão "Ver oferta" deve levar)
+  const WA_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
+
+  // Atualização automática da planilha:
+  const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
+
+  // =========================
+  // HELPERS
+  // =========================
+  function nowHHMMSS(){
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    return `${hh}:${mm}:${ss}`;
+  }
+
+  // Formata corretamente em R$ (pt-BR)
   function moneyBRL(value){
     const n = Number(value);
-    if (!isFinite(n)) return "—";
+    if (!isFinite(n)) return "";
     return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
   }
 
-  // Aceita "129,90" | "R$ 129,90" | "129.90" | "1.299,90"
-  function toNumberBR(str){
-    if(str == null) return NaN;
-    let s = String(str).trim();
-    if(!s) return NaN;
-    s = s.replace(/\s/g,'').replace(/[R$r$\u00A0]/g,''); // remove R$ e espaços
-    s = s.replace(/\./g,''); // remove milhar
-    s = s.replace(',', '.'); // decimal pt-br
-    s = s.replace(/[^\d.-]/g,'');
+  function toNumber(str){
+    if (str == null) return NaN;
+    const s = String(str).trim()
+      .replace(/\s/g,'')
+      .replace(/\./g,'')
+      .replace(',', '.')
+      .replace(/[^\d.-]/g,'');
     const n = Number(s);
     return isFinite(n) ? n : NaN;
   }
 
-  function scrollToOffers(){document.getElementById("offers").scrollIntoView({behavior:"smooth",block:"start"});}
-  function openWhatsApp(){const msg=encodeURIComponent("Oi! Quero ajuda com uma oferta do site Achadinhos Oficial.");window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,"_blank");}
-
-  function setStatus(mode,text){
-    const dot=document.getElementById("statusDot");
-    const label=document.getElementById("updatedLabel");
-    const time=document.getElementById("updatedTime");
-    if(mode==="ok"){dot.style.background="var(--brand)";dot.style.boxShadow="0 0 0 4px rgba(34,197,94,.12)";label.innerHTML="<b>Atualizado</b>";time.dataset.mode="updated";time.textContent=text;}
-    else if(mode==="loading"){dot.style.background="var(--accent)";dot.style.boxShadow="0 0 0 4px rgba(245,158,11,.12)";label.innerHTML="<b>Carregando</b>";time.dataset.mode="checking";time.textContent=text;}
-    else{dot.style.background="var(--danger)";dot.style.boxShadow="0 0 0 4px rgba(239,68,68,.12)";label.innerHTML="<b>Falha</b>";time.dataset.mode="checking";time.textContent=text;}
+  function safeText(x){
+    return (x ?? "").toString().replace(/\s+/g,' ').trim();
   }
 
+  function scrollToOffers(){
+    document.getElementById("offers").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function openWhatsApp(){
+    const msg = encodeURIComponent("Oi! Quero ajuda com uma oferta do site Achadinhos Oficial.");
+    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, "_blank");
+  }
+
+  // ✅ Agora "Ver oferta" sempre vai para o grupo do WhatsApp (não abre imagem nem link da planilha)
+  function openOffer(){
+    window.open(WA_GROUP_LINK, "_blank");
+  }
+
+  function setStatus(mode, text){
+    const dot = document.getElementById("statusDot");
+    const label = document.getElementById("updatedLabel");
+    const time = document.getElementById("updatedTime");
+
+    if (mode === "ok"){
+      dot.style.background = "var(--brand)";
+      dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
+      label.innerHTML = "<b>Atualizado</b>";
+      time.dataset.mode = "updated";
+      time.textContent = text;
+    } else if (mode === "loading"){
+      dot.style.background = "var(--accent)";
+      dot.style.boxShadow = "0 0 0 4px rgba(245,158,11,.12)";
+      label.innerHTML = "<b>Carregando</b>";
+      time.dataset.mode = "checking";
+      time.textContent = text;
+    } else {
+      dot.style.background = "var(--danger)";
+      dot.style.boxShadow = "0 0 0 4px rgba(239,68,68,.12)";
+      label.innerHTML = "<b>Falha</b>";
+      time.dataset.mode = "checking";
+      time.textContent = text;
+    }
+  }
+
+  // Relógio rodando sempre (mesmo enquanto carrega)
   function startLiveClock(){
-    const timeEl=document.getElementById("updatedTime");
-    if(!timeEl)return;
-    setInterval(()=>{if(timeEl.dataset.mode!=="updated"){timeEl.textContent=`Verificando: ${nowHHMMSS()}`;}},1000);
+    const timeEl = document.getElementById("updatedTime");
+    if(!timeEl) return;
+
+    setInterval(() => {
+      if(timeEl.dataset.mode !== "updated"){
+        timeEl.textContent = `Verificando: ${nowHHMMSS()}`;
+      }
+    }, 1000);
   }
 
-  // ===== CSV parser =====
+  // CSV parser simples (suporta aspas)
   function parseCSV(text){
-    const rows=[];let row=[];let cur="";let inQuotes=false;
+    const rows = [];
+    let row = [];
+    let cur = "";
+    let inQuotes = false;
+
     for(let i=0;i<text.length;i++){
-      const ch=text[i], next=text[i+1];
-      if(ch==='"'&&inQuotes&&next==='"'){cur+='"';i++;continue;}
-      if(ch==='"'){inQuotes=!inQuotes;continue;}
-      if(ch===','&&!inQuotes){row.push(cur);cur="";continue;}
-      if((ch==='\n'||ch==='\r')&&!inQuotes){
-        if(ch==='\r'&&next==='\n'){i++;}
-        row.push(cur);cur="";
-        if(row.length>1||row[0].trim()!==""){rows.push(row);}
-        row=[];continue;
+      const ch = text[i];
+      const next = text[i+1];
+
+      if(ch === '"' && inQuotes && next === '"'){
+        cur += '"';
+        i++;
+        continue;
       }
-      cur+=ch;
+      if(ch === '"'){
+        inQuotes = !inQuotes;
+        continue;
+      }
+      if(ch === ',' && !inQuotes){
+        row.push(cur);
+        cur = "";
+        continue;
+      }
+      if((ch === '\n' || ch === '\r') && !inQuotes){
+        if(ch === '\r' && next === '\n'){ i++; }
+        row.push(cur);
+        cur = "";
+        if(row.length > 1 || row[0].trim() !== ""){
+          rows.push(row);
+        }
+        row = [];
+        continue;
+      }
+      cur += ch;
     }
     row.push(cur);
-    if(row.length>1||row[0].trim()!==""){rows.push(row);}
+    if(row.length > 1 || row[0].trim() !== ""){
+      rows.push(row);
+    }
     return rows;
   }
 
-  // ===== Vídeo =====
-  function initVideo(){
-    const video=document.getElementById("promoVideo");
-    const src=document.getElementById("videoSrc");
-    const btnToggle=document.getElementById("toggleVideoBtn");
-    const btnSound=document.getElementById("soundBtn");
-    const btnMute=document.getElementById("muteBtn");
-    if(!video||!src) return;
+  // =========================
+  // RENDER
+  // =========================
+  let ALL_ITEMS = [];
 
-    src.src=VIDEO_SRC;
-    video.setAttribute("playsinline",""); video.setAttribute("webkit-playsinline","");
-    video.muted=true;
-    video.play().catch(()=>{});
-
-    btnToggle?.addEventListener("click",()=>{
-      if(video.paused){video.play().catch(()=>{});btnToggle.textContent="⏸ Pausar";}
-      else{video.pause();btnToggle.textContent="▶️ Reproduzir";}
-    });
-
-    btnSound?.addEventListener("click",()=>{
-      video.muted=false;
-      video.volume=1.0;
-      video.play().catch(()=>{});
-      btnMute.textContent="🔊 Com som";
-    });
-
-    btnMute?.addEventListener("click",()=>{
-      video.muted=!video.muted;
-      btnMute.textContent = video.muted ? "🔇 Mutado" : "🔊 Com som";
-    });
+  function forceReload(){
+    loadSheet(true);
   }
 
-  // ===== Link finder =====
-  function normalizeHeader(h){
-    return safeText(h).toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g,''); // remove acentos
+  function getQuery(){
+    return safeText(document.getElementById("q").value).toLowerCase();
   }
 
-  function findColumnIndex(header, candidates){
-    const map = header.map(normalizeHeader);
-    for(const cand of candidates){
-      const c = normalizeHeader(cand);
-      const i = map.indexOf(c);
-      if(i >= 0) return i;
-    }
-    // tentativa por "contém"
-    for(let i=0;i<map.length;i++){
-      const h = map[i];
-      for(const cand of candidates){
-        const c = normalizeHeader(cand);
-        if(h.includes(c)) return i;
-      }
-    }
-    return -1;
+  function getSort(){
+    return document.getElementById("sort").value;
   }
 
-  function firstHttpInRow(row){
-    for(const cell of row){
-      const v = safeText(cell);
-      if(/^https?:\/\//i.test(v)) return v;
-    }
-    return "";
-  }
+  function sortItems(items, mode){
+    const a = [...items];
 
-  // ===== Render =====
-  let ALL_ITEMS=[];
-  function forceReload(){loadSheet(true);}
-  function getQuery(){return safeText(document.getElementById("q").value).toLowerCase();}
-  function getSort(){return document.getElementById("sort").value;}
-
-  function sortItems(items,mode){
-    const a=[...items];
-    if(mode==="priceAsc"){a.sort((x,y)=>(x.priceNum||Infinity)-(y.priceNum||Infinity));}
-    else if(mode==="priceDesc"){a.sort((x,y)=>(y.priceNum||-Infinity)-(x.priceNum||-Infinity));}
-    else if(mode==="discountDesc"){a.sort((x,y)=>(y.discountNum||0)-(x.discountNum||0));}
-    else if(mode==="soldDesc"){a.sort((x,y)=>(y.soldNum||0)-(x.soldNum||0));}
-    else if(mode==="ratingDesc"){a.sort((x,y)=>(y.ratingNum||0)-(x.ratingNum||0));}
-    else{
+    if(mode === "priceAsc"){
+      a.sort((x,y)=> (x.priceNum||Infinity) - (y.priceNum||Infinity));
+    } else if(mode === "priceDesc"){
+      a.sort((x,y)=> (y.priceNum||-Infinity) - (x.priceNum||-Infinity));
+    } else if(mode === "discountDesc"){
+      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
+    } else if(mode === "soldDesc"){
+      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
+    } else if(mode === "ratingDesc"){
+      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
+    } else {
       a.sort((x,y)=>{
-        const sx=(x.soldNum||0)*2+(x.discountNum||0)*1.2+(x.ratingNum||0)*10;
-        const sy=(y.soldNum||0)*2+(y.discountNum||0)*1.2+(y.ratingNum||0)*10;
-        return sy-sx;
+        const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
+        const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
+        return sy - sx;
       });
     }
     return a;
   }
 
   function filterItems(items){
-    const q=getQuery(); if(!q) return items;
-    return items.filter(it=>(`${it.title} ${it.coupon||""}`).toLowerCase().includes(q));
+    const q = getQuery();
+    if(!q) return items;
+
+    return items.filter(it => {
+      const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
+      return hay.includes(q);
+    });
   }
 
   function render(){
-    const grid=document.getElementById("offers");
-    const loading=document.getElementById("loading");
-    const sorted=sortItems(filterItems(ALL_ITEMS),getSort());
+    const grid = document.getElementById("offers");
+    const loading = document.getElementById("loading");
 
-    grid.innerHTML="";
-    loading.style.display=sorted.length?"none":"block";
-    loading.textContent=sorted.length?"":"Nenhuma oferta encontrada. Tente outra busca.";
+    const sorted = sortItems(filterItems(ALL_ITEMS), getSort());
 
-    document.getElementById("countPill").textContent=`${ALL_ITEMS.length} ofertas`;
-    document.getElementById("kpi1").textContent=ALL_ITEMS.length.toString();
+    grid.innerHTML = "";
+    loading.style.display = sorted.length ? "none" : "block";
+    loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
 
-    const soldToday=ALL_ITEMS.reduce((acc,it)=>acc+(it.soldNum||0),0);
-    document.getElementById("kpi2").textContent=soldToday?soldToday.toString():"—";
-    document.getElementById("urgencyText").textContent="Quando aparece desconto alto, costuma acabar rápido. Se gostou, aproveite agora.";
-    document.getElementById("socialText").textContent=soldToday?`Hoje já teve ${soldToday} compras somadas nas ofertas da planilha.`:"Ofertas com boa avaliação e desconto tendem a vender mais rápido.";
+    document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
+    document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
+
+    const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
+    document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
+    document.getElementById("urgencyText").textContent =
+      "Quando aparece desconto alto, costuma acabar rápido. Se gostou, aproveite agora.";
+    document.getElementById("socialText").textContent =
+      soldToday ? `Hoje já teve ${soldToday} compras somadas nas ofertas da planilha.` : "Ofertas com boa avaliação e desconto tendem a vender mais rápido.";
 
     for(const it of sorted){
-      const card=document.createElement("article"); card.className="card";
+      const card = document.createElement("article");
+      card.className = "card";
 
-      const img=document.createElement("div"); img.className="imgbox";
-      img.innerHTML=`<img src="${it.image||""}" alt="${escapeHtml(it.title)}" loading="lazy" referrerpolicy="no-referrer">`;
+      const img = document.createElement("div");
+      img.className = "imgbox";
+      img.innerHTML = `<img src="${it.image || ""}" alt="${escapeHtml(it.title)}" loading="lazy" referrerpolicy="no-referrer" />`;
       card.appendChild(img);
 
-      const body=document.createElement("div"); body.className="cardBody";
+      const body = document.createElement("div");
+      body.className = "cardBody";
 
-      const title=document.createElement("h2"); title.className="title"; title.textContent=it.title||"Oferta";
+      const title = document.createElement("h2");
+      title.className = "title";
+      title.textContent = it.title || "Oferta";
       body.appendChild(title);
 
-      const row1=document.createElement("div"); row1.className="row";
+      const row1 = document.createElement("div");
+      row1.className = "row";
 
-      // ✅ sempre R$
-      const price=document.createElement("div"); price.className="price";
-      price.textContent = isFinite(it.priceNum) ? moneyBRL(it.priceNum) : "—";
+      const price = document.createElement("div");
+      price.className = "price";
+      // ✅ sempre mostrar em reais
+      price.textContent = isFinite(it.priceNum) ? moneyBRL(it.priceNum) : (it.price ? it.price : "—");
       row1.appendChild(price);
 
-      const right=document.createElement("div");
-      right.style.display="flex"; right.style.gap="8px"; right.style.flexWrap="wrap"; right.style.justifyContent="flex-end";
+      const right = document.createElement("div");
+      right.style.display="flex";
+      right.style.gap="8px";
+      right.style.flexWrap="wrap";
+      right.style.justifyContent="flex-end";
 
       if(it.discount){
-        const t=document.createElement("span"); t.className="tag off"; t.textContent=it.discount;
+        const t = document.createElement("span");
+        t.className = "tag off";
+        t.textContent = it.discount;
         right.appendChild(t);
       }
       if(it.coupon){
-        const t=document.createElement("span"); t.className="tag coupon"; t.textContent=`CUPOM: ${it.coupon}`;
+        const t = document.createElement("span");
+        t.className = "tag coupon";
+        t.textContent = `CUPOM: ${it.coupon}`;
         right.appendChild(t);
       }
-
       row1.appendChild(right);
       body.appendChild(row1);
 
-      const row2=document.createElement("div"); row2.className="row";
-      row2.innerHTML=`<div class="muted">${it.rating?`⭐ ${it.rating}`:"⭐ —"} &nbsp;•&nbsp; ${it.sold?`${it.sold} vendidos`:"— vendidos"}</div>
-                      <div class="muted">Atualizado: ${nowHHMMSS()}</div>`;
+      const row2 = document.createElement("div");
+      row2.className = "row";
+      row2.innerHTML = `
+        <div class="muted">${it.rating ? `⭐ ${it.rating}` : "⭐ —"} &nbsp;•&nbsp; ${it.sold ? `${it.sold} vendidos` : "— vendidos"}</div>
+        <div class="muted">Atualizado: ${nowHHMMSS()}</div>
+      `;
       body.appendChild(row2);
 
-      const buy=document.createElement("div"); buy.className="buy";
+      const buy = document.createElement("div");
+      buy.className = "buy";
 
-      const btn1=document.createElement("button"); btn1.className="btnSmall btnBuy"; btn1.textContent="Ver oferta";
-      btn1.onclick=()=>openLink(it.link);
+      const btn1 = document.createElement("button");
+      btn1.className = "btnSmall btnBuy";
+      btn1.textContent = "Ver oferta";
+      // ✅ redireciona para o grupo
+      btn1.onclick = () => openOffer();
       buy.appendChild(btn1);
 
-      const btn2=document.createElement("button"); btn2.className="btnSmall"; btn2.textContent="Copiar cupom";
-      btn2.onclick=()=>copyCoupon(it.coupon);
+      const btn2 = document.createElement("button");
+      btn2.className = "btnSmall";
+      btn2.textContent = "Copiar cupom";
+      btn2.onclick = () => copyCoupon(it.coupon);
       buy.appendChild(btn2);
 
       body.appendChild(buy);
@@ -501,109 +721,112 @@
     }
   }
 
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
+  }
+
   async function copyCoupon(coupon){
-    const c=safeText(coupon); if(!c){alert("Este item não tem cupom.");return;}
-    try{await navigator.clipboard.writeText(c); alert("Cupom copiado: "+c);}
-    catch{prompt("Copie o cupom:",c);}
-  }
-
-  function openLink(url){
-    const u = safeText(url);
-    if(!u){
-      alert("Link do produto não encontrado na planilha. Verifique a coluna de link/URL.");
-      return;
+    const c = safeText(coupon);
+    if(!c){ alert("Este item não tem cupom."); return; }
+    try{
+      await navigator.clipboard.writeText(c);
+      alert("Cupom copiado: " + c);
+    }catch{
+      prompt("Copie o cupom:", c);
     }
-    window.open(u,"_blank");
   }
 
-  // ===== Planilha =====
+  // =========================
+  // LOAD SHEET
+  // =========================
   async function loadSheet(isManual=false){
     try{
-      setStatus("loading",(isManual?"Atualizando agora… ":"Atualizando… ")+nowHHMMSS());
-      const url=SHEET_CSV_URL+(SHEET_CSV_URL.includes("?")?"&":"?")+"t="+Date.now();
-      const res=await fetch(url,{cache:"no-store"}); if(!res.ok) throw new Error("HTTP "+res.status);
+      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
 
-      const text=await res.text();
-      const rows=parseCSV(text);
+      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
+
+      const res = await fetch(url, { cache:"no-store" });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+
+      const text = await res.text();
+      const rows = parseCSV(text);
+
       if(!rows.length) throw new Error("CSV vazio");
 
-      const header = rows[0].map(h => safeText(h));
-      const items=[];
+      const header = rows[0].map(h => safeText(h).toLowerCase());
+      const idx = (name) => header.indexOf(name);
 
-      // colunas aceitas
-      const iImage  = findColumnIndex(header, ["image","imagem","img","foto","thumbnail","thumb"]);
-      const iTitle  = findColumnIndex(header, ["title","titulo","produto","nome","descricao","descrição"]);
-      const iPrice  = findColumnIndex(header, ["price","preco","preço","valor","value","amount"]);
-      const iDiscount = findColumnIndex(header, ["discount","desconto","off","promo","promocao","promoção"]);
-      const iCoupon = findColumnIndex(header, ["coupon","cupom","codigo","código"]);
-      const iSold   = findColumnIndex(header, ["sold","vendidos","vendas","qtdvendida","quantidadevendida"]);
-      const iRating = findColumnIndex(header, ["rating","avaliacao","avaliação","nota","stars","estrelas"]);
+      const iImage = idx("image");
+      const iTitle = idx("title");
+      const iPrice = idx("price");
+      const iDiscount = idx("discount");
+      const iCoupon = idx("coupon");
+      const iSold = idx("sold");
+      const iRating = idx("rating");
 
-      // ✅ link com muitos nomes
-      const iLink = findColumnIndex(header, [
-        "link","url","href","checkout","oferta","produto link","link do produto","url do produto",
-        "mercadolivre","mercado livre","ml","product","product link","link produto"
-      ]);
+      const items = [];
+      for(let r=1; r<rows.length; r++){
+        const row = rows[r];
+        const title = safeText(row[iTitle]);
+        const image = safeText(row[iImage]);
+        const price = safeText(row[iPrice]);
+        const discount = safeText(row[iDiscount]);
+        const coupon = safeText(row[iCoupon]);
+        const sold = safeText(row[iSold]);
+        const rating = safeText(row[iRating]);
 
-      for(let r=1;r<rows.length;r++){
-        const row=rows[r];
+        if(!title && !image && !price) continue;
 
-        const title = iTitle>=0 ? safeText(row[iTitle]) : safeText(row[0]);
-        const image = iImage>=0 ? safeText(row[iImage]) : "";
-        const priceRaw = iPrice>=0 ? safeText(row[iPrice]) : "";
-        const discount = iDiscount>=0 ? safeText(row[iDiscount]) : "";
-        const coupon = iCoupon>=0 ? safeText(row[iCoupon]) : "";
-        const sold = iSold>=0 ? safeText(row[iSold]) : "";
-        const rating = iRating>=0 ? safeText(row[iRating]) : "";
-
-        // ✅ tenta link pela coluna; se falhar, procura http na linha
-        let link = iLink>=0 ? safeText(row[iLink]) : "";
-        if(!/^https?:\/\//i.test(link)) link = firstHttpInRow(row);
-
-        // ignora linha vazia de verdade
-        if(!title && !image && !priceRaw && !link) continue;
-
-        const priceNum = toNumberBR(priceRaw);
-        const discountNum = toNumberBR(discount);
-        const soldNum = toNumberBR(sold);
-        const ratingNum = toNumberBR(rating);
+        const priceNum = toNumber(price);
+        const discountNum = toNumber(discount);
+        const soldNum = toNumber(sold);
+        const ratingNum = toNumber(rating);
 
         items.push({
           title: title || "Oferta",
           image,
-          priceNum: isFinite(priceNum) ? priceNum : NaN,
+          price,
+          priceNum,
           discount,
           discountNum: isFinite(discountNum) ? discountNum : 0,
           coupon,
           sold,
           soldNum: isFinite(soldNum) ? soldNum : 0,
           rating,
-          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          link
+          ratingNum: isFinite(ratingNum) ? ratingNum : 0
         });
       }
 
       ALL_ITEMS = items;
-      setStatus("ok",`Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
+
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
       render();
 
     }catch(err){
       console.error(err);
-      setStatus("error",`Tentando novamente… ${nowHHMMSS()}`);
-      const loading=document.getElementById("loading"); loading.style.display="block";
-      loading.textContent="Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("loading").textContent =
+        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
     }
   }
 
-  // ===== Eventos =====
-  document.getElementById("q").addEventListener("input",()=>render());
-  document.getElementById("sort").addEventListener("change",()=>render());
+  // =========================
+  // EVENTS
+  // =========================
+  document.getElementById("q").addEventListener("input", () => render());
+  document.getElementById("sort").addEventListener("change", () => render());
 
   // Start
-  initVideo();
   startLiveClock();
   loadSheet();
-  setInterval(()=>loadSheet(false), REFRESH_MS);
+
+  // Auto refresh
+  setInterval(() => loadSheet(false), REFRESH_MS);
 </script>
 
 </body>
