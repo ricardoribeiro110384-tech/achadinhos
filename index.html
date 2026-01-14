@@ -19,6 +19,10 @@
       --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
+
+      --yellow:#ffd000;
+      --yellow2:#ffb800;
+      --yellowText:#1a1400;
     }
     *{box-sizing:border-box}
     body{
@@ -28,22 +32,97 @@
                   radial-gradient(800px 500px at 80% 10%, rgba(245,158,11,.10), transparent 55%),
                   var(--bg);
       color:var(--text);
-      overflow-x:hidden; /* evita "puxar pro lado" e ficar vazio */
+      overflow-x:hidden;
     }
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
-    /* Header */
+    /* =========================
+       BARRA AMARELA (LOGO + NOME)
+       ========================= */
+    .topbar{
+      background: linear-gradient(90deg, var(--yellow), var(--yellow2));
+      color:var(--yellowText);
+      border-bottom:1px solid rgba(0,0,0,.12);
+      position:sticky;
+      top:0;
+      z-index:70;
+    }
+    .topbar .wrap{
+      padding:10px 16px;  /* menor que antes (mais compacta) */
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .topbrand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      min-width:0;
+    }
+    .toplogo{
+      width:34px;height:34px; /* menor */
+      border-radius:12px;
+      background:#111;
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+      flex:0 0 auto;
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+    .toplogo img{width:100%;height:100%;object-fit:contain}
+    .toptext{min-width:0}
+    .topname{
+      font-size:15px; /* menor */
+      line-height:1.05;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .toptag{
+      font-size:11.5px; /* menor */
+      opacity:.9;
+      font-weight:900;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:60vw;
+    }
+    .topright{
+      display:flex;gap:10px;align-items:center;flex:0 0 auto;
+      font-weight:1000;
+      font-size:12px;
+      background: rgba(0,0,0,.10);
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:999px;
+      padding:8px 10px;
+      white-space:nowrap;
+      cursor:pointer;
+      user-select:none;
+    }
+    .topright:active{transform: translateY(1px)}
+    @media (max-width: 520px){
+      .toptag{display:none}
+      .topright{padding:8px 10px}
+    }
+
+    /* Header (escuro) */
     header{
-      position:sticky; top:0; z-index:50;
+      position:sticky;
+      top:54px; /* fica abaixo da barra amarela */
+      z-index:60;
       background: rgba(11,18,32,.86);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
+    @media (max-width: 520px){
+      header{top:52px}
+    }
+
     .headbar{
       display:flex;gap:12px;align-items:center;justify-content:space-between;
       padding:12px 0;
-      flex-wrap:wrap; /* mobile não estoura */
+      flex-wrap:wrap;
     }
     .brand{
       display:flex;align-items:center;gap:10px;
@@ -79,7 +158,7 @@
       white-space:nowrap;
     }
 
-    /* Hero promise */
+    /* Hero */
     .hero{
       margin-top:16px;
       background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
@@ -102,7 +181,7 @@
       display:grid;
       grid-template-columns: 1.3fr .7fr;
       gap:14px;
-      align-items:center;
+      align-items:start;
     }
     @media (max-width: 860px){
       .hero-inner{grid-template-columns:1fr}
@@ -126,6 +205,7 @@
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
       color:#052014;border:none;
     }
+
     .kpi{display:grid;gap:10px;}
     .kpiCard{
       border:1px solid var(--border);
@@ -136,9 +216,11 @@
     .kpiCard b{font-size:16px}
     .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
 
-    /* Video (mantém layout — é só um bloco extra, não altera cards) */
+    /* =========================
+       VÍDEO (MENOR / COMPACTO)
+       ========================= */
     .videoWrap{
-      margin-top:14px;
+      margin-top:12px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
       border-radius:14px;
@@ -152,7 +234,6 @@
     }
     .videoTop b{font-size:13px}
     .videoTop .mini{font-size:12px;color:var(--muted);font-weight:900}
-    video{width:100%;height:auto;display:block;background:#000}
     .btnTiny{
       padding:10px 12px;border-radius:12px;
       border:1px solid var(--border);
@@ -160,6 +241,25 @@
       font-weight:1000;
       cursor:pointer;
       color:var(--text);
+    }
+    .videoBox{
+      width:100%;
+      max-width: 520px;  /* limita para não ficar gigante */
+    }
+    @media (max-width: 860px){
+      .videoBox{max-width: 100%;}
+    }
+    .videoFrame{
+      aspect-ratio: 16 / 9;
+      background:#000;
+      display:flex;align-items:center;justify-content:center;
+    }
+    video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background:#000;
     }
 
     /* Controls */
@@ -203,8 +303,8 @@
       .bar{grid-template-columns:1fr}
     }
     .notice{
-      border:1px solid rgba(255,255,255,.16); /* mais visível */
-      background: rgba(255,255,255,.06);       /* mais claro (melhor no celular) */
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
       border-radius:14px;
       padding:14px;
       display:flex;gap:10px;align-items:flex-start;
@@ -217,7 +317,6 @@
       flex:0 0 auto;
       font-size:18px;
     }
-
     /* ESCASSEZ maior */
     .notice h3{
       margin:0;
@@ -237,8 +336,6 @@
       .notice p{ font-size:15px; }
     }
 
-    .mini{font-size:12px;color:var(--muted);font-weight:800}
-
     /* Grid / cards */
     .grid{
       margin-top:16px;
@@ -247,7 +344,7 @@
       gap:12px;
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
-    /* No celular: 2 colunas para visualizar melhor */
+    /* no celular: 2 colunas */
     @media (max-width: 620px){.grid{grid-template-columns: repeat(2, 1fr)}}
     @media (max-width: 380px){.grid{grid-template-columns: 1fr}}
 
@@ -268,7 +365,7 @@
       overflow:hidden;
       padding:8px;
     }
-    /* Para não cortar (muito) no celular: contain + padding */
+    /* não corta */
     .imgbox img{
       width:100%;height:100%;
       object-fit:contain;
@@ -336,9 +433,11 @@
     .buy{
       margin-top:2px;
       display:flex;gap:10px;
+      flex-wrap:wrap;
     }
     .btnSmall{
       flex:1;
+      min-width: 140px;
       display:flex;align-items:center;justify-content:center;
       padding:11px 12px;border-radius:14px;
       border:1px solid rgba(255,255,255,.14);
@@ -409,6 +508,26 @@
 
 <body>
 
+<!-- BARRA AMARELA (logo + nome) -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="topbrand">
+      <div class="toplogo" aria-hidden="true">
+        <!-- coloque um arquivo "logo.png" no mesmo repositório -->
+        <img src="logo.png" alt="Logo Achadinhos" onerror="this.style.display='none'">
+      </div>
+      <div class="toptext">
+        <div class="topname">Achadinhos Oficial</div>
+        <div class="toptag">Ofertas e cupons no grupo • aproveite antes que acabe</div>
+      </div>
+    </div>
+
+    <div class="topright" onclick="openGroup()" title="Abrir grupo do WhatsApp">
+      🟢 Entrar no grupo
+    </div>
+  </div>
+</div>
+
 <header>
   <div class="wrap">
     <div class="headbar">
@@ -433,7 +552,6 @@
 
 <main class="wrap">
 
-  <!-- 🔝 Topo com promessa -->
   <section class="hero">
     <div class="hero-inner">
       <div>
@@ -446,16 +564,18 @@
           <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
         </div>
 
-        <!-- Vídeo (com botão pra liberar áudio — autoplay com áudio é bloqueado no celular) -->
-        <div class="videoWrap" id="videoWrap" style="display:none">
+        <!-- VÍDEO MENOR (não removi) -->
+        <div class="videoWrap videoBox" id="videoWrap" style="display:none">
           <div class="videoTop">
             <div>
-              <b>🎥 Vídeo de ofertas</b>
-              <div class="mini">Toque em “Ativar áudio” se quiser ouvir.</div>
+              <b>🎥 Vídeo</b>
+              <div class="mini">No celular, autoplay com áudio é bloqueado. Use “Ativar áudio”.</div>
             </div>
             <button class="btnTiny" onclick="enableVideoAudio()">🔊 Ativar áudio</button>
           </div>
-          <video id="promoVideo" controls playsinline preload="metadata"></video>
+          <div class="videoFrame">
+            <video id="promoVideo" controls playsinline preload="metadata"></video>
+          </div>
         </div>
       </div>
 
@@ -472,7 +592,6 @@
     </div>
   </section>
 
-  <!-- Busca / filtro -->
   <section class="controls">
     <div class="search">
       🔎 <input id="q" type="text" placeholder="Buscar produto (ex: tênis, perfume, mesa...)" />
@@ -488,7 +607,6 @@
     </select>
   </section>
 
-  <!-- 🔥 Urgência social / Prova -->
   <section class="bar">
     <div class="notice">
       <div class="badge">🔥</div>
@@ -509,10 +627,8 @@
 
   <div id="loading" class="loading">Carregando ofertas da planilha…</div>
 
-  <!-- 🎁 Destaque de ofertas -->
   <section id="offers" class="grid" aria-live="polite"></section>
 
-  <!-- 🔚 Rodapé confiável -->
   <footer>
     <b>🔒 Compra com mais segurança</b>
     <ul>
@@ -525,7 +641,6 @@
 
 </main>
 
-<!-- 🟢 Botão WhatsApp fixo -->
 <button class="wa" onclick="openGroup()" aria-label="Entrar no grupo do WhatsApp">
   <div class="waIcon">🟢</div>
   <div>
@@ -539,16 +654,13 @@
   // CONFIG
   // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-
-  // Link do grupo (o botão "Ver oferta" pode ir pro link do afiliado da planilha OU, se não tiver, vai pro grupo)
   const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
 
-  // Vídeo (opcional). Coloque aqui um link direto .mp4/.webm (ex: hospedado no GitHub/Drive público/CDN)
-  // Se ficar vazio, o bloco do vídeo some automaticamente.
+  // Coloque um link direto de vídeo (mp4/webm). Se deixar vazio, o bloco do vídeo some.
   const VIDEO_URL = ""; // ex: "https://seusite.com/video.mp4"
 
-  // Atualização automática da planilha:
-  const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
+  // Atualização automática
+  const REFRESH_MS = 2 * 60 * 1000;
 
   // =========================
   // HELPERS
@@ -623,7 +735,6 @@
     }
   }
 
-  // Relógio rodando sempre (mesmo enquanto carrega)
   function startLiveClock(){
     const timeEl = document.getElementById("updatedTime");
     if(!timeEl) return;
@@ -634,7 +745,6 @@
     }, 1000);
   }
 
-  // CSV parser simples (suporta aspas)
   function parseCSV(text){
     const rows = [];
     let row = [];
@@ -684,14 +794,21 @@
   function setupVideo(){
     const wrap = document.getElementById("videoWrap");
     const vid = document.getElementById("promoVideo");
+
     if(!VIDEO_URL){
       wrap.style.display = "none";
       return;
     }
+
     wrap.style.display = "block";
     vid.src = VIDEO_URL;
-    vid.muted = true; // inicia mudo (mobile bloqueia autoplay com áudio)
+
+    // tenta autoplay mudo (mobile costuma permitir)
+    vid.muted = true;
     vid.playsInline = true;
+    vid.autoplay = true;
+
+    vid.play().catch(()=>{});
   }
 
   function enableVideoAudio(){
@@ -749,27 +866,15 @@
     });
   }
 
-  function getOfferUrl(it){
-    // Se você colocar o link de afiliado na planilha (coluna "link" ou "url" ou "affiliate"),
-    // o botão "Ver oferta" vai abrir esse link. Se não tiver, abre o grupo.
-    const u = safeText(it.link);
-    if(u) return u;
-    return WHATSAPP_GROUP_LINK;
-  }
-
   function openOffer(it){
-    window.open(getOfferUrl(it), "_blank");
-  }
-
-  function openLink(url){
-    const u = safeText(url);
-    if(!u){ alert("Link não encontrado na planilha. Vou abrir o grupo."); openGroup(); return; }
-    window.open(u, "_blank");
+    // Se tiver link de afiliado na planilha, abre ele. Se não tiver, abre o grupo.
+    const u = safeText(it.link);
+    window.open(u || WHATSAPP_GROUP_LINK, "_blank");
   }
 
   async function shareOffer(it){
     const title = safeText(it.title) || "Oferta";
-    const url = getOfferUrl(it);
+    const url = safeText(it.link) || WHATSAPP_GROUP_LINK;
     const text = `🔥 OFERTA: ${title}\n👉 Link: ${url}\n\nEntre no grupo para pegar mais cupons: ${WHATSAPP_GROUP_LINK}`;
 
     try{
@@ -787,14 +892,113 @@
     }
   }
 
-  async function copyCoupon(coupon){
-    const c = safeText(coupon);
-    if(!c){ alert("Este item não tem cupom."); return; }
+  // =========================
+  // LOAD SHEET
+  // =========================
+  async function loadSheet(isManual=false){
     try{
-      await navigator.clipboard.writeText(c);
-      alert("Cupom copiado: " + c);
-    }catch{
-      prompt("Copie o cupom:", c);
+      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
+
+      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
+      const res = await fetch(url, { cache:"no-store" });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if(!rows.length) throw new Error("CSV vazio");
+
+      const header = rows[0].map(h => safeText(h).toLowerCase());
+      const idx = (name) => header.indexOf(name);
+
+      // sua planilha: image,title,price(original),discount(%),coupon,sold,rating,link/url/affiliate(opcional)
+      const iImage = idx("image");
+      const iTitle = idx("title");
+      const iPrice = idx("price"); // ORIGINAL
+      const iDiscount = idx("discount");
+      const iCoupon = idx("coupon");
+      const iSold = idx("sold");
+      const iRating = idx("rating");
+      const iLink =
+        idx("affiliate") >= 0 ? idx("affiliate") :
+        (idx("link") >= 0 ? idx("link") :
+        (idx("url") >= 0 ? idx("url") : -1));
+
+      const items = [];
+
+      for(let r=1; r<rows.length; r++){
+        const row = rows[r] || [];
+        const title = safeText(row[iTitle]);
+        const image = safeText(row[iImage]);
+        const originalRaw = safeText(row[iPrice]);    // ORIGINAL
+        const discountRaw = safeText(row[iDiscount]); // "46% OFF" ou "46"
+        const coupon = safeText(row[iCoupon]);
+        const sold = safeText(row[iSold]);
+        const rating = safeText(row[iRating]);
+        const link = iLink >= 0 ? safeText(row[iLink]) : "";
+
+        if(!title && !image && !originalRaw && !link) continue;
+
+        const originalNum = toNumber(originalRaw);
+
+        // discount: pega número, mesmo se vier "46% OFF"
+        let discountNum = toNumber(discountRaw);
+        if(!isFinite(discountNum)){
+          const m = (discountRaw || "").match(/(\d+(?:[.,]\d+)?)/);
+          discountNum = m ? toNumber(m[1]) : 0;
+        }
+        if(!isFinite(discountNum)) discountNum = 0;
+
+        // final = original - %
+        let finalNum = originalNum;
+        if(isFinite(originalNum) && discountNum > 0 && discountNum < 100){
+          finalNum = +(originalNum * (1 - discountNum/100)).toFixed(2);
+        }
+
+        const soldNum = toNumber(sold);
+        const ratingNum = toNumber(rating);
+
+        items.push({
+          title: title || "Oferta",
+          image,
+          originalPriceText: isFinite(originalNum) ? moneyBRLFromNumber(originalNum) : (originalRaw || ""),
+          originalPriceNum: isFinite(originalNum) ? originalNum : NaN,
+          finalPriceText: isFinite(finalNum) ? moneyBRLFromNumber(finalNum) : (originalRaw || ""),
+          finalPriceNum: isFinite(finalNum) ? finalNum : NaN,
+          discount: discountRaw,
+          discountNum: isFinite(discountNum) ? discountNum : 0,
+          coupon,
+          sold,
+          soldNum: isFinite(soldNum) ? soldNum : 0,
+          rating,
+          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
+          link
+        });
+      }
+
+      ALL_ITEMS = items;
+
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
+      render();
+
+      // KPI / textos
+      const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
+      document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
+      document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
+
+      // escassez (forte)
+      document.getElementById("urgencyText").textContent =
+        "🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.";
+      document.getElementById("socialText").textContent =
+        soldToday ? `✅ Hoje já teve ${soldToday} compras somadas nas ofertas. Quem chega primeiro leva.` :
+                    "✅ Quem chega primeiro leva. Entre no grupo pra pegar link/cupom na hora e não perder.";
+
+    }catch(err){
+      console.error(err);
+      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
+      const loading = document.getElementById("loading");
+      loading.style.display = "block";
+      loading.textContent =
+        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
     }
   }
 
@@ -808,19 +1012,7 @@
     loading.style.display = sorted.length ? "none" : "block";
     loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
 
-    // KPIs
     document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
-    document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
-
-    const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-    document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
-
-    // Copy de escassez (forte e grande)
-    document.getElementById("urgencyText").textContent =
-      "🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.";
-    document.getElementById("socialText").textContent =
-      soldToday ? `✅ Hoje já teve ${soldToday} compras somadas nas ofertas da planilha. Quem chega primeiro leva.` :
-                  "✅ Quem chega primeiro leva. Entre no grupo pra pegar link/cupom na hora e não perder.";
 
     for(const it of sorted){
       const card = document.createElement("article");
@@ -839,20 +1031,18 @@
       title.textContent = it.title || "Oferta";
       body.appendChild(title);
 
-      // Preços: original riscado + desconto destacado
       const prices = document.createElement("div");
       prices.className = "prices";
 
       const nowP = document.createElement("div");
       nowP.className = "priceNow";
       nowP.textContent = it.finalPriceText || "—";
-
-      const oldP = document.createElement("div");
-      oldP.className = "priceOld";
-      oldP.textContent = it.originalPriceText || "";
-
       prices.appendChild(nowP);
+
       if(it.originalPriceText && it.originalPriceText !== it.finalPriceText){
+        const oldP = document.createElement("div");
+        oldP.className = "priceOld";
+        oldP.textContent = it.originalPriceText;
         prices.appendChild(oldP);
       }
       body.appendChild(prices);
@@ -892,7 +1082,6 @@
       row2.innerHTML = `<div class="muted">Atualizado: ${nowHHMMSS()}</div>`;
       body.appendChild(row2);
 
-      // Botões (bem visíveis no celular)
       const buy = document.createElement("div");
       buy.className = "buy";
 
@@ -915,131 +1104,55 @@
       buy.appendChild(btn3);
 
       body.appendChild(buy);
+
       card.appendChild(body);
       grid.appendChild(card);
     }
   }
 
   // =========================
-  // LOAD SHEET
+  // SEARCH/FILTER/SORT
   // =========================
-  async function loadSheet(isManual=false){
-    try{
-      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
+  function filterItems(items){
+    const q = getQuery();
+    if(!q) return items;
+    return items.filter(it => {
+      const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
+      return hay.includes(q);
+    });
+  }
 
-      // cache-buster
-      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
-
-      const res = await fetch(url, { cache:"no-store" });
-      if(!res.ok) throw new Error("HTTP " + res.status);
-
-      const text = await res.text();
-      const rows = parseCSV(text);
-      if(!rows.length) throw new Error("CSV vazio");
-
-      const header = rows[0].map(h => safeText(h).toLowerCase());
-      const idx = (name) => header.indexOf(name);
-
-      // Mapeamento flexível (sua planilha já tem: image,title,price,discount,coupon,sold,rating)
-      const iImage = idx("image");
-      const iTitle = idx("title");
-
-      // Preço original pode vir como "price" (o original), ou "original", "old_price"
-      const iPriceOriginal =
-        idx("price") >= 0 ? idx("price") :
-        idx("original") >= 0 ? idx("original") :
-        idx("old_price") >= 0 ? idx("old_price") : -1;
-
-      // Se você quiser definir o preço com desconto direto na planilha:
-      const iFinal =
-        idx("final_price") >= 0 ? idx("final_price") :
-        idx("sale_price") >= 0 ? idx("sale_price") :
-        idx("discount_price") >= 0 ? idx("discount_price") : -1;
-
-      const iDiscount = idx("discount");
-      const iCoupon = idx("coupon");
-      const iSold = idx("sold");
-      const iRating = idx("rating");
-
-      // Links: use "link" / "url" / "affiliate"
-      const iLink =
-        idx("affiliate") >= 0 ? idx("affiliate") :
-        (idx("link") >= 0 ? idx("link") :
-        (idx("url") >= 0 ? idx("url") : -1));
-
-      const items = [];
-
-      for(let r=1; r<rows.length; r++){
-        const row = rows[r] || [];
-        const title = safeText(row[iTitle]);
-        const image = safeText(row[iImage]);
-        const originalPriceRaw = safeText(row[iPriceOriginal]);
-        const finalRaw = iFinal >= 0 ? safeText(row[iFinal]) : "";
-        const discount = safeText(row[iDiscount]);
-        const coupon = safeText(row[iCoupon]);
-        const sold = safeText(row[iSold]);
-        const rating = safeText(row[iRating]);
-        const link = iLink >= 0 ? safeText(row[iLink]) : "";
-
-        if(!title && !image && !originalPriceRaw && !finalRaw) continue;
-
-        const originalNum = toNumber(originalPriceRaw);
-        const soldNum = toNumber(sold);
-        const ratingNum = toNumber(rating);
-
-        // desconto em % se vier tipo "46% OFF"
-        let discountNum = toNumber(discount);
-        if(!isFinite(discountNum)) discountNum = 0;
-
-        // Preço final:
-        let finalNum = toNumber(finalRaw);
-        if(!isFinite(finalNum)){
-          // se não tiver final na planilha, calcula pelo desconto (se tiver)
-          if(isFinite(originalNum) && discountNum > 0){
-            finalNum = originalNum * (1 - (discountNum/100));
-          } else {
-            finalNum = originalNum;
-          }
-        }
-
-        const originalText = isFinite(originalNum) ? moneyBRLFromNumber(originalNum) : (originalPriceRaw ? originalPriceRaw : "");
-        const finalText = isFinite(finalNum) ? moneyBRLFromNumber(finalNum) : (finalRaw ? finalRaw : (originalText || "—"));
-
-        items.push({
-          title: title || "Oferta",
-          image,
-          originalPriceText: originalText,
-          originalPriceNum: isFinite(originalNum) ? originalNum : NaN,
-          finalPriceText: finalText,
-          finalPriceNum: isFinite(finalNum) ? finalNum : NaN,
-          discount,
-          discountNum,
-          coupon,
-          sold,
-          soldNum: isFinite(soldNum) ? soldNum : 0,
-          rating,
-          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          link
-        });
-      }
-
-      ALL_ITEMS = items;
-
-      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
-      render();
-
-    }catch(err){
-      console.error(err);
-      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
-      const loading = document.getElementById("loading");
-      loading.style.display = "block";
-      loading.textContent =
-        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+  function sortItems(items, mode){
+    const a = [...items];
+    if(mode === "priceAsc"){
+      a.sort((x,y)=> (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity));
+    } else if(mode === "priceDesc"){
+      a.sort((x,y)=> (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity));
+    } else if(mode === "discountDesc"){
+      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
+    } else if(mode === "soldDesc"){
+      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
+    } else if(mode === "ratingDesc"){
+      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
+    } else {
+      a.sort((x,y)=>{
+        const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
+        const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
+        return sy - sx;
+      });
     }
+    return a;
+  }
+
+  function getQuery(){
+    return safeText(document.getElementById("q").value).toLowerCase();
+  }
+  function getSort(){
+    return document.getElementById("sort").value;
   }
 
   // =========================
-  // EVENTS / START
+  // START
   // =========================
   document.getElementById("q").addEventListener("input", () => render());
   document.getElementById("sort").addEventListener("change", () => render());
