@@ -50,6 +50,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 .carousel::-webkit-scrollbar{height:8px}
 .carousel::-webkit-scrollbar-thumb{background:#bbb;border-radius:999px}
 
+/* ✅ No celular continua grande */
 .carditem{
   flex:0 0 82%;
   background:#fff;
@@ -75,22 +76,12 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 
 /* preço */
 .prices{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.old{
-  color:#777;
-  text-decoration:line-through;
-  font-weight:900;
-}
-.new{
-  font-weight:1000;
-  font-size:18px;
-}
+.old{color:#777;text-decoration:line-through;font-weight:900}
+.new{font-weight:1000;font-size:18px}
 .off{
-  background:#dff3e1;
-  color:#1b5e20;
-  padding:4px 8px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:1000;
+  background:#dff3e1;color:#1b5e20;
+  padding:4px 8px;border-radius:999px;
+  font-size:12px;font-weight:1000
 }
 
 /* botões rolar */
@@ -110,16 +101,30 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 }
 .cbtn:active{transform:translateY(1px)}
 
-/* ✅ SOMENTE "OFERTAS" vira grade no PC (sem buracos) */
+/* ✅ PC: cards menores (remove o “buracão”) */
 @media(min-width:900px){
+  /* ofertas pode virar grade bonita */
   .offers-grid{
     display:grid !important;
-    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
     gap:12px;
     overflow:visible !important;
     padding:0 !important;
   }
   .offers-grid .carditem{flex:initial}
+
+  /* promoções (carrossel) no PC: cards menores */
+  #trackPromos .carditem{
+    flex:0 0 340px;  /* 👈 tamanho fixo no PC */
+  }
+}
+
+/* ✅ quando não tiver scroll (poucos itens), centraliza */
+.carousel.no-scroll{
+  justify-content:center;
+}
+.carousel.no-scroll .carditem{
+  flex:0 0 340px;
 }
 
 /* status */
@@ -166,12 +171,12 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
     </div>
 
     <div class="lead">
-      Isso acontece com milhares de mulheres todos os dias. A boa notícia? Agora existe uma forma simples e segura de comprar.
+      Isso acontece com milhares de pessoas todos os dias. A boa notícia? Agora existe uma forma simples e segura de comprar.
     </div>
 
     <div id="status" class="notice">Carregando ofertas da planilha…</div>
 
-    <!-- OFERTAS PRINCIPAIS (auto) -->
+    <!-- OFERTAS PRINCIPAIS -->
     <section class="section" id="ofertas">
       <h2>Ofertas principais 🔥</h2>
       <p class="hint">Arraste para o lado e entre no grupo para pegar o link</p>
@@ -184,7 +189,7 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
       </div>
     </section>
 
-    <!-- PROMOÇÕES DO DIA (auto, sempre carrossel) -->
+    <!-- PROMOÇÕES DO DIA -->
     <section class="section" id="promocoes">
       <h2>Promoções do dia ⏰</h2>
       <p class="hint">Atualize só a planilha e o site muda sozinho</p>
@@ -212,7 +217,7 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
 </div>
 
 <script>
-/** ✅ SUA PLANILHA (pubhtml -> csv) */
+/** ✅ SUA PLANILHA */
 const SHEET_PUBHTML_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pubhtml";
 const SHEET_CSV_URL = SHEET_PUBHTML_URL.replace("/pubhtml", "/pub?output=csv");
 
@@ -228,7 +233,7 @@ function rolar(trackId, dir){
   t.scrollBy({ left: amount, behavior: "smooth" });
 }
 
-/* ✅ CSV parser robusto (aspas + vírgulas) */
+/* ✅ CSV parser robusto */
 function parseCSV(text){
   const rows = [];
   let row = [], cur = "", inQuotes = false;
@@ -267,7 +272,6 @@ function parseCSV(text){
 function safeText(s){ return (s || "").replace(/</g,"&lt;"); }
 
 function toNumberBR(v){
-  // aceita: 191.55 | 191,55 | R$ 191,55 | 1.234,56
   let s = String(v || "").trim();
   if(!s) return NaN;
   s = s.replace(/[^\d,.\-]/g,"");
@@ -287,11 +291,7 @@ function toDiscount(v){
 }
 
 function formatBRL(n){
-  try{
-    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
-  }catch{
-    return "R$ " + (Math.round(n*100)/100).toFixed(2).replace(".",",");
-  }
+  return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
 }
 
 function buildCard(item){
@@ -352,6 +352,13 @@ function buildCard(item){
   return a;
 }
 
+/* ✅ centraliza quando não precisa rolar */
+function markScrollable(track){
+  if(!track) return;
+  const needsScroll = track.scrollWidth > (track.clientWidth + 2);
+  track.classList.toggle("no-scroll", !needsScroll);
+}
+
 async function loadFromSheet(){
   const status = document.getElementById("status");
   const ofertasWrap = document.getElementById("trackOfertas");
@@ -400,10 +407,23 @@ async function loadFromSheet(){
     promos.forEach(item  => promosWrap.appendChild(buildCard(item)));
 
     status.textContent = `Atualizado pela planilha ✅ (${ofertas.length} ofertas, ${promos.length} promoções)`;
+
+    // marca centralização depois de renderizar
+    requestAnimationFrame(() => {
+      markScrollable(promosWrap);
+      // ofertas vira grade no PC, mas no mobile pode precisar centralizar também
+      markScrollable(ofertasWrap);
+    });
+
   } catch(e){
-    status.textContent = "Não consegui carregar a planilha. Confirme se ela está 'Publicada na web' e se o link está correto.";
+    status.textContent = "Não consegui carregar a planilha. Confirme se ela está publicada e o link está correto.";
   }
 }
+
+window.addEventListener("resize", () => {
+  markScrollable(document.getElementById("trackPromos"));
+  markScrollable(document.getElementById("trackOfertas"));
+});
 
 loadFromSheet();
 </script>
