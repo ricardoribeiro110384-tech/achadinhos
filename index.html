@@ -38,7 +38,7 @@
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
     /* =========================
-       BARRA AMARELA (MAIOR)
+       BARRA AMARELA
        ========================= */
     .topbar{
       background: linear-gradient(90deg, var(--yellow), var(--yellow2));
@@ -49,7 +49,7 @@
       z-index:80;
     }
     .topbar .wrap{
-      padding:14px 16px; /* AUMENTEI */
+      padding:14px 16px;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -62,7 +62,7 @@
       min-width:0;
     }
     .toplogo{
-      width:46px;height:46px; /* AUMENTEI */
+      width:46px;height:46px;
       border-radius:16px;
       background:#111;
       display:flex;align-items:center;justify-content:center;
@@ -73,14 +73,14 @@
     .toplogo img{width:100%;height:100%;object-fit:contain}
     .toptext{min-width:0}
     .topname{
-      font-size:18px; /* AUMENTEI */
+      font-size:18px;
       line-height:1.05;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
     .toptag{
-      font-size:13px; /* AUMENTEI */
+      font-size:13px;
       opacity:.9;
       font-weight:900;
       white-space:nowrap;
@@ -95,7 +95,7 @@
       background: rgba(0,0,0,.10);
       border:1px solid rgba(0,0,0,.12);
       border-radius:999px;
-      padding:10px 12px; /* AUMENTEI */
+      padding:10px 12px;
       white-space:nowrap;
       cursor:pointer;
       user-select:none;
@@ -111,7 +111,7 @@
     /* Header escuro */
     header{
       position:sticky;
-      top:74px; /* acompanha a barra amarela maior */
+      top:74px;
       z-index:60;
       background: rgba(11,18,32,.86);
       backdrop-filter: blur(10px);
@@ -219,18 +219,19 @@
     .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
 
     /* =========================
-       VÍDEO (APARECE SEMPRE)
+       VÍDEO (CENTRALIZADO)
        ========================= */
-  .videoWrap{
-  width:100%;
-  max-width:520px;
-  margin:12px auto;     /* centralização real */
-  display:block;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.03);
-  border-radius:14px;
-  overflow:hidden;
-}
+    .videoWrap{
+      margin:12px auto 0;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      overflow:hidden;
+      max-width: 520px;
+    }
+    @media (max-width: 860px){
+      .videoWrap{max-width:100%}
+    }
     .videoTop{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:10px 12px;
@@ -257,6 +258,94 @@
       object-fit:cover;
       display:block;
       background:#000;
+    }
+
+    /* =========================
+       OFERTA DO MINUTO (NOVO)
+       ========================= */
+    .spot{
+      margin-top:14px;
+      border:1px solid rgba(245,158,11,.22);
+      background: linear-gradient(180deg, rgba(245,158,11,.10), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      box-shadow: 0 12px 24px rgba(0,0,0,.20);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap:0;
+    }
+    @media (max-width: 860px){
+      .spot{grid-template-columns:1fr}
+    }
+    .spotImg{
+      background: rgba(0,0,0,.18);
+      border-right:1px solid rgba(255,255,255,.08);
+      min-height: 220px;
+      display:flex;align-items:center;justify-content:center;
+      padding:10px;
+    }
+    @media (max-width: 860px){
+      .spotImg{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
+    }
+    .spotImg img{
+      width:100%;
+      height:100%;
+      max-height: 260px;
+      object-fit:contain;
+      border-radius: 14px;
+      background: rgba(0,0,0,.14);
+    }
+    .spotBody{
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+    .spotTop{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    }
+    .spotBadge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background: rgba(239,68,68,.14);
+      border:1px solid rgba(239,68,68,.28);
+      color:#fecaca;
+      font-weight:1000;
+      letter-spacing:.2px;
+    }
+    .spotTitle{
+      margin:0;
+      font-size:16px;
+      font-weight:1000;
+      line-height:1.2;
+    }
+    .spotPrices{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    }
+    .priceNow{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(34,197,94,.18);
+      border:1px solid rgba(34,197,94,.35);
+      font-weight:1000;
+      font-size:18px;
+      color:#bbf7d0;
+      white-space:nowrap;
+    }
+    .priceOld{
+      color: rgba(229,231,235,.75);
+      font-weight:900;
+      font-size:14px;
+      text-decoration: line-through;
+      white-space:nowrap;
+    }
+    .spotCopy{
+      font-weight:1000;
+      color: rgba(229,231,235,.92);
+      line-height:1.35;
+    }
+    .spotBtns{
+      display:flex;gap:10px;flex-wrap:wrap;
     }
 
     /* Controls */
@@ -287,6 +376,35 @@
       color:var(--text);
       font-weight:800;
       outline:none;
+    }
+
+    /* =========================
+       FILTROS RÁPIDOS (NOVO)
+       ========================= */
+    .chips{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+    }
+    .chipOn{
+      border:1px solid rgba(34,197,94,.35);
+      background: rgba(34,197,94,.14);
+      color:#bbf7d0;
     }
 
     /* Social proof / urgency */
@@ -326,10 +444,6 @@
       font-weight:1000;
       font-size:14px;
       line-height:1.35;
-    }
-    @media (max-width: 860px){
-      .notice h3{ font-size:17px; }
-      .notice p{ font-size:15px; }
     }
 
     /* Grid / cards */
@@ -377,30 +491,10 @@
       font-weight:900;
       min-height: 36px;
     }
-
     .prices{
       display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
       flex-wrap:wrap;
     }
-    .priceNow{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background: rgba(34,197,94,.18);
-      border:1px solid rgba(34,197,94,.35);
-      font-weight:1000;
-      font-size:18px;
-      color:#bbf7d0;
-      white-space:nowrap;
-    }
-    .priceOld{
-      color: rgba(229,231,235,.75);
-      font-weight:900;
-      font-size:14px;
-      text-decoration: line-through;
-      white-space:nowrap;
-    }
-
     .row{
       display:flex;justify-content:space-between;gap:10px;align-items:center;
       flex-wrap:wrap;
@@ -423,7 +517,6 @@
       background: rgba(34,197,94,.12);
       color:#bbf7d0;
     }
-
     .buy{
       margin-top:2px;
       display:flex;gap:10px;
@@ -502,7 +595,6 @@
 
 <body>
 
-<!-- BARRA AMARELA (AGORA MAIOR) -->
 <div class="topbar">
   <div class="wrap">
     <div class="topbrand">
@@ -557,7 +649,6 @@
           <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
         </div>
 
-        <!-- VÍDEO (não removi) -->
         <div class="videoWrap" id="videoWrap">
           <div class="videoTop">
             <div>
@@ -585,6 +676,36 @@
     </div>
   </section>
 
+  <!-- 🚨 OFERTA DO MINUTO (NOVO) -->
+  <section id="spotlight" class="spot" style="display:none" aria-live="polite">
+    <div class="spotImg">
+      <img id="spotImg" src="" alt="Oferta do minuto" referrerpolicy="no-referrer">
+    </div>
+    <div class="spotBody">
+      <div class="spotTop">
+        <div class="spotBadge">🚨 OFERTA DO MINUTO</div>
+        <div class="muted" id="spotMeta">pode acabar a qualquer momento</div>
+      </div>
+
+      <h2 class="spotTitle" id="spotTitle">—</h2>
+
+      <div class="spotPrices">
+        <div class="priceNow" id="spotNow">—</div>
+        <div class="priceOld" id="spotOld" style="display:none">—</div>
+      </div>
+
+      <div class="spotCopy" id="spotCopy">
+        🔥 Essa é a oferta com melhor combinação de desconto + avaliação agora. Entre no grupo pra pegar o link/cupom na hora.
+      </div>
+
+      <div class="spotBtns">
+        <button class="btnSmall btnBuy" onclick="spotOpen()">Ver oferta</button>
+        <button class="btnSmall btnGroup" onclick="openGroup()">Entrar no grupo</button>
+        <button class="btnSmall btnShare" onclick="spotShare()">Compartilhar</button>
+      </div>
+    </div>
+  </section>
+
   <section class="controls">
     <div class="search">
       🔎 <input id="q" type="text" placeholder="Buscar produto (ex: tênis, perfume, mesa...)" />
@@ -600,20 +721,26 @@
     </select>
   </section>
 
+  <!-- Chips (NOVO) -->
+  <section class="chips">
+    <div class="chip" id="chipCoupon" onclick="toggleChip('coupon')">🧾 Com cupom</div>
+    <div class="chip" id="chipDiscount" onclick="toggleChip('discount')">🔥 Maior desconto</div>
+  </section>
+
   <section class="bar">
     <div class="notice">
-      <div class="badge">🔥</div>
+      <div class="badge">✅</div>
       <div>
-        <h3>Acabando rápido</h3>
-        <p id="urgencyText">🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.</p>
+        <h3>Prova social</h3>
+        <p id="socialProof">✅ +1.200 pessoas já entraram no grupo • 🔥 27 ofertas postadas hoje</p>
       </div>
     </div>
 
     <div class="notice">
-      <div class="badge">✅</div>
+      <div class="badge">🔥</div>
       <div>
-        <h3>Quem chega primeiro leva</h3>
-        <p id="socialText">✅ Entre no grupo pra pegar link/cupom na hora e não perder as melhores oportunidades.</p>
+        <h3>Escassez real</h3>
+        <p id="urgencyText">🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.</p>
       </div>
     </div>
   </section>
@@ -626,7 +753,7 @@
     <b>🔒 Compra com mais segurança</b>
     <ul>
       <li>Este site divulga ofertas encontradas em marketplaces e grupos parceiros.</li>
-      <li>Não somos uma loja oficial do Mercado Livre nem representamos a marca.</li>
+      <li><b>Não somos uma loja oficial do Mercado Livre</b> e não representamos a marca.</li>
       <li>Preços e disponibilidade podem mudar a qualquer momento no site do vendedor.</li>
       <li>Se algum item não abrir, atualize a página e tente novamente.</li>
     </ul>
@@ -648,13 +775,22 @@
   // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
   const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-
-  // ✅ VÍDEO: coloque o arquivo no GitHub (mesma pasta do index.html) com o nome "video.mp4"
-  // ou troque para o nome correto do seu arquivo.
   const VIDEO_URL = "video.mp4";
-
-  // Atualização automática
   const REFRESH_MS = 2 * 60 * 1000;
+
+  // Prova social padrão (se a planilha não tiver colunas)
+  const DEFAULT_GROUP_COUNT = 1200; // ✅ +1.200 pessoas
+  const DEFAULT_POSTS_TODAY = 27;   // 🔥 27 ofertas hoje
+
+  // =========================
+  // STATE
+  // =========================
+  let ALL_ITEMS = [];
+  let FILTER_COUPON_ONLY = false;
+  let FILTER_TOP_DISCOUNT = false;
+
+  // Spotlight state
+  let SPOT_ITEM = null;
 
   // =========================
   // HELPERS
@@ -696,6 +832,7 @@
   function openGroup(){
     window.open(WHATSAPP_GROUP_LINK, "_blank");
   }
+
   function setStatus(mode, text){
     const dot = document.getElementById("statusDot");
     const label = document.getElementById("updatedLabel");
@@ -729,6 +866,7 @@
       }
     }, 1000);
   }
+
   function parseCSV(text){
     const rows = [];
     let row = [];
@@ -759,12 +897,9 @@
   function setupVideo(){
     const vid = document.getElementById("promoVideo");
     vid.src = VIDEO_URL;
-
-    // tenta autoplay mudo (permitido em muitos celulares)
     vid.muted = true;
     vid.playsInline = true;
     vid.autoplay = true;
-
     vid.play().catch(()=>{});
   }
   function enableVideoAudio(){
@@ -775,10 +910,23 @@
   }
 
   // =========================
-  // RENDER
+  // CHIPS (FILTROS RÁPIDOS)
   // =========================
-  let ALL_ITEMS = [];
+  function toggleChip(which){
+    if(which === "coupon"){
+      FILTER_COUPON_ONLY = !FILTER_COUPON_ONLY;
+      document.getElementById("chipCoupon").classList.toggle("chipOn", FILTER_COUPON_ONLY);
+    }
+    if(which === "discount"){
+      FILTER_TOP_DISCOUNT = !FILTER_TOP_DISCOUNT;
+      document.getElementById("chipDiscount").classList.toggle("chipOn", FILTER_TOP_DISCOUNT);
+    }
+    render();
+  }
 
+  // =========================
+  // RENDER / SORT / FILTER
+  // =========================
   function forceReload(){ loadSheet(true); }
 
   function getQuery(){
@@ -790,8 +938,22 @@
 
   function filterItems(items){
     const q = getQuery();
-    if(!q) return items;
-    return items.filter(it => (`${it.title} ${it.coupon||""}`.toLowerCase()).includes(q));
+    let out = items;
+
+    if(q){
+      out = out.filter(it => (`${it.title} ${it.coupon||""}`.toLowerCase()).includes(q));
+    }
+    if(FILTER_COUPON_ONLY){
+      out = out.filter(it => !!safeText(it.coupon));
+    }
+    if(FILTER_TOP_DISCOUNT){
+      // mantém só o topo por desconto (ex: top 20% ou pelo menos 10 itens)
+      const sorted = [...out].sort((a,b)=>(b.discountNum||0)-(a.discountNum||0));
+      const keep = Math.max(10, Math.ceil(sorted.length * 0.20));
+      out = sorted.slice(0, keep);
+    }
+
+    return out;
   }
 
   function sortItems(items, mode){
@@ -817,8 +979,35 @@
   }
 
   function openOffer(it){
+    // abre link afiliado se existir; se não, manda pro grupo
     const u = safeText(it.link);
     window.open(u || WHATSAPP_GROUP_LINK, "_blank");
+  }
+
+  // ✅ Copiar cupom e abrir WhatsApp já com texto (o usuário escolhe o grupo)
+  async function copyCouponAndOpenWhatsApp(it){
+    const c = safeText(it.coupon);
+    const title = safeText(it.title) || "Oferta";
+    if(!c){
+      alert("Este item não tem cupom.");
+      return;
+    }
+
+    const msg =
+`🔥 CUPOM + OFERTA
+Produto: ${title}
+Cupom: ${c}
+
+👉 Quero o link dessa oferta (se tiver) e instruções pra usar o cupom.
+Grupo: ${WHATSAPP_GROUP_LINK}`;
+
+    try{
+      await navigator.clipboard.writeText(c);
+    }catch(_){}
+
+    // Abre o WhatsApp com texto (compartilhar/encaminhar para o grupo)
+    const wa = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(wa, "_blank");
   }
 
   async function shareOffer(it){
@@ -839,17 +1028,78 @@
     }
   }
 
+  // =========================
+  // SPOTLIGHT (OFERTA DO MINUTO)
+  // =========================
+  function pickSpotlight(items){
+    if(!items.length) return null;
+
+    // pega os melhores por score (desconto + avaliação + vendidos)
+    const scored = [...items].sort((a,b)=>{
+      const sa = (a.discountNum||0)*1.3 + (a.ratingNum||0)*10 + (a.soldNum||0)*0.02;
+      const sb = (b.discountNum||0)*1.3 + (b.ratingNum||0)*10 + (b.soldNum||0)*0.02;
+      return sb - sa;
+    });
+
+    return scored[0] || items[0];
+  }
+
+  function renderSpotlight(){
+    const box = document.getElementById("spotlight");
+    if(!SPOT_ITEM){
+      box.style.display = "none";
+      return;
+    }
+
+    document.getElementById("spotImg").src = SPOT_ITEM.image || "";
+    document.getElementById("spotTitle").textContent = SPOT_ITEM.title || "Oferta";
+    document.getElementById("spotNow").textContent = SPOT_ITEM.finalPriceText || "—";
+
+    const old = document.getElementById("spotOld");
+    if(SPOT_ITEM.originalPriceText && SPOT_ITEM.originalPriceText !== SPOT_ITEM.finalPriceText){
+      old.style.display = "block";
+      old.textContent = SPOT_ITEM.originalPriceText;
+    } else {
+      old.style.display = "none";
+    }
+
+    const metaBits = [];
+    if(SPOT_ITEM.discount) metaBits.push(`🔥 ${SPOT_ITEM.discount}`);
+    if(SPOT_ITEM.rating) metaBits.push(`⭐ ${SPOT_ITEM.rating}`);
+    if(SPOT_ITEM.sold) metaBits.push(`✅ ${SPOT_ITEM.sold} vendidos`);
+    document.getElementById("spotMeta").textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";
+
+    box.style.display = "grid";
+  }
+
+  function spotOpen(){
+    if(!SPOT_ITEM) return;
+    openOffer(SPOT_ITEM);
+  }
+  function spotShare(){
+    if(!SPOT_ITEM) return;
+    shareOffer(SPOT_ITEM);
+  }
+
+  // =========================
+  // MAIN RENDER
+  // =========================
   function render(){
     const grid = document.getElementById("offers");
     const loading = document.getElementById("loading");
 
-    const sorted = sortItems(filterItems(ALL_ITEMS), getSort());
+    const filtered = filterItems(ALL_ITEMS);
+    const sorted = sortItems(filtered, getSort());
 
     grid.innerHTML = "";
     loading.style.display = sorted.length ? "none" : "block";
     loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
 
     document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
+
+    // Spotlight: pega do conjunto completo (melhor sensação de “oferta do minuto”)
+    SPOT_ITEM = pickSpotlight(ALL_ITEMS);
+    renderSpotlight();
 
     for(const it of sorted){
       const card = document.createElement("article");
@@ -882,6 +1132,7 @@
         oldP.textContent = it.originalPriceText;
         prices.appendChild(oldP);
       }
+
       body.appendChild(prices);
 
       const row1 = document.createElement("div");
@@ -935,6 +1186,12 @@
       btn3.onclick = () => shareOffer(it);
       buy.appendChild(btn3);
 
+      const btn4 = document.createElement("button");
+      btn4.className = "btnSmall";
+      btn4.textContent = "Copiar cupom";
+      btn4.onclick = () => copyCouponAndOpenWhatsApp(it);
+      buy.appendChild(btn4);
+
       body.appendChild(buy);
 
       card.appendChild(body);
@@ -948,7 +1205,6 @@
   async function loadSheet(isManual=false){
     try{
       setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
-
       const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
       const res = await fetch(url, { cache:"no-store" });
       if(!res.ok) throw new Error("HTTP " + res.status);
@@ -960,9 +1216,12 @@
       const header = rows[0].map(h => safeText(h).toLowerCase());
       const idx = (name) => header.indexOf(name);
 
+      // Colunas esperadas: image,title,price,discount,coupon,sold,rating,affiliate/link/url
+      // Colunas extras opcionais para prova social:
+      // group_count, posts_today (pode repetir em todas as linhas; ele pega o primeiro número que achar)
       const iImage = idx("image");
       const iTitle = idx("title");
-      const iPrice = idx("price"); // ORIGINAL
+      const iPrice = idx("price"); // preço original
       const iDiscount = idx("discount");
       const iCoupon = idx("coupon");
       const iSold = idx("sold");
@@ -972,10 +1231,26 @@
         (idx("link") >= 0 ? idx("link") :
         (idx("url") >= 0 ? idx("url") : -1));
 
-      const items = [];
+      const iGroup = idx("group_count");
+      const iPosts = idx("posts_today");
 
+      let groupCount = null;
+      let postsToday = null;
+
+      const items = [];
       for(let r=1; r<rows.length; r++){
         const row = rows[r] || [];
+
+        // Captura social proof se existir (pega o primeiro que encontrar)
+        if(groupCount == null && iGroup >= 0){
+          const g = toNumber(row[iGroup]);
+          if(isFinite(g) && g > 0) groupCount = Math.round(g);
+        }
+        if(postsToday == null && iPosts >= 0){
+          const p = toNumber(row[iPosts]);
+          if(isFinite(p) && p > 0) postsToday = Math.round(p);
+        }
+
         const title = safeText(row[iTitle]);
         const image = safeText(row[iImage]);
         const originalRaw = safeText(row[iPrice]);
@@ -1024,12 +1299,18 @@
 
       ALL_ITEMS = items;
 
-      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
+      // Atualiza KPIs
       document.getElementById("kpi1").textContent = items.length.toString();
+      const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
+      document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";
 
-      const soldToday = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-      document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
+      // Prova social (planilha ou padrão)
+      const gc = groupCount ?? DEFAULT_GROUP_COUNT;
+      const pt = postsToday ?? DEFAULT_POSTS_TODAY;
+      document.getElementById("socialProof").textContent =
+        `✅ +${gc.toLocaleString("pt-BR")} pessoas já entraram no grupo • 🔥 ${pt} ofertas postadas hoje`;
 
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
       render();
 
     }catch(err){
@@ -1043,7 +1324,7 @@
   }
 
   // =========================
-  // START
+  // EVENTS + START
   // =========================
   document.getElementById("q").addEventListener("input", () => render());
   document.getElementById("sort").addEventListener("change", () => render());
