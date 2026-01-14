@@ -15,15 +15,25 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 .wrap{max-width:1100px;margin:auto;padding:16px}
+
+/* topo */
 .top{background:var(--yellow);border-radius:var(--radius);padding:22px;text-align:center;box-shadow:var(--shadow)}
 .logo{width:320px;max-width:90%}
+
+/* card */
 .poster{background:var(--card);margin-top:14px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
 .title{text-align:center;padding:18px}
 .title h1{margin:0;font-size:26px;font-weight:900}
+
+/* faixa vermelha */
 .redbar{background:#c62828;color:#fff;margin:0 14px;border-radius:16px;padding:14px}
 .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-weight:bold}
 @media(max-width:700px){.qgrid{grid-template-columns:1fr}}
+
+/* texto */
 .lead{text-align:center;padding:14px;font-weight:bold}
+
+/* seções */
 .section{padding:14px 18px}
 .section h2{text-align:center;font-size:22px;margin-bottom:8px}
 .hint{text-align:center;font-weight:bold;margin-bottom:10px}
@@ -86,7 +96,31 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   font-size:12px;
   font-weight:1000;
 }
-.timer{margin-top:8px;font-weight:900}
+.metaLine{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.soldPill{
+  background:#fff3cd;
+  color:#7a5200;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:1000;
+  border:1px solid rgba(0,0,0,.06);
+}
+.ratingPill{
+  background:#f1f3f4;
+  color:#111;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:1000;
+  border:1px solid rgba(0,0,0,.06);
+}
+.timer{margin-top:10px;font-weight:900}
 .ctaWide{
   display:inline-block;
   margin-top:12px;
@@ -143,6 +177,30 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
   border-radius:999px;
   font-size:12px;
   font-weight:1000;
+}
+.metaSmall{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.soldSmall{
+  background:#fff3cd;
+  color:#7a5200;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:1000;
+  border:1px solid rgba(0,0,0,.06);
+}
+.ratingSmall{
+  background:#f1f3f4;
+  color:#111;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:1000;
+  border:1px solid rgba(0,0,0,.06);
 }
 
 /* botões rolar */
@@ -229,6 +287,11 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
           <span class="new" id="featuredNew"></span>
           <span class="offPill" id="featuredOff" style="display:none;"></span>
           <span class="couponPill" id="featuredCoupon" style="display:none;"></span>
+        </div>
+
+        <div class="metaLine">
+          <span class="soldPill" id="featuredSold" style="display:none;"></span>
+          <span class="ratingPill" id="featuredRating" style="display:none;"></span>
         </div>
 
         <div class="timer">⏳ Termina em: <span id="countdown">--:--:--</span></div>
@@ -346,6 +409,16 @@ function toDiscount(v){
   return Number.isFinite(n) ? n : 0;
 }
 
+function toRating(v){
+  let s = String(v || "").trim();
+  if(!s) return 0;
+  s = s.replace(",",".");
+  const n = parseFloat(s);
+  if(!Number.isFinite(n)) return 0;
+  // limita entre 0 e 5
+  return Math.max(0, Math.min(5, n));
+}
+
 function formatBRL(n){
   return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
 }
@@ -353,9 +426,25 @@ function formatBRL(n){
 function normalizeCoupon(v){
   let s = String(v || "").trim();
   if(!s) return "";
-  // remove "cupom:" se a pessoa escrever
   s = s.replace(/^cupom\s*:\s*/i, "").trim();
   return s;
+}
+
+function normalizeSold(v){
+  let s = String(v || "").trim();
+  if(!s) return "";
+  // se o usuário digitar só "100", vira "+100 vendidos"
+  if (/^\d+$/g.test(s)) return `+${s} vendidos`;
+  // se ele digitar "+100", completa
+  if (/^\+\d+$/g.test(s)) return `${s} vendidos`;
+  return s; // se já vier "+100 vendidos" mantém
+}
+
+function ratingText(r){
+  if(!r) return "";
+  // ⭐ 4,8 (máx 1 casa)
+  const txt = (Math.round(r*10)/10).toString().replace(".",",");
+  return `⭐ ${txt}`;
 }
 
 function buildCard(item){
@@ -416,8 +505,29 @@ function buildCard(item){
     prices.appendChild(cp);
   }
 
+  // vendidos + avaliação
+  const meta = document.createElement("div");
+  meta.className = "metaSmall";
+
+  const sold = normalizeSold(item.sold);
+  if (sold){
+    const s = document.createElement("span");
+    s.className = "soldSmall";
+    s.textContent = sold;
+    meta.appendChild(s);
+  }
+
+  const r = toRating(item.rating);
+  if (r){
+    const rr = document.createElement("span");
+    rr.className = "ratingSmall";
+    rr.textContent = ratingText(r);
+    meta.appendChild(rr);
+  }
+
   info.appendChild(strong);
   info.appendChild(prices);
+  if (meta.childNodes.length) info.appendChild(meta);
 
   a.appendChild(img);
   a.appendChild(info);
@@ -467,6 +577,9 @@ function renderFeatured(best){
   const offEl = document.getElementById("featuredOff");
   const cupEl = document.getElementById("featuredCoupon");
 
+  const soldEl = document.getElementById("featuredSold");
+  const ratingEl = document.getElementById("featuredRating");
+
   img.src = best.image;
   title.textContent = best.title || "Destaque do dia";
   cta.href = WA_GROUP;
@@ -499,6 +612,24 @@ function renderFeatured(best){
     cupEl.textContent = "";
   }
 
+  const sold = normalizeSold(best.sold);
+  if (sold){
+    soldEl.style.display = "";
+    soldEl.textContent = sold;
+  } else {
+    soldEl.style.display = "none";
+    soldEl.textContent = "";
+  }
+
+  const r = toRating(best.rating);
+  if (r){
+    ratingEl.style.display = "";
+    ratingEl.textContent = ratingText(r);
+  } else {
+    ratingEl.style.display = "none";
+    ratingEl.textContent = "";
+  }
+
   wrap.style.display = "grid";
   startCountdown();
 }
@@ -527,10 +658,12 @@ async function loadFromSheet(){
     const tI = idx("title");
     const pI = idx("price");
     const dI = idx("discount");
-    const cI = idx("coupon"); // ✅ novo
+    const cI = idx("coupon");
+    const soI = idx("sold");
+    const rI = idx("rating");
 
     if (sI < 0 || iI < 0 || tI < 0){
-      status.textContent = "Cabeçalhos inválidos. Use: section | image | title | price | discount | coupon";
+      status.textContent = "Cabeçalhos inválidos. Use: section | image | title | price | discount | coupon | sold | rating";
       return;
     }
 
@@ -540,7 +673,9 @@ async function loadFromSheet(){
       title:   (r[tI] || "").trim(),
       price:   pI >= 0 ? (r[pI] || "").trim() : "",
       discount:dI >= 0 ? (r[dI] || "").trim() : "",
-      coupon:  cI >= 0 ? (r[cI] || "").trim() : ""
+      coupon:  cI >= 0 ? (r[cI] || "").trim() : "",
+      sold:    soI >= 0 ? (r[soI] || "").trim() : "",
+      rating:  rI >= 0 ? (r[rI] || "").trim() : ""
     })).filter(x => x.section && x.image);
 
     // destaque: maior desconto (se empate, pega o primeiro)
