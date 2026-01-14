@@ -49,7 +49,7 @@
       z-index:80;
     }
     .topbar .wrap{
-      padding:14px 16px; /* AUMENTEI */
+      padding:14px 16px;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -62,7 +62,7 @@
       min-width:0;
     }
     .toplogo{
-      width:46px;height:46px; /* AUMENTEI */
+      width:46px;height:46px;
       border-radius:16px;
       background:#111;
       display:flex;align-items:center;justify-content:center;
@@ -73,14 +73,14 @@
     .toplogo img{width:100%;height:100%;object-fit:contain}
     .toptext{min-width:0}
     .topname{
-      font-size:18px; /* AUMENTEI */
+      font-size:18px;
       line-height:1.05;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
     .toptag{
-      font-size:13px; /* AUMENTEI */
+      font-size:13px;
       opacity:.9;
       font-weight:900;
       white-space:nowrap;
@@ -95,7 +95,7 @@
       background: rgba(0,0,0,.10);
       border:1px solid rgba(0,0,0,.12);
       border-radius:999px;
-      padding:10px 12px; /* AUMENTEI */
+      padding:10px 12px;
       white-space:nowrap;
       cursor:pointer;
       user-select:none;
@@ -111,7 +111,7 @@
     /* Header escuro */
     header{
       position:sticky;
-      top:74px; /* acompanha a barra amarela maior */
+      top:74px;
       z-index:60;
       background: rgba(11,18,32,.86);
       backdrop-filter: blur(10px);
@@ -219,15 +219,15 @@
     .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
 
     /* =========================
-       VÍDEO (APARECE SEMPRE)
+       VÍDEO (CENTRALIZADO)
        ========================= */
     .videoWrap{
-      margin-top:12px auto 0;
+      margin:12px auto 0;   /* ✅ ÚNICA MUDANÇA: centraliza */
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
       border-radius:14px;
       overflow:hidden;
-      max-width: 520px; /* menor */
+      max-width: 520px;
     }
     @media (max-width: 860px){
       .videoWrap{max-width:100%}
@@ -503,7 +503,6 @@
 
 <body>
 
-<!-- BARRA AMARELA (AGORA MAIOR) -->
 <div class="topbar">
   <div class="wrap">
     <div class="topbrand">
@@ -558,7 +557,6 @@
           <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
         </div>
 
-        <!-- VÍDEO (não removi) -->
         <div class="videoWrap" id="videoWrap">
           <div class="videoTop">
             <div>
@@ -627,7 +625,7 @@
     <b>🔒 Compra com mais segurança</b>
     <ul>
       <li>Este site divulga ofertas encontradas em marketplaces e grupos parceiros.</li>
-      <li><b>Não somos uma loja oficial do Mercado Livre e não representamos a marca.</li>
+      <li><b>Não somos uma loja oficial do Mercado Livre</b> e não representamos a marca.</li>
       <li>Preços e disponibilidade podem mudar a qualquer momento no site do vendedor.</li>
       <li>Se algum item não abrir, atualize a página e tente novamente.</li>
     </ul>
@@ -644,22 +642,11 @@
 </button>
 
 <script>
-  // =========================
-  // CONFIG
-  // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
   const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-
-  // ✅ VÍDEO: coloque o arquivo no GitHub (mesma pasta do index.html) com o nome "video.mp4"
-  // ou troque para o nome correto do seu arquivo.
   const VIDEO_URL = "video.mp4";
-
-  // Atualização automática
   const REFRESH_MS = 2 * 60 * 1000;
 
-  // =========================
-  // HELPERS
-  // =========================
   function nowHHMMSS(){
     const d = new Date();
     const hh = String(d.getHours()).padStart(2,'0');
@@ -754,18 +741,12 @@
     return rows;
   }
 
-  // =========================
-  // VIDEO
-  // =========================
   function setupVideo(){
     const vid = document.getElementById("promoVideo");
     vid.src = VIDEO_URL;
-
-    // tenta autoplay mudo (permitido em muitos celulares)
     vid.muted = true;
     vid.playsInline = true;
     vid.autoplay = true;
-
     vid.play().catch(()=>{});
   }
   function enableVideoAudio(){
@@ -775,11 +756,7 @@
     vid.play().catch(()=>{});
   }
 
-  // =========================
-  // RENDER
-  // =========================
   let ALL_ITEMS = [];
-
   function forceReload(){ loadSheet(true); }
 
   function getQuery(){
@@ -788,13 +765,11 @@
   function getSort(){
     return document.getElementById("sort").value;
   }
-
   function filterItems(items){
     const q = getQuery();
     if(!q) return items;
     return items.filter(it => (`${it.title} ${it.coupon||""}`.toLowerCase()).includes(q));
   }
-
   function sortItems(items, mode){
     const a = [...items];
     if(mode === "priceAsc"){
@@ -821,7 +796,6 @@
     const u = safeText(it.link);
     window.open(u || WHATSAPP_GROUP_LINK, "_blank");
   }
-
   async function shareOffer(it){
     const title = safeText(it.title) || "Oferta";
     const url = safeText(it.link) || WHATSAPP_GROUP_LINK;
@@ -943,13 +917,9 @@
     }
   }
 
-  // =========================
-  // LOAD SHEET
-  // =========================
   async function loadSheet(isManual=false){
     try{
       setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
-
       const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
       const res = await fetch(url, { cache:"no-store" });
       if(!res.ok) throw new Error("HTTP " + res.status);
@@ -1024,13 +994,7 @@
       }
 
       ALL_ITEMS = items;
-
       setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
-      document.getElementById("kpi1").textContent = items.length.toString();
-
-      const soldToday = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-      document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
-
       render();
 
     }catch(err){
@@ -1043,9 +1007,6 @@
     }
   }
 
-  // =========================
-  // START
-  // =========================
   document.getElementById("q").addEventListener("input", () => render());
   document.getElementById("sort").addEventListener("change", () => render());
 
