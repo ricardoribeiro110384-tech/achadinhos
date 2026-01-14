@@ -38,7 +38,7 @@
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
     /* =========================
-       BARRA AMARELA (LOGO + NOME)
+       BARRA AMARELA (MAIOR)
        ========================= */
     .topbar{
       background: linear-gradient(90deg, var(--yellow), var(--yellow2));
@@ -46,41 +46,41 @@
       border-bottom:1px solid rgba(0,0,0,.12);
       position:sticky;
       top:0;
-      z-index:70;
+      z-index:80;
     }
     .topbar .wrap{
-      padding:10px 16px;  /* menor que antes (mais compacta) */
+      padding:14px 16px; /* AUMENTEI */
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
     }
     .topbrand{
-      display:flex;align-items:center;gap:10px;
+      display:flex;align-items:center;gap:12px;
       font-weight:1000;
       letter-spacing:.2px;
       min-width:0;
     }
     .toplogo{
-      width:34px;height:34px; /* menor */
-      border-radius:12px;
+      width:46px;height:46px; /* AUMENTEI */
+      border-radius:16px;
       background:#111;
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;
       flex:0 0 auto;
-      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      box-shadow: 0 12px 26px rgba(0,0,0,.20);
     }
     .toplogo img{width:100%;height:100%;object-fit:contain}
     .toptext{min-width:0}
     .topname{
-      font-size:15px; /* menor */
+      font-size:18px; /* AUMENTEI */
       line-height:1.05;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
     .toptag{
-      font-size:11.5px; /* menor */
+      font-size:13px; /* AUMENTEI */
       opacity:.9;
       font-weight:900;
       white-space:nowrap;
@@ -91,11 +91,11 @@
     .topright{
       display:flex;gap:10px;align-items:center;flex:0 0 auto;
       font-weight:1000;
-      font-size:12px;
+      font-size:13px;
       background: rgba(0,0,0,.10);
       border:1px solid rgba(0,0,0,.12);
       border-radius:999px;
-      padding:8px 10px;
+      padding:10px 12px; /* AUMENTEI */
       white-space:nowrap;
       cursor:pointer;
       user-select:none;
@@ -103,20 +103,22 @@
     .topright:active{transform: translateY(1px)}
     @media (max-width: 520px){
       .toptag{display:none}
-      .topright{padding:8px 10px}
+      .topbar .wrap{padding:12px 14px}
+      .toplogo{width:44px;height:44px}
+      .topname{font-size:16px}
     }
 
-    /* Header (escuro) */
+    /* Header escuro */
     header{
       position:sticky;
-      top:54px; /* fica abaixo da barra amarela */
+      top:74px; /* acompanha a barra amarela maior */
       z-index:60;
       background: rgba(11,18,32,.86);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
     @media (max-width: 520px){
-      header{top:52px}
+      header{top:68px}
     }
 
     .headbar{
@@ -217,7 +219,7 @@
     .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
 
     /* =========================
-       VÍDEO (MENOR / COMPACTO)
+       VÍDEO (APARECE SEMPRE)
        ========================= */
     .videoWrap{
       margin-top:12px;
@@ -225,6 +227,10 @@
       background: rgba(255,255,255,.03);
       border-radius:14px;
       overflow:hidden;
+      max-width: 520px; /* menor */
+    }
+    @media (max-width: 860px){
+      .videoWrap{max-width:100%}
     }
     .videoTop{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -242,17 +248,9 @@
       cursor:pointer;
       color:var(--text);
     }
-    .videoBox{
-      width:100%;
-      max-width: 520px;  /* limita para não ficar gigante */
-    }
-    @media (max-width: 860px){
-      .videoBox{max-width: 100%;}
-    }
     .videoFrame{
       aspect-ratio: 16 / 9;
       background:#000;
-      display:flex;align-items:center;justify-content:center;
     }
     video{
       width:100%;
@@ -317,7 +315,6 @@
       flex:0 0 auto;
       font-size:18px;
     }
-    /* ESCASSEZ maior */
     .notice h3{
       margin:0;
       font-size:16px;
@@ -344,7 +341,6 @@
       gap:12px;
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
-    /* no celular: 2 colunas */
     @media (max-width: 620px){.grid{grid-template-columns: repeat(2, 1fr)}}
     @media (max-width: 380px){.grid{grid-template-columns: 1fr}}
 
@@ -365,7 +361,6 @@
       overflow:hidden;
       padding:8px;
     }
-    /* não corta */
     .imgbox img{
       width:100%;height:100%;
       object-fit:contain;
@@ -508,12 +503,11 @@
 
 <body>
 
-<!-- BARRA AMARELA (logo + nome) -->
+<!-- BARRA AMARELA (AGORA MAIOR) -->
 <div class="topbar">
   <div class="wrap">
     <div class="topbrand">
       <div class="toplogo" aria-hidden="true">
-        <!-- coloque um arquivo "logo.png" no mesmo repositório -->
         <img src="logo.png" alt="Logo Achadinhos" onerror="this.style.display='none'">
       </div>
       <div class="toptext">
@@ -564,8 +558,8 @@
           <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
         </div>
 
-        <!-- VÍDEO MENOR (não removi) -->
-        <div class="videoWrap videoBox" id="videoWrap" style="display:none">
+        <!-- VÍDEO (não removi) -->
+        <div class="videoWrap" id="videoWrap">
           <div class="videoTop">
             <div>
               <b>🎥 Vídeo</b>
@@ -656,8 +650,9 @@
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
   const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
 
-  // Coloque um link direto de vídeo (mp4/webm). Se deixar vazio, o bloco do vídeo some.
-  const VIDEO_URL = ""; // ex: "https://seusite.com/video.mp4"
+  // ✅ VÍDEO: coloque o arquivo no GitHub (mesma pasta do index.html) com o nome "video.mp4"
+  // ou troque para o nome correto do seu arquivo.
+  const VIDEO_URL = "video.mp4";
 
   // Atualização automática
   const REFRESH_MS = 2 * 60 * 1000;
@@ -672,12 +667,10 @@
     const ss = String(d.getSeconds()).padStart(2,'0');
     return `${hh}:${mm}:${ss}`;
   }
-
   function moneyBRLFromNumber(n){
     if (!isFinite(n)) return "";
     return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
   }
-
   function toNumber(str){
     if (str == null) return NaN;
     const s = String(str).trim()
@@ -688,11 +681,9 @@
     const n = Number(s);
     return isFinite(n) ? n : NaN;
   }
-
   function safeText(x){
     return (x ?? "").toString().replace(/\s+/g,' ').trim();
   }
-
   function escapeHtml(s){
     return (s ?? "").toString()
       .replaceAll("&","&amp;")
@@ -700,20 +691,16 @@
       .replaceAll(">","&gt;")
       .replaceAll('"',"&quot;");
   }
-
   function scrollToOffers(){
     document.getElementById("offers").scrollIntoView({behavior:"smooth", block:"start"});
   }
-
   function openGroup(){
     window.open(WHATSAPP_GROUP_LINK, "_blank");
   }
-
   function setStatus(mode, text){
     const dot = document.getElementById("statusDot");
     const label = document.getElementById("updatedLabel");
     const time = document.getElementById("updatedTime");
-
     if (mode === "ok"){
       dot.style.background = "var(--brand)";
       dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
@@ -734,7 +721,6 @@
       time.textContent = text;
     }
   }
-
   function startLiveClock(){
     const timeEl = document.getElementById("updatedTime");
     if(!timeEl) return;
@@ -744,47 +730,27 @@
       }
     }, 1000);
   }
-
   function parseCSV(text){
     const rows = [];
     let row = [];
     let cur = "";
     let inQuotes = false;
-
     for(let i=0;i<text.length;i++){
       const ch = text[i];
       const next = text[i+1];
-
-      if(ch === '"' && inQuotes && next === '"'){
-        cur += '"';
-        i++;
-        continue;
-      }
-      if(ch === '"'){
-        inQuotes = !inQuotes;
-        continue;
-      }
-      if(ch === ',' && !inQuotes){
-        row.push(cur);
-        cur = "";
-        continue;
-      }
+      if(ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }
+      if(ch === '"'){ inQuotes = !inQuotes; continue; }
+      if(ch === ',' && !inQuotes){ row.push(cur); cur = ""; continue; }
       if((ch === '\n' || ch === '\r') && !inQuotes){
         if(ch === '\r' && next === '\n'){ i++; }
-        row.push(cur);
-        cur = "";
-        if(row.length > 1 || row[0].trim() !== ""){
-          rows.push(row);
-        }
-        row = [];
-        continue;
+        row.push(cur); cur = "";
+        if(row.length > 1 || row[0].trim() !== "") rows.push(row);
+        row = []; continue;
       }
       cur += ch;
     }
     row.push(cur);
-    if(row.length > 1 || row[0].trim() !== ""){
-      rows.push(row);
-    }
+    if(row.length > 1 || row[0].trim() !== "") rows.push(row);
     return rows;
   }
 
@@ -792,28 +758,18 @@
   // VIDEO
   // =========================
   function setupVideo(){
-    const wrap = document.getElementById("videoWrap");
     const vid = document.getElementById("promoVideo");
-
-    if(!VIDEO_URL){
-      wrap.style.display = "none";
-      return;
-    }
-
-    wrap.style.display = "block";
     vid.src = VIDEO_URL;
 
-    // tenta autoplay mudo (mobile costuma permitir)
+    // tenta autoplay mudo (permitido em muitos celulares)
     vid.muted = true;
     vid.playsInline = true;
     vid.autoplay = true;
 
     vid.play().catch(()=>{});
   }
-
   function enableVideoAudio(){
     const vid = document.getElementById("promoVideo");
-    if(!vid) return;
     vid.muted = false;
     vid.volume = 1;
     vid.play().catch(()=>{});
@@ -829,14 +785,18 @@
   function getQuery(){
     return safeText(document.getElementById("q").value).toLowerCase();
   }
-
   function getSort(){
     return document.getElementById("sort").value;
   }
 
+  function filterItems(items){
+    const q = getQuery();
+    if(!q) return items;
+    return items.filter(it => (`${it.title} ${it.coupon||""}`.toLowerCase()).includes(q));
+  }
+
   function sortItems(items, mode){
     const a = [...items];
-
     if(mode === "priceAsc"){
       a.sort((x,y)=> (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity));
     } else if(mode === "priceDesc"){
@@ -849,25 +809,15 @@
       a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
     } else {
       a.sort((x,y)=>{
-        const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
-        const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
+        const sx = (x.soldNum||0)*2 + (x.discountNum||0)*1.2 + (x.ratingNum||0)*10;
+        const sy = (y.soldNum||0)*2 + (y.discountNum||0)*1.2 + (y.ratingNum||0)*10;
         return sy - sx;
       });
     }
     return a;
   }
 
-  function filterItems(items){
-    const q = getQuery();
-    if(!q) return items;
-    return items.filter(it => {
-      const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
-      return hay.includes(q);
-    });
-  }
-
   function openOffer(it){
-    // Se tiver link de afiliado na planilha, abre ele. Se não tiver, abre o grupo.
     const u = safeText(it.link);
     window.open(u || WHATSAPP_GROUP_LINK, "_blank");
   }
@@ -875,130 +825,18 @@
   async function shareOffer(it){
     const title = safeText(it.title) || "Oferta";
     const url = safeText(it.link) || WHATSAPP_GROUP_LINK;
-    const text = `🔥 OFERTA: ${title}\n👉 Link: ${url}\n\nEntre no grupo para pegar mais cupons: ${WHATSAPP_GROUP_LINK}`;
-
+    const text = `🔥 OFERTA: ${title}\n👉 Link: ${url}\n\nEntre no grupo: ${WHATSAPP_GROUP_LINK}`;
     try{
       if(navigator.share){
         await navigator.share({ title: "Achadinhos Oficial", text, url });
         return;
       }
-    }catch(_) {}
-
+    }catch(_){}
     try{
       await navigator.clipboard.writeText(text);
       alert("Copiado! Agora é só colar no WhatsApp/Instagram.");
     }catch{
       prompt("Copie e compartilhe:", text);
-    }
-  }
-
-  // =========================
-  // LOAD SHEET
-  // =========================
-  async function loadSheet(isManual=false){
-    try{
-      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
-
-      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
-      const res = await fetch(url, { cache:"no-store" });
-      if(!res.ok) throw new Error("HTTP " + res.status);
-
-      const text = await res.text();
-      const rows = parseCSV(text);
-      if(!rows.length) throw new Error("CSV vazio");
-
-      const header = rows[0].map(h => safeText(h).toLowerCase());
-      const idx = (name) => header.indexOf(name);
-
-      // sua planilha: image,title,price(original),discount(%),coupon,sold,rating,link/url/affiliate(opcional)
-      const iImage = idx("image");
-      const iTitle = idx("title");
-      const iPrice = idx("price"); // ORIGINAL
-      const iDiscount = idx("discount");
-      const iCoupon = idx("coupon");
-      const iSold = idx("sold");
-      const iRating = idx("rating");
-      const iLink =
-        idx("affiliate") >= 0 ? idx("affiliate") :
-        (idx("link") >= 0 ? idx("link") :
-        (idx("url") >= 0 ? idx("url") : -1));
-
-      const items = [];
-
-      for(let r=1; r<rows.length; r++){
-        const row = rows[r] || [];
-        const title = safeText(row[iTitle]);
-        const image = safeText(row[iImage]);
-        const originalRaw = safeText(row[iPrice]);    // ORIGINAL
-        const discountRaw = safeText(row[iDiscount]); // "46% OFF" ou "46"
-        const coupon = safeText(row[iCoupon]);
-        const sold = safeText(row[iSold]);
-        const rating = safeText(row[iRating]);
-        const link = iLink >= 0 ? safeText(row[iLink]) : "";
-
-        if(!title && !image && !originalRaw && !link) continue;
-
-        const originalNum = toNumber(originalRaw);
-
-        // discount: pega número, mesmo se vier "46% OFF"
-        let discountNum = toNumber(discountRaw);
-        if(!isFinite(discountNum)){
-          const m = (discountRaw || "").match(/(\d+(?:[.,]\d+)?)/);
-          discountNum = m ? toNumber(m[1]) : 0;
-        }
-        if(!isFinite(discountNum)) discountNum = 0;
-
-        // final = original - %
-        let finalNum = originalNum;
-        if(isFinite(originalNum) && discountNum > 0 && discountNum < 100){
-          finalNum = +(originalNum * (1 - discountNum/100)).toFixed(2);
-        }
-
-        const soldNum = toNumber(sold);
-        const ratingNum = toNumber(rating);
-
-        items.push({
-          title: title || "Oferta",
-          image,
-          originalPriceText: isFinite(originalNum) ? moneyBRLFromNumber(originalNum) : (originalRaw || ""),
-          originalPriceNum: isFinite(originalNum) ? originalNum : NaN,
-          finalPriceText: isFinite(finalNum) ? moneyBRLFromNumber(finalNum) : (originalRaw || ""),
-          finalPriceNum: isFinite(finalNum) ? finalNum : NaN,
-          discount: discountRaw,
-          discountNum: isFinite(discountNum) ? discountNum : 0,
-          coupon,
-          sold,
-          soldNum: isFinite(soldNum) ? soldNum : 0,
-          rating,
-          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          link
-        });
-      }
-
-      ALL_ITEMS = items;
-
-      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
-      render();
-
-      // KPI / textos
-      const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-      document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
-      document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
-
-      // escassez (forte)
-      document.getElementById("urgencyText").textContent =
-        "🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.";
-      document.getElementById("socialText").textContent =
-        soldToday ? `✅ Hoje já teve ${soldToday} compras somadas nas ofertas. Quem chega primeiro leva.` :
-                    "✅ Quem chega primeiro leva. Entre no grupo pra pegar link/cupom na hora e não perder.";
-
-    }catch(err){
-      console.error(err);
-      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
-      const loading = document.getElementById("loading");
-      loading.style.display = "block";
-      loading.textContent =
-        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
     }
   }
 
@@ -1077,11 +915,6 @@
       row1.appendChild(right);
       body.appendChild(row1);
 
-      const row2 = document.createElement("div");
-      row2.className = "row";
-      row2.innerHTML = `<div class="muted">Atualizado: ${nowHHMMSS()}</div>`;
-      body.appendChild(row2);
-
       const buy = document.createElement("div");
       buy.className = "buy";
 
@@ -1111,44 +944,103 @@
   }
 
   // =========================
-  // SEARCH/FILTER/SORT
+  // LOAD SHEET
   // =========================
-  function filterItems(items){
-    const q = getQuery();
-    if(!q) return items;
-    return items.filter(it => {
-      const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
-      return hay.includes(q);
-    });
-  }
+  async function loadSheet(isManual=false){
+    try{
+      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
 
-  function sortItems(items, mode){
-    const a = [...items];
-    if(mode === "priceAsc"){
-      a.sort((x,y)=> (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity));
-    } else if(mode === "priceDesc"){
-      a.sort((x,y)=> (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity));
-    } else if(mode === "discountDesc"){
-      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
-    } else if(mode === "soldDesc"){
-      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
-    } else if(mode === "ratingDesc"){
-      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
-    } else {
-      a.sort((x,y)=>{
-        const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
-        const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
-        return sy - sx;
-      });
+      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
+      const res = await fetch(url, { cache:"no-store" });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if(!rows.length) throw new Error("CSV vazio");
+
+      const header = rows[0].map(h => safeText(h).toLowerCase());
+      const idx = (name) => header.indexOf(name);
+
+      const iImage = idx("image");
+      const iTitle = idx("title");
+      const iPrice = idx("price"); // ORIGINAL
+      const iDiscount = idx("discount");
+      const iCoupon = idx("coupon");
+      const iSold = idx("sold");
+      const iRating = idx("rating");
+      const iLink =
+        idx("affiliate") >= 0 ? idx("affiliate") :
+        (idx("link") >= 0 ? idx("link") :
+        (idx("url") >= 0 ? idx("url") : -1));
+
+      const items = [];
+
+      for(let r=1; r<rows.length; r++){
+        const row = rows[r] || [];
+        const title = safeText(row[iTitle]);
+        const image = safeText(row[iImage]);
+        const originalRaw = safeText(row[iPrice]);
+        const discountRaw = safeText(row[iDiscount]);
+        const coupon = safeText(row[iCoupon]);
+        const sold = safeText(row[iSold]);
+        const rating = safeText(row[iRating]);
+        const link = iLink >= 0 ? safeText(row[iLink]) : "";
+
+        if(!title && !image && !originalRaw && !link) continue;
+
+        const originalNum = toNumber(originalRaw);
+
+        let discountNum = toNumber(discountRaw);
+        if(!isFinite(discountNum)){
+          const m = (discountRaw || "").match(/(\d+(?:[.,]\d+)?)/);
+          discountNum = m ? toNumber(m[1]) : 0;
+        }
+        if(!isFinite(discountNum)) discountNum = 0;
+
+        let finalNum = originalNum;
+        if(isFinite(originalNum) && discountNum > 0 && discountNum < 100){
+          finalNum = +(originalNum * (1 - discountNum/100)).toFixed(2);
+        }
+
+        const soldNum = toNumber(sold);
+        const ratingNum = toNumber(rating);
+
+        items.push({
+          title: title || "Oferta",
+          image,
+          originalPriceText: isFinite(originalNum) ? moneyBRLFromNumber(originalNum) : (originalRaw || ""),
+          originalPriceNum: isFinite(originalNum) ? originalNum : NaN,
+          finalPriceText: isFinite(finalNum) ? moneyBRLFromNumber(finalNum) : (originalRaw || ""),
+          finalPriceNum: isFinite(finalNum) ? finalNum : NaN,
+          discount: discountRaw,
+          discountNum: isFinite(discountNum) ? discountNum : 0,
+          coupon,
+          sold,
+          soldNum: isFinite(soldNum) ? soldNum : 0,
+          rating,
+          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
+          link
+        });
+      }
+
+      ALL_ITEMS = items;
+
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
+      document.getElementById("kpi1").textContent = items.length.toString();
+
+      const soldToday = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
+      document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
+
+      render();
+
+    }catch(err){
+      console.error(err);
+      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
+      const loading = document.getElementById("loading");
+      loading.style.display = "block";
+      loading.textContent =
+        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
     }
-    return a;
-  }
-
-  function getQuery(){
-    return safeText(document.getElementById("q").value).toLowerCase();
-  }
-  function getSort(){
-    return document.getElementById("sort").value;
   }
 
   // =========================
