@@ -110,13 +110,14 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
 }
 .cbtn:active{transform:translateY(1px)}
 
-/* ✅ SOMENTE "OFERTAS" vira grade no PC */
+/* ✅ SOMENTE "OFERTAS" vira grade no PC (sem buracos) */
 @media(min-width:900px){
   .offers-grid{
     display:grid !important;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:12px;
     overflow:visible !important;
-    padding: 0 !important;
+    padding:0 !important;
   }
   .offers-grid .carditem{flex:initial}
 }
@@ -165,7 +166,7 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
     </div>
 
     <div class="lead">
-      Isso acontece com milhares de pessoas todos os dias. A boa notícia? Agora existe uma forma simples e segura de comprar.
+      Isso acontece com milhares de mulheres todos os dias. A boa notícia? Agora existe uma forma simples e segura de comprar.
     </div>
 
     <div id="status" class="notice">Carregando ofertas da planilha…</div>
@@ -186,6 +187,7 @@ footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
     <!-- PROMOÇÕES DO DIA (auto, sempre carrossel) -->
     <section class="section" id="promocoes">
       <h2>Promoções do dia ⏰</h2>
+      <p class="hint">Atualize só a planilha e o site muda sozinho</p>
 
       <div class="carousel" id="trackPromos"></div>
 
@@ -268,17 +270,14 @@ function toNumberBR(v){
   // aceita: 191.55 | 191,55 | R$ 191,55 | 1.234,56
   let s = String(v || "").trim();
   if(!s) return NaN;
-  s = s.replace(/[^\d,.\-]/g,"");      // tira R$, espaços etc.
-  // se tem vírgula e ponto, assume pt-BR: 1.234,56 -> 1234.56
+  s = s.replace(/[^\d,.\-]/g,"");
   if (s.includes(",") && s.includes(".")) s = s.replace(/\./g,"").replace(",",".");
-  // se só tem vírgula, vira ponto
   else if (s.includes(",") && !s.includes(".")) s = s.replace(",",".");
   const n = parseFloat(s);
   return Number.isFinite(n) ? n : NaN;
 }
 
 function toDiscount(v){
-  // aceita: 15 | 15% | 15 OFF
   let s = String(v || "").trim();
   if(!s) return 0;
   s = s.replace(",",".");
@@ -317,7 +316,7 @@ function buildCard(item){
   prices.className = "prices";
 
   const priceNum = toNumberBR(item.price);
-  const disc = toDiscount(item.discount || item.badgeDiscount || "");
+  const disc = toDiscount(item.discount || "");
 
   if (Number.isFinite(priceNum) && priceNum > 0 && disc > 0){
     const old = document.createElement("span");
@@ -340,19 +339,9 @@ function buildCard(item){
   } else {
     const neu = document.createElement("span");
     neu.className = "new";
-    // se tiver price válido sem desconto, mostra só ele
     if (Number.isFinite(priceNum) && priceNum > 0) neu.textContent = formatBRL(priceNum);
     else neu.textContent = "Ver no grupo →";
     prices.appendChild(neu);
-
-    // se existir badge textual (ex: "Frete grátis") mostra como pill
-    const badgeTxt = String(item.badge || "").trim();
-    if (badgeTxt && !String(item.discount || "").trim()){
-      const off = document.createElement("span");
-      off.className = "off";
-      off.textContent = badgeTxt;
-      prices.appendChild(off);
-    }
   }
 
   info.appendChild(strong);
@@ -387,10 +376,9 @@ async function loadFromSheet(){
     const tI = idx("title");
     const pI = idx("price");
     const dI = idx("discount");
-    const bI = idx("badge");
 
     if (sI < 0 || iI < 0 || tI < 0){
-      status.textContent = "Cabeçalhos inválidos. Use: section | image | title | price | discount (e opcional badge)";
+      status.textContent = "Cabeçalhos inválidos. Use: section | image | title | price | discount";
       return;
     }
 
@@ -399,8 +387,7 @@ async function loadFromSheet(){
       image:   (r[iI] || "").trim(),
       title:   (r[tI] || "").trim(),
       price:   pI >= 0 ? (r[pI] || "").trim() : "",
-      discount:dI >= 0 ? (r[dI] || "").trim() : "",
-      badge:   bI >= 0 ? (r[bI] || "").trim() : ""
+      discount:dI >= 0 ? (r[dI] || "").trim() : ""
     })).filter(x => x.section && x.image);
 
     const ofertas = items.filter(x => x.section === "oferta");
