@@ -16,12 +16,9 @@
       --brand:#22c55e;
       --accent:#f59e0b;
       --danger:#ef4444;
-      --border:rgba(255,255,255,.10);
+      --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
-
-      --yellow:#ffd000;
-      --yellowText:#1a1400;
     }
     *{box-sizing:border-box}
     body{
@@ -31,129 +28,55 @@
                   radial-gradient(800px 500px at 80% 10%, rgba(245,158,11,.10), transparent 55%),
                   var(--bg);
       color:var(--text);
-      overflow-x:hidden;
+      overflow-x:hidden; /* evita "puxar pro lado" e ficar vazio */
     }
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
-    /* =========================
-       TOP YELLOW STRIP (logo)
-       ========================= */
-    .topbar{
-      background: linear-gradient(90deg, #ffd000, #ffb800);
-      color:var(--yellowText);
-      border-bottom:1px solid rgba(0,0,0,.10);
-    }
-    .topbar .wrap{
-      padding:10px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .topbrand{
-      display:flex;align-items:center;gap:10px;
-      font-weight:1000;
-      letter-spacing:.2px;
-      min-width:0;
-    }
-    .toplogo{
-      width:38px;height:38px;border-radius:12px;
-      background:#111;
-      display:flex;align-items:center;justify-content:center;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-    /* Se você tiver uma logo.png no mesmo repositório, ela aparece aqui */
-    .toplogo img{width:100%;height:100%;object-fit:contain}
-    .topbrand .name{
-      font-size:16px;
-      line-height:1.1;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .topbrand .tagline{
-      font-size:12px;
-      opacity:.85;
-      font-weight:900;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:60vw;
-    }
-    .topright{
-      display:flex;gap:10px;align-items:center;flex:0 0 auto;
-      font-weight:1000;
-      font-size:12px;
-      background: rgba(0,0,0,.10);
-      border:1px solid rgba(0,0,0,.12);
-      border-radius:999px;
-      padding:8px 10px;
-      white-space:nowrap;
-    }
-
     /* Header */
     header{
       position:sticky; top:0; z-index:50;
-      background: rgba(11,18,32,.90);
+      background: rgba(11,18,32,.86);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
     .headbar{
       display:flex;gap:12px;align-items:center;justify-content:space-between;
       padding:12px 0;
+      flex-wrap:wrap; /* mobile não estoura */
     }
     .brand{
       display:flex;align-items:center;gap:10px;
-      font-weight:1000; letter-spacing:.3px;
-      min-width:0;
+      font-weight:800; letter-spacing:.3px;
+      min-width: 220px;
     }
     .logo{
       width:38px;height:38px;border-radius:12px;
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));
       box-shadow: var(--shadow);
-      flex:0 0 auto;
-    }
-    .brandText{min-width:0}
-    .brandText > div:first-child{
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      flex: 0 0 auto;
     }
     .sub{
-      font-size:12px;color:var(--muted);margin-top:2px;font-weight:800;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      font-size:12px;color:var(--muted);margin-top:2px;font-weight:600;
     }
     .status{
       display:flex;align-items:center;gap:10px;
       padding:10px 12px;border:1px solid var(--border);
-      border-radius:999px;background: rgba(255,255,255,.04);
+      border-radius:999px;background: rgba(255,255,255,.03);
       font-size:12px;color:var(--muted);
       white-space:nowrap;
-      max-width:520px;
+      max-width: 100%;
       overflow:hidden;
-      text-overflow:ellipsis;
+      text-overflow: ellipsis;
     }
     .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12)}
     .status b{color:var(--text)}
     .pill{
       padding:8px 10px;border-radius:999px;
-      background: rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.28);
-      font-size:12px;font-weight:1000;color:#bbf7d0;
+      background: rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.25);
+      font-size:12px;font-weight:800;color:#bbf7d0;
       white-space:nowrap;
-    }
-
-    /* MOBILE header fix (não “estoura”/não fica espaço vazio ao puxar) */
-    @media (max-width: 860px){
-      .headbar{flex-wrap:wrap; align-items:flex-start}
-      .brand{flex:1 1 auto}
-      .pill{order:2}
-      .status{
-        order:3;
-        width:100%;
-        justify-content:center;
-        max-width:none;
-      }
     }
 
     /* Hero promise */
@@ -185,14 +108,14 @@
       .hero-inner{grid-template-columns:1fr}
     }
     .hero h1{margin:0;font-size:22px;line-height:1.2}
-    .hero p{margin:8px 0 0;color:var(--muted);font-weight:800}
+    .hero p{margin:8px 0 0;color:var(--muted);font-weight:600}
     .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
     .btn{
       display:inline-flex;align-items:center;gap:10px;
       padding:12px 14px;border-radius:14px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      font-weight:1000;
+      background: rgba(255,255,255,.03);
+      font-weight:900;
       cursor:pointer;
       transition: transform .08s ease;
       user-select:none;
@@ -203,41 +126,40 @@
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
       color:#052014;border:none;
     }
-
-    .kpi{display:grid;gap:10px}
+    .kpi{display:grid;gap:10px;}
     .kpiCard{
       border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.03);
       border-radius:14px;
       padding:12px;
     }
     .kpiCard b{font-size:16px}
-    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:900;margin-top:2px}
+    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
 
-    /* OPTIONAL VIDEO (mantido) */
-    .videoBox{
+    /* Video (mantém layout — é só um bloco extra, não altera cards) */
+    .videoWrap{
       margin-top:14px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
       overflow:hidden;
-      box-shadow: var(--shadow);
     }
-    .videoBox .vpad{padding:12px}
-    .videoBox h3{margin:0 0 8px;font-size:14px}
-    .videoBox p{margin:0 0 10px;color:var(--muted);font-weight:800;font-size:12px;line-height:1.4}
-    .videoWrap{
-      background:#000;
-      aspect-ratio:16/9;
-      width:100%;
-      display:flex;align-items:center;justify-content:center;
+    .videoTop{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+      flex-wrap:wrap;
     }
-    video{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit:cover;
-      background:#000;
+    .videoTop b{font-size:13px}
+    .videoTop .mini{font-size:12px;color:var(--muted);font-weight:900}
+    video{width:100%;height:auto;display:block;background:#000}
+    .btnTiny{
+      padding:10px 12px;border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-weight:1000;
+      cursor:pointer;
+      color:var(--text);
     }
 
     /* Controls */
@@ -247,27 +169,26 @@
       align-items:center;justify-content:space-between;
     }
     .search{
-      flex:1;
-      min-width:240px;
+      flex:1; min-width:240px;
       display:flex;align-items:center;gap:10px;
       padding:12px 12px;
       border:1px solid var(--border);
       border-radius:14px;
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.03);
     }
     .search input{
       width:100%;
       background:transparent;border:none;outline:none;color:var(--text);
-      font-size:14px;font-weight:900;
+      font-size:14px;font-weight:700;
     }
     .select{
       min-width:180px;
       padding:12px 12px;
       border:1px solid var(--border);
       border-radius:14px;
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.03);
       color:var(--text);
-      font-weight:1000;
+      font-weight:800;
       outline:none;
     }
 
@@ -282,22 +203,41 @@
       .bar{grid-template-columns:1fr}
     }
     .notice{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.16); /* mais visível */
+      background: rgba(255,255,255,.06);       /* mais claro (melhor no celular) */
       border-radius:14px;
-      padding:12px;
+      padding:14px;
       display:flex;gap:10px;align-items:flex-start;
     }
     .badge{
-      width:34px;height:34px;border-radius:12px;
+      width:42px;height:42px;border-radius:14px;
       display:flex;align-items:center;justify-content:center;
-      background: rgba(245,158,11,.16);
+      background: rgba(245,158,11,.18);
       border:1px solid rgba(245,158,11,.30);
       flex:0 0 auto;
+      font-size:18px;
     }
-    .notice h3{margin:0;font-size:13px}
-    .notice p{margin:4px 0 0;color:var(--muted);font-weight:900;font-size:12px;line-height:1.35}
-    .mini{font-size:12px;color:var(--muted);font-weight:1000}
+
+    /* ESCASSEZ maior */
+    .notice h3{
+      margin:0;
+      font-size:16px;
+      font-weight:1000;
+      letter-spacing:.2px;
+    }
+    .notice p{
+      margin:6px 0 0;
+      color: rgba(229,231,235,.92);
+      font-weight:1000;
+      font-size:14px;
+      line-height:1.35;
+    }
+    @media (max-width: 860px){
+      .notice h3{ font-size:17px; }
+      .notice p{ font-size:15px; }
+    }
+
+    .mini{font-size:12px;color:var(--muted);font-weight:800}
 
     /* Grid / cards */
     .grid{
@@ -307,37 +247,19 @@
       gap:12px;
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
-    @media (max-width: 620px){.grid{grid-template-columns: 1fr}}
-
-    /* Mobile: “carrossel” com 2 cards por vez (sem estourar a tela) */
-    @media (max-width: 860px){
-      .grid{
-        display:flex;
-        overflow-x:auto;
-        gap:12px;
-        padding: 6px 2px 12px;
-        scroll-snap-type:x mandatory;
-        -webkit-overflow-scrolling: touch;
-      }
-      .grid::after{content:"";flex:0 0 8px}
-      .card{
-        flex:0 0 calc(50% - 8px);
-        min-width: 240px;
-        scroll-snap-align:start;
-      }
-    }
+    /* No celular: 2 colunas para visualizar melhor */
+    @media (max-width: 620px){.grid{grid-template-columns: repeat(2, 1fr)}}
+    @media (max-width: 380px){.grid{grid-template-columns: 1fr}}
 
     .card{
       border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border-radius: var(--radius);
       overflow:hidden;
       box-shadow: 0 12px 24px rgba(0,0,0,.25);
       display:flex;flex-direction:column;
-      min-height: 430px;
+      min-height: 420px;
     }
-
-    /* IMAGENS SEM CORTAR */
     .imgbox{
       background: rgba(255,255,255,.03);
       border-bottom:1px solid var(--border);
@@ -346,12 +268,14 @@
       overflow:hidden;
       padding:8px;
     }
+    /* Para não cortar (muito) no celular: contain + padding */
     .imgbox img{
       width:100%;height:100%;
-      object-fit:contain; /* <- não corta */
+      object-fit:contain;
       display:block;
-      background: rgba(255,255,255,.02);
-      border-radius:12px;
+      filter:saturate(1.05) contrast(1.03);
+      background: rgba(0,0,0,.12);
+      border-radius: 12px;
     }
 
     .cardBody{padding:12px;display:grid;gap:10px}
@@ -359,45 +283,48 @@
       margin:0;
       font-size:14px;
       line-height:1.25;
-      font-weight:1000;
-      min-height: 38px;
+      font-weight:900;
+      min-height: 36px;
     }
+
+    .prices{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+      flex-wrap:wrap;
+    }
+    .priceNow{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(34,197,94,.18);
+      border:1px solid rgba(34,197,94,.35);
+      font-weight:1000;
+      font-size:18px;
+      color:#bbf7d0;
+      white-space:nowrap;
+    }
+    .priceOld{
+      color: rgba(229,231,235,.75);
+      font-weight:900;
+      font-size:14px;
+      text-decoration: line-through;
+      white-space:nowrap;
+    }
+
     .row{
       display:flex;justify-content:space-between;gap:10px;align-items:center;
       flex-wrap:wrap;
     }
-
-    /* preços */
-    .priceWrap{display:flex;flex-direction:column;gap:4px}
-    .priceNow{
-      font-size:18px;font-weight:1100;
-      display:inline-flex;align-items:center;gap:8px;
-      background: rgba(34,197,94,.16);
-      border:1px solid rgba(34,197,94,.30);
-      color:#bbf7d0;
-      padding:6px 10px;
-      border-radius:999px;
-      width:max-content;
-    }
-    .priceOld{
-      font-size:13px;
-      color: rgba(229,231,235,.75);
-      font-weight:900;
-      text-decoration: line-through;
-      padding-left:2px;
-    }
-
     .muted{color:var(--muted);font-weight:900;font-size:12px}
     .tag{
       display:inline-flex;align-items:center;gap:6px;
       padding:6px 10px;border-radius:999px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      font-size:12px;font-weight:1000;color:var(--text);
+      background: rgba(255,255,255,.03);
+      font-size:12px;font-weight:900;color:var(--text);
     }
     .off{
-      border:1px solid rgba(239,68,68,.35);
-      background: rgba(239,68,68,.14);
+      border:1px solid rgba(239,68,68,.32);
+      background: rgba(239,68,68,.12);
       color:#fecaca;
     }
     .coupon{
@@ -406,58 +333,44 @@
       color:#bbf7d0;
     }
 
-    /* buttons */
     .buy{
       margin-top:2px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
+      display:flex;gap:10px;
     }
     .btnSmall{
+      flex:1;
       display:flex;align-items:center;justify-content:center;
-      padding:12px 10px;border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      font-weight:1100;
+      padding:11px 12px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      font-weight:1000;
       cursor:pointer;
       color:var(--text);
     }
     .btnBuy{
-      background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
+      background: linear-gradient(135deg, rgba(245,158,11,.98), rgba(245,158,11,.78));
       color:#1b1201;border:none;
     }
     .btnGroup{
-      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
+      background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
       color:#052014;border:none;
     }
-
-    /* Share button (sempre visível, boa leitura) */
-    .shareRow{
-      display:flex;
-      gap:10px;
-      margin-top:8px;
-    }
     .btnShare{
-      flex:1;
-      padding:11px 10px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.07);
-      color:#e5e7eb;
-      font-weight:1100;
-      cursor:pointer;
-      display:flex;align-items:center;justify-content:center;gap:8px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.18);
+      color:var(--text);
     }
 
     /* Footer */
     footer{
       margin:18px 0 110px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.03);
       border-radius: var(--radius);
       padding:14px;
     }
     footer b{display:block;margin-bottom:6px}
-    footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:800;font-size:13px;line-height:1.45}
+    footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:800;font-size:13px;line-height:1.55}
 
     /* WhatsApp fixed button */
     .wa{
@@ -467,12 +380,13 @@
       border-radius:999px;
       background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
       color:#052014;
-      font-weight:1100;
+      font-weight:1000;
       box-shadow: 0 18px 40px rgba(0,0,0,.35);
       border:none;
       cursor:pointer;
+      max-width: calc(100vw - 32px);
     }
-    .wa small{display:block;font-weight:1000;opacity:.9;line-height:1}
+    .wa small{display:block;font-weight:900;opacity:.9;line-height:1}
     .wa span{display:block;line-height:1}
     .waIcon{
       width:38px;height:38px;border-radius:999px;
@@ -484,7 +398,7 @@
     /* Loading */
     .loading{
       margin-top:16px;
-      border:1px dashed rgba(255,255,255,.22);
+      border:1px dashed rgba(255,255,255,.18);
       border-radius: var(--radius);
       padding:14px;
       color:var(--muted);
@@ -495,32 +409,12 @@
 
 <body>
 
-<!-- FAIXA AMARELA (logo + nome) -->
-<div class="topbar">
-  <div class="wrap">
-    <div class="topbrand">
-      <div class="toplogo" aria-hidden="true">
-        <!-- coloque uma imagem "logo.png" no repositório para aparecer aqui -->
-        <img src="logo.png" alt="" onerror="this.style.display='none'">
-      </div>
-      <div style="min-width:0">
-        <div class="name">Achadinhos Oficial</div>
-        <div class="tagline">Links + cupons no grupo • aproveite antes que acabe</div>
-      </div>
-    </div>
-
-    <div class="topright" title="Grupo oficial">
-      🔗 Grupo WhatsApp
-    </div>
-  </div>
-</div>
-
 <header>
   <div class="wrap">
     <div class="headbar">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
-        <div class="brandText">
+        <div>
           <div>Achadinhos <span style="color:#bbf7d0">Oficial</span></div>
           <div class="sub">Ofertas atualizadas direto da planilha</div>
         </div>
@@ -543,12 +437,25 @@
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <h1>As melhores ofertas do dia — sem enrolação. <span style="color:#bbf7d0">Se piscar, some.</span></h1>
-        <p>⚠️ Desconto alto costuma acabar rápido. Quer os links e cupons? Entre no grupo.</p>
+        <h1>As melhores ofertas do dia — sem enrolação. <span style="color:#bbf7d0">Clique e garanta.</span></h1>
+        <p>Atualiza sozinho e mostra o que está com desconto agora. Se tiver cupom, já aparece.</p>
+
         <div class="ctaRow">
           <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
-          <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
           <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
+          <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
+        </div>
+
+        <!-- Vídeo (com botão pra liberar áudio — autoplay com áudio é bloqueado no celular) -->
+        <div class="videoWrap" id="videoWrap" style="display:none">
+          <div class="videoTop">
+            <div>
+              <b>🎥 Vídeo de ofertas</b>
+              <div class="mini">Toque em “Ativar áudio” se quiser ouvir.</div>
+            </div>
+            <button class="btnTiny" onclick="enableVideoAudio()">🔊 Ativar áudio</button>
+          </div>
+          <video id="promoVideo" controls playsinline preload="metadata"></video>
         </div>
       </div>
 
@@ -558,25 +465,10 @@
           <span>ofertas disponíveis</span>
         </div>
         <div class="kpiCard">
-          <b id="kpi2">—</b>
+          <b id="kpi2">0</b>
           <span>vendidos hoje (estimativa)</span>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- 🎬 VÍDEO (mantido) -->
-  <section class="videoBox">
-    <div class="vpad">
-      <h3>🎥 Aviso rápido</h3>
-      <p>Se o vídeo estiver sem áudio, toque no ícone 🔊 do player. (No celular, autoplay com som é bloqueado.)</p>
-    </div>
-    <div class="videoWrap">
-      <!-- Troque "video.mp4" pelo seu arquivo de vídeo no repositório -->
-      <video controls playsinline preload="metadata">
-        <source src="video.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
     </div>
   </section>
 
@@ -602,15 +494,15 @@
       <div class="badge">🔥</div>
       <div>
         <h3>Acabando rápido</h3>
-        <p id="urgencyText">Quando aparece desconto alto, costuma acabar rápido. Se gostou, garanta agora.</p>
+        <p id="urgencyText">🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.</p>
       </div>
     </div>
 
     <div class="notice">
       <div class="badge">✅</div>
       <div>
-        <h3>Quem compra, leva</h3>
-        <p id="socialText">As melhores ofertas saem do ar primeiro. Entre no grupo para pegar o link na hora.</p>
+        <h3>Quem chega primeiro leva</h3>
+        <p id="socialText">✅ Entre no grupo pra pegar link/cupom na hora e não perder as melhores oportunidades.</p>
       </div>
     </div>
   </section>
@@ -622,12 +514,12 @@
 
   <!-- 🔚 Rodapé confiável -->
   <footer>
-    <b>🔒 Compra com segurança</b>
+    <b>🔒 Compra com mais segurança</b>
     <ul>
-      <li>Este site apenas divulga ofertas encontradas em marketplaces e grupos de promoções.</li>
+      <li>Este site divulga ofertas encontradas em marketplaces e grupos parceiros.</li>
       <li><b>Não somos uma loja oficial do Mercado Livre</b> e não representamos a marca.</li>
       <li>Preços e disponibilidade podem mudar a qualquer momento no site do vendedor.</li>
-      <li>Para receber <b>links e cupons</b>, entre no grupo do WhatsApp.</li>
+      <li>Se algum item não abrir, atualize a página e tente novamente.</li>
     </ul>
   </footer>
 
@@ -638,7 +530,7 @@
   <div class="waIcon">🟢</div>
   <div>
     <span>Entrar no grupo</span>
-    <small>Links + cupons</small>
+    <small>Receber links e cupons</small>
   </div>
 </button>
 
@@ -648,10 +540,14 @@
   // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
 
-  // Link do grupo WhatsApp (para abrir no botão)
-  const WHATS_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
+  // Link do grupo (o botão "Ver oferta" pode ir pro link do afiliado da planilha OU, se não tiver, vai pro grupo)
+  const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
 
-  // Atualização automática da planilha
+  // Vídeo (opcional). Coloque aqui um link direto .mp4/.webm (ex: hospedado no GitHub/Drive público/CDN)
+  // Se ficar vazio, o bloco do vídeo some automaticamente.
+  const VIDEO_URL = ""; // ex: "https://seusite.com/video.mp4"
+
+  // Atualização automática da planilha:
   const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
 
   // =========================
@@ -665,9 +561,8 @@
     return `${hh}:${mm}:${ss}`;
   }
 
-  function moneyBRL(value){
-    const n = Number(value);
-    if (!isFinite(n)) return "—";
+  function moneyBRLFromNumber(n){
+    if (!isFinite(n)) return "";
     return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
   }
 
@@ -682,16 +577,16 @@
     return isFinite(n) ? n : NaN;
   }
 
-  function parsePercent(discountStr){
-    // aceita "46% OFF", "46%", "OFF 46%"...
-    const m = String(discountStr || "").match(/(\d+(?:[.,]\d+)?)/);
-    if(!m) return NaN;
-    const n = toNumber(m[1]);
-    return isFinite(n) ? n : NaN;
-  }
-
   function safeText(x){
     return (x ?? "").toString().replace(/\s+/g,' ').trim();
+  }
+
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
   }
 
   function scrollToOffers(){
@@ -699,7 +594,7 @@
   }
 
   function openGroup(){
-    window.open(WHATS_GROUP_LINK, "_blank");
+    window.open(WHATSAPP_GROUP_LINK, "_blank");
   }
 
   function setStatus(mode, text){
@@ -728,11 +623,10 @@
     }
   }
 
-  // Relógio rodando sempre
+  // Relógio rodando sempre (mesmo enquanto carrega)
   function startLiveClock(){
     const timeEl = document.getElementById("updatedTime");
     if(!timeEl) return;
-
     setInterval(() => {
       if(timeEl.dataset.mode !== "updated"){
         timeEl.textContent = `Verificando: ${nowHHMMSS()}`;
@@ -785,13 +679,35 @@
   }
 
   // =========================
+  // VIDEO
+  // =========================
+  function setupVideo(){
+    const wrap = document.getElementById("videoWrap");
+    const vid = document.getElementById("promoVideo");
+    if(!VIDEO_URL){
+      wrap.style.display = "none";
+      return;
+    }
+    wrap.style.display = "block";
+    vid.src = VIDEO_URL;
+    vid.muted = true; // inicia mudo (mobile bloqueia autoplay com áudio)
+    vid.playsInline = true;
+  }
+
+  function enableVideoAudio(){
+    const vid = document.getElementById("promoVideo");
+    if(!vid) return;
+    vid.muted = false;
+    vid.volume = 1;
+    vid.play().catch(()=>{});
+  }
+
+  // =========================
   // RENDER
   // =========================
   let ALL_ITEMS = [];
 
-  function forceReload(){
-    loadSheet(true);
-  }
+  function forceReload(){ loadSheet(true); }
 
   function getQuery(){
     return safeText(document.getElementById("q").value).toLowerCase();
@@ -805,9 +721,9 @@
     const a = [...items];
 
     if(mode === "priceAsc"){
-      a.sort((x,y)=> (x.priceNowNum||Infinity) - (y.priceNowNum||Infinity));
+      a.sort((x,y)=> (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity));
     } else if(mode === "priceDesc"){
-      a.sort((x,y)=> (y.priceNowNum||-Infinity) - (x.priceNowNum||-Infinity));
+      a.sort((x,y)=> (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity));
     } else if(mode === "discountDesc"){
       a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
     } else if(mode === "soldDesc"){
@@ -815,7 +731,6 @@
     } else if(mode === "ratingDesc"){
       a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
     } else {
-      // destaque: sold + desconto + rating
       a.sort((x,y)=>{
         const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
         const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
@@ -828,60 +743,47 @@
   function filterItems(items){
     const q = getQuery();
     if(!q) return items;
-
     return items.filter(it => {
       const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
       return hay.includes(q);
     });
   }
 
-  function escapeHtml(s){
-    return (s ?? "").toString()
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;");
+  function getOfferUrl(it){
+    // Se você colocar o link de afiliado na planilha (coluna "link" ou "url" ou "affiliate"),
+    // o botão "Ver oferta" vai abrir esse link. Se não tiver, abre o grupo.
+    const u = safeText(it.link);
+    if(u) return u;
+    return WHATSAPP_GROUP_LINK;
   }
 
   function openOffer(it){
-    // SE tiver link de afiliado na planilha -> abre ele
-    // SENÃO -> abre o grupo do WhatsApp
-    const u = safeText(it.affiliate || it.link);
-    if(u && /^https?:\/\//i.test(u)){
-      window.open(u, "_blank");
-      return;
-    }
-    openGroup();
+    window.open(getOfferUrl(it), "_blank");
+  }
+
+  function openLink(url){
+    const u = safeText(url);
+    if(!u){ alert("Link não encontrado na planilha. Vou abrir o grupo."); openGroup(); return; }
+    window.open(u, "_blank");
   }
 
   async function shareOffer(it){
-    const priceNow = isFinite(it.priceNowNum) ? moneyBRL(it.priceNowNum) : "—";
-    const priceOld = isFinite(it.priceOldNum) ? moneyBRL(it.priceOldNum) : "";
-    const coupon = it.coupon ? `\nCupom: ${it.coupon}` : "";
-    const discount = it.discount ? `\nDesconto: ${it.discount}` : "";
-    const link = safeText(it.affiliate || it.link) || WHATS_GROUP_LINK;
-
-    const text =
-`${it.title}
-Preço: ${priceNow}${priceOld ? ` (de ${priceOld})` : ""}${discount}${coupon}
-
-⚠️ Se quiser pegar o link/cupom rápido, entra no grupo:
-${WHATS_GROUP_LINK}`;
+    const title = safeText(it.title) || "Oferta";
+    const url = getOfferUrl(it);
+    const text = `🔥 OFERTA: ${title}\n👉 Link: ${url}\n\nEntre no grupo para pegar mais cupons: ${WHATSAPP_GROUP_LINK}`;
 
     try{
       if(navigator.share){
-        await navigator.share({ title: it.title, text, url: link });
-      }else{
-        await navigator.clipboard.writeText(text);
-        alert("Texto da oferta copiado para compartilhar!");
+        await navigator.share({ title: "Achadinhos Oficial", text, url });
+        return;
       }
-    }catch(e){
-      try{
-        await navigator.clipboard.writeText(text);
-        alert("Texto da oferta copiado para compartilhar!");
-      }catch{
-        prompt("Copie para compartilhar:", text);
-      }
+    }catch(_) {}
+
+    try{
+      await navigator.clipboard.writeText(text);
+      alert("Copiado! Agora é só colar no WhatsApp/Instagram.");
+    }catch{
+      prompt("Copie e compartilhe:", text);
     }
   }
 
@@ -913,12 +815,12 @@ ${WHATS_GROUP_LINK}`;
     const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
     document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
 
-    // textos de escassez (mais fortes)
+    // Copy de escassez (forte e grande)
     document.getElementById("urgencyText").textContent =
-      "🔥 As melhores ofertas somem primeiro. Se gostou, clica e garante AGORA.";
+      "🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.";
     document.getElementById("socialText").textContent =
-      soldToday ? `✅ Hoje já somou ${soldToday} compras nas ofertas da planilha. Quem chega antes, leva.` :
-                 "✅ Oferta boa não fica muito tempo no ar. Entre no grupo pra pegar o link na hora.";
+      soldToday ? `✅ Hoje já teve ${soldToday} compras somadas nas ofertas da planilha. Quem chega primeiro leva.` :
+                  "✅ Quem chega primeiro leva. Entre no grupo pra pegar link/cupom na hora e não perder.";
 
     for(const it of sorted){
       const card = document.createElement("article");
@@ -937,26 +839,30 @@ ${WHATS_GROUP_LINK}`;
       title.textContent = it.title || "Oferta";
       body.appendChild(title);
 
-      // preço (agora + antigo riscado)
+      // Preços: original riscado + desconto destacado
+      const prices = document.createElement("div");
+      prices.className = "prices";
+
+      const nowP = document.createElement("div");
+      nowP.className = "priceNow";
+      nowP.textContent = it.finalPriceText || "—";
+
+      const oldP = document.createElement("div");
+      oldP.className = "priceOld";
+      oldP.textContent = it.originalPriceText || "";
+
+      prices.appendChild(nowP);
+      if(it.originalPriceText && it.originalPriceText !== it.finalPriceText){
+        prices.appendChild(oldP);
+      }
+      body.appendChild(prices);
+
       const row1 = document.createElement("div");
       row1.className = "row";
 
       const left = document.createElement("div");
-      left.className = "priceWrap";
-
-      const now = document.createElement("div");
-      now.className = "priceNow";
-      now.textContent = isFinite(it.priceNowNum) ? moneyBRL(it.priceNowNum) : "—";
-
-      left.appendChild(now);
-
-      if(isFinite(it.priceOldNum) && it.priceOldNum > it.priceNowNum){
-        const old = document.createElement("div");
-        old.className = "priceOld";
-        old.textContent = moneyBRL(it.priceOldNum);
-        left.appendChild(old);
-      }
-
+      left.className = "muted";
+      left.textContent = `${it.rating ? `⭐ ${it.rating}` : "⭐ —"} • ${it.sold ? `${it.sold} vendidos` : "— vendidos"}`;
       row1.appendChild(left);
 
       const right = document.createElement("div");
@@ -983,13 +889,10 @@ ${WHATS_GROUP_LINK}`;
 
       const row2 = document.createElement("div");
       row2.className = "row";
-      row2.innerHTML = `
-        <div class="muted">${it.rating ? `⭐ ${it.rating}` : "⭐ —"} &nbsp;•&nbsp; ${it.sold ? `${it.sold} vendidos` : "— vendidos"}</div>
-        <div class="muted">Atualizado: ${nowHHMMSS()}</div>
-      `;
+      row2.innerHTML = `<div class="muted">Atualizado: ${nowHHMMSS()}</div>`;
       body.appendChild(row2);
 
-      // botões
+      // Botões (bem visíveis no celular)
       const buy = document.createElement("div");
       buy.className = "buy";
 
@@ -1005,26 +908,13 @@ ${WHATS_GROUP_LINK}`;
       btn2.onclick = () => openGroup();
       buy.appendChild(btn2);
 
+      const btn3 = document.createElement("button");
+      btn3.className = "btnSmall btnShare";
+      btn3.textContent = "Compartilhar";
+      btn3.onclick = () => shareOffer(it);
+      buy.appendChild(btn3);
+
       body.appendChild(buy);
-
-      // compartilhar + copiar cupom
-      const shareRow = document.createElement("div");
-      shareRow.className = "shareRow";
-
-      const btnShare = document.createElement("button");
-      btnShare.className = "btnShare";
-      btnShare.textContent = "📤 Compartilhar";
-      btnShare.onclick = () => shareOffer(it);
-      shareRow.appendChild(btnShare);
-
-      const btnCupom = document.createElement("button");
-      btnCupom.className = "btnShare";
-      btnCupom.textContent = "🏷️ Copiar cupom";
-      btnCupom.onclick = () => copyCoupon(it.coupon);
-      shareRow.appendChild(btnCupom);
-
-      body.appendChild(shareRow);
-
       card.appendChild(body);
       grid.appendChild(card);
     }
@@ -1048,70 +938,88 @@ ${WHATS_GROUP_LINK}`;
       if(!rows.length) throw new Error("CSV vazio");
 
       const header = rows[0].map(h => safeText(h).toLowerCase());
-      const idx = (...names) => {
-        for(const n of names){
-          const i = header.indexOf(n);
-          if(i >= 0) return i;
-        }
-        return -1;
-      };
+      const idx = (name) => header.indexOf(name);
 
-      // colunas esperadas:
-      // image,title,price (preço original),discount,coupon,sold,rating,link/affiliate
-      const iImage    = idx("image", "img", "imagem");
-      const iTitle    = idx("title", "titulo", "nome");
-      const iPrice    = idx("price", "preco", "preço");
-      const iDiscount = idx("discount", "desconto");
-      const iCoupon   = idx("coupon", "cupom", "código", "codigo");
-      const iSold     = idx("sold", "vendidos", "vendas");
-      const iRating   = idx("rating", "avaliacao", "avaliação");
-      const iLink     = idx("link", "url");
-      const iAff      = idx("affiliate", "afiliado", "link_afiliado", "linkafiliado");
+      // Mapeamento flexível (sua planilha já tem: image,title,price,discount,coupon,sold,rating)
+      const iImage = idx("image");
+      const iTitle = idx("title");
+
+      // Preço original pode vir como "price" (o original), ou "original", "old_price"
+      const iPriceOriginal =
+        idx("price") >= 0 ? idx("price") :
+        idx("original") >= 0 ? idx("original") :
+        idx("old_price") >= 0 ? idx("old_price") : -1;
+
+      // Se você quiser definir o preço com desconto direto na planilha:
+      const iFinal =
+        idx("final_price") >= 0 ? idx("final_price") :
+        idx("sale_price") >= 0 ? idx("sale_price") :
+        idx("discount_price") >= 0 ? idx("discount_price") : -1;
+
+      const iDiscount = idx("discount");
+      const iCoupon = idx("coupon");
+      const iSold = idx("sold");
+      const iRating = idx("rating");
+
+      // Links: use "link" / "url" / "affiliate"
+      const iLink =
+        idx("affiliate") >= 0 ? idx("affiliate") :
+        (idx("link") >= 0 ? idx("link") :
+        (idx("url") >= 0 ? idx("url") : -1));
 
       const items = [];
+
       for(let r=1; r<rows.length; r++){
-        const row = rows[r];
+        const row = rows[r] || [];
+        const title = safeText(row[iTitle]);
+        const image = safeText(row[iImage]);
+        const originalPriceRaw = safeText(row[iPriceOriginal]);
+        const finalRaw = iFinal >= 0 ? safeText(row[iFinal]) : "";
+        const discount = safeText(row[iDiscount]);
+        const coupon = safeText(row[iCoupon]);
+        const sold = safeText(row[iSold]);
+        const rating = safeText(row[iRating]);
+        const link = iLink >= 0 ? safeText(row[iLink]) : "";
 
-        const title    = safeText(iTitle   >=0 ? row[iTitle]   : "");
-        const image    = safeText(iImage   >=0 ? row[iImage]   : "");
-        const priceStr = safeText(iPrice   >=0 ? row[iPrice]   : "");
-        const discount = safeText(iDiscount>=0 ? row[iDiscount]: "");
-        const coupon   = safeText(iCoupon  >=0 ? row[iCoupon]  : "");
-        const sold     = safeText(iSold    >=0 ? row[iSold]    : "");
-        const rating   = safeText(iRating  >=0 ? row[iRating]  : "");
-        const link     = safeText(iLink    >=0 ? row[iLink]    : "");
-        const affiliate= safeText(iAff     >=0 ? row[iAff]     : "");
+        if(!title && !image && !originalPriceRaw && !finalRaw) continue;
 
-        if(!title && !image && !priceStr && !link && !affiliate) continue;
-
-        const priceOldNum = toNumber(priceStr); // PRICE = preço original
-        const discPercent = parsePercent(discount);
-        let priceNowNum = NaN;
-
-        if(isFinite(priceOldNum) && isFinite(discPercent) && discPercent > 0 && discPercent < 100){
-          priceNowNum = +(priceOldNum * (1 - discPercent/100)).toFixed(2);
-        } else {
-          // se não tiver desconto válido, mostra o price como "agora"
-          priceNowNum = isFinite(priceOldNum) ? priceOldNum : NaN;
-        }
-
+        const originalNum = toNumber(originalPriceRaw);
         const soldNum = toNumber(sold);
         const ratingNum = toNumber(rating);
+
+        // desconto em % se vier tipo "46% OFF"
+        let discountNum = toNumber(discount);
+        if(!isFinite(discountNum)) discountNum = 0;
+
+        // Preço final:
+        let finalNum = toNumber(finalRaw);
+        if(!isFinite(finalNum)){
+          // se não tiver final na planilha, calcula pelo desconto (se tiver)
+          if(isFinite(originalNum) && discountNum > 0){
+            finalNum = originalNum * (1 - (discountNum/100));
+          } else {
+            finalNum = originalNum;
+          }
+        }
+
+        const originalText = isFinite(originalNum) ? moneyBRLFromNumber(originalNum) : (originalPriceRaw ? originalPriceRaw : "");
+        const finalText = isFinite(finalNum) ? moneyBRLFromNumber(finalNum) : (finalRaw ? finalRaw : (originalText || "—"));
 
         items.push({
           title: title || "Oferta",
           image,
-          priceOldNum,
-          priceNowNum,
+          originalPriceText: originalText,
+          originalPriceNum: isFinite(originalNum) ? originalNum : NaN,
+          finalPriceText: finalText,
+          finalPriceNum: isFinite(finalNum) ? finalNum : NaN,
           discount,
-          discountNum: isFinite(discPercent) ? discPercent : 0,
+          discountNum,
           coupon,
           sold,
           soldNum: isFinite(soldNum) ? soldNum : 0,
           rating,
           ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          link,
-          affiliate
+          link
         });
       }
 
@@ -1131,16 +1039,14 @@ ${WHATS_GROUP_LINK}`;
   }
 
   // =========================
-  // EVENTS
+  // EVENTS / START
   // =========================
   document.getElementById("q").addEventListener("input", () => render());
   document.getElementById("sort").addEventListener("change", () => render());
 
-  // start
   startLiveClock();
+  setupVideo();
   loadSheet();
-
-  // auto refresh
   setInterval(() => loadSheet(false), REFRESH_MS);
 </script>
 
