@@ -37,6 +37,7 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
+    /* ===== Header ===== */
     header{
       position:sticky; top:0; z-index:50;
       background: rgba(11,18,32,.86);
@@ -44,6 +45,7 @@
       border-bottom:1px solid var(--border);
     }
 
+    /* ✅ faixa amarela MAIS ALTA */
     .topStrip{
       background: linear-gradient(90deg, var(--yellow), var(--yellow2));
       border-bottom:1px solid rgba(0,0,0,.15);
@@ -51,14 +53,13 @@
     .topStripInner{
       max-width:1100px;
       margin:0 auto;
-      padding:10px 16px;
+      padding:16px 16px;  /* ✅ maior */
       display:flex;
       align-items:center;
-      gap:12px;
-      justify-content:flex-start;
+      gap:14px;
     }
     .topStripInner img{
-      height:36px;
+      height:52px;        /* ✅ logo maior */
       width:auto;
       display:block;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
@@ -68,11 +69,14 @@
       color:#111;
       letter-spacing:.2px;
       line-height:1.1;
+      font-size:18px;     /* ✅ título maior */
     }
     .topStripTitle small{
       display:block;
       font-weight:900;
       opacity:.9;
+      font-size:13px;
+      margin-top:2px;
     }
 
     .headbar{
@@ -122,11 +126,7 @@
       box-shadow: 0 0 0 4px rgba(245,158,11,.12);
       flex:0 0 auto;
     }
-    #updatedLabel, #updatedTime{
-      min-width:0;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+    #updatedLabel, #updatedTime{min-width:0;overflow:hidden;text-overflow:ellipsis;}
     .status b{color:var(--text)}
     .pill{
       padding:8px 10px;border-radius:999px;
@@ -137,6 +137,7 @@
       flex:0 0 auto;
     }
 
+    /* ===== Hero / vídeo ===== */
     .hero{
       margin-top:16px;
       background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
@@ -158,17 +159,17 @@
       position:relative;
       padding:18px;
       display:grid;
-      grid-template-columns: 1.3fr .7fr;
+      grid-template-columns: 1.2fr .8fr;
       gap:14px;
-      align-items:center;
+      align-items:start;
       max-width:100%;
     }
-    @media (max-width: 860px){
-      .hero-inner{grid-template-columns:1fr}
-    }
+    @media (max-width: 860px){ .hero-inner{grid-template-columns:1fr} }
+
     .hero h1{margin:0;font-size:22px;line-height:1.2}
     .hero p{margin:8px 0 0;color:var(--muted);font-weight:700}
     .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
     .btn{
       display:inline-flex;align-items:center;gap:10px;
       padding:12px 14px;border-radius:14px;
@@ -185,6 +186,7 @@
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
       color:#052014;border:none;
     }
+
     .kpi{display:grid;gap:10px}
     .kpiCard{
       border:1px solid var(--border);
@@ -195,6 +197,45 @@
     .kpiCard b{font-size:16px}
     .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-top:2px}
 
+    .videoCard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      overflow:hidden;
+    }
+    .videoWrap{
+      position:relative;
+      aspect-ratio:16/9;
+      background:#000;
+    }
+    .videoWrap video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .videoControls{
+      display:flex;
+      gap:8px;
+      padding:10px;
+      flex-wrap:wrap;
+    }
+    .btnSmallTop{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      font-weight:950;
+      cursor:pointer;
+    }
+    .btnSound{
+      background: rgba(34,197,94,.14);
+      border:1px solid rgba(34,197,94,.30);
+      color:#bbf7d0;
+    }
+
+    /* ===== Controls ===== */
     .controls{
       margin-top:14px;
       display:flex;gap:10px;flex-wrap:wrap;
@@ -229,6 +270,7 @@
       max-width:100%;
     }
 
+    /* ===== Notices ===== */
     .bar{
       margin-top:14px;
       display:grid;
@@ -236,9 +278,7 @@
       gap:10px;
       max-width:100%;
     }
-    @media (max-width: 860px){
-      .bar{grid-template-columns:1fr}
-    }
+    @media (max-width: 860px){ .bar{grid-template-columns:1fr} }
     .notice{
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
@@ -257,6 +297,7 @@
     .notice h3{margin:0;font-size:13px}
     .notice p{margin:4px 0 0;color:var(--muted);font-weight:800;font-size:12px;line-height:1.35}
 
+    /* ===== Grid / Cards ===== */
     .grid{
       margin-top:16px;
       display:grid;
@@ -266,6 +307,7 @@
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
 
+    /* ✅ MOBILE: 2 cards por “tela” em carrossel */
     @media (max-width: 620px){
       .grid{
         display:flex;
@@ -277,11 +319,13 @@
       }
       .grid::-webkit-scrollbar{height:8px}
       .grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:999px}
+
       .card{
-        flex:0 0 86vw;
+        flex:0 0 calc(50vw - 16px);  /* ✅ 2 cards na tela */
         scroll-snap-align:start;
         min-height:unset;
       }
+      .imgbox{aspect-ratio: 1 / 1;} /* fica melhor em 2 cards */
     }
 
     .card{
@@ -306,7 +350,7 @@
     .imgbox img{
       width:100%;
       height:100%;
-      object-fit:contain;
+      object-fit:contain;   /* ✅ sem corte */
       object-position:center;
       display:block;
       background: rgba(0,0,0,.12);
@@ -342,7 +386,7 @@
 
     .prices{display:flex;flex-direction:column;gap:6px;line-height:1.05}
     .priceNow{
-      font-size:20px;
+      font-size:18px;
       font-weight:1000;
       color:#052014;
       background: linear-gradient(135deg, rgba(34,197,94,.96), rgba(34,197,94,.72));
@@ -359,29 +403,36 @@
       text-decoration:line-through;
       text-decoration-thickness:2px;
     }
-    .priceSingle{
-      font-size:18px;
-      font-weight:1000;
-    }
+    .priceSingle{font-size:18px;font-weight:1000;}
 
     .buy{
       margin-top:2px;
       display:flex;gap:10px;
       max-width:100%;
     }
+
     .btnSmall{
       flex:1;
       display:flex;align-items:center;justify-content:center;
       padding:11px 12px;border-radius:14px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
       font-weight:1000;
       cursor:pointer;
       max-width:100%;
+      color:#052014;
     }
+
     .btnBuy{
       background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
-      color:#1b1201;border:none;
+      border:none;
+      color:#1b1201;
+    }
+
+    /* ✅ botão “Entrar no grupo” (dentro do card) bem visível */
+    .btnGroup{
+      background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
+      border:none;
+      color:#052014;
     }
 
     footer{
@@ -433,6 +484,7 @@
 <body>
 
 <header>
+  <!-- faixa amarela maior -->
   <div class="topStrip">
     <div class="topStripInner">
       <img src="logo.png" alt="Logo Achadinhos">
@@ -470,22 +522,37 @@
     <div class="hero-inner">
       <div>
         <h1>As melhores ofertas do dia — <span style="color:#bbf7d0">com desconto calculado na hora</span>.</h1>
-        <p>Se tiver link na planilha, o botão abre seu link de afiliado. Se não tiver, abre o grupo.</p>
+        <p>Se tiver link na planilha, abre seu link de afiliado. Se não tiver, abre o grupo.</p>
+
         <div class="ctaRow">
           <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
           <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
           <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
         </div>
+
+        <div class="kpi" style="margin-top:12px">
+          <div class="kpiCard">
+            <b id="kpi1">0</b>
+            <span>ofertas disponíveis</span>
+          </div>
+          <div class="kpiCard">
+            <b id="kpi2">0</b>
+            <span>vendidos hoje (estimativa)</span>
+          </div>
+        </div>
       </div>
 
-      <div class="kpi">
-        <div class="kpiCard">
-          <b id="kpi1">0</b>
-          <span>ofertas disponíveis</span>
+      <!-- ✅ vídeo voltou -->
+      <div class="videoCard">
+        <div class="videoWrap">
+          <video id="promoVideo" autoplay muted playsinline loop preload="metadata">
+            <source src="video.mp4" type="video/mp4">
+          </video>
         </div>
-        <div class="kpiCard">
-          <b id="kpi2">0</b>
-          <span>vendidos hoje (estimativa)</span>
+        <div class="videoControls">
+          <button class="btnSmallTop" onclick="toggleVideo()">⏯ Pausar / Tocar</button>
+          <button class="btnSmallTop btnSound" onclick="toggleSound()">🔊 Ativar / Desativar som</button>
+          <span class="muted" id="soundHint">No celular, o navegador só libera áudio após toque.</span>
         </div>
       </div>
     </div>
@@ -573,13 +640,10 @@
     if (str == null) return NaN;
     let s = String(str).trim();
     if (!s) return NaN;
-
     s = s.replace(/\s/g, "").replace(/R\$/gi, "").replace(/\u00A0/g, "");
     s = s.replace(/[^\d.,-]/g, "");
-
     const hasDot = s.includes(".");
     const hasComma = s.includes(",");
-
     if (hasDot && hasComma) {
       const lastDot = s.lastIndexOf(".");
       const lastComma = s.lastIndexOf(",");
@@ -599,16 +663,11 @@
     return isFinite(n) ? n : NaN;
   }
 
-  function safeText(x){
-    return (x ?? "").toString().replace(/\s+/g,' ').trim();
-  }
-
+  function safeText(x){ return (x ?? "").toString().replace(/\s+/g,' ').trim(); }
   function escapeHtml(s){
     return (s ?? "").toString()
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;");
+      .replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll(">","&gt;").replaceAll('"',"&quot;");
   }
 
   function scrollToOffers(){
@@ -619,7 +678,6 @@
     const dot = document.getElementById("statusDot");
     const label = document.getElementById("updatedLabel");
     const time = document.getElementById("updatedTime");
-
     if (mode === "ok"){
       dot.style.background = "var(--brand)";
       dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
@@ -653,24 +711,17 @@
 
   function parseCSV(text){
     const rows = [];
-    let row = [];
-    let cur = "";
-    let inQuotes = false;
-
+    let row = [], cur = "", inQuotes = false;
     for(let i=0;i<text.length;i++){
-      const ch = text[i];
-      const next = text[i+1];
-
+      const ch = text[i], next = text[i+1];
       if(ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }
       if(ch === '"'){ inQuotes = !inQuotes; continue; }
-
-      if(ch === ',' && !inQuotes){ row.push(cur); cur = ""; continue; }
-
+      if(ch === ',' && !inQuotes){ row.push(cur); cur=""; continue; }
       if((ch === '\n' || ch === '\r') && !inQuotes){
-        if(ch === '\r' && next === '\n'){ i++; }
-        row.push(cur); cur = "";
+        if(ch === '\r' && next === '\n') i++;
+        row.push(cur); cur="";
         if(row.length > 1 || row[0].trim() !== "") rows.push(row);
-        row = [];
+        row=[];
         continue;
       }
       cur += ch;
@@ -705,23 +756,16 @@
 
   function sortItems(items, mode){
     const a = [...items];
-    if(mode === "priceAsc"){
-      a.sort((x,y)=> (x.nowNum ?? Infinity) - (y.nowNum ?? Infinity));
-    } else if(mode === "priceDesc"){
-      a.sort((x,y)=> (y.nowNum ?? -Infinity) - (x.nowNum ?? -Infinity));
-    } else if(mode === "discountDesc"){
-      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
-    } else if(mode === "soldDesc"){
-      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
-    } else if(mode === "ratingDesc"){
-      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
-    } else {
-      a.sort((x,y)=>{
-        const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
-        const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
-        return sy - sx;
-      });
-    }
+    if(mode === "priceAsc") a.sort((x,y)=> (x.nowNum ?? Infinity) - (y.nowNum ?? Infinity));
+    else if(mode === "priceDesc") a.sort((x,y)=> (y.nowNum ?? -Infinity) - (x.nowNum ?? -Infinity));
+    else if(mode === "discountDesc") a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
+    else if(mode === "soldDesc") a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
+    else if(mode === "ratingDesc") a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
+    else a.sort((x,y)=>{
+      const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
+      const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
+      return sy - sx;
+    });
     return a;
   }
 
@@ -731,7 +775,6 @@
     return items.filter(it => (`${it.title} ${it.coupon||""}`).toLowerCase().includes(q));
   }
 
-  // ✅ abre link de afiliado se existir, senão abre grupo
   function openOfferForItem(it){
     const u = normalizeUrl(it.link);
     if(u) window.open(u, "_blank");
@@ -780,7 +823,6 @@
 
       const priceBox = document.createElement("div");
       const p = computePrices(it);
-
       if(p.mode === "dual"){
         priceBox.className = "prices";
         priceBox.innerHTML = `
@@ -815,6 +857,7 @@
         right.appendChild(t);
       }
       row1.appendChild(right);
+
       body.appendChild(row1);
 
       const row2 = document.createElement("div");
@@ -835,25 +878,14 @@
       buy.appendChild(btn1);
 
       const btn2 = document.createElement("button");
-      btn2.className = "btnSmall";
-      btn2.textContent = it.coupon ? "Copiar cupom" : "Entrar no grupo";
-      btn2.onclick = it.coupon ? (() => copyCoupon(it.coupon)) : openGroup;
+      btn2.className = "btnSmall btnGroup";
+      btn2.textContent = "Entrar no grupo";
+      btn2.onclick = openGroup;
       buy.appendChild(btn2);
 
       body.appendChild(buy);
       card.appendChild(body);
       grid.appendChild(card);
-    }
-  }
-
-  async function copyCoupon(coupon){
-    const c = safeText(coupon);
-    if(!c){ openGroup(); return; }
-    try{
-      await navigator.clipboard.writeText(c);
-      alert("Cupom copiado: " + c);
-    }catch{
-      prompt("Copie o cupom:", c);
     }
   }
 
@@ -879,7 +911,7 @@
       const iCoupon = idx("coupon");
       const iSold = idx("sold");
       const iRating = idx("rating");
-      const iLink = idx("link") >= 0 ? idx("link") : idx("url"); // ✅ link afiliado
+      const iLink = idx("link") >= 0 ? idx("link") : idx("url");
 
       const items = [];
       for(let r=1; r<rows.length; r++){
@@ -901,7 +933,7 @@
         const soldNum = parseNumberSmart(sold);
         const ratingNum = parseNumberSmart(rating);
 
-        const p = (isFinite(priceNum) && isFinite(discountNum) && discountNum > 0)
+        const nowNum = (isFinite(priceNum) && isFinite(discountNum) && discountNum > 0)
           ? (priceNum * (1 - discountNum/100))
           : (isFinite(priceNum) ? priceNum : NaN);
 
@@ -916,7 +948,7 @@
           soldNum: isFinite(soldNum) ? soldNum : 0,
           rating,
           ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          nowNum: isFinite(p) ? p : NaN,
+          nowNum: isFinite(nowNum) ? nowNum : NaN,
           link
         });
       }
@@ -930,6 +962,27 @@
       const loading = document.getElementById("loading");
       loading.style.display = "block";
       loading.textContent = "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+    }
+  }
+
+  // vídeo
+  function toggleVideo(){
+    const v = document.getElementById("promoVideo");
+    if(!v) return;
+    if(v.paused) v.play();
+    else v.pause();
+  }
+  function toggleSound(){
+    const v = document.getElementById("promoVideo");
+    const hint = document.getElementById("soundHint");
+    if(!v) return;
+
+    v.muted = !v.muted;
+    if(!v.muted){
+      v.play().catch(()=>{});
+      hint.textContent = "Som ativado (se o navegador permitir).";
+    }else{
+      hint.textContent = "Som desativado.";
     }
   }
 
