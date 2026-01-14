@@ -16,16 +16,14 @@
       --brand:#22c55e;
       --accent:#f59e0b;
       --danger:#ef4444;
-      --border:rgba(255,255,255,.08);
+      --border:rgba(255,255,255,.10);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
-      --yellow:#facc15;
-      --yellow2:#f59e0b;
+
+      --yellow:#ffd000;
+      --yellowText:#1a1400;
     }
-
     *{box-sizing:border-box}
-    html, body{width:100%;max-width:100%;overflow-x:hidden;}
-
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -33,108 +31,132 @@
                   radial-gradient(800px 500px at 80% 10%, rgba(245,158,11,.10), transparent 55%),
                   var(--bg);
       color:var(--text);
+      overflow-x:hidden;
     }
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
+    /* =========================
+       TOP YELLOW STRIP (logo)
+       ========================= */
+    .topbar{
+      background: linear-gradient(90deg, #ffd000, #ffb800);
+      color:var(--yellowText);
+      border-bottom:1px solid rgba(0,0,0,.10);
+    }
+    .topbar .wrap{
+      padding:10px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .topbrand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      min-width:0;
+    }
+    .toplogo{
+      width:38px;height:38px;border-radius:12px;
+      background:#111;
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    /* Se você tiver uma logo.png no mesmo repositório, ela aparece aqui */
+    .toplogo img{width:100%;height:100%;object-fit:contain}
+    .topbrand .name{
+      font-size:16px;
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbrand .tagline{
+      font-size:12px;
+      opacity:.85;
+      font-weight:900;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:60vw;
+    }
+    .topright{
+      display:flex;gap:10px;align-items:center;flex:0 0 auto;
+      font-weight:1000;
+      font-size:12px;
+      background: rgba(0,0,0,.10);
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:999px;
+      padding:8px 10px;
+      white-space:nowrap;
+    }
+
+    /* Header */
     header{
       position:sticky; top:0; z-index:50;
-      background: rgba(11,18,32,.86);
+      background: rgba(11,18,32,.90);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--border);
     }
-
-    .topStrip{
-      background: linear-gradient(90deg, var(--yellow), var(--yellow2));
-      border-bottom:1px solid rgba(0,0,0,.15);
-    }
-    .topStripInner{
-      max-width:1100px;
-      margin:0 auto;
-      padding:16px 16px;
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-    .topStripInner img{
-      height:52px;
-      width:auto;
-      display:block;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
-    }
-    .topStripTitle{
-      font-weight:1000;
-      color:#111;
-      letter-spacing:.2px;
-      line-height:1.1;
-      font-size:18px;
-    }
-    .topStripTitle small{
-      display:block;
-      font-weight:900;
-      opacity:.9;
-      font-size:13px;
-      margin-top:2px;
-    }
-
     .headbar{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
+      display:flex;gap:12px;align-items:center;justify-content:space-between;
       padding:12px 0;
-      flex-wrap:wrap;
-      max-width:100%;
     }
-
     .brand{
       display:flex;align-items:center;gap:10px;
-      font-weight:900; letter-spacing:.3px;
-      min-width: 220px;
-      max-width:100%;
+      font-weight:1000; letter-spacing:.3px;
+      min-width:0;
     }
-    .logoDot{
+    .logo{
       width:38px;height:38px;border-radius:12px;
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));
       box-shadow: var(--shadow);
       flex:0 0 auto;
     }
+    .brandText{min-width:0}
+    .brandText > div:first-child{
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
     .sub{
-      font-size:12px;color:var(--muted);margin-top:2px;font-weight:700;
+      font-size:12px;color:var(--muted);margin-top:2px;font-weight:800;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
-
     .status{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      background: rgba(255,255,255,.03);
-      font-size:12px;
-      color:var(--muted);
-      max-width:100%;
-      flex: 1 1 260px;
-      min-width:0;
-      white-space:normal;
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;border:1px solid var(--border);
+      border-radius:999px;background: rgba(255,255,255,.04);
+      font-size:12px;color:var(--muted);
+      white-space:nowrap;
+      max-width:520px;
       overflow:hidden;
+      text-overflow:ellipsis;
     }
-    .dot{
-      width:9px;height:9px;border-radius:999px;background:var(--accent);
-      box-shadow: 0 0 0 4px rgba(245,158,11,.12);
-      flex:0 0 auto;
-    }
-    #updatedLabel, #updatedTime{min-width:0;overflow:hidden;text-overflow:ellipsis;}
+    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12)}
     .status b{color:var(--text)}
     .pill{
       padding:8px 10px;border-radius:999px;
-      background: rgba(34,197,94,.12);
-      border:1px solid rgba(34,197,94,.25);
-      font-size:12px;font-weight:900;color:#bbf7d0;
+      background: rgba(34,197,94,.14);
+      border:1px solid rgba(34,197,94,.28);
+      font-size:12px;font-weight:1000;color:#bbf7d0;
       white-space:nowrap;
-      flex:0 0 auto;
     }
 
+    /* MOBILE header fix (não “estoura”/não fica espaço vazio ao puxar) */
+    @media (max-width: 860px){
+      .headbar{flex-wrap:wrap; align-items:flex-start}
+      .brand{flex:1 1 auto}
+      .pill{order:2}
+      .status{
+        order:3;
+        width:100%;
+        justify-content:center;
+        max-width:none;
+      }
+    }
+
+    /* Hero promise */
     .hero{
       margin-top:16px;
       background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
@@ -143,7 +165,6 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       position:relative;
-      max-width:100%;
     }
     .hero:before{
       content:"";
@@ -156,27 +177,26 @@
       position:relative;
       padding:18px;
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1.3fr .7fr;
       gap:14px;
-      align-items:start;
-      max-width:100%;
+      align-items:center;
     }
-    @media (max-width: 860px){ .hero-inner{grid-template-columns:1fr} }
-
+    @media (max-width: 860px){
+      .hero-inner{grid-template-columns:1fr}
+    }
     .hero h1{margin:0;font-size:22px;line-height:1.2}
-    .hero p{margin:8px 0 0;color:var(--muted);font-weight:700}
+    .hero p{margin:8px 0 0;color:var(--muted);font-weight:800}
     .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-
     .btn{
       display:inline-flex;align-items:center;gap:10px;
       padding:12px 14px;border-radius:14px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      font-weight:950;
+      background: rgba(255,255,255,.04);
+      font-weight:1000;
       cursor:pointer;
       transition: transform .08s ease;
       user-select:none;
-      max-width:100%;
+      color:var(--text);
     }
     .btn:active{transform: translateY(1px)}
     .btnPrimary{
@@ -187,56 +207,44 @@
     .kpi{display:grid;gap:10px}
     .kpiCard{
       border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
+      background: rgba(255,255,255,.04);
       border-radius:14px;
       padding:12px;
     }
     .kpiCard b{font-size:16px}
-    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-top:2px}
+    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:900;margin-top:2px}
 
-    .videoCard{
+    /* OPTIONAL VIDEO (mantido) */
+    .videoBox{
+      margin-top:14px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      border-radius:14px;
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
       overflow:hidden;
+      box-shadow: var(--shadow);
     }
+    .videoBox .vpad{padding:12px}
+    .videoBox h3{margin:0 0 8px;font-size:14px}
+    .videoBox p{margin:0 0 10px;color:var(--muted);font-weight:800;font-size:12px;line-height:1.4}
     .videoWrap{
-      position:relative;
-      aspect-ratio:16/9;
       background:#000;
+      aspect-ratio:16/9;
+      width:100%;
+      display:flex;align-items:center;justify-content:center;
     }
-    .videoWrap video{
+    video{
       width:100%;
       height:100%;
-      object-fit:cover;
       display:block;
-    }
-    .videoControls{
-      display:flex;
-      gap:8px;
-      padding:10px;
-      flex-wrap:wrap;
-    }
-    .btnSmallTop{
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      color:var(--text);
-      font-weight:950;
-      cursor:pointer;
-    }
-    .btnSound{
-      background: rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.30);
-      color:#bbf7d0;
+      object-fit:cover;
+      background:#000;
     }
 
+    /* Controls */
     .controls{
       margin-top:14px;
       display:flex;gap:10px;flex-wrap:wrap;
       align-items:center;justify-content:space-between;
-      max-width:100%;
     }
     .search{
       flex:1;
@@ -245,108 +253,105 @@
       padding:12px 12px;
       border:1px solid var(--border);
       border-radius:14px;
-      background: rgba(255,255,255,.03);
-      max-width:100%;
+      background: rgba(255,255,255,.04);
     }
     .search input{
       width:100%;
       background:transparent;border:none;outline:none;color:var(--text);
-      font-size:14px;font-weight:800;
-      min-width:0;
+      font-size:14px;font-weight:900;
     }
     .select{
       min-width:180px;
       padding:12px 12px;
       border:1px solid var(--border);
       border-radius:14px;
-      background: rgba(255,255,255,.03);
+      background: rgba(255,255,255,.04);
       color:var(--text);
-      font-weight:900;
+      font-weight:1000;
       outline:none;
-      max-width:100%;
     }
 
+    /* Social proof / urgency */
     .bar{
       margin-top:14px;
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:10px;
-      max-width:100%;
     }
-    @media (max-width: 860px){ .bar{grid-template-columns:1fr} }
+    @media (max-width: 860px){
+      .bar{grid-template-columns:1fr}
+    }
     .notice{
       border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
+      background: rgba(255,255,255,.04);
       border-radius:14px;
       padding:12px;
       display:flex;gap:10px;align-items:flex-start;
-      max-width:100%;
     }
     .badge{
       width:34px;height:34px;border-radius:12px;
       display:flex;align-items:center;justify-content:center;
       background: rgba(245,158,11,.16);
-      border:1px solid rgba(245,158,11,.28);
+      border:1px solid rgba(245,158,11,.30);
       flex:0 0 auto;
     }
     .notice h3{margin:0;font-size:13px}
-    .notice p{margin:4px 0 0;color:var(--muted);font-weight:800;font-size:12px;line-height:1.35}
+    .notice p{margin:4px 0 0;color:var(--muted);font-weight:900;font-size:12px;line-height:1.35}
+    .mini{font-size:12px;color:var(--muted);font-weight:1000}
 
+    /* Grid / cards */
     .grid{
       margin-top:16px;
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:12px;
-      max-width:100%;
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
+    @media (max-width: 620px){.grid{grid-template-columns: 1fr}}
 
-    @media (max-width: 620px){
+    /* Mobile: “carrossel” com 2 cards por vez (sem estourar a tela) */
+    @media (max-width: 860px){
       .grid{
         display:flex;
         overflow-x:auto;
         gap:12px;
+        padding: 6px 2px 12px;
         scroll-snap-type:x mandatory;
-        padding:2px 4px 10px;
         -webkit-overflow-scrolling: touch;
       }
-      .grid::-webkit-scrollbar{height:8px}
-      .grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:999px}
+      .grid::after{content:"";flex:0 0 8px}
       .card{
-        flex:0 0 calc(50vw - 16px);
+        flex:0 0 calc(50% - 8px);
+        min-width: 240px;
         scroll-snap-align:start;
-        min-height:unset;
       }
-      .imgbox{aspect-ratio: 1 / 1;}
     }
 
     .card{
       border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
       border-radius: var(--radius);
       overflow:hidden;
       box-shadow: 0 12px 24px rgba(0,0,0,.25);
       display:flex;flex-direction:column;
-      min-height: 420px;
-      max-width:100%;
+      min-height: 430px;
     }
 
+    /* IMAGENS SEM CORTAR */
     .imgbox{
       background: rgba(255,255,255,.03);
       border-bottom:1px solid var(--border);
       aspect-ratio: 16 / 11;
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;
-      padding:10px;
+      padding:8px;
     }
     .imgbox img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      object-position:center;
+      width:100%;height:100%;
+      object-fit:contain; /* <- não corta */
       display:block;
-      background: rgba(0,0,0,.12);
-      border-radius: 12px;
+      background: rgba(255,255,255,.02);
+      border-radius:12px;
     }
 
     .cardBody{padding:12px;display:grid;gap:10px}
@@ -354,96 +359,107 @@
       margin:0;
       font-size:14px;
       line-height:1.25;
-      font-weight:950;
-      min-height: 36px;
-      word-break:break-word;
+      font-weight:1000;
+      min-height: 38px;
     }
     .row{
-      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
       flex-wrap:wrap;
-      max-width:100%;
     }
-    .muted{color:var(--muted);font-weight:850;font-size:12px}
 
+    /* preços */
+    .priceWrap{display:flex;flex-direction:column;gap:4px}
+    .priceNow{
+      font-size:18px;font-weight:1100;
+      display:inline-flex;align-items:center;gap:8px;
+      background: rgba(34,197,94,.16);
+      border:1px solid rgba(34,197,94,.30);
+      color:#bbf7d0;
+      padding:6px 10px;
+      border-radius:999px;
+      width:max-content;
+    }
+    .priceOld{
+      font-size:13px;
+      color: rgba(229,231,235,.75);
+      font-weight:900;
+      text-decoration: line-through;
+      padding-left:2px;
+    }
+
+    .muted{color:var(--muted);font-weight:900;font-size:12px}
     .tag{
       display:inline-flex;align-items:center;gap:6px;
       padding:6px 10px;border-radius:999px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      font-size:12px;font-weight:950;color:var(--text);
-      max-width:100%;
+      background: rgba(255,255,255,.04);
+      font-size:12px;font-weight:1000;color:var(--text);
     }
-    .off{border:1px solid rgba(239,68,68,.32);background: rgba(239,68,68,.12);color:#fecaca}
-    .coupon{border:1px solid rgba(34,197,94,.28);background: rgba(34,197,94,.12);color:#bbf7d0}
+    .off{
+      border:1px solid rgba(239,68,68,.35);
+      background: rgba(239,68,68,.14);
+      color:#fecaca;
+    }
+    .coupon{
+      border:1px solid rgba(34,197,94,.28);
+      background: rgba(34,197,94,.12);
+      color:#bbf7d0;
+    }
 
-    .prices{display:flex;flex-direction:column;gap:6px;line-height:1.05}
-    .priceNow{
-      font-size:18px;
-      font-weight:1000;
-      color:#052014;
-      background: linear-gradient(135deg, rgba(34,197,94,.96), rgba(34,197,94,.72));
-      display:inline-block;
-      padding:7px 10px;
-      border-radius:12px;
-      width:max-content;
-      box-shadow: 0 10px 22px rgba(0,0,0,.25);
-    }
-    .priceOld{
-      font-size:13px;
-      font-weight:950;
-      color:rgba(229,231,235,.72);
-      text-decoration:line-through;
-      text-decoration-thickness:2px;
-    }
-    .priceSingle{font-size:18px;font-weight:1000;}
-
+    /* buttons */
     .buy{
       margin-top:2px;
-      display:flex;gap:10px;
-      max-width:100%;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
     }
-
     .btnSmall{
-      flex:1;
       display:flex;align-items:center;justify-content:center;
-      padding:11px 12px;border-radius:14px;
+      padding:12px 10px;border-radius:14px;
       border:1px solid var(--border);
-      font-weight:1000;
+      background: rgba(255,255,255,.06);
+      font-weight:1100;
       cursor:pointer;
-      max-width:100%;
-      color:#052014;
+      color:var(--text);
     }
-
     .btnBuy{
       background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
-      border:none;
-      color:#1b1201;
+      color:#1b1201;border:none;
     }
-
     .btnGroup{
-      background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
-      border:none;
-      color:#052014;
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
+      color:#052014;border:none;
     }
 
-    /* ✅ botão compartilhar (mesmo visual, sem mexer no layout) */
+    /* Share button (sempre visível, boa leitura) */
+    .shareRow{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
+    }
     .btnShare{
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.18);
-      color: var(--text);
+      flex:1;
+      padding:11px 10px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+      color:#e5e7eb;
+      font-weight:1100;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:8px;
     }
 
+    /* Footer */
     footer{
-      margin:18px 0 100px;
+      margin:18px 0 110px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
+      background: rgba(255,255,255,.04);
       border-radius: var(--radius);
       padding:14px;
-      max-width:100%;
     }
     footer b{display:block;margin-bottom:6px}
     footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:800;font-size:13px;line-height:1.45}
 
+    /* WhatsApp fixed button */
     .wa{
       position:fixed;right:16px;bottom:16px;z-index:999;
       display:flex;align-items:center;gap:10px;
@@ -451,52 +467,60 @@
       border-radius:999px;
       background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
       color:#052014;
-      font-weight:1000;
+      font-weight:1100;
       box-shadow: 0 18px 40px rgba(0,0,0,.35);
       border:none;
       cursor:pointer;
-      max-width: calc(100% - 32px);
     }
-    .wa small{display:block;font-weight:900;opacity:.9;line-height:1}
+    .wa small{display:block;font-weight:1000;opacity:.9;line-height:1}
     .wa span{display:block;line-height:1}
     .waIcon{
       width:38px;height:38px;border-radius:999px;
       background: rgba(0,0,0,.12);
       display:flex;align-items:center;justify-content:center;
       font-size:18px;
-      flex:0 0 auto;
     }
 
+    /* Loading */
     .loading{
       margin-top:16px;
-      border:1px dashed rgba(255,255,255,.18);
+      border:1px dashed rgba(255,255,255,.22);
       border-radius: var(--radius);
       padding:14px;
       color:var(--muted);
       font-weight:900;
-      max-width:100%;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="topStrip">
-    <div class="topStripInner">
-      <img src="logo.png" alt="Logo Achadinhos">
-      <div class="topStripTitle">
-        Achadinhos Oficial
-        <small>Ofertas verificadas • links e cupons</small>
+<!-- FAIXA AMARELA (logo + nome) -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="topbrand">
+      <div class="toplogo" aria-hidden="true">
+        <!-- coloque uma imagem "logo.png" no repositório para aparecer aqui -->
+        <img src="logo.png" alt="" onerror="this.style.display='none'">
+      </div>
+      <div style="min-width:0">
+        <div class="name">Achadinhos Oficial</div>
+        <div class="tagline">Links + cupons no grupo • aproveite antes que acabe</div>
       </div>
     </div>
-  </div>
 
+    <div class="topright" title="Grupo oficial">
+      🔗 Grupo WhatsApp
+    </div>
+  </div>
+</div>
+
+<header>
   <div class="wrap">
     <div class="headbar">
       <div class="brand">
-        <div class="logoDot" aria-hidden="true"></div>
-        <div>
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandText">
           <div>Achadinhos <span style="color:#bbf7d0">Oficial</span></div>
           <div class="sub">Ofertas atualizadas direto da planilha</div>
         </div>
@@ -515,47 +539,48 @@
 
 <main class="wrap">
 
+  <!-- 🔝 Topo com promessa -->
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <h1>⚠️ Ofertas somem rápido — <span style="color:#bbf7d0">quem chega primeiro leva</span>.</h1>
-        <p>Preço e estoque mudam o tempo todo. Se você gostou, <b>não espera</b>.</p>
-
+        <h1>As melhores ofertas do dia — sem enrolação. <span style="color:#bbf7d0">Se piscar, some.</span></h1>
+        <p>⚠️ Desconto alto costuma acabar rápido. Quer os links e cupons? Entre no grupo.</p>
         <div class="ctaRow">
           <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
-          <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
           <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
-          <!-- ✅ NOVO: compartilhar a página -->
-          <button class="btn" onclick="sharePage()">📤 Compartilhar</button>
-        </div>
-
-        <div class="kpi" style="margin-top:12px">
-          <div class="kpiCard">
-            <b id="kpi1">0</b>
-            <span>ofertas disponíveis agora</span>
-          </div>
-          <div class="kpiCard">
-            <b id="kpi2">0</b>
-            <span>itens “rodando” rápido</span>
-          </div>
+          <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
         </div>
       </div>
 
-      <div class="videoCard">
-        <div class="videoWrap">
-          <video id="promoVideo" autoplay muted playsinline loop preload="metadata">
-            <source src="video.mp4" type="video/mp4">
-          </video>
+      <div class="kpi">
+        <div class="kpiCard">
+          <b id="kpi1">0</b>
+          <span>ofertas disponíveis</span>
         </div>
-        <div class="videoControls">
-          <button class="btnSmallTop" onclick="toggleVideo()">⏯ Pausar / Tocar</button>
-          <button class="btnSmallTop btnSound" onclick="toggleSound()">🔊 Ativar / Desativar som</button>
-          <span class="muted" id="soundHint">No celular, o navegador só libera áudio após toque.</span>
+        <div class="kpiCard">
+          <b id="kpi2">—</b>
+          <span>vendidos hoje (estimativa)</span>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- 🎬 VÍDEO (mantido) -->
+  <section class="videoBox">
+    <div class="vpad">
+      <h3>🎥 Aviso rápido</h3>
+      <p>Se o vídeo estiver sem áudio, toque no ícone 🔊 do player. (No celular, autoplay com som é bloqueado.)</p>
+    </div>
+    <div class="videoWrap">
+      <!-- Troque "video.mp4" pelo seu arquivo de vídeo no repositório -->
+      <video controls playsinline preload="metadata">
+        <source src="video.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo.
+      </video>
+    </div>
+  </section>
+
+  <!-- Busca / filtro -->
   <section class="controls">
     <div class="search">
       🔎 <input id="q" type="text" placeholder="Buscar produto (ex: tênis, perfume, mesa...)" />
@@ -563,20 +588,21 @@
 
     <select class="select" id="sort">
       <option value="best">Ordenar: destaque</option>
-      <option value="priceAsc">Menor preço (com desconto)</option>
-      <option value="priceDesc">Maior preço (com desconto)</option>
+      <option value="priceAsc">Menor preço</option>
+      <option value="priceDesc">Maior preço</option>
       <option value="discountDesc">Maior desconto</option>
       <option value="soldDesc">Mais vendidos</option>
       <option value="ratingDesc">Melhor avaliação</option>
     </select>
   </section>
 
+  <!-- 🔥 Urgência social / Prova -->
   <section class="bar">
     <div class="notice">
       <div class="badge">🔥</div>
       <div>
-        <h3>Escassez real</h3>
-        <p id="urgencyText">Se apareceu aqui, pode acabar a qualquer momento. Não deixa pra depois.</p>
+        <h3>Acabando rápido</h3>
+        <p id="urgencyText">Quando aparece desconto alto, costuma acabar rápido. Se gostou, garanta agora.</p>
       </div>
     </div>
 
@@ -584,42 +610,53 @@
       <div class="badge">✅</div>
       <div>
         <h3>Quem compra, leva</h3>
-        <p id="socialText">As melhores ofertas não duram — estoque some rápido e preço muda sem aviso.</p>
+        <p id="socialText">As melhores ofertas saem do ar primeiro. Entre no grupo para pegar o link na hora.</p>
       </div>
     </div>
   </section>
 
   <div id="loading" class="loading">Carregando ofertas da planilha…</div>
+
+  <!-- 🎁 Destaque de ofertas -->
   <section id="offers" class="grid" aria-live="polite"></section>
 
+  <!-- 🔚 Rodapé confiável -->
   <footer>
     <b>🔒 Compra com segurança</b>
     <ul>
-      <li>Este site divulga ofertas encontradas em marketplaces e grupos parceiros.</li>
-      <li><strong>Não somos uma loja oficial do Mercado Livre</strong> e não representamos a marca.</li>
-      <li>As compras são finalizadas nos sites oficiais (Marketplaces) através dos links divulgados.</li>
-      <li>Não solicitamos dados bancários ou senhas fora da plataforma de compra.</li>
-      <li>Os preços, cupons e estoques podem mudar a qualquer momento sem aviso prévio.</li>
+      <li>Este site apenas divulga ofertas encontradas em marketplaces e grupos de promoções.</li>
+      <li><b>Não somos uma loja oficial do Mercado Livre</b> e não representamos a marca.</li>
+      <li>Preços e disponibilidade podem mudar a qualquer momento no site do vendedor.</li>
+      <li>Para receber <b>links e cupons</b>, entre no grupo do WhatsApp.</li>
     </ul>
   </footer>
 
 </main>
 
+<!-- 🟢 Botão WhatsApp fixo -->
 <button class="wa" onclick="openGroup()" aria-label="Entrar no grupo do WhatsApp">
   <div class="waIcon">🟢</div>
   <div>
     <span>Entrar no grupo</span>
-    <small>Receber links e cupons</small>
+    <small>Links + cupons</small>
   </div>
 </button>
 
 <script>
+  // =========================
+  // CONFIG
+  // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-  const WA_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-  const REFRESH_MS = 2 * 60 * 1000;
 
-  function openGroup(){ window.open(WA_GROUP_LINK, "_blank"); }
+  // Link do grupo WhatsApp (para abrir no botão)
+  const WHATS_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
 
+  // Atualização automática da planilha
+  const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
+
+  // =========================
+  // HELPERS
+  // =========================
   function nowHHMMSS(){
     const d = new Date();
     const hh = String(d.getHours()).padStart(2,'0');
@@ -634,48 +671,42 @@
     return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
   }
 
-  function parseNumberSmart(str){
+  function toNumber(str){
     if (str == null) return NaN;
-    let s = String(str).trim();
-    if (!s) return NaN;
-    s = s.replace(/\s/g, "").replace(/R\$/gi, "").replace(/\u00A0/g, "");
-    s = s.replace(/[^\d.,-]/g, "");
-    const hasDot = s.includes(".");
-    const hasComma = s.includes(",");
-    if (hasDot && hasComma) {
-      const lastDot = s.lastIndexOf(".");
-      const lastComma = s.lastIndexOf(",");
-      const decimalIsComma = lastComma > lastDot;
-      if (decimalIsComma) s = s.replace(/\./g, "").replace(",", ".");
-      else s = s.replace(/,/g, "");
-    } else if (hasComma && !hasDot) {
-      s = s.replace(",", ".");
-    } else if (hasDot && !hasComma) {
-      const parts = s.split(".");
-      if (parts.length > 2) {
-        const dec = parts.pop();
-        s = parts.join("") + "." + dec;
-      }
-    }
+    const s = String(str).trim()
+      .replace(/\s/g,'')
+      .replace(/\./g,'')
+      .replace(',', '.')
+      .replace(/[^\d.-]/g,'');
     const n = Number(s);
     return isFinite(n) ? n : NaN;
   }
 
-  function safeText(x){ return (x ?? "").toString().replace(/\s+/g,' ').trim(); }
-  function escapeHtml(s){
-    return (s ?? "").toString()
-      .replaceAll("&","&amp;").replaceAll("<","&lt;")
-      .replaceAll(">","&gt;").replaceAll('"',"&quot;");
+  function parsePercent(discountStr){
+    // aceita "46% OFF", "46%", "OFF 46%"...
+    const m = String(discountStr || "").match(/(\d+(?:[.,]\d+)?)/);
+    if(!m) return NaN;
+    const n = toNumber(m[1]);
+    return isFinite(n) ? n : NaN;
+  }
+
+  function safeText(x){
+    return (x ?? "").toString().replace(/\s+/g,' ').trim();
   }
 
   function scrollToOffers(){
     document.getElementById("offers").scrollIntoView({behavior:"smooth", block:"start"});
   }
 
+  function openGroup(){
+    window.open(WHATS_GROUP_LINK, "_blank");
+  }
+
   function setStatus(mode, text){
     const dot = document.getElementById("statusDot");
     const label = document.getElementById("updatedLabel");
     const time = document.getElementById("updatedTime");
+
     if (mode === "ok"){
       dot.style.background = "var(--brand)";
       dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
@@ -697,9 +728,11 @@
     }
   }
 
+  // Relógio rodando sempre
   function startLiveClock(){
     const timeEl = document.getElementById("updatedTime");
     if(!timeEl) return;
+
     setInterval(() => {
       if(timeEl.dataset.mode !== "updated"){
         timeEl.textContent = `Verificando: ${nowHHMMSS()}`;
@@ -707,136 +740,185 @@
     }, 1000);
   }
 
+  // CSV parser simples (suporta aspas)
   function parseCSV(text){
     const rows = [];
-    let row = [], cur = "", inQuotes = false;
+    let row = [];
+    let cur = "";
+    let inQuotes = false;
+
     for(let i=0;i<text.length;i++){
-      const ch = text[i], next = text[i+1];
-      if(ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }
-      if(ch === '"'){ inQuotes = !inQuotes; continue; }
-      if(ch === ',' && !inQuotes){ row.push(cur); cur=""; continue; }
+      const ch = text[i];
+      const next = text[i+1];
+
+      if(ch === '"' && inQuotes && next === '"'){
+        cur += '"';
+        i++;
+        continue;
+      }
+      if(ch === '"'){
+        inQuotes = !inQuotes;
+        continue;
+      }
+      if(ch === ',' && !inQuotes){
+        row.push(cur);
+        cur = "";
+        continue;
+      }
       if((ch === '\n' || ch === '\r') && !inQuotes){
-        if(ch === '\r' && next === '\n') i++;
-        row.push(cur); cur="";
-        if(row.length > 1 || row[0].trim() !== "") rows.push(row);
-        row=[];
+        if(ch === '\r' && next === '\n'){ i++; }
+        row.push(cur);
+        cur = "";
+        if(row.length > 1 || row[0].trim() !== ""){
+          rows.push(row);
+        }
+        row = [];
         continue;
       }
       cur += ch;
     }
     row.push(cur);
-    if(row.length > 1 || row[0].trim() !== "") rows.push(row);
+    if(row.length > 1 || row[0].trim() !== ""){
+      rows.push(row);
+    }
     return rows;
   }
 
-  function computePrices(it){
-    const hasPrice = isFinite(it.priceNum);
-    const hasDiscount = isFinite(it.discountNum) && it.discountNum > 0;
-    if(!hasPrice) return { mode:"none" };
-    if(!hasDiscount) return { mode:"single", single: it.priceNum };
-    const oldP = it.priceNum;
-    const nowP = it.priceNum * (1 - (it.discountNum / 100));
-    return { mode:"dual", old: oldP, now: nowP };
-  }
-
-  function normalizeUrl(url){
-    const u = safeText(url);
-    if(!u) return "";
-    if(/^https?:\/\//i.test(u)) return u;
-    return "https://" + u;
-  }
-
-  // ✅ compartilhamento: página e item
-  function buildShareTextForItem(it){
-    const p = computePrices(it);
-    const priceLine = (p.mode === "dual")
-      ? `De ${moneyBRL(p.old)} por ${moneyBRL(p.now)} (${it.discount || ""})`
-      : (p.mode === "single" ? `${moneyBRL(p.single)}` : "");
-
-    const couponLine = it.coupon ? `\nCUPOM: ${it.coupon}` : "";
-    const linkLine = it.link ? `\nLink: ${normalizeUrl(it.link)}` : `\nGrupo: ${WA_GROUP_LINK}`;
-
-    return `🔥 OFERTA RÁPIDA: ${it.title}\n${priceLine}${couponLine}${linkLine}\n\n⚠️ Corre porque pode acabar/alterar a qualquer momento.`;
-  }
-
-  async function shareText(text, title="Achadinhos Oficial"){
-    const shareData = { title, text, url: location.href };
-    try{
-      if(navigator.share){
-        await navigator.share(shareData);
-        return true;
-      }
-    }catch(e){ /* cancelado */ }
-
-    // fallback: copia
-    try{
-      await navigator.clipboard.writeText(text);
-      alert("Texto copiado! Agora é só colar no WhatsApp/Instagram.");
-      return true;
-    }catch{
-      prompt("Copie e compartilhe:", text);
-      return false;
-    }
-  }
-
-  function sharePage(){
-    const text = `🔥 Achadinhos Oficial\nOfertas rápidas e cupons.\n⚠️ As melhores somem rápido — entra e aproveita:\n${location.href}`;
-    shareText(text, "Compartilhar Achadinhos");
-  }
-
+  // =========================
+  // RENDER
+  // =========================
   let ALL_ITEMS = [];
 
-  function forceReload(){ loadSheet(true); }
-  function getQuery(){ return safeText(document.getElementById("q").value).toLowerCase(); }
-  function getSort(){ return document.getElementById("sort").value; }
+  function forceReload(){
+    loadSheet(true);
+  }
+
+  function getQuery(){
+    return safeText(document.getElementById("q").value).toLowerCase();
+  }
+
+  function getSort(){
+    return document.getElementById("sort").value;
+  }
 
   function sortItems(items, mode){
     const a = [...items];
-    if(mode === "priceAsc") a.sort((x,y)=> (x.nowNum ?? Infinity) - (y.nowNum ?? Infinity));
-    else if(mode === "priceDesc") a.sort((x,y)=> (y.nowNum ?? -Infinity) - (x.nowNum ?? -Infinity));
-    else if(mode === "discountDesc") a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
-    else if(mode === "soldDesc") a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
-    else if(mode === "ratingDesc") a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
-    else a.sort((x,y)=>{
-      const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
-      const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
-      return sy - sx;
-    });
+
+    if(mode === "priceAsc"){
+      a.sort((x,y)=> (x.priceNowNum||Infinity) - (y.priceNowNum||Infinity));
+    } else if(mode === "priceDesc"){
+      a.sort((x,y)=> (y.priceNowNum||-Infinity) - (x.priceNowNum||-Infinity));
+    } else if(mode === "discountDesc"){
+      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
+    } else if(mode === "soldDesc"){
+      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
+    } else if(mode === "ratingDesc"){
+      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
+    } else {
+      // destaque: sold + desconto + rating
+      a.sort((x,y)=>{
+        const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
+        const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
+        return sy - sx;
+      });
+    }
     return a;
   }
 
   function filterItems(items){
     const q = getQuery();
     if(!q) return items;
-    return items.filter(it => (`${it.title} ${it.coupon||""}`).toLowerCase().includes(q));
+
+    return items.filter(it => {
+      const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
+      return hay.includes(q);
+    });
   }
 
-  function openOfferForItem(it){
-    const u = normalizeUrl(it.link);
-    if(u) window.open(u, "_blank");
-    else openGroup();
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
+  }
+
+  function openOffer(it){
+    // SE tiver link de afiliado na planilha -> abre ele
+    // SENÃO -> abre o grupo do WhatsApp
+    const u = safeText(it.affiliate || it.link);
+    if(u && /^https?:\/\//i.test(u)){
+      window.open(u, "_blank");
+      return;
+    }
+    openGroup();
+  }
+
+  async function shareOffer(it){
+    const priceNow = isFinite(it.priceNowNum) ? moneyBRL(it.priceNowNum) : "—";
+    const priceOld = isFinite(it.priceOldNum) ? moneyBRL(it.priceOldNum) : "";
+    const coupon = it.coupon ? `\nCupom: ${it.coupon}` : "";
+    const discount = it.discount ? `\nDesconto: ${it.discount}` : "";
+    const link = safeText(it.affiliate || it.link) || WHATS_GROUP_LINK;
+
+    const text =
+`${it.title}
+Preço: ${priceNow}${priceOld ? ` (de ${priceOld})` : ""}${discount}${coupon}
+
+⚠️ Se quiser pegar o link/cupom rápido, entra no grupo:
+${WHATS_GROUP_LINK}`;
+
+    try{
+      if(navigator.share){
+        await navigator.share({ title: it.title, text, url: link });
+      }else{
+        await navigator.clipboard.writeText(text);
+        alert("Texto da oferta copiado para compartilhar!");
+      }
+    }catch(e){
+      try{
+        await navigator.clipboard.writeText(text);
+        alert("Texto da oferta copiado para compartilhar!");
+      }catch{
+        prompt("Copie para compartilhar:", text);
+      }
+    }
+  }
+
+  async function copyCoupon(coupon){
+    const c = safeText(coupon);
+    if(!c){ alert("Este item não tem cupom."); return; }
+    try{
+      await navigator.clipboard.writeText(c);
+      alert("Cupom copiado: " + c);
+    }catch{
+      prompt("Copie o cupom:", c);
+    }
   }
 
   function render(){
     const grid = document.getElementById("offers");
     const loading = document.getElementById("loading");
+
     const sorted = sortItems(filterItems(ALL_ITEMS), getSort());
 
     grid.innerHTML = "";
     loading.style.display = sorted.length ? "none" : "block";
     loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
 
+    // KPIs
     document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
     document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
 
     const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
     document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
 
-    // ✅ textos de escassez mais fortes (apenas texto)
+    // textos de escassez (mais fortes)
     document.getElementById("urgencyText").textContent =
-      "⚠️ Se você piscou, perdeu: preço muda e estoque some rápido. Aproveita agora.";
+      "🔥 As melhores ofertas somem primeiro. Se gostou, clica e garante AGORA.";
     document.getElementById("socialText").textContent =
-      "🔥 As melhores ofertas saem do ar primeiro. Se gostou, clica e garante antes que acabe.";
+      soldToday ? `✅ Hoje já somou ${soldToday} compras nas ofertas da planilha. Quem chega antes, leva.` :
+                 "✅ Oferta boa não fica muito tempo no ar. Entre no grupo pra pegar o link na hora.";
 
     for(const it of sorted){
       const card = document.createElement("article");
@@ -855,25 +937,27 @@
       title.textContent = it.title || "Oferta";
       body.appendChild(title);
 
+      // preço (agora + antigo riscado)
       const row1 = document.createElement("div");
       row1.className = "row";
 
-      const priceBox = document.createElement("div");
-      const p = computePrices(it);
-      if(p.mode === "dual"){
-        priceBox.className = "prices";
-        priceBox.innerHTML = `
-          <div class="priceNow">${moneyBRL(p.now)}</div>
-          <div class="priceOld">${moneyBRL(p.old)}</div>
-        `;
-      } else if(p.mode === "single"){
-        priceBox.className = "priceSingle";
-        priceBox.textContent = moneyBRL(p.single);
-      } else {
-        priceBox.className = "priceSingle";
-        priceBox.textContent = "—";
+      const left = document.createElement("div");
+      left.className = "priceWrap";
+
+      const now = document.createElement("div");
+      now.className = "priceNow";
+      now.textContent = isFinite(it.priceNowNum) ? moneyBRL(it.priceNowNum) : "—";
+
+      left.appendChild(now);
+
+      if(isFinite(it.priceOldNum) && it.priceOldNum > it.priceNowNum){
+        const old = document.createElement("div");
+        old.className = "priceOld";
+        old.textContent = moneyBRL(it.priceOldNum);
+        left.appendChild(old);
       }
-      row1.appendChild(priceBox);
+
+      row1.appendChild(left);
 
       const right = document.createElement("div");
       right.style.display="flex";
@@ -893,8 +977,8 @@
         t.textContent = `CUPOM: ${it.coupon}`;
         right.appendChild(t);
       }
-      row1.appendChild(right);
 
+      row1.appendChild(right);
       body.appendChild(row1);
 
       const row2 = document.createElement("div");
@@ -905,37 +989,55 @@
       `;
       body.appendChild(row2);
 
-      // ✅ 3 botões (sem mexer no layout, só adiciona um)
+      // botões
       const buy = document.createElement("div");
       buy.className = "buy";
 
       const btn1 = document.createElement("button");
       btn1.className = "btnSmall btnBuy";
       btn1.textContent = "Ver oferta";
-      btn1.onclick = () => openOfferForItem(it);
+      btn1.onclick = () => openOffer(it);
       buy.appendChild(btn1);
 
       const btn2 = document.createElement("button");
       btn2.className = "btnSmall btnGroup";
       btn2.textContent = "Entrar no grupo";
-      btn2.onclick = openGroup;
+      btn2.onclick = () => openGroup();
       buy.appendChild(btn2);
 
-      const btn3 = document.createElement("button");
-      btn3.className = "btnSmall btnShare";
-      btn3.textContent = "Compartilhar";
-      btn3.onclick = () => shareText(buildShareTextForItem(it), "Compartilhar oferta");
-      buy.appendChild(btn3);
-
       body.appendChild(buy);
+
+      // compartilhar + copiar cupom
+      const shareRow = document.createElement("div");
+      shareRow.className = "shareRow";
+
+      const btnShare = document.createElement("button");
+      btnShare.className = "btnShare";
+      btnShare.textContent = "📤 Compartilhar";
+      btnShare.onclick = () => shareOffer(it);
+      shareRow.appendChild(btnShare);
+
+      const btnCupom = document.createElement("button");
+      btnCupom.className = "btnShare";
+      btnCupom.textContent = "🏷️ Copiar cupom";
+      btnCupom.onclick = () => copyCoupon(it.coupon);
+      shareRow.appendChild(btnCupom);
+
+      body.appendChild(shareRow);
+
       card.appendChild(body);
       grid.appendChild(card);
     }
   }
 
+  // =========================
+  // LOAD SHEET
+  // =========================
   async function loadSheet(isManual=false){
     try{
       setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
+
+      // cache-buster
       const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
 
       const res = await fetch(url, { cache:"no-store" });
@@ -946,94 +1048,99 @@
       if(!rows.length) throw new Error("CSV vazio");
 
       const header = rows[0].map(h => safeText(h).toLowerCase());
-      const idx = (name) => header.indexOf(name);
+      const idx = (...names) => {
+        for(const n of names){
+          const i = header.indexOf(n);
+          if(i >= 0) return i;
+        }
+        return -1;
+      };
 
-      const iImage = idx("image");
-      const iTitle = idx("title");
-      const iPrice = idx("price");
-      const iDiscount = idx("discount");
-      const iCoupon = idx("coupon");
-      const iSold = idx("sold");
-      const iRating = idx("rating");
-      const iLink = idx("link") >= 0 ? idx("link") : idx("url");
+      // colunas esperadas:
+      // image,title,price (preço original),discount,coupon,sold,rating,link/affiliate
+      const iImage    = idx("image", "img", "imagem");
+      const iTitle    = idx("title", "titulo", "nome");
+      const iPrice    = idx("price", "preco", "preço");
+      const iDiscount = idx("discount", "desconto");
+      const iCoupon   = idx("coupon", "cupom", "código", "codigo");
+      const iSold     = idx("sold", "vendidos", "vendas");
+      const iRating   = idx("rating", "avaliacao", "avaliação");
+      const iLink     = idx("link", "url");
+      const iAff      = idx("affiliate", "afiliado", "link_afiliado", "linkafiliado");
 
       const items = [];
       for(let r=1; r<rows.length; r++){
         const row = rows[r];
 
-        const title = iTitle>=0 ? safeText(row[iTitle]) : "";
-        const image = iImage>=0 ? safeText(row[iImage]) : "";
-        const priceRaw = iPrice>=0 ? safeText(row[iPrice]) : "";
-        const discountRaw = iDiscount>=0 ? safeText(row[iDiscount]) : "";
-        const coupon = iCoupon>=0 ? safeText(row[iCoupon]) : "";
-        const sold = iSold>=0 ? safeText(row[iSold]) : "";
-        const rating = iRating>=0 ? safeText(row[iRating]) : "";
-        const link = iLink>=0 ? safeText(row[iLink]) : "";
+        const title    = safeText(iTitle   >=0 ? row[iTitle]   : "");
+        const image    = safeText(iImage   >=0 ? row[iImage]   : "");
+        const priceStr = safeText(iPrice   >=0 ? row[iPrice]   : "");
+        const discount = safeText(iDiscount>=0 ? row[iDiscount]: "");
+        const coupon   = safeText(iCoupon  >=0 ? row[iCoupon]  : "");
+        const sold     = safeText(iSold    >=0 ? row[iSold]    : "");
+        const rating   = safeText(iRating  >=0 ? row[iRating]  : "");
+        const link     = safeText(iLink    >=0 ? row[iLink]    : "");
+        const affiliate= safeText(iAff     >=0 ? row[iAff]     : "");
 
-        if(!title && !image && !priceRaw && !link) continue;
+        if(!title && !image && !priceStr && !link && !affiliate) continue;
 
-        const priceNum = parseNumberSmart(priceRaw);
-        const discountNum = parseNumberSmart(discountRaw);
-        const soldNum = parseNumberSmart(sold);
-        const ratingNum = parseNumberSmart(rating);
+        const priceOldNum = toNumber(priceStr); // PRICE = preço original
+        const discPercent = parsePercent(discount);
+        let priceNowNum = NaN;
 
-        const nowNum = (isFinite(priceNum) && isFinite(discountNum) && discountNum > 0)
-          ? (priceNum * (1 - discountNum/100))
-          : (isFinite(priceNum) ? priceNum : NaN);
+        if(isFinite(priceOldNum) && isFinite(discPercent) && discPercent > 0 && discPercent < 100){
+          priceNowNum = +(priceOldNum * (1 - discPercent/100)).toFixed(2);
+        } else {
+          // se não tiver desconto válido, mostra o price como "agora"
+          priceNowNum = isFinite(priceOldNum) ? priceOldNum : NaN;
+        }
+
+        const soldNum = toNumber(sold);
+        const ratingNum = toNumber(rating);
 
         items.push({
           title: title || "Oferta",
           image,
-          priceNum: isFinite(priceNum) ? priceNum : NaN,
-          discount: discountRaw,
-          discountNum: isFinite(discountNum) ? discountNum : 0,
+          priceOldNum,
+          priceNowNum,
+          discount,
+          discountNum: isFinite(discPercent) ? discPercent : 0,
           coupon,
           sold,
           soldNum: isFinite(soldNum) ? soldNum : 0,
           rating,
           ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          nowNum: isFinite(nowNum) ? nowNum : NaN,
-          link
+          link,
+          affiliate
         });
       }
 
       ALL_ITEMS = items;
+
       setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
       render();
+
     }catch(err){
       console.error(err);
-      setStatus("error", `Falha • tentando novamente… ${nowHHMMSS()}`);
+      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
       const loading = document.getElementById("loading");
       loading.style.display = "block";
-      loading.textContent = "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+      loading.textContent =
+        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
     }
   }
 
-  // vídeo
-  function toggleVideo(){
-    const v = document.getElementById("promoVideo");
-    if(!v) return;
-    if(v.paused) v.play();
-    else v.pause();
-  }
-  function toggleSound(){
-    const v = document.getElementById("promoVideo");
-    const hint = document.getElementById("soundHint");
-    if(!v) return;
-    v.muted = !v.muted;
-    if(!v.muted){
-      v.play().catch(()=>{});
-      hint.textContent = "Som ativado (se o navegador permitir).";
-    }else{
-      hint.textContent = "Som desativado.";
-    }
-  }
-
+  // =========================
+  // EVENTS
+  // =========================
   document.getElementById("q").addEventListener("input", () => render());
   document.getElementById("sort").addEventListener("change", () => render());
 
+  // start
   startLiveClock();
   loadSheet();
+
+  // auto refresh
   setInterval(() => loadSheet(false), REFRESH_MS);
 </script>
 
