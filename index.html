@@ -1,704 +1,836 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Achadinhos Oficial — Ofertas reais todo dia</title>
-  <meta name="description" content="Achadinhos Oficial: ofertas reais todos os dias. Entre no grupo e receba os links com cupom e desconto." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Achadinhos Oficial</title>
+  <meta name="theme-color" content="#0f172a" />
 
   <style>
     :root{
-      --bg:#0b0b0f;
-      --card:#12121a;
-      --text:#f3f4f6;
-      --muted:#a7a7b3;
-      --brand:#ffd400;      /* faixa amarela */
-      --brand2:#ff7a00;     /* destaque */
-      --ok:#19c37d;
-      --danger:#ff4d4d;
+      --bg:#0b1220;
+      --card:#0f1a33;
+      --soft:#132047;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --brand:#22c55e;
+      --accent:#f59e0b;
+      --danger:#ef4444;
+      --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
-      --max:1100px;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 50% -10%, rgba(255,212,0,.20), transparent 60%),
-                  radial-gradient(900px 500px at 10% 10%, rgba(255,122,0,.12), transparent 55%),
+      background: radial-gradient(1000px 600px at 20% 0%, rgba(34,197,94,.12), transparent 60%),
+                  radial-gradient(800px 500px at 80% 10%, rgba(245,158,11,.10), transparent 55%),
                   var(--bg);
       color:var(--text);
     }
-    a{color:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
-    /* 🔝 Topo com promessa (faixa + promessa curta) */
-    .topbar{
-      background: linear-gradient(90deg, var(--brand), #ffe86a);
-      color:#111;
-      position:sticky;
-      top:0;
-      z-index:50;
-      box-shadow: 0 6px 18px rgba(0,0,0,.22);
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(11,18,32,.86);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
     }
-    .topbar .inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px 0;
+    .headbar{
+      display:flex;gap:12px;align-items:center;justify-content:space-between;
+      padding:12px 0;
     }
-    .brand-left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:800; letter-spacing:.3px;
     }
     .logo{
-      width:40px; height:40px;
-      border-radius:10px;
-      background:#111;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-    .logo img{width:100%; height:100%; object-fit:contain}
-    .brand-text{
-      display:flex;
-      flex-direction:column;
-      line-height:1.05;
-      min-width:0;
-    }
-    .brand-text strong{font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-    .brand-text span{font-size:12px; opacity:.85; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-    .top-cta{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex:0 0 auto;
-    }
-    .pill{
-      font-size:12px;
-      font-weight:700;
-      padding:8px 10px;
-      border-radius:999px;
-      background:#111;
-      color:#fff;
-      white-space:nowrap;
-    }
-    .btn{
-      border:0;
-      cursor:pointer;
-      border-radius:999px;
-      padding:10px 14px;
-      font-weight:800;
-      font-size:13px;
-      background:#111;
-      color:#fff;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      text-decoration:none;
-      transition:.15s transform ease, .15s opacity ease;
-      white-space:nowrap;
-    }
-    .btn:hover{transform: translateY(-1px); opacity:.95}
-    .btn.primary{background: #111; color:#fff}
-    .btn.orange{background: var(--brand2); color:#111}
-    .btn .dot{
-      width:8px;height:8px;border-radius:999px;background:var(--ok);
-      box-shadow:0 0 0 4px rgba(25,195,125,.18);
-    }
-
-    /* Hero */
-    .hero{
-      padding:22px 0 8px;
-    }
-    .hero-card{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:14px;
-      align-items:stretch;
-    }
-    @media (max-width: 900px){
-      .hero-card{grid-template-columns:1fr}
-    }
-    .panel{
-      background: rgba(18,18,26,.92);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius);
+      width:38px;height:38px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));
       box-shadow: var(--shadow);
-      padding:16px;
-    }
-    .headline{
-      margin:0 0 10px;
-      font-size:26px;
-      line-height:1.1;
-      letter-spacing:-.2px;
     }
     .sub{
-      margin:0 0 14px;
-      color:var(--muted);
-      font-size:14px;
+      font-size:12px;color:var(--muted);margin-top:2px;font-weight:600;
     }
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:10px;
+    .status{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;border:1px solid var(--border);
+      border-radius:999px;background: rgba(255,255,255,.03);
+      font-size:12px;color:var(--muted);
+      white-space:nowrap;
     }
-    .trust-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:14px;
-    }
-    .chip{
-      font-size:12px;
-      color:#eaeaf2;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.08);
-      padding:8px 10px;
-      border-radius:999px;
-    }
-    .chip strong{color:#fff}
-    .chip.red{border-color: rgba(255,77,77,.35); background: rgba(255,77,77,.10)}
-    .chip.green{border-color: rgba(25,195,125,.35); background: rgba(25,195,125,.10)}
-
-    /* video / destaque lateral (sem obrigar) */
-    .side{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .mini{
-      padding:14px;
-    }
-    .mini h3{
-      margin:0 0 8px;
-      font-size:14px;
-      letter-spacing:.2px;
-    }
-    .mini p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .mini .statline{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-    .stat{
-      flex:1 1 120px;
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius: 12px;
-      padding:10px;
-    }
-    .stat b{display:block; font-size:14px}
-    .stat small{color:var(--muted)}
-
-    /* 🎁 Destaque ofertas + carrossel */
-    .section{
-      padding:14px 0 22px;
-    }
-    .section-title{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-      margin:6px 0 10px;
-    }
-    .section-title h2{
-      margin:0;
-      font-size:18px;
-      letter-spacing:-.2px;
-    }
-    .section-title span{
-      color:var(--muted);
-      font-size:12px;
+    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12)}
+    .status b{color:var(--text)}
+    .pill{
+      padding:8px 10px;border-radius:999px;
+      background: rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.25);
+      font-size:12px;font-weight:800;color:#bbf7d0;
     }
 
-    .carousel{
-      position:relative;
-    }
-    .track{
-      display:flex;
-      gap:12px;
-      overflow:auto;
-      scroll-snap-type:x mandatory;
-      padding:4px 2px 10px;
-      scrollbar-width: thin;
-    }
-    .track::-webkit-scrollbar{height:10px}
-    .track::-webkit-scrollbar-thumb{background: rgba(255,255,255,.16); border-radius:999px}
-    .card{
-      flex: 0 0 260px;
-      scroll-snap-align:start;
-      background: rgba(18,18,26,.92);
-      border:1px solid rgba(255,255,255,.08);
+    /* Hero promise */
+    .hero{
+      margin-top:16px;
+      background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
+      border:1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
-      display:flex;
-      flex-direction:column;
-      min-height: 340px;
+      position:relative;
     }
-    @media (max-width:520px){
-      .card{flex-basis: 82vw}
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(500px 200px at 20% 10%, rgba(34,197,94,.25), transparent 60%),
+                  radial-gradient(450px 220px at 75% 0%, rgba(245,158,11,.22), transparent 55%);
+      pointer-events:none;
+      filter: blur(0px);
+    }
+    .hero-inner{
+      position:relative;
+      padding:18px;
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap:14px;
+      align-items:center;
+    }
+    @media (max-width: 860px){
+      .hero-inner{grid-template-columns:1fr}
+    }
+    .hero h1{margin:0;font-size:22px;line-height:1.2}
+    .hero p{margin:8px 0 0;color:var(--muted);font-weight:600}
+    .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 14px;border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-weight:900;
+      cursor:pointer;
+      transition: transform .08s ease;
+      user-select:none;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btnPrimary{
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
+      color:#052014;border:none;
+    }
+    .kpi{
+      display:grid;gap:10px;
+    }
+    .kpiCard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+    }
+    .kpiCard b{font-size:16px}
+    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
+
+    /* Controls */
+    .controls{
+      margin-top:14px;
+      display:flex;gap:10px;flex-wrap:wrap;
+      align-items:center;justify-content:space-between;
+    }
+    .search{
+      flex:1;
+      min-width:240px;
+      display:flex;align-items:center;gap:10px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.03);
+    }
+    .search input{
+      width:100%;
+      background:transparent;border:none;outline:none;color:var(--text);
+      font-size:14px;font-weight:700;
+    }
+    .select{
+      min-width:180px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      font-weight:800;
+      outline:none;
+    }
+
+    /* Social proof / urgency */
+    .bar{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 860px){
+      .bar{grid-template-columns:1fr}
+    }
+    .notice{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+      display:flex;gap:10px;align-items:flex-start;
+    }
+    .badge{
+      width:34px;height:34px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background: rgba(245,158,11,.16);
+      border:1px solid rgba(245,158,11,.28);
+      flex:0 0 auto;
+    }
+    .notice h3{margin:0;font-size:13px}
+    .notice p{margin:4px 0 0;color:var(--muted);font-weight:700;font-size:12px;line-height:1.35}
+    .mini{font-size:12px;color:var(--muted);font-weight:800}
+
+    /* Grid / cards */
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
+    @media (max-width: 620px){.grid{grid-template-columns: 1fr}}
+
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: 0 12px 24px rgba(0,0,0,.25);
+      display:flex;flex-direction:column;
+      min-height: 410px;
     }
     .imgbox{
-      width:100%;
-      aspect-ratio: 1 / 1;
-      background: rgba(255,255,255,.06);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      background: rgba(255,255,255,.03);
+      border-bottom:1px solid var(--border);
+      aspect-ratio: 16 / 11;
+      display:flex;align-items:center;justify-content:center;
       overflow:hidden;
     }
     .imgbox img{
-      width:100%;
-      height:100%;
-      object-fit: contain; /* NÃO corta */
-      padding:10px;
+      width:100%;height:100%;object-fit:cover;
+      display:block;
+      filter:saturate(1.05) contrast(1.03);
     }
-    .card-body{padding:12px; display:flex; flex-direction:column; gap:10px; flex:1}
+    .cardBody{padding:12px;display:grid;gap:10px}
     .title{
       margin:0;
       font-size:14px;
-      line-height:1.2;
-      min-height: 34px;
-    }
-    .meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-    .badge{
-      font-size:12px;
-      padding:6px 8px;
-      border-radius:999px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.08);
-      color:#f0f0f7;
-    }
-    .badge.orange{background: rgba(255,122,0,.14); border-color: rgba(255,122,0,.28)}
-    .badge.green{background: rgba(25,195,125,.14); border-color: rgba(25,195,125,.28)}
-    .badge.red{background: rgba(255,77,77,.14); border-color: rgba(255,77,77,.28)}
-    .price-row{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:10px;
-      margin-top:auto;
-    }
-    .prices{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-    .old{
-      color:var(--muted);
-      font-size:12px;
-      text-decoration:line-through;
-    }
-    .new{
-      font-size:18px;
+      line-height:1.25;
       font-weight:900;
-      letter-spacing:-.2px;
+      min-height: 36px;
+    }
+    .row{
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      flex-wrap:wrap;
+    }
+    .price{
+      font-size:18px;font-weight:1000;
+    }
+    .muted{color:var(--muted);font-weight:800;font-size:12px}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-size:12px;font-weight:900;color:var(--text);
     }
     .off{
-      font-size:12px;
-      font-weight:900;
-      color:#111;
-      background: var(--brand);
-      padding:6px 10px;
-      border-radius:999px;
-      white-space:nowrap;
+      border:1px solid rgba(239,68,68,.32);
+      background: rgba(239,68,68,.12);
+      color:#fecaca;
     }
-    .cta{
-      margin-top:10px;
-      display:flex;
-      gap:8px;
+    .coupon{
+      border:1px solid rgba(34,197,94,.28);
+      background: rgba(34,197,94,.12);
+      color:#bbf7d0;
     }
-    .cta a{
+    .buy{
+      margin-top:2px;
+      display:flex;gap:10px;
+    }
+    .btnSmall{
       flex:1;
-      text-align:center;
-      padding:10px 12px;
-      border-radius:12px;
-      text-decoration:none;
-      font-weight:900;
-      font-size:13px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-    }
-    .cta a.main{
-      background: var(--brand2);
-      border-color: rgba(0,0,0,.0);
-      color:#111;
-    }
-
-    /* setas do carrossel */
-    .navbtn{
-      position:absolute;
-      top:42%;
-      transform:translateY(-50%);
-      width:42px;height:42px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.45);
-      color:#fff;
-      display:grid;
-      place-items:center;
+      display:flex;align-items:center;justify-content:center;
+      padding:11px 12px;border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-weight:1000;
       cursor:pointer;
-      z-index:5;
-      box-shadow: 0 10px 20px rgba(0,0,0,.25);
     }
-    .navbtn:hover{background: rgba(0,0,0,.6)}
-    .navbtn.left{left:-6px}
-    .navbtn.right{right:-6px}
-    @media (max-width: 700px){
-      .navbtn{display:none} /* no celular rola com swipe */
+    .btnBuy{
+      background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
+      color:#1b1201;border:none;
     }
 
-    /* 🔥 Urgência social */
-    .social{
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap:12px;
-      margin-top:12px;
-    }
-    @media (max-width: 900px){
-      .social{grid-template-columns:1fr}
-    }
-    .social .box{
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
+    /* Footer */
+    footer{
+      margin:18px 0 100px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
       border-radius: var(--radius);
       padding:14px;
     }
-    .social .box b{display:block; font-size:14px}
-    .social .box small{color:var(--muted)}
+    footer b{display:block;margin-bottom:6px}
+    footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:700;font-size:13px;line-height:1.45}
 
-    /* 🟢 Botão WhatsApp fixo */
-    .wa-float{
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      width: 60px;
-      height: 60px;
-      border-radius: 999px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      font-size: 26px;
-      font-weight:900;
-      background:#25D366;
-      color:#fff;
-      box-shadow: 0 12px 26px rgba(0,0,0,.35);
-      z-index: 9999;
-      transition: transform .15s ease, opacity .15s ease;
+    /* WhatsApp fixed button */
+    .wa{
+      position:fixed;right:16px;bottom:16px;z-index:999;
+      display:flex;align-items:center;gap:10px;
+      padding:14px 14px;
+      border-radius:999px;
+      background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
+      color:#052014;
+      font-weight:1000;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      border:none;
+      cursor:pointer;
     }
-    .wa-float:hover{transform: translateY(-2px); opacity:.96}
-    .wa-tip{
-      position:fixed;
-      right: 88px;
-      bottom: 24px;
-      background: rgba(0,0,0,.75);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius: 999px;
-      padding:8px 10px;
-      font-size:12px;
-      z-index:9999;
-      display:none;
-    }
-    @media (min-width: 900px){
-      .wa-float:hover + .wa-tip{display:block}
+    .wa small{display:block;font-weight:900;opacity:.9;line-height:1}
+    .wa span{display:block;line-height:1}
+    .waIcon{
+      width:38px;height:38px;border-radius:999px;
+      background: rgba(0,0,0,.12);
+      display:flex;align-items:center;justify-content:center;
+      font-size:18px;
     }
 
-    /* Rodapé confiável */
-    footer{
-      margin-top: 18px;
-      padding: 18px 0 28px;
-      color: var(--muted);
-      font-size: 12px;
+    /* Loading */
+    .loading{
+      margin-top:16px;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius: var(--radius);
+      padding:14px;
+      color:var(--muted);
+      font-weight:800;
     }
-    footer .foot{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding-top:14px;
-    }
-    footer .legal{
-      max-width: 820px;
-      line-height:1.4;
-    }
-    footer .contact{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .link{
-      color:#eaeaf2;
-      text-decoration:none;
-      border-bottom:1px dashed rgba(255,255,255,.25);
-    }
-    .link:hover{border-bottom-color: rgba(255,255,255,.5)}
   </style>
 </head>
 
 <body>
+
+<header>
+  <div class="wrap">
+    <div class="headbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div>Achadinhos <span style="color:#bbf7d0">Oficial</span></div>
+          <div class="sub">Ofertas atualizadas direto da planilha</div>
+        </div>
+      </div>
+
+      <div class="status" title="Atualização automática">
+        <span class="dot" id="statusDot"></span>
+        <span id="updatedLabel"><b>Carregando</b></span>
+        <span id="updatedTime" class="mini" data-mode="checking">Verificando…</span>
+      </div>
+
+      <div class="pill" id="countPill">0 ofertas</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
   <!-- 🔝 Topo com promessa -->
-  <div class="topbar">
-    <div class="wrap">
-      <div class="inner">
-        <div class="brand-left">
-          <!-- Troque logo.png pelo nome do seu arquivo de logo -->
-          <div class="logo">
-            <img src="logo.png" alt="Achadinhos Oficial" onerror="this.style.display='none'; this.parentElement.style.background='#111';">
-          </div>
-          <div class="brand-text">
-            <strong>Achadinhos Oficial</strong>
-            <span>Ofertas reais • atualizadas diariamente</span>
-          </div>
-        </div>
-
-        <div class="top-cta">
-          <span class="pill"><span class="dot"></span> Entrar e receber os links</span>
-          <a class="btn orange" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">
-            Ver ofertas ➜
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hero / promessa (mantém estrutura de landing) -->
-  <div class="wrap hero">
-    <div class="hero-card">
-      <div class="panel">
-        <h1 class="headline">Pague menos, com segurança — eu mando os achadinhos do dia no grupo.</h1>
-        <p class="sub">
-          Pra quem tem medo de comprar online: aqui você entra no grupo, recebe os links das ofertas e tira dúvidas comigo.
-          <b style="color:#fff">Sem enrolação.</b>
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn orange" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">
-            🔥 Ver ofertas no grupo
-          </a>
-          <a class="btn primary" href="https://wa.me/5589981311034?text=Oi!%20Vim%20pelo%20site%20Achadinhos%20Oficial%20e%20quero%20tirar%20uma%20d%C3%BAvida%20antes%20de%20comprar."
-             target="_blank" rel="noopener noreferrer">
-            💬 Falar comigo
-          </a>
-        </div>
-
-        <div class="trust-row">
-          <span class="chip green"><strong>Links do dia</strong> + cupons quando tiver</span>
-          <span class="chip"><strong>Sem golpe</strong> • curadoria manual</span>
-          <span class="chip red"><strong>Acaba rápido</strong> • estoque muda</span>
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1>As melhores ofertas do dia — sem enrolação. <span style="color:#bbf7d0">Clique e compre.</span></h1>
+        <p>Atualiza sozinho e mostra o que está com desconto agora. Se tiver cupom, já aparece.</p>
+        <div class="ctaRow">
+          <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
+          <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
         </div>
       </div>
 
-      <!-- lateral: urgência social + “atualizado” -->
-      <div class="side">
-        <div class="panel mini">
-          <h3>🔥 Prova social (ajuda a converter)</h3>
-          <p>As ofertas mudam o tempo todo. Quando tiver cupom, eu aviso no card.</p>
-          <div class="statline">
-            <div class="stat">
-              <b id="updatedLabel">Atualizado agora</b>
-              <small id="updatedTime">—</small>
-            </div>
-            <div class="stat">
-              <b>Atendimento</b>
-              <small>WhatsApp: (89) 98131-1034</small>
-            </div>
-          </div>
+      <div class="kpi">
+        <div class="kpiCard">
+          <b id="kpi1">0</b>
+          <span>ofertas disponíveis</span>
         </div>
-
-        <div class="panel mini">
-          <h3>✅ Como funciona</h3>
-          <p>1) Clique em <b>Ver ofertas</b> → 2) Entre no grupo → 3) Pegue o link + cupom → 4) Compre com segurança.</p>
+        <div class="kpiCard">
+          <b id="kpi2">0</b>
+          <span>vendidos hoje (estimativa)</span>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- 🎁 Destaque de ofertas (carrossel) -->
-  <div class="wrap section">
-    <div class="section-title">
-      <h2>🎁 Promoções em destaque</h2>
-      <span>Arraste no celular • use as setas no PC</span>
+  <!-- Busca / filtro -->
+  <section class="controls">
+    <div class="search">
+      🔎 <input id="q" type="text" placeholder="Buscar produto (ex: tênis, perfume, mesa...)" />
     </div>
 
-    <div class="carousel">
-      <button class="navbtn left" type="button" aria-label="Voltar" onclick="scrollTrack(-1)">‹</button>
-      <button class="navbtn right" type="button" aria-label="Avançar" onclick="scrollTrack(1)">›</button>
+    <select class="select" id="sort">
+      <option value="best">Ordenar: destaque</option>
+      <option value="priceAsc">Menor preço</option>
+      <option value="priceDesc">Maior preço</option>
+      <option value="discountDesc">Maior desconto</option>
+      <option value="soldDesc">Mais vendidos</option>
+      <option value="ratingDesc">Melhor avaliação</option>
+    </select>
+  </section>
 
-      <div class="track" id="track">
-        <!-- CARD 1 -->
-        <article class="card">
-          <div class="imgbox">
-            <!-- troque a imagem pelo seu arquivo/URL -->
-            <img src="oferta1.jpg" alt="Oferta 1" onerror="this.src='https://via.placeholder.com/800x800.png?text=Oferta+1';">
-          </div>
-          <div class="card-body">
-            <h3 class="title">Oferta 1 — Nome do produto (edite depois)</h3>
-            <div class="meta">
-              <span class="badge green">⭐ 4,8</span>
-              <span class="badge">+100 vendidos</span>
-              <span class="badge orange">CUPOM: SIM</span>
-              <span class="badge red">Acaba rápido</span>
-            </div>
-            <div class="price-row">
-              <div class="prices">
-                <span class="old">R$ 199,90</span>
-                <span class="new">R$ 149,90</span>
-              </div>
-              <span class="off">-25%</span>
-            </div>
-            <div class="cta">
-              <a class="main" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">Ver no grupo</a>
-              <a href="https://wa.me/5589981311034?text=Oi!%20Vi%20a%20Oferta%201%20no%20site%20Achadinhos%20Oficial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener noreferrer">Tirar dúvida</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- CARD 2 -->
-        <article class="card">
-          <div class="imgbox">
-            <img src="oferta2.jpg" alt="Oferta 2" onerror="this.src='https://via.placeholder.com/800x800.png?text=Oferta+2';">
-          </div>
-          <div class="card-body">
-            <h3 class="title">Oferta 2 — Nome do produto (edite depois)</h3>
-            <div class="meta">
-              <span class="badge green">⭐ 4,7</span>
-              <span class="badge">+250 vendidos</span>
-              <span class="badge orange">CUPOM: NÃO</span>
-              <span class="badge">Frete bom</span>
-            </div>
-            <div class="price-row">
-              <div class="prices">
-                <span class="old">R$ 89,90</span>
-                <span class="new">R$ 69,90</span>
-              </div>
-              <span class="off">-22%</span>
-            </div>
-            <div class="cta">
-              <a class="main" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">Ver no grupo</a>
-              <a href="https://wa.me/5589981311034?text=Oi!%20Vi%20a%20Oferta%202%20no%20site%20Achadinhos%20Oficial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener noreferrer">Tirar dúvida</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- CARD 3 -->
-        <article class="card">
-          <div class="imgbox">
-            <img src="oferta3.jpg" alt="Oferta 3" onerror="this.src='https://via.placeholder.com/800x800.png?text=Oferta+3';">
-          </div>
-          <div class="card-body">
-            <h3 class="title">Oferta 3 — Nome do produto (edite depois)</h3>
-            <div class="meta">
-              <span class="badge green">⭐ 4,9</span>
-              <span class="badge">+1.000 vendidos</span>
-              <span class="badge orange">CUPOM: SIM</span>
-              <span class="badge red">Últimas unidades</span>
-            </div>
-            <div class="price-row">
-              <div class="prices">
-                <span class="old">R$ 329,90</span>
-                <span class="new">R$ 249,90</span>
-              </div>
-              <span class="off">-24%</span>
-            </div>
-            <div class="cta">
-              <a class="main" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">Ver no grupo</a>
-              <a href="https://wa.me/5589981311034?text=Oi!%20Vi%20a%20Oferta%203%20no%20site%20Achadinhos%20Oficial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener noreferrer">Tirar dúvida</a>
-            </div>
-          </div>
-        </article>
-
+  <!-- 🔥 Urgência social / Prova -->
+  <section class="bar">
+    <div class="notice">
+      <div class="badge">🔥</div>
+      <div>
+        <h3>Acabando rápido</h3>
+        <p id="urgencyText">Ofertas mudam o tempo todo — se gostou, aproveite agora.</p>
       </div>
     </div>
 
-    <!-- 🔥 Urgência social (sem mudar estrutura: é só um bloco a mais) -->
-    <div class="social">
-      <div class="box">
-        <b>🔥 Ofertas mudam rápido</b>
-        <small>Se acabar, eu posto outra no grupo. Entre e acompanhe.</small>
-      </div>
-      <div class="box">
-        <b>✅ Para quem tem medo</b>
-        <small>Chama no WhatsApp que eu te explico o passo a passo.</small>
-      </div>
-      <div class="box">
-        <b>🏷️ Cupom quando tiver</b>
-        <small>Nos cards aparece “CUPOM: SIM”. No grupo eu mando o código.</small>
+    <div class="notice">
+      <div class="badge">✅</div>
+      <div>
+        <h3>Prova social</h3>
+        <p id="socialText">Hoje já teve várias compras — atualizando em tempo real.</p>
       </div>
     </div>
+  </section>
 
-    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-      <a class="btn orange" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">✅ Entrar no grupo agora</a>
-      <a class="btn primary" href="https://wa.me/5589981311034?text=Oi!%20Vim%20pelo%20site%20Achadinhos%20Oficial%20e%20quero%20saber%20como%20aproveitar%20as%20promo%C3%A7%C3%B5es." target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
-    </div>
-  </div>
+  <div id="loading" class="loading">Carregando ofertas da planilha…</div>
+
+  <!-- 🎁 Destaque de ofertas -->
+  <section id="offers" class="grid" aria-live="polite"></section>
 
   <!-- 🔚 Rodapé confiável -->
-  <div class="wrap">
-    <footer>
-      <div class="foot">
-        <div class="legal">
-          <b style="color:#fff">Achadinhos Oficial</b> — curadoria independente de ofertas.
-          <br />
-          Este site não possui vínculo oficial com o Mercado Livre. As marcas e produtos exibidos pertencem aos seus respectivos proprietários.
-          <br />
-          <span id="year"></span> • Atualizado com base nas ofertas do dia (estoque e preços podem mudar).
-        </div>
-        <div class="contact">
-          <a class="link" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener noreferrer">Entrar no Grupo</a>
-          <a class="link" href="https://wa.me/5589981311034" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-        </div>
-      </div>
-    </footer>
+  <footer>
+    <b>✅ Compra com mais segurança</b>
+    <ul>
+      <li>Ofertas exibidas a partir da planilha publicada.</li>
+      <li>Preços podem mudar a qualquer momento no site do vendedor.</li>
+      <li>Se algum item não abrir, atualize a página e tente novamente.</li>
+    </ul>
+  </footer>
+
+</main>
+
+<!-- 🟢 Botão WhatsApp fixo -->
+<button class="wa" onclick="openWhatsApp()" aria-label="Falar no WhatsApp">
+  <div class="waIcon">🟢</div>
+  <div>
+    <span>Falar no WhatsApp</span>
+    <small>Resposta rápida</small>
   </div>
+</button>
 
-  <!-- 🟢 Botão WhatsApp fixo -->
-  <a class="wa-float"
-     href="https://wa.me/5589981311034?text=Oi!%20Vim%20pelo%20site%20Achadinhos%20Oficial%20e%20quero%20aproveitar%20as%20ofertas%20%F0%9F%94%A5"
-     target="_blank" rel="noopener noreferrer"
-     aria-label="Falar no WhatsApp">
-    💬
-  </a>
-  <div class="wa-tip">Falar no WhatsApp</div>
+<script>
+  // =========================
+  // CONFIG
+  // =========================
+  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
 
-  <script>
-    // setas do carrossel (PC)
-    function scrollTrack(dir){
-      const el = document.getElementById('track');
-      const step = Math.min(el.clientWidth * 0.85, 520);
-      el.scrollBy({ left: dir * step, behavior: 'smooth' });
+  // Seu WhatsApp (somente números) + DDI Brasil
+  const WA_NUMBER = "5589981311034"; // 55 + 89 981311034
+
+  // Atualização automática da planilha:
+  const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
+
+  // =========================
+  // HELPERS
+  // =========================
+  function nowHHMMSS(){
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    return `${hh}:${mm}:${ss}`;
+  }
+
+  function moneyBRL(value){
+    const n = Number(value);
+    if (!isFinite(n)) return "";
+    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+  }
+
+  function toNumber(str){
+    if (str == null) return NaN;
+    const s = String(str).trim()
+      .replace(/\s/g,'')
+      .replace(/\./g,'')
+      .replace(',', '.')
+      .replace(/[^\d.-]/g,'');
+    const n = Number(s);
+    return isFinite(n) ? n : NaN;
+  }
+
+  function safeText(x){
+    return (x ?? "").toString().replace(/\s+/g,' ').trim();
+  }
+
+  function scrollToOffers(){
+    document.getElementById("offers").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function openWhatsApp(){
+    const msg = encodeURIComponent("Oi! Quero ajuda com uma oferta do site Achadinhos Oficial.");
+    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, "_blank");
+  }
+
+  function setStatus(mode, text){
+    const dot = document.getElementById("statusDot");
+    const label = document.getElementById("updatedLabel");
+    const time = document.getElementById("updatedTime");
+
+    if (mode === "ok"){
+      dot.style.background = "var(--brand)";
+      dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
+      label.innerHTML = "<b>Atualizado</b>";
+      time.dataset.mode = "updated";
+      time.textContent = text;
+    } else if (mode === "loading"){
+      dot.style.background = "var(--accent)";
+      dot.style.boxShadow = "0 0 0 4px rgba(245,158,11,.12)";
+      label.innerHTML = "<b>Carregando</b>";
+      time.dataset.mode = "checking";
+      time.textContent = text;
+    } else {
+      dot.style.background = "var(--danger)";
+      dot.style.boxShadow = "0 0 0 4px rgba(239,68,68,.12)";
+      label.innerHTML = "<b>Falha</b>";
+      time.dataset.mode = "checking";
+      time.textContent = text;
     }
+  }
 
-    // "Atualizado agora" + horário
-    (function(){
-      const now = new Date();
-      const hh = String(now.getHours()).padStart(2,'0');
-      const mm = String(now.getMinutes()).padStart(2,'0');
-      document.getElementById('updatedTime').textContent = `Última atualização: ${hh}:${mm}`;
-      document.getElementById('year').textContent = `© ${now.getFullYear()}`;
-    })();
-  </script>
+  // Relógio rodando sempre (mesmo enquanto carrega)
+  function startLiveClock(){
+    const timeEl = document.getElementById("updatedTime");
+    if(!timeEl) return;
+
+    setInterval(() => {
+      if(timeEl.dataset.mode !== "updated"){
+        timeEl.textContent = `Verificando: ${nowHHMMSS()}`;
+      }
+    }, 1000);
+  }
+
+  // CSV parser simples (suporta aspas)
+  function parseCSV(text){
+    const rows = [];
+    let row = [];
+    let cur = "";
+    let inQuotes = false;
+
+    for(let i=0;i<text.length;i++){
+      const ch = text[i];
+      const next = text[i+1];
+
+      if(ch === '"' && inQuotes && next === '"'){
+        cur += '"';
+        i++;
+        continue;
+      }
+      if(ch === '"'){
+        inQuotes = !inQuotes;
+        continue;
+      }
+      if(ch === ',' && !inQuotes){
+        row.push(cur);
+        cur = "";
+        continue;
+      }
+      if((ch === '\n' || ch === '\r') && !inQuotes){
+        if(ch === '\r' && next === '\n'){ i++; }
+        row.push(cur);
+        cur = "";
+        if(row.length > 1 || row[0].trim() !== ""){
+          rows.push(row);
+        }
+        row = [];
+        continue;
+      }
+      cur += ch;
+    }
+    // last
+    row.push(cur);
+    if(row.length > 1 || row[0].trim() !== ""){
+      rows.push(row);
+    }
+    return rows;
+  }
+
+  // =========================
+  // RENDER
+  // =========================
+  let ALL_ITEMS = [];
+
+  function forceReload(){
+    loadSheet(true);
+  }
+
+  function getQuery(){
+    return safeText(document.getElementById("q").value).toLowerCase();
+  }
+
+  function getSort(){
+    return document.getElementById("sort").value;
+  }
+
+  function sortItems(items, mode){
+    const a = [...items];
+
+    if(mode === "priceAsc"){
+      a.sort((x,y)=> (x.priceNum||Infinity) - (y.priceNum||Infinity));
+    } else if(mode === "priceDesc"){
+      a.sort((x,y)=> (y.priceNum||-Infinity) - (x.priceNum||-Infinity));
+    } else if(mode === "discountDesc"){
+      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
+    } else if(mode === "soldDesc"){
+      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
+    } else if(mode === "ratingDesc"){
+      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
+    } else {
+      // destaque: sold + desconto + rating
+      a.sort((x,y)=>{
+        const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
+        const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
+        return sy - sx;
+      });
+    }
+    return a;
+  }
+
+  function filterItems(items){
+    const q = getQuery();
+    if(!q) return items;
+
+    return items.filter(it => {
+      const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
+      return hay.includes(q);
+    });
+  }
+
+  function render(){
+    const grid = document.getElementById("offers");
+    const loading = document.getElementById("loading");
+
+    const sorted = sortItems(filterItems(ALL_ITEMS), getSort());
+
+    grid.innerHTML = "";
+    loading.style.display = sorted.length ? "none" : "block";
+    loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
+
+    // KPIs
+    document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
+    document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
+
+    // Prova social / urgência (leve e simples)
+    const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
+    document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
+    document.getElementById("urgencyText").textContent =
+      "Quando aparece desconto alto, costuma acabar rápido. Se gostou, aproveite agora.";
+    document.getElementById("socialText").textContent =
+      soldToday ? `Hoje já teve ${soldToday} compras somadas nas ofertas da planilha.` : "Ofertas com boa avaliação e desconto tendem a vender mais rápido.";
+
+    for(const it of sorted){
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const img = document.createElement("div");
+      img.className = "imgbox";
+      img.innerHTML = `<img src="${it.image || ""}" alt="${escapeHtml(it.title)}" loading="lazy" referrerpolicy="no-referrer" />`;
+      card.appendChild(img);
+
+      const body = document.createElement("div");
+      body.className = "cardBody";
+
+      const title = document.createElement("h2");
+      title.className = "title";
+      title.textContent = it.title || "Oferta";
+      body.appendChild(title);
+
+      const row1 = document.createElement("div");
+      row1.className = "row";
+
+      const price = document.createElement("div");
+      price.className = "price";
+      price.textContent = it.price ? it.price : (isFinite(it.priceNum) ? moneyBRL(it.priceNum) : "—");
+      row1.appendChild(price);
+
+      const right = document.createElement("div");
+      right.style.display="flex";
+      right.style.gap="8px";
+      right.style.flexWrap="wrap";
+      right.style.justifyContent="flex-end";
+
+      if(it.discount){
+        const t = document.createElement("span");
+        t.className = "tag off";
+        t.textContent = it.discount;
+        right.appendChild(t);
+      }
+      if(it.coupon){
+        const t = document.createElement("span");
+        t.className = "tag coupon";
+        t.textContent = `CUPOM: ${it.coupon}`;
+        right.appendChild(t);
+      }
+      row1.appendChild(right);
+      body.appendChild(row1);
+
+      const row2 = document.createElement("div");
+      row2.className = "row";
+      row2.innerHTML = `
+        <div class="muted">${it.rating ? `⭐ ${it.rating}` : "⭐ —"} &nbsp;•&nbsp; ${it.sold ? `${it.sold} vendidos` : "— vendidos"}</div>
+        <div class="muted">Atualizado: ${nowHHMMSS()}</div>
+      `;
+      body.appendChild(row2);
+
+      const buy = document.createElement("div");
+      buy.className = "buy";
+
+      const btn1 = document.createElement("button");
+      btn1.className = "btnSmall btnBuy";
+      btn1.textContent = "Ver oferta";
+      btn1.onclick = () => openLink(it.link);
+      buy.appendChild(btn1);
+
+      const btn2 = document.createElement("button");
+      btn2.className = "btnSmall";
+      btn2.textContent = "Copiar cupom";
+      btn2.onclick = () => copyCoupon(it.coupon);
+      buy.appendChild(btn2);
+
+      body.appendChild(buy);
+      card.appendChild(body);
+      grid.appendChild(card);
+    }
+  }
+
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
+  }
+
+  function openLink(url){
+    const u = safeText(url);
+    if(!u){ alert("Link não encontrado na planilha."); return; }
+    window.open(u, "_blank");
+  }
+
+  async function copyCoupon(coupon){
+    const c = safeText(coupon);
+    if(!c){ alert("Este item não tem cupom."); return; }
+    try{
+      await navigator.clipboard.writeText(c);
+      alert("Cupom copiado: " + c);
+    }catch{
+      prompt("Copie o cupom:", c);
+    }
+  }
+
+  // =========================
+  // LOAD SHEET
+  // =========================
+  async function loadSheet(isManual=false){
+    try{
+      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
+
+      // cache-buster pra garantir atualização
+      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
+
+      const res = await fetch(url, { cache:"no-store" });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+
+      const text = await res.text();
+      const rows = parseCSV(text);
+
+      if(!rows.length) throw new Error("CSV vazio");
+
+      const header = rows[0].map(h => safeText(h).toLowerCase());
+      const idx = (name) => header.indexOf(name);
+
+      // Esperado (como na sua planilha): image,title,price,discount,coupon,sold,rating,link(ou url)
+      const iImage = idx("image");
+      const iTitle = idx("title");
+      const iPrice = idx("price");
+      const iDiscount = idx("discount");
+      const iCoupon = idx("coupon");
+      const iSold = idx("sold");
+      const iRating = idx("rating");
+      const iLink = idx("link") >= 0 ? idx("link") : idx("url");
+
+      const items = [];
+      for(let r=1; r<rows.length; r++){
+        const row = rows[r];
+        const title = safeText(row[iTitle]);
+        const image = safeText(row[iImage]);
+        const price = safeText(row[iPrice]);
+        const discount = safeText(row[iDiscount]);
+        const coupon = safeText(row[iCoupon]);
+        const sold = safeText(row[iSold]);
+        const rating = safeText(row[iRating]);
+        const link = safeText(row[iLink]);
+
+        // Ignora linha totalmente vazia
+        if(!title && !image && !price && !link) continue;
+
+        const priceNum = toNumber(price);
+        const discountNum = toNumber(discount); // se vier "46% OFF" vira 46
+        const soldNum = toNumber(sold);
+        const ratingNum = toNumber(rating);
+
+        items.push({
+          title: title || "Oferta",
+          image,
+          price,
+          priceNum,
+          discount,
+          discountNum: isFinite(discountNum) ? discountNum : 0,
+          coupon,
+          sold,
+          soldNum: isFinite(soldNum) ? soldNum : 0,
+          rating,
+          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
+          link
+        });
+      }
+
+      ALL_ITEMS = items;
+
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
+      render();
+
+    }catch(err){
+      console.error(err);
+      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("loading").textContent =
+        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+    }
+  }
+
+  // =========================
+  // EVENTS
+  // =========================
+  document.getElementById("q").addEventListener("input", () => render());
+  document.getElementById("sort").addEventListener("change", () => render());
+
+  // Start
+  startLiveClock();
+  loadSheet();
+
+  // Auto refresh
+  setInterval(() => loadSheet(false), REFRESH_MS);
+</script>
+
 </body>
 </html>
