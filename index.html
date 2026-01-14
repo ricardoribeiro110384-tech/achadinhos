@@ -19,13 +19,15 @@
       --border:rgba(255,255,255,.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
+      --yellow:#facc15;
+      --yellow2:#f59e0b;
     }
 
     *{box-sizing:border-box}
     html, body{
       width:100%;
       max-width:100%;
-      overflow-x:hidden; /* ✅ impede “puxar pro lado” e aparecer vazio */
+      overflow-x:hidden; /* ✅ evita “puxar pro lado” */
     }
 
     body{
@@ -39,7 +41,7 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
-    /* Header */
+    /* ===== Header com faixa amarela + logo ===== */
     header{
       position:sticky; top:0; z-index:50;
       background: rgba(11,18,32,.86);
@@ -47,56 +49,104 @@
       border-bottom:1px solid var(--border);
     }
 
+    .topStrip{
+      background: linear-gradient(90deg, var(--yellow), var(--yellow2));
+      border-bottom:1px solid rgba(0,0,0,.15);
+    }
+    .topStripInner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:10px 16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      justify-content:flex-start;
+    }
+    .topStripInner img{
+      height:36px;
+      width:auto;
+      display:block;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
+    }
+    .topStripTitle{
+      font-weight:1000;
+      color:#111;
+      letter-spacing:.2px;
+      line-height:1.1;
+    }
+    .topStripTitle small{
+      display:block;
+      font-weight:900;
+      opacity:.9;
+    }
+
     .headbar{
       display:flex;
-      gap:12px;
+      gap:10px;
       align-items:center;
       justify-content:space-between;
       padding:12px 0;
-      flex-wrap:wrap;            /* ✅ no celular não estoura */
+
+      flex-wrap:wrap;      /* ✅ quebra no celular */
       max-width:100%;
     }
 
     .brand{
       display:flex;align-items:center;gap:10px;
-      font-weight:800; letter-spacing:.3px;
+      font-weight:900; letter-spacing:.3px;
       min-width: 220px;
-      max-width: 100%;
+      max-width:100%;
     }
-
-    .logo{
+    .logoDot{
       width:38px;height:38px;border-radius:12px;
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));
       box-shadow: var(--shadow);
       flex:0 0 auto;
     }
     .sub{
-      font-size:12px;color:var(--muted);margin-top:2px;font-weight:600;
+      font-size:12px;color:var(--muted);margin-top:2px;font-weight:700;
     }
 
+    /* ✅ status não estoura */
     .status{
-      display:flex;align-items:center;gap:10px;
-      padding:10px 12px;border:1px solid var(--border);
-      border-radius:999px;background: rgba(255,255,255,.03);
-      font-size:12px;color:var(--muted);
-      white-space:nowrap;
-      max-width:100%;            /* ✅ não passa da tela */
+      display:flex;
+      align-items:center;
+      gap:8px;
+
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background: rgba(255,255,255,.03);
+      font-size:12px;
+      color:var(--muted);
+
+      max-width:100%;
+      flex: 1 1 260px;   /* encolhe */
+      min-width:0;       /* impede overflow invisível */
+      white-space:normal;
+      overflow:hidden;
+    }
+    .dot{
+      width:9px;height:9px;border-radius:999px;background:var(--accent);
+      box-shadow: 0 0 0 4px rgba(245,158,11,.12);
+      flex:0 0 auto;
+    }
+    #updatedLabel, #updatedTime{
+      min-width:0;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-
-    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12); flex:0 0 auto;}
     .status b{color:var(--text)}
     .pill{
       padding:8px 10px;border-radius:999px;
       background: rgba(34,197,94,.12);
       border:1px solid rgba(34,197,94,.25);
-      font-size:12px;font-weight:800;color:#bbf7d0;
+      font-size:12px;font-weight:900;color:#bbf7d0;
       white-space:nowrap;
-      max-width:100%;
+      flex:0 0 auto;
     }
 
-    /* Hero promise */
+    /* ===== Hero ===== */
     .hero{
       margin-top:16px;
       background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
@@ -127,15 +177,14 @@
       .hero-inner{grid-template-columns:1fr}
     }
     .hero h1{margin:0;font-size:22px;line-height:1.2}
-    .hero p{margin:8px 0 0;color:var(--muted);font-weight:600}
+    .hero p{margin:8px 0 0;color:var(--muted);font-weight:700}
     .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-
     .btn{
       display:inline-flex;align-items:center;gap:10px;
       padding:12px 14px;border-radius:14px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
-      font-weight:900;
+      font-weight:950;
       cursor:pointer;
       transition: transform .08s ease;
       user-select:none;
@@ -154,9 +203,9 @@
       padding:12px;
     }
     .kpiCard b{font-size:16px}
-    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
+    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-top:2px}
 
-    /* Controls */
+    /* ===== Controls ===== */
     .controls{
       margin-top:14px;
       display:flex;gap:10px;flex-wrap:wrap;
@@ -176,7 +225,7 @@
     .search input{
       width:100%;
       background:transparent;border:none;outline:none;color:var(--text);
-      font-size:14px;font-weight:700;
+      font-size:14px;font-weight:800;
       min-width:0;
     }
     .select{
@@ -186,12 +235,12 @@
       border-radius:14px;
       background: rgba(255,255,255,.03);
       color:var(--text);
-      font-weight:800;
+      font-weight:900;
       outline:none;
       max-width:100%;
     }
 
-    /* Social proof / urgency */
+    /* ===== Notices ===== */
     .bar{
       margin-top:14px;
       display:grid;
@@ -218,10 +267,9 @@
       flex:0 0 auto;
     }
     .notice h3{margin:0;font-size:13px}
-    .notice p{margin:4px 0 0;color:var(--muted);font-weight:700;font-size:12px;line-height:1.35}
-    .mini{font-size:12px;color:var(--muted);font-weight:800}
+    .notice p{margin:4px 0 0;color:var(--muted);font-weight:800;font-size:12px;line-height:1.35}
 
-    /* Grid / cards */
+    /* ===== Grid / Cards ===== */
     .grid{
       margin-top:16px;
       display:grid;
@@ -230,7 +278,25 @@
       max-width:100%;
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
-    @media (max-width: 620px){.grid{grid-template-columns: 1fr}}
+
+    /* ✅ Carrossel no celular */
+    @media (max-width: 620px){
+      .grid{
+        display:flex;
+        overflow-x:auto;
+        gap:12px;
+        scroll-snap-type:x mandatory;
+        padding:2px 4px 10px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .grid::-webkit-scrollbar{height:8px}
+      .grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:999px}
+      .card{
+        flex:0 0 86vw;
+        scroll-snap-align:start;
+        min-height:unset;
+      }
+    }
 
     .card{
       border:1px solid var(--border);
@@ -239,23 +305,23 @@
       overflow:hidden;
       box-shadow: 0 12px 24px rgba(0,0,0,.25);
       display:flex;flex-direction:column;
-      min-height: 410px;
+      min-height: 420px;
       max-width:100%;
     }
 
+    /* ✅ Imagem sem cortar */
     .imgbox{
       background: rgba(255,255,255,.03);
       border-bottom:1px solid var(--border);
       aspect-ratio: 16 / 11;
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;
-      padding:8px;                 /* ✅ dá “respiro” pra não cortar */
+      padding:10px;
     }
-
     .imgbox img{
       width:100%;
       height:100%;
-      object-fit:contain;          /* ✅ NÃO CORTA a imagem */
+      object-fit:contain;      /* ✅ sem corte */
       object-position:center;
       display:block;
       background: rgba(0,0,0,.12);
@@ -267,37 +333,53 @@
       margin:0;
       font-size:14px;
       line-height:1.25;
-      font-weight:900;
+      font-weight:950;
       min-height: 36px;
-      word-break: break-word;
+      word-break:break-word;
     }
     .row{
-      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
       flex-wrap:wrap;
       max-width:100%;
     }
-    .price{
-      font-size:18px;font-weight:1000;
-    }
-    .muted{color:var(--muted);font-weight:800;font-size:12px}
+    .muted{color:var(--muted);font-weight:850;font-size:12px}
+
     .tag{
       display:inline-flex;align-items:center;gap:6px;
       padding:6px 10px;border-radius:999px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.03);
-      font-size:12px;font-weight:900;color:var(--text);
+      font-size:12px;font-weight:950;color:var(--text);
       max-width:100%;
     }
-    .off{
-      border:1px solid rgba(239,68,68,.32);
-      background: rgba(239,68,68,.12);
-      color:#fecaca;
+    .off{border:1px solid rgba(239,68,68,.32);background: rgba(239,68,68,.12);color:#fecaca}
+    .coupon{border:1px solid rgba(34,197,94,.28);background: rgba(34,197,94,.12);color:#bbf7d0}
+
+    /* ✅ Preço com desconto */
+    .prices{display:flex;flex-direction:column;gap:6px;line-height:1.05}
+    .priceNow{
+      font-size:20px;
+      font-weight:1000;
+      color:#052014;
+      background: linear-gradient(135deg, rgba(34,197,94,.96), rgba(34,197,94,.72));
+      display:inline-block;
+      padding:7px 10px;
+      border-radius:12px;
+      width:max-content;
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
     }
-    .coupon{
-      border:1px solid rgba(34,197,94,.28);
-      background: rgba(34,197,94,.12);
-      color:#bbf7d0;
+    .priceOld{
+      font-size:13px;
+      font-weight:950;
+      color:rgba(229,231,235,.72);
+      text-decoration:line-through;
+      text-decoration-thickness:2px;
     }
+    .priceSingle{
+      font-size:18px;
+      font-weight:1000;
+    }
+
     .buy{
       margin-top:2px;
       display:flex;gap:10px;
@@ -328,9 +410,9 @@
       max-width:100%;
     }
     footer b{display:block;margin-bottom:6px}
-    footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:700;font-size:13px;line-height:1.45}
+    footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:800;font-size:13px;line-height:1.45}
 
-    /* WhatsApp fixed button */
+    /* WhatsApp fixed */
     .wa{
       position:fixed;right:16px;bottom:16px;z-index:999;
       display:flex;align-items:center;gap:10px;
@@ -354,14 +436,13 @@
       flex:0 0 auto;
     }
 
-    /* Loading */
     .loading{
       margin-top:16px;
       border:1px dashed rgba(255,255,255,.18);
       border-radius: var(--radius);
       padding:14px;
       color:var(--muted);
-      font-weight:800;
+      font-weight:900;
       max-width:100%;
     }
   </style>
@@ -370,10 +451,21 @@
 <body>
 
 <header>
+  <!-- ✅ faixa amarela com logo -->
+  <div class="topStrip">
+    <div class="topStripInner">
+      <img src="logo.png" alt="Logo Achadinhos">
+      <div class="topStripTitle">
+        Achadinhos Oficial
+        <small>Ofertas verificadas • sem enrolação</small>
+      </div>
+    </div>
+  </div>
+
   <div class="wrap">
     <div class="headbar">
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <div class="logoDot" aria-hidden="true"></div>
         <div>
           <div>Achadinhos <span style="color:#bbf7d0">Oficial</span></div>
           <div class="sub">Ofertas atualizadas direto da planilha</div>
@@ -396,11 +488,12 @@
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <h1>As melhores ofertas do dia — sem enrolação. <span style="color:#bbf7d0">Clique e compre.</span></h1>
-        <p>Atualiza sozinho e mostra o que está com desconto agora. Se tiver cupom, já aparece.</p>
+        <h1>As melhores ofertas do dia — <span style="color:#bbf7d0">com desconto calculado na hora</span>.</h1>
+        <p>Quando você clicar em <b>Ver oferta</b>, vai direto pro nosso grupo do WhatsApp.</p>
         <div class="ctaRow">
           <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
           <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
+          <button class="btn" onclick="openOffer()">🟢 Entrar no grupo</button>
         </div>
       </div>
 
@@ -424,8 +517,8 @@
 
     <select class="select" id="sort">
       <option value="best">Ordenar: destaque</option>
-      <option value="priceAsc">Menor preço</option>
-      <option value="priceDesc">Maior preço</option>
+      <option value="priceAsc">Menor preço (com desconto)</option>
+      <option value="priceDesc">Maior preço (com desconto)</option>
       <option value="discountDesc">Maior desconto</option>
       <option value="soldDesc">Mais vendidos</option>
       <option value="ratingDesc">Melhor avaliação</option>
@@ -467,20 +560,25 @@
 
 </main>
 
-<button class="wa" onclick="openWhatsApp()" aria-label="Falar no WhatsApp">
+<button class="wa" onclick="openOffer()" aria-label="Entrar no grupo do WhatsApp">
   <div class="waIcon">🟢</div>
   <div>
-    <span>Falar no WhatsApp</span>
-    <small>Resposta rápida</small>
+    <span>Entrar no grupo</span>
+    <small>Receber links e cupons</small>
   </div>
 </button>
 
 <script>
+  // =========================
+  // CONFIG
+  // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-  const WA_NUMBER = "5589981311034";
   const WA_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-  const REFRESH_MS = 2 * 60 * 1000;
+  const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
 
+  // =========================
+  // HELPERS
+  // =========================
   function nowHHMMSS(){
     const d = new Date();
     const hh = String(d.getHours()).padStart(2,'0');
@@ -491,17 +589,42 @@
 
   function moneyBRL(value){
     const n = Number(value);
-    if (!isFinite(n)) return "";
+    if (!isFinite(n)) return "—";
     return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
   }
 
-  function toNumber(str){
+  // ✅ aceita 499,99 / 499.99 / R$ 1.299,90 / 1,299.90 / "46% OFF" etc
+  function parseNumberSmart(str){
     if (str == null) return NaN;
-    const s = String(str).trim()
-      .replace(/\s/g,'')
-      .replace(/\./g,'')
-      .replace(',', '.')
-      .replace(/[^\d.-]/g,'');
+    let s = String(str).trim();
+    if (!s) return NaN;
+
+    s = s.replace(/\s/g, "").replace(/R\$/gi, "").replace(/\u00A0/g, "");
+    s = s.replace(/[^\d.,-]/g, "");
+
+    const hasDot = s.includes(".");
+    const hasComma = s.includes(",");
+
+    if (hasDot && hasComma) {
+      const lastDot = s.lastIndexOf(".");
+      const lastComma = s.lastIndexOf(",");
+      const decimalIsComma = lastComma > lastDot;
+
+      if (decimalIsComma) {
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma && !hasDot) {
+      s = s.replace(",", ".");
+    } else if (hasDot && !hasComma) {
+      const parts = s.split(".");
+      if (parts.length > 2) {
+        const dec = parts.pop();
+        s = parts.join("") + "." + dec;
+      }
+    }
+
     const n = Number(s);
     return isFinite(n) ? n : NaN;
   }
@@ -510,13 +633,16 @@
     return (x ?? "").toString().replace(/\s+/g,' ').trim();
   }
 
-  function scrollToOffers(){
-    document.getElementById("offers").scrollIntoView({behavior:"smooth", block:"start"});
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
   }
 
-  function openWhatsApp(){
-    const msg = encodeURIComponent("Oi! Quero ajuda com uma oferta do site Achadinhos Oficial.");
-    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, "_blank");
+  function scrollToOffers(){
+    document.getElementById("offers").scrollIntoView({behavior:"smooth", block:"start"});
   }
 
   function openOffer(){
@@ -549,6 +675,7 @@
     }
   }
 
+  // relógio sempre rodando
   function startLiveClock(){
     const timeEl = document.getElementById("updatedTime");
     if(!timeEl) return;
@@ -559,6 +686,7 @@
     }, 1000);
   }
 
+  // CSV parser (com aspas)
   function parseCSV(text){
     const rows = [];
     let row = [];
@@ -602,27 +730,38 @@
     return rows;
   }
 
+  // =========================
+  // PREÇO COM DESCONTO
+  // price = original, discount = %OFF
+  // =========================
+  function computePrices(it){
+    const hasPrice = isFinite(it.priceNum);
+    const hasDiscount = isFinite(it.discountNum) && it.discountNum > 0;
+
+    if(!hasPrice) return { mode:"none" };
+    if(!hasDiscount) return { mode:"single", single: it.priceNum };
+
+    const oldP = it.priceNum;
+    const nowP = it.priceNum * (1 - (it.discountNum / 100));
+    return { mode:"dual", old: oldP, now: nowP };
+  }
+
+  // =========================
+  // RENDER
+  // =========================
   let ALL_ITEMS = [];
 
-  function forceReload(){
-    loadSheet(true);
-  }
-
-  function getQuery(){
-    return safeText(document.getElementById("q").value).toLowerCase();
-  }
-
-  function getSort(){
-    return document.getElementById("sort").value;
-  }
+  function forceReload(){ loadSheet(true); }
+  function getQuery(){ return safeText(document.getElementById("q").value).toLowerCase(); }
+  function getSort(){ return document.getElementById("sort").value; }
 
   function sortItems(items, mode){
     const a = [...items];
 
     if(mode === "priceAsc"){
-      a.sort((x,y)=> (x.priceNum||Infinity) - (y.priceNum||Infinity));
+      a.sort((x,y)=> (x.nowNum ?? Infinity) - (y.nowNum ?? Infinity));
     } else if(mode === "priceDesc"){
-      a.sort((x,y)=> (y.priceNum||-Infinity) - (x.priceNum||-Infinity));
+      a.sort((x,y)=> (y.nowNum ?? -Infinity) - (x.nowNum ?? -Infinity));
     } else if(mode === "discountDesc"){
       a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
     } else if(mode === "soldDesc"){
@@ -642,26 +781,26 @@
   function filterItems(items){
     const q = getQuery();
     if(!q) return items;
-    return items.filter(it => {
-      const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
-      return hay.includes(q);
-    });
+    return items.filter(it => (`${it.title} ${it.coupon||""}`).toLowerCase().includes(q));
   }
 
   function render(){
     const grid = document.getElementById("offers");
     const loading = document.getElementById("loading");
+
     const sorted = sortItems(filterItems(ALL_ITEMS), getSort());
 
     grid.innerHTML = "";
     loading.style.display = sorted.length ? "none" : "block";
     loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
 
+    // KPIs
     document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
     document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
 
     const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
     document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
+
     document.getElementById("urgencyText").textContent =
       "Quando aparece desconto alto, costuma acabar rápido. Se gostou, aproveite agora.";
     document.getElementById("socialText").textContent =
@@ -687,17 +826,30 @@
       const row1 = document.createElement("div");
       row1.className = "row";
 
-      const price = document.createElement("div");
-      price.className = "price";
-      price.textContent = isFinite(it.priceNum) ? moneyBRL(it.priceNum) : (it.price ? it.price : "—");
-      row1.appendChild(price);
+      // ✅ preços
+      const priceBox = document.createElement("div");
+      const p = computePrices(it);
+
+      if(p.mode === "dual"){
+        priceBox.className = "prices";
+        priceBox.innerHTML = `
+          <div class="priceNow">${moneyBRL(p.now)}</div>
+          <div class="priceOld">${moneyBRL(p.old)}</div>
+        `;
+      } else if(p.mode === "single"){
+        priceBox.className = "priceSingle";
+        priceBox.textContent = moneyBRL(p.single);
+      } else {
+        priceBox.className = "priceSingle";
+        priceBox.textContent = "—";
+      }
+      row1.appendChild(priceBox);
 
       const right = document.createElement("div");
       right.style.display="flex";
       right.style.gap="8px";
       right.style.flexWrap="wrap";
       right.style.justifyContent="flex-end";
-      right.style.maxWidth="100%";
 
       if(it.discount){
         const t = document.createElement("span");
@@ -712,6 +864,7 @@
         right.appendChild(t);
       }
       row1.appendChild(right);
+
       body.appendChild(row1);
 
       const row2 = document.createElement("div");
@@ -728,13 +881,13 @@
       const btn1 = document.createElement("button");
       btn1.className = "btnSmall btnBuy";
       btn1.textContent = "Ver oferta";
-      btn1.onclick = () => openOffer();
+      btn1.onclick = openOffer; // ✅ sempre WhatsApp
       buy.appendChild(btn1);
 
       const btn2 = document.createElement("button");
       btn2.className = "btnSmall";
-      btn2.textContent = "Copiar cupom";
-      btn2.onclick = () => copyCoupon(it.coupon);
+      btn2.textContent = it.coupon ? "Copiar cupom" : "Entrar no grupo";
+      btn2.onclick = it.coupon ? (() => copyCoupon(it.coupon)) : openOffer;
       buy.appendChild(btn2);
 
       body.appendChild(buy);
@@ -743,17 +896,9 @@
     }
   }
 
-  function escapeHtml(s){
-    return (s ?? "").toString()
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;");
-  }
-
   async function copyCoupon(coupon){
     const c = safeText(coupon);
-    if(!c){ alert("Este item não tem cupom."); return; }
+    if(!c){ openOffer(); return; }
     try{
       await navigator.clipboard.writeText(c);
       alert("Cupom copiado: " + c);
@@ -762,11 +907,14 @@
     }
   }
 
+  // =========================
+  // LOAD SHEET
+  // =========================
   async function loadSheet(isManual=false){
     try{
       setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
-      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
 
+      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
       const res = await fetch(url, { cache:"no-store" });
       if(!res.ok) throw new Error("HTTP " + res.status);
 
@@ -777,60 +925,70 @@
       const header = rows[0].map(h => safeText(h).toLowerCase());
       const idx = (name) => header.indexOf(name);
 
-      const iImage = idx("image");
-      const iTitle = idx("title");
-      const iPrice = idx("price");
-      const iDiscount = idx("discount");
-      const iCoupon = idx("coupon");
-      const iSold = idx("sold");
-      const iRating = idx("rating");
+      // colunas esperadas
+      const iImage = idx("image") >= 0 ? idx("image") : idx("imagem");
+      const iTitle = idx("title") >= 0 ? idx("title") : idx("titulo");
+      const iPrice = idx("price") >= 0 ? idx("price") : (idx("preco")>=0 ? idx("preco") : idx("preço"));
+      const iDiscount = idx("discount") >= 0 ? idx("discount") : idx("desconto");
+      const iCoupon = idx("coupon") >= 0 ? idx("coupon") : idx("cupom");
+      const iSold = idx("sold") >= 0 ? idx("sold") : idx("vendidos");
+      const iRating = idx("rating") >= 0 ? idx("rating") : (idx("avaliacao")>=0 ? idx("avaliacao") : idx("avaliação"));
 
       const items = [];
       for(let r=1; r<rows.length; r++){
         const row = rows[r];
-        const title = safeText(row[iTitle]);
-        const image = safeText(row[iImage]);
-        const price = safeText(row[iPrice]);
-        const discount = safeText(row[iDiscount]);
-        const coupon = safeText(row[iCoupon]);
-        const sold = safeText(row[iSold]);
-        const rating = safeText(row[iRating]);
 
-        if(!title && !image && !price) continue;
+        const title = iTitle>=0 ? safeText(row[iTitle]) : "";
+        const image = iImage>=0 ? safeText(row[iImage]) : "";
+        const priceRaw = iPrice>=0 ? safeText(row[iPrice]) : "";
+        const discountRaw = iDiscount>=0 ? safeText(row[iDiscount]) : "";
+        const coupon = iCoupon>=0 ? safeText(row[iCoupon]) : "";
+        const sold = iSold>=0 ? safeText(row[iSold]) : "";
+        const rating = iRating>=0 ? safeText(row[iRating]) : "";
 
-        const priceNum = toNumber(price);
-        const discountNum = toNumber(discount);
-        const soldNum = toNumber(sold);
-        const ratingNum = toNumber(rating);
+        if(!title && !image && !priceRaw) continue;
+
+        const priceNum = parseNumberSmart(priceRaw);       // price = original
+        const discountNum = parseNumberSmart(discountRaw); // %off
+        const soldNum = parseNumberSmart(sold);
+        const ratingNum = parseNumberSmart(rating);
+
+        const p = (isFinite(priceNum) && isFinite(discountNum) && discountNum > 0)
+          ? (priceNum * (1 - discountNum/100))
+          : (isFinite(priceNum) ? priceNum : NaN);
 
         items.push({
           title: title || "Oferta",
           image,
-          price,
-          priceNum,
-          discount,
+          priceNum: isFinite(priceNum) ? priceNum : NaN,
+          discount: discountRaw,
           discountNum: isFinite(discountNum) ? discountNum : 0,
           coupon,
           sold,
           soldNum: isFinite(soldNum) ? soldNum : 0,
           rating,
-          ratingNum: isFinite(ratingNum) ? ratingNum : 0
+          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
+          nowNum: isFinite(p) ? p : NaN
         });
       }
 
       ALL_ITEMS = items;
+
       setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
       render();
 
     }catch(err){
       console.error(err);
-      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
-      document.getElementById("loading").style.display = "block";
-      document.getElementById("loading").textContent =
-        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+      setStatus("error", `Falha • tentando novamente… ${nowHHMMSS()}`);
+      const loading = document.getElementById("loading");
+      loading.style.display = "block";
+      loading.textContent = "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
     }
   }
 
+  // =========================
+  // EVENTS
+  // =========================
   document.getElementById("q").addEventListener("input", () => render());
   document.getElementById("sort").addEventListener("change", () => render());
 
