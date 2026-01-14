@@ -24,11 +24,7 @@
     }
 
     *{box-sizing:border-box}
-    html, body{
-      width:100%;
-      max-width:100%;
-      overflow-x:hidden; /* ✅ evita “puxar pro lado” */
-    }
+    html, body{width:100%;max-width:100%;overflow-x:hidden;}
 
     body{
       margin:0;
@@ -41,7 +37,6 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
-    /* ===== Header com faixa amarela + logo ===== */
     header{
       position:sticky; top:0; z-index:50;
       background: rgba(11,18,32,.86);
@@ -86,8 +81,7 @@
       align-items:center;
       justify-content:space-between;
       padding:12px 0;
-
-      flex-wrap:wrap;      /* ✅ quebra no celular */
+      flex-wrap:wrap;
       max-width:100%;
     }
 
@@ -107,22 +101,19 @@
       font-size:12px;color:var(--muted);margin-top:2px;font-weight:700;
     }
 
-    /* ✅ status não estoura */
     .status{
       display:flex;
       align-items:center;
       gap:8px;
-
       padding:10px 12px;
       border:1px solid var(--border);
       border-radius:999px;
       background: rgba(255,255,255,.03);
       font-size:12px;
       color:var(--muted);
-
       max-width:100%;
-      flex: 1 1 260px;   /* encolhe */
-      min-width:0;       /* impede overflow invisível */
+      flex: 1 1 260px;
+      min-width:0;
       white-space:normal;
       overflow:hidden;
     }
@@ -146,7 +137,6 @@
       flex:0 0 auto;
     }
 
-    /* ===== Hero ===== */
     .hero{
       margin-top:16px;
       background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
@@ -205,7 +195,6 @@
     .kpiCard b{font-size:16px}
     .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-top:2px}
 
-    /* ===== Controls ===== */
     .controls{
       margin-top:14px;
       display:flex;gap:10px;flex-wrap:wrap;
@@ -240,7 +229,6 @@
       max-width:100%;
     }
 
-    /* ===== Notices ===== */
     .bar{
       margin-top:14px;
       display:grid;
@@ -269,7 +257,6 @@
     .notice h3{margin:0;font-size:13px}
     .notice p{margin:4px 0 0;color:var(--muted);font-weight:800;font-size:12px;line-height:1.35}
 
-    /* ===== Grid / Cards ===== */
     .grid{
       margin-top:16px;
       display:grid;
@@ -279,7 +266,6 @@
     }
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
 
-    /* ✅ Carrossel no celular */
     @media (max-width: 620px){
       .grid{
         display:flex;
@@ -309,7 +295,6 @@
       max-width:100%;
     }
 
-    /* ✅ Imagem sem cortar */
     .imgbox{
       background: rgba(255,255,255,.03);
       border-bottom:1px solid var(--border);
@@ -321,7 +306,7 @@
     .imgbox img{
       width:100%;
       height:100%;
-      object-fit:contain;      /* ✅ sem corte */
+      object-fit:contain;
       object-position:center;
       display:block;
       background: rgba(0,0,0,.12);
@@ -355,7 +340,6 @@
     .off{border:1px solid rgba(239,68,68,.32);background: rgba(239,68,68,.12);color:#fecaca}
     .coupon{border:1px solid rgba(34,197,94,.28);background: rgba(34,197,94,.12);color:#bbf7d0}
 
-    /* ✅ Preço com desconto */
     .prices{display:flex;flex-direction:column;gap:6px;line-height:1.05}
     .priceNow{
       font-size:20px;
@@ -400,7 +384,6 @@
       color:#1b1201;border:none;
     }
 
-    /* Footer */
     footer{
       margin:18px 0 100px;
       border:1px solid var(--border);
@@ -412,7 +395,6 @@
     footer b{display:block;margin-bottom:6px}
     footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:800;font-size:13px;line-height:1.45}
 
-    /* WhatsApp fixed */
     .wa{
       position:fixed;right:16px;bottom:16px;z-index:999;
       display:flex;align-items:center;gap:10px;
@@ -451,13 +433,12 @@
 <body>
 
 <header>
-  <!-- ✅ faixa amarela com logo -->
   <div class="topStrip">
     <div class="topStripInner">
       <img src="logo.png" alt="Logo Achadinhos">
       <div class="topStripTitle">
         Achadinhos Oficial
-        <small>Ofertas verificadas • sem enrolação</small>
+        <small>Ofertas verificadas • links e cupons</small>
       </div>
     </div>
   </div>
@@ -489,11 +470,11 @@
     <div class="hero-inner">
       <div>
         <h1>As melhores ofertas do dia — <span style="color:#bbf7d0">com desconto calculado na hora</span>.</h1>
-        <p>Quando você clicar em <b>Ver oferta</b>, vai direto pro nosso grupo do WhatsApp.</p>
+        <p>Se tiver link na planilha, o botão abre seu link de afiliado. Se não tiver, abre o grupo.</p>
         <div class="ctaRow">
           <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
           <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
-          <button class="btn" onclick="openOffer()">🟢 Entrar no grupo</button>
+          <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
         </div>
       </div>
 
@@ -544,7 +525,6 @@
   </section>
 
   <div id="loading" class="loading">Carregando ofertas da planilha…</div>
-
   <section id="offers" class="grid" aria-live="polite"></section>
 
   <footer>
@@ -552,7 +532,7 @@
     <ul>
       <li>Este site divulga ofertas encontradas em marketplaces e grupos parceiros.</li>
       <li><strong>Não somos uma loja oficial do Mercado Livre</strong> e não representamos a marca.</li>
-      <li>As compras são finalizadas exclusivamente através dos links divulgados no nosso grupo de WhatsApp.</li>
+      <li>As compras são finalizadas nos sites oficiais (Marketplaces) através dos links divulgados.</li>
       <li>Não solicitamos dados bancários ou senhas fora da plataforma de compra.</li>
       <li>Os preços, cupons e estoques podem mudar a qualquer momento sem aviso prévio.</li>
     </ul>
@@ -560,7 +540,7 @@
 
 </main>
 
-<button class="wa" onclick="openOffer()" aria-label="Entrar no grupo do WhatsApp">
+<button class="wa" onclick="openGroup()" aria-label="Entrar no grupo do WhatsApp">
   <div class="waIcon">🟢</div>
   <div>
     <span>Entrar no grupo</span>
@@ -569,16 +549,12 @@
 </button>
 
 <script>
-  // =========================
-  // CONFIG
-  // =========================
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
   const WA_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-  const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
+  const REFRESH_MS = 2 * 60 * 1000;
 
-  // =========================
-  // HELPERS
-  // =========================
+  function openGroup(){ window.open(WA_GROUP_LINK, "_blank"); }
+
   function nowHHMMSS(){
     const d = new Date();
     const hh = String(d.getHours()).padStart(2,'0');
@@ -593,7 +569,6 @@
     return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
   }
 
-  // ✅ aceita 499,99 / 499.99 / R$ 1.299,90 / 1,299.90 / "46% OFF" etc
   function parseNumberSmart(str){
     if (str == null) return NaN;
     let s = String(str).trim();
@@ -609,12 +584,8 @@
       const lastDot = s.lastIndexOf(".");
       const lastComma = s.lastIndexOf(",");
       const decimalIsComma = lastComma > lastDot;
-
-      if (decimalIsComma) {
-        s = s.replace(/\./g, "").replace(",", ".");
-      } else {
-        s = s.replace(/,/g, "");
-      }
+      if (decimalIsComma) s = s.replace(/\./g, "").replace(",", ".");
+      else s = s.replace(/,/g, "");
     } else if (hasComma && !hasDot) {
       s = s.replace(",", ".");
     } else if (hasDot && !hasComma) {
@@ -624,7 +595,6 @@
         s = parts.join("") + "." + dec;
       }
     }
-
     const n = Number(s);
     return isFinite(n) ? n : NaN;
   }
@@ -643,10 +613,6 @@
 
   function scrollToOffers(){
     document.getElementById("offers").scrollIntoView({behavior:"smooth", block:"start"});
-  }
-
-  function openOffer(){
-    window.open(WA_GROUP_LINK, "_blank");
   }
 
   function setStatus(mode, text){
@@ -675,7 +641,6 @@
     }
   }
 
-  // relógio sempre rodando
   function startLiveClock(){
     const timeEl = document.getElementById("updatedTime");
     if(!timeEl) return;
@@ -686,7 +651,6 @@
     }, 1000);
   }
 
-  // CSV parser (com aspas)
   function parseCSV(text){
     const rows = [];
     let row = [];
@@ -697,58 +661,42 @@
       const ch = text[i];
       const next = text[i+1];
 
-      if(ch === '"' && inQuotes && next === '"'){
-        cur += '"';
-        i++;
-        continue;
-      }
-      if(ch === '"'){
-        inQuotes = !inQuotes;
-        continue;
-      }
-      if(ch === ',' && !inQuotes){
-        row.push(cur);
-        cur = "";
-        continue;
-      }
+      if(ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }
+      if(ch === '"'){ inQuotes = !inQuotes; continue; }
+
+      if(ch === ',' && !inQuotes){ row.push(cur); cur = ""; continue; }
+
       if((ch === '\n' || ch === '\r') && !inQuotes){
         if(ch === '\r' && next === '\n'){ i++; }
-        row.push(cur);
-        cur = "";
-        if(row.length > 1 || row[0].trim() !== ""){
-          rows.push(row);
-        }
+        row.push(cur); cur = "";
+        if(row.length > 1 || row[0].trim() !== "") rows.push(row);
         row = [];
         continue;
       }
       cur += ch;
     }
     row.push(cur);
-    if(row.length > 1 || row[0].trim() !== ""){
-      rows.push(row);
-    }
+    if(row.length > 1 || row[0].trim() !== "") rows.push(row);
     return rows;
   }
 
-  // =========================
-  // PREÇO COM DESCONTO
-  // price = original, discount = %OFF
-  // =========================
   function computePrices(it){
     const hasPrice = isFinite(it.priceNum);
     const hasDiscount = isFinite(it.discountNum) && it.discountNum > 0;
-
     if(!hasPrice) return { mode:"none" };
     if(!hasDiscount) return { mode:"single", single: it.priceNum };
-
     const oldP = it.priceNum;
     const nowP = it.priceNum * (1 - (it.discountNum / 100));
     return { mode:"dual", old: oldP, now: nowP };
   }
 
-  // =========================
-  // RENDER
-  // =========================
+  function normalizeUrl(url){
+    const u = safeText(url);
+    if(!u) return "";
+    if(/^https?:\/\//i.test(u)) return u;
+    return "https://" + u;
+  }
+
   let ALL_ITEMS = [];
 
   function forceReload(){ loadSheet(true); }
@@ -757,7 +705,6 @@
 
   function sortItems(items, mode){
     const a = [...items];
-
     if(mode === "priceAsc"){
       a.sort((x,y)=> (x.nowNum ?? Infinity) - (y.nowNum ?? Infinity));
     } else if(mode === "priceDesc"){
@@ -784,17 +731,22 @@
     return items.filter(it => (`${it.title} ${it.coupon||""}`).toLowerCase().includes(q));
   }
 
+  // ✅ abre link de afiliado se existir, senão abre grupo
+  function openOfferForItem(it){
+    const u = normalizeUrl(it.link);
+    if(u) window.open(u, "_blank");
+    else openGroup();
+  }
+
   function render(){
     const grid = document.getElementById("offers");
     const loading = document.getElementById("loading");
-
     const sorted = sortItems(filterItems(ALL_ITEMS), getSort());
 
     grid.innerHTML = "";
     loading.style.display = sorted.length ? "none" : "block";
     loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
 
-    // KPIs
     document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
     document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
 
@@ -826,7 +778,6 @@
       const row1 = document.createElement("div");
       row1.className = "row";
 
-      // ✅ preços
       const priceBox = document.createElement("div");
       const p = computePrices(it);
 
@@ -864,7 +815,6 @@
         right.appendChild(t);
       }
       row1.appendChild(right);
-
       body.appendChild(row1);
 
       const row2 = document.createElement("div");
@@ -881,13 +831,13 @@
       const btn1 = document.createElement("button");
       btn1.className = "btnSmall btnBuy";
       btn1.textContent = "Ver oferta";
-      btn1.onclick = openOffer; // ✅ sempre WhatsApp
+      btn1.onclick = () => openOfferForItem(it);
       buy.appendChild(btn1);
 
       const btn2 = document.createElement("button");
       btn2.className = "btnSmall";
       btn2.textContent = it.coupon ? "Copiar cupom" : "Entrar no grupo";
-      btn2.onclick = it.coupon ? (() => copyCoupon(it.coupon)) : openOffer;
+      btn2.onclick = it.coupon ? (() => copyCoupon(it.coupon)) : openGroup;
       buy.appendChild(btn2);
 
       body.appendChild(buy);
@@ -898,7 +848,7 @@
 
   async function copyCoupon(coupon){
     const c = safeText(coupon);
-    if(!c){ openOffer(); return; }
+    if(!c){ openGroup(); return; }
     try{
       await navigator.clipboard.writeText(c);
       alert("Cupom copiado: " + c);
@@ -907,14 +857,11 @@
     }
   }
 
-  // =========================
-  // LOAD SHEET
-  // =========================
   async function loadSheet(isManual=false){
     try{
       setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
-
       const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
+
       const res = await fetch(url, { cache:"no-store" });
       if(!res.ok) throw new Error("HTTP " + res.status);
 
@@ -925,14 +872,14 @@
       const header = rows[0].map(h => safeText(h).toLowerCase());
       const idx = (name) => header.indexOf(name);
 
-      // colunas esperadas
-      const iImage = idx("image") >= 0 ? idx("image") : idx("imagem");
-      const iTitle = idx("title") >= 0 ? idx("title") : idx("titulo");
-      const iPrice = idx("price") >= 0 ? idx("price") : (idx("preco")>=0 ? idx("preco") : idx("preço"));
-      const iDiscount = idx("discount") >= 0 ? idx("discount") : idx("desconto");
-      const iCoupon = idx("coupon") >= 0 ? idx("coupon") : idx("cupom");
-      const iSold = idx("sold") >= 0 ? idx("sold") : idx("vendidos");
-      const iRating = idx("rating") >= 0 ? idx("rating") : (idx("avaliacao")>=0 ? idx("avaliacao") : idx("avaliação"));
+      const iImage = idx("image");
+      const iTitle = idx("title");
+      const iPrice = idx("price");
+      const iDiscount = idx("discount");
+      const iCoupon = idx("coupon");
+      const iSold = idx("sold");
+      const iRating = idx("rating");
+      const iLink = idx("link") >= 0 ? idx("link") : idx("url"); // ✅ link afiliado
 
       const items = [];
       for(let r=1; r<rows.length; r++){
@@ -945,11 +892,12 @@
         const coupon = iCoupon>=0 ? safeText(row[iCoupon]) : "";
         const sold = iSold>=0 ? safeText(row[iSold]) : "";
         const rating = iRating>=0 ? safeText(row[iRating]) : "";
+        const link = iLink>=0 ? safeText(row[iLink]) : "";
 
-        if(!title && !image && !priceRaw) continue;
+        if(!title && !image && !priceRaw && !link) continue;
 
-        const priceNum = parseNumberSmart(priceRaw);       // price = original
-        const discountNum = parseNumberSmart(discountRaw); // %off
+        const priceNum = parseNumberSmart(priceRaw);
+        const discountNum = parseNumberSmart(discountRaw);
         const soldNum = parseNumberSmart(sold);
         const ratingNum = parseNumberSmart(rating);
 
@@ -968,15 +916,14 @@
           soldNum: isFinite(soldNum) ? soldNum : 0,
           rating,
           ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          nowNum: isFinite(p) ? p : NaN
+          nowNum: isFinite(p) ? p : NaN,
+          link
         });
       }
 
       ALL_ITEMS = items;
-
       setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
       render();
-
     }catch(err){
       console.error(err);
       setStatus("error", `Falha • tentando novamente… ${nowHHMMSS()}`);
@@ -986,9 +933,6 @@
     }
   }
 
-  // =========================
-  // EVENTS
-  // =========================
   document.getElementById("q").addEventListener("input", () => render());
   document.getElementById("sort").addEventListener("change", () => render());
 
