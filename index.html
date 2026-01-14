@@ -1,754 +1,945 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Achadinhos ML</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Achadinhos Oficial</title>
+  <meta name="theme-color" content="#0f172a" />
 
-<style>
-:root{
-  --yellow:#ffd400;
-  --card: rgba(255,255,255,.9);
-  --shadow:0 18px 40px rgba(0,0,0,.35);
-  --radius:22px;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111}
-.wrap{max-width:1100px;margin:auto;padding:16px}
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a33;
+      --soft:#132047;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --brand:#22c55e;
+      --accent:#f59e0b;
+      --danger:#ef4444;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1000px 600px at 20% 0%, rgba(34,197,94,.12), transparent 60%),
+                  radial-gradient(800px 500px at 80% 10%, rgba(245,158,11,.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
 
-/* topo */
-.top{background:var(--yellow);border-radius:var(--radius);padding:22px;text-align:center;box-shadow:var(--shadow)}
-.logo{width:320px;max-width:90%}
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(11,18,32,.86);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .headbar{
+      display:flex;gap:12px;align-items:center;justify-content:space-between;
+      padding:12px 0;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:800; letter-spacing:.3px;
+    }
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));
+      box-shadow: var(--shadow);
+    }
+    .sub{
+      font-size:12px;color:var(--muted);margin-top:2px;font-weight:600;
+    }
+    .status{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;border:1px solid var(--border);
+      border-radius:999px;background: rgba(255,255,255,.03);
+      font-size:12px;color:var(--muted);
+      white-space:nowrap;
+    }
+    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12)}
+    .status b{color:var(--text)}
+    .pill{
+      padding:8px 10px;border-radius:999px;
+      background: rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.25);
+      font-size:12px;font-weight:800;color:#bbf7d0;
+    }
 
-/* card */
-.poster{background:var(--card);margin-top:14px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.title{text-align:center;padding:18px}
-.title h1{margin:0;font-size:26px;font-weight:900}
+    /* Hero promise */
+    .hero{
+      margin-top:16px;
+      background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(500px 200px at 20% 10%, rgba(34,197,94,.25), transparent 60%),
+                  radial-gradient(450px 220px at 75% 0%, rgba(245,158,11,.22), transparent 55%);
+      pointer-events:none;
+      filter: blur(0px);
+    }
+    .hero-inner{
+      position:relative;
+      padding:18px;
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap:14px;
+      align-items:center;
+    }
+    @media (max-width: 860px){
+      .hero-inner{grid-template-columns:1fr}
+    }
+    .hero h1{margin:0;font-size:22px;line-height:1.2}
+    .hero p{margin:8px 0 0;color:var(--muted);font-weight:600}
+    .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 14px;border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-weight:900;
+      cursor:pointer;
+      transition: transform .08s ease;
+      user-select:none;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btnPrimary{
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
+      color:#052014;border:none;
+    }
+    .kpi{
+      display:grid;gap:10px;
+    }
+    .kpiCard{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+    }
+    .kpiCard b{font-size:16px}
+    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
 
-/* vídeo */
-.videoCard{
-  margin:12px 14px 0;
-  background:#fff;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 12px 26px rgba(0,0,0,.18);
-}
-.videoHead{
-  padding:12px 12px 0;
-  font-weight:1000;
-  text-align:center;
-}
-.videoWrap{
-  position:relative;
-  background:#000;
-}
-.videoWrap video{
-  width:100%;
-  height:auto;
-  display:block;
-  aspect-ratio: 16 / 9;
-  background:#000;
-}
-.videoControls{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-  padding:12px;
-}
-.vbtn{
-  padding:10px 14px;
-  border-radius:12px;
-  border:1px solid #e6e6e6;
-  background:#fff;
-  font-weight:1000;
-  cursor:pointer;
-}
-.vbtn.primary{
-  background:var(--yellow);
-  border-color:transparent;
-}
+    /* ✅ Video (voltou) */
+    .videoWrap{
+      margin-top:14px;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    .videoTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+    }
+    .videoTop b{font-size:13px}
+    .videoTop span{font-size:12px;color:var(--muted);font-weight:800}
+    .videoBox{
+      position:relative;
+      width:100%;
+      aspect-ratio: 16 / 9;
+      background:#000;
+    }
+    .videoBox video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .videoControls{
+      display:flex;gap:10px;flex-wrap:wrap;
+      padding:10px 12px;
+      border-top:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+    }
+    .btnMini{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      font-weight:900;
+      cursor:pointer;
+    }
+    .btnMiniPrimary{
+      background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
+      color:#1b1201;border:none;
+    }
 
-/* faixa vermelha */
-.redbar{background:#c62828;color:#fff;margin:14px 14px 0;border-radius:16px;padding:14px}
-.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-weight:bold}
-@media(max-width:700px){.qgrid{grid-template-columns:1fr}}
+    /* Controls */
+    .controls{
+      margin-top:14px;
+      display:flex;gap:10px;flex-wrap:wrap;
+      align-items:center;justify-content:space-between;
+    }
+    .search{
+      flex:1;
+      min-width:240px;
+      display:flex;align-items:center;gap:10px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.03);
+    }
+    .search input{
+      width:100%;
+      background:transparent;border:none;outline:none;color:var(--text);
+      font-size:14px;font-weight:700;
+    }
+    .select{
+      min-width:180px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      font-weight:800;
+      outline:none;
+    }
 
-/* texto */
-.lead{text-align:center;padding:14px;font-weight:bold}
+    /* Social proof / urgency */
+    .bar{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 860px){
+      .bar{grid-template-columns:1fr}
+    }
+    .notice{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+      display:flex;gap:10px;align-items:flex-start;
+    }
+    .badge{
+      width:34px;height:34px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background: rgba(245,158,11,.16);
+      border:1px solid rgba(245,158,11,.28);
+      flex:0 0 auto;
+    }
+    .notice h3{margin:0;font-size:13px}
+    .notice p{margin:4px 0 0;color:var(--muted);font-weight:700;font-size:12px;line-height:1.35}
+    .mini{font-size:12px;color:var(--muted);font-weight:800}
 
-/* seções */
-.section{padding:14px 18px}
-.section h2{text-align:center;font-size:22px;margin-bottom:8px}
-.hint{text-align:center;font-weight:bold;margin-bottom:10px}
+    /* Grid / cards */
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
+    @media (max-width: 620px){.grid{grid-template-columns: 1fr}}
 
-/* oculto */
-.notice{display:none}
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: 0 12px 24px rgba(0,0,0,.25);
+      display:flex;flex-direction:column;
+      min-height: 410px;
+    }
 
-/* ===== destaque ===== */
-.featured{
-  margin: 12px 14px 0;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 12px 26px rgba(0,0,0,.18);
-  background:#fff;
-  display:grid;
-  grid-template-columns: 1.1fr 1fr;
-}
-@media(max-width:850px){ .featured{grid-template-columns:1fr} }
-.featured .imgwrap{
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px;
-}
-.featured img{width:100%;height:280px;object-fit:contain}
-.featured .content{
-  padding:14px;
-  background:linear-gradient(180deg, rgba(255,212,0,.35), rgba(255,255,255,1));
-}
-.badgeTop{
-  display:inline-block;background:#111;color:#fff;
-  padding:6px 10px;border-radius:999px;font-weight:1000;font-size:12px;
-}
-.featured h3{margin:10px 0 8px;font-size:20px}
-.pricesLine{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;margin:8px 0 6px}
-.old{color:#777;text-decoration:line-through;font-weight:900}
-.new{font-weight:1000;font-size:20px}
-.offPill{background:#dff3e1;color:#1b5e20;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000}
-.couponPill{background:#e8f0fe;color:#1a73e8;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000}
-.metaLine{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-.soldPill{background:#fff3cd;color:#7a5200;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000;border:1px solid rgba(0,0,0,.06)}
-.ratingPill{background:#f1f3f4;color:#111;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000;border:1px solid rgba(0,0,0,.06)}
-.timer{margin-top:10px;font-weight:900}
-.actionsRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.ctaWide{display:inline-block;background:var(--yellow);color:#000;padding:12px 16px;border-radius:14px;font-weight:1000;text-decoration:none}
-.secondaryBtn{display:inline-block;background:#fff;color:#111;padding:12px 16px;border-radius:14px;font-weight:1000;text-decoration:none;border:1px solid #e6e6e6;cursor:pointer}
+    /* ✅ IMAGENS SEM CORTAR */
+    .imgbox{
+      background: rgba(255,255,255,.03);
+      border-bottom:1px solid var(--border);
+      aspect-ratio: 16 / 11;
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+      padding:10px; /* respiro */
+    }
+    .imgbox img{
+      width:100%;
+      height:100%;
+      object-fit:contain; /* ✅ não corta */
+      object-position:center;
+      display:block;
+      filter:saturate(1.05) contrast(1.03);
+    }
 
-/* carrossel */
-.carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:2px 4px 10px}
-.carousel::-webkit-scrollbar{height:8px}
-.carousel::-webkit-scrollbar-thumb{background:#bbb;border-radius:999px}
-.carditem{flex:0 0 82%;background:#fff;border-radius:16px;box-shadow:0 10px 20px rgba(0,0,0,.2);text-decoration:none;color:#000;scroll-snap-align:start;overflow:hidden}
-.carditem img{width:100%;height:260px;object-fit:contain;background:#fff;display:block}
-.cardinfo{padding:12px}
-.cardinfo strong{display:block;margin-bottom:6px}
-.prices{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.newSmall{font-weight:1000;font-size:18px}
-.offSmall{background:#dff3e1;color:#1b5e20;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:1000}
-.couponSmall{background:#e8f0fe;color:#1a73e8;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:1000}
-.metaSmall{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.soldSmall{background:#fff3cd;color:#7a5200;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:1000;border:1px solid rgba(0,0,0,.06)}
-.ratingSmall{background:#f1f3f4;color:#111;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:1000;border:1px solid rgba(0,0,0,.06)}
-.cardActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.cardBtn{border:1px solid #e6e6e6;background:#fff;border-radius:12px;padding:10px 12px;font-weight:1000;cursor:pointer}
-.cardBtn.primary{background:var(--yellow);border-color:transparent}
+    .cardBody{padding:12px;display:grid;gap:10px}
+    .title{
+      margin:0;
+      font-size:14px;
+      line-height:1.25;
+      font-weight:900;
+      min-height: 36px;
+    }
+    .row{
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      flex-wrap:wrap;
+    }
+    .price{
+      font-size:18px;font-weight:1000;
+    }
+    .muted{color:var(--muted);font-weight:800;font-size:12px}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-size:12px;font-weight:900;color:var(--text);
+    }
+    .off{
+      border:1px solid rgba(239,68,68,.32);
+      background: rgba(239,68,68,.12);
+      color:#fecaca;
+    }
+    .coupon{
+      border:1px solid rgba(34,197,94,.28);
+      background: rgba(34,197,94,.12);
+      color:#bbf7d0;
+    }
+    .buy{
+      margin-top:2px;
+      display:flex;gap:10px;
+    }
+    .btnSmall{
+      flex:1;
+      display:flex;align-items:center;justify-content:center;
+      padding:11px 12px;border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-weight:1000;
+      cursor:pointer;
+    }
+    .btnBuy{
+      background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
+      color:#1b1201;border:none;
+    }
 
-/* botões rolar */
-.carousel-controls{display:flex;justify-content:center;gap:10px;margin-top:8px}
-.cbtn{padding:10px 14px;border-radius:12px;border:none;background:var(--yellow);font-weight:900;cursor:pointer}
-.cbtn:active{transform:translateY(1px)}
+    /* Footer */
+    footer{
+      margin:18px 0 100px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:14px;
+    }
+    footer b{display:block;margin-bottom:6px}
+    footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:700;font-size:13px;line-height:1.45}
 
-/* PC */
-@media(min-width:900px){
-  .offers-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;overflow:visible!important;padding:0!important}
-  .offers-grid .carditem{flex:initial}
-  #trackPromos .carditem{flex:0 0 340px}
-}
-.carousel.no-scroll{justify-content:center}
-.carousel.no-scroll .carditem{flex:0 0 340px}
+    /* WhatsApp fixed button */
+    .wa{
+      position:fixed;right:16px;bottom:16px;z-index:999;
+      display:flex;align-items:center;gap:10px;
+      padding:14px 14px;
+      border-radius:999px;
+      background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
+      color:#052014;
+      font-weight:1000;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      border:none;
+      cursor:pointer;
+    }
+    .wa small{display:block;font-weight:900;opacity:.9;line-height:1}
+    .wa span{display:block;line-height:1}
+    .waIcon{
+      width:38px;height:38px;border-radius:999px;
+      background: rgba(0,0,0,.12);
+      display:flex;align-items:center;justify-content:center;
+      font-size:18px;
+    }
 
-/* atenção */
-.attention{margin:14px;border-radius:16px;overflow:hidden}
-.att-top{background:#ffb300;text-align:center;font-weight:900;padding:12px}
-.att-body{background:#222;color:#fff;text-align:center;padding:14px}
-.cta{display:inline-block;margin-top:10px;background:var(--yellow);color:#000;padding:12px 18px;border-radius:14px;font-weight:900;text-decoration:none}
-
-footer{text-align:center;color:#aaa;font-size:12px;margin-top:10px}
-.toast{
-  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-  background:#111;color:#fff;padding:10px 12px;border-radius:999px;
-  font-weight:900;box-shadow:0 12px 24px rgba(0,0,0,.35);
-  opacity:0;pointer-events:none;transition:opacity .25s ease;
-}
-.toast.show{opacity:1}
-</style>
+    /* Loading */
+    .loading{
+      margin-top:16px;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius: var(--radius);
+      padding:14px;
+      color:var(--muted);
+      font-weight:800;
+    }
+  </style>
 </head>
 
 <body>
-<div class="wrap">
-  <div class="top">
-    <img src="logo.png" class="logo" alt="Achadinhos ML">
+
+<header>
+  <div class="wrap">
+    <div class="headbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div>Achadinhos <span style="color:#bbf7d0">Oficial</span></div>
+          <div class="sub">Ofertas atualizadas direto da planilha</div>
+        </div>
+      </div>
+
+      <div class="status" title="Atualização automática">
+        <span class="dot" id="statusDot"></span>
+        <span id="updatedLabel"><b>Carregando</b></span>
+        <span id="updatedTime" class="mini" data-mode="checking">Verificando…</span>
+      </div>
+
+      <div class="pill" id="countPill">0 ofertas</div>
+    </div>
   </div>
+</header>
 
-  <main class="poster">
-    <div class="title">
-      <h1>Descubra como comprar online com segurança, pagando menos e sem cair em golpes</h1>
-    </div>
+<main class="wrap">
 
-    <!-- ✅ VÍDEO (autoplay mudo + botões) -->
-    <div class="videoCard">
-      <div class="videoHead">🎥 Assista rapidinho (1 minuto)</div>
-      <div class="videoWrap">
-        <video id="introVideo"
-          src="video.mp4"
-          playsinline
-          muted
-          autoplay
-          loop
-          preload="metadata"
-        ></video>
-      </div>
-      <div class="videoControls">
-        <button class="vbtn primary" id="btnPlayPause" type="button">⏸ Pausar</button>
-        <button class="vbtn" id="btnMute" type="button">🔇 Sem som</button>
-      </div>
-    </div>
-
-    <div class="redbar">
-      <div class="qgrid">
-        <div>✔ E se não chegar?</div>
-        <div>✔ E se eu perder meu dinheiro?</div>
-        <div>✔ E se for falso?</div>
-        <div>✔ E se for golpe?</div>
-      </div>
-    </div>
-
-    <div class="lead">
-      Agora você encontra ofertas reais todos os dias. Entre no grupo e pegue os links.
-    </div>
-
-    <div id="status" class="notice">Carregando…</div>
-
-    <!-- resto do site (ofertas/planilha) -->
-    <div id="featuredWrap" class="featured" style="display:none;">
-      <div class="imgwrap"><img id="featuredImg" alt="Destaque do dia"></div>
-      <div class="content">
-        <span class="badgeTop">🔥 Melhor oferta do dia</span>
-        <h3 id="featuredTitle"></h3>
-
-        <div class="pricesLine">
-          <span class="old" id="featuredOld" style="display:none;"></span>
-          <span class="new" id="featuredNew"></span>
-          <span class="offPill" id="featuredOff" style="display:none;"></span>
-          <span class="couponPill" id="featuredCoupon" style="display:none;"></span>
+  <!-- 🔝 Topo com promessa -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1>As melhores ofertas do dia — sem enrolação. <span style="color:#bbf7d0">Clique e compre.</span></h1>
+        <p>Atualiza sozinho e mostra o que está com desconto agora. Se tiver cupom, já aparece.</p>
+        <div class="ctaRow">
+          <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
+          <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
         </div>
+      </div>
 
-        <div class="metaLine">
-          <span class="soldPill" id="featuredSold" style="display:none;"></span>
-          <span class="ratingPill" id="featuredRating" style="display:none;"></span>
+      <div class="kpi">
+        <div class="kpiCard">
+          <b id="kpi1">0</b>
+          <span>ofertas disponíveis</span>
         </div>
-
-        <div class="timer">⏳ Termina em: <span id="countdown">--:--:--</span></div>
-
-        <div class="actionsRow">
-          <a class="ctaWide" id="featuredCTA" href="#" target="_blank" rel="noopener">Ver no grupo do WhatsApp →</a>
-          <button class="secondaryBtn" id="featuredCopyCoupon" style="display:none;" type="button">Copiar cupom</button>
-          <button class="secondaryBtn" id="featuredShare" type="button">Compartilhar</button>
+        <div class="kpiCard">
+          <b id="kpi2">0</b>
+          <span>vendidos hoje (estimativa)</span>
         </div>
       </div>
     </div>
+  </section>
 
-    <section class="section" id="ofertas">
-      <h2>Ofertas principais 🔥</h2>
-      <p class="hint">Arraste para o lado e entre no grupo para pegar o link</p>
-      <div class="carousel offers-grid" id="trackOfertas"></div>
-      <div class="carousel-controls">
-        <button class="cbtn" type="button" onclick="rolar('trackOfertas', -1)">⬅️</button>
-        <button class="cbtn" type="button" onclick="rolar('trackOfertas', 1)">➡️</button>
+  <!-- ✅ VÍDEO (recolocado sem mexer no resto) -->
+  <section class="videoWrap" aria-label="Vídeo do Achadinhos">
+    <div class="videoTop">
+      <div>
+        <b>🎥 Recado rápido</b>
+        <span>Se quiser, pausa quando quiser.</span>
       </div>
-    </section>
+      <button class="btnMini btnMiniPrimary" id="toggleVideoBtn" type="button">⏸ Pausar</button>
+    </div>
 
-    <section class="section" id="promocoes">
-      <h2>Promoções do dia ⏰</h2>
-      <p class="hint">Atualize a planilha e as promoções mudam</p>
-      <div class="carousel" id="trackPromos"></div>
-      <div class="carousel-controls">
-        <button class="cbtn" type="button" onclick="rolar('trackPromos', -1)">⬅️</button>
-        <button class="cbtn" type="button" onclick="rolar('trackPromos', 1)">➡️</button>
-      </div>
-    </section>
+    <div class="videoBox">
+      <video id="promoVideo" autoplay muted playsinline loop preload="metadata">
+        <source id="videoSrc" src="" type="video/mp4" />
+        Seu navegador não suporta vídeo.
+      </video>
+    </div>
 
-    <div class="attention">
-      <div class="att-top">⚠️ Atenção!</div>
-      <div class="att-body">
-        As melhores ofertas acabam rápido.<br>
-        <a class="cta" href="https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov" target="_blank" rel="noopener">
-          Entrar no grupo do WhatsApp →
-        </a>
+    <div class="videoControls">
+      <button class="btnMini" type="button" onclick="scrollToOffers()">🎁 Ver ofertas</button>
+      <button class="btnMini" type="button" onclick="openWhatsApp()">🟢 Tirar dúvida no WhatsApp</button>
+    </div>
+  </section>
+
+  <!-- Busca / filtro -->
+  <section class="controls">
+    <div class="search">
+      🔎 <input id="q" type="text" placeholder="Buscar produto (ex: tênis, perfume, mesa...)" />
+    </div>
+
+    <select class="select" id="sort">
+      <option value="best">Ordenar: destaque</option>
+      <option value="priceAsc">Menor preço</option>
+      <option value="priceDesc">Maior preço</option>
+      <option value="discountDesc">Maior desconto</option>
+      <option value="soldDesc">Mais vendidos</option>
+      <option value="ratingDesc">Melhor avaliação</option>
+    </select>
+  </section>
+
+  <!-- 🔥 Urgência social / Prova -->
+  <section class="bar">
+    <div class="notice">
+      <div class="badge">🔥</div>
+      <div>
+        <h3>Acabando rápido</h3>
+        <p id="urgencyText">Ofertas mudam o tempo todo — se gostou, aproveite agora.</p>
       </div>
     </div>
-  </main>
 
-  <footer>© <span id="year"></span> Achadinhos ML</footer>
-</div>
+    <div class="notice">
+      <div class="badge">✅</div>
+      <div>
+        <h3>Prova social</h3>
+        <p id="socialText">Hoje já teve várias compras — atualizando em tempo real.</p>
+      </div>
+    </div>
+  </section>
 
-<div id="toast" class="toast">Copiado!</div>
+  <div id="loading" class="loading">Carregando ofertas da planilha…</div>
+
+  <!-- 🎁 Destaque de ofertas -->
+  <section id="offers" class="grid" aria-live="polite"></section>
+
+  <!-- 🔚 Rodapé confiável -->
+  <footer>
+    <b>✅ Compra com mais segurança</b>
+    <ul>
+      <li>Ofertas exibidas a partir da planilha publicada.</li>
+      <li>Preços podem mudar a qualquer momento no site do vendedor.</li>
+      <li>Se algum item não abrir, atualize a página e tente novamente.</li>
+    </ul>
+  </footer>
+
+</main>
+
+<!-- 🟢 Botão WhatsApp fixo -->
+<button class="wa" onclick="openWhatsApp()" aria-label="Falar no WhatsApp">
+  <div class="waIcon">🟢</div>
+  <div>
+    <span>Falar no WhatsApp</span>
+    <small>Resposta rápida</small>
+  </div>
+</button>
 
 <script>
-/** ✅ SUA PLANILHA */
-const SHEET_PUBHTML_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pubhtml";
-const SHEET_CSV_URL = SHEET_PUBHTML_URL.replace("/pubhtml", "/pub?output=csv");
+  // =========================
+  // CONFIG
+  // =========================
+  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
 
-/** ✅ SEU GRUPO WHATSAPP */
-const WA_GROUP = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
+  // Seu WhatsApp (somente números) + DDI Brasil
+  const WA_NUMBER = "5589981311034"; // 55 + 89 981311034
 
-/** ✅ AUTO-ATUALIZAÇÃO */
-const AUTO_REFRESH_MS = 60 * 1000; // 1 min
+  // Atualização automática da planilha:
+  const REFRESH_MS = 2 * 60 * 1000; // 2 minutos
 
-document.getElementById("year").textContent = new Date().getFullYear();
+  // ✅ VÍDEO: coloque o caminho do seu mp4 aqui (no GitHub)
+  // Exemplo: "video/recado.mp4" (pasta video dentro do repo)
+  const VIDEO_SRC = "video.mp4"; // <-- TROQUE AQUI
 
-/* 🎥 controle do vídeo */
-(function initVideo(){
-  const v = document.getElementById("introVideo");
-  const btnPlayPause = document.getElementById("btnPlayPause");
-  const btnMute = document.getElementById("btnMute");
+  // =========================
+  // HELPERS
+  // =========================
+  function nowHHMMSS(){
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    return `${hh}:${mm}:${ss}`;
+  }
 
-  // tenta tocar (alguns celulares só tocam após interação, mas como é mudo costuma funcionar)
-  v.play().catch(()=>{ /* silencioso */ });
+  function moneyBRL(value){
+    const n = Number(value);
+    if (!isFinite(n)) return "";
+    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+  }
 
-  btnPlayPause.addEventListener("click", ()=>{
-    if (v.paused){
-      v.play().catch(()=>{});
-      btnPlayPause.textContent = "⏸ Pausar";
+  function toNumber(str){
+    if (str == null) return NaN;
+    const s = String(str).trim()
+      .replace(/\s/g,'')
+      .replace(/\./g,'')
+      .replace(',', '.')
+      .replace(/[^\d.-]/g,'');
+    const n = Number(s);
+    return isFinite(n) ? n : NaN;
+  }
+
+  function safeText(x){
+    return (x ?? "").toString().replace(/\s+/g,' ').trim();
+  }
+
+  function scrollToOffers(){
+    document.getElementById("offers").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function openWhatsApp(){
+    const msg = encodeURIComponent("Oi! Quero ajuda com uma oferta do site Achadinhos Oficial.");
+    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, "_blank");
+  }
+
+  function setStatus(mode, text){
+    const dot = document.getElementById("statusDot");
+    const label = document.getElementById("updatedLabel");
+    const time = document.getElementById("updatedTime");
+
+    if (mode === "ok"){
+      dot.style.background = "var(--brand)";
+      dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
+      label.innerHTML = "<b>Atualizado</b>";
+      time.dataset.mode = "updated";
+      time.textContent = text;
+    } else if (mode === "loading"){
+      dot.style.background = "var(--accent)";
+      dot.style.boxShadow = "0 0 0 4px rgba(245,158,11,.12)";
+      label.innerHTML = "<b>Carregando</b>";
+      time.dataset.mode = "checking";
+      time.textContent = text;
     } else {
-      v.pause();
-      btnPlayPause.textContent = "▶️ Reproduzir";
+      dot.style.background = "var(--danger)";
+      dot.style.boxShadow = "0 0 0 4px rgba(239,68,68,.12)";
+      label.innerHTML = "<b>Falha</b>";
+      time.dataset.mode = "checking";
+      time.textContent = text;
     }
-  });
+  }
 
-  btnMute.addEventListener("click", ()=>{
-    v.muted = !v.muted;
-    btnMute.textContent = v.muted ? "🔇 Sem som" : "🔊 Com som";
-    // se tirar mute, tenta play (pode precisar de clique — e já é um clique)
-    if(!v.paused) v.play().catch(()=>{});
-  });
+  // Relógio rodando sempre (mesmo enquanto carrega)
+  function startLiveClock(){
+    const timeEl = document.getElementById("updatedTime");
+    if(!timeEl) return;
 
-  // se por algum motivo não estiver tocando, o botão play resolve
-})();
-
-/* UI */
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg || "Feito!";
-  t.classList.add("show");
-  clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(()=>t.classList.remove("show"), 1600);
-}
-
-function rolar(trackId, dir){
-  const t = document.getElementById(trackId);
-  if(!t) return;
-  const amount = Math.min(t.clientWidth * 0.85, 520) * dir;
-  t.scrollBy({ left: amount, behavior: "smooth" });
-}
-
-/* CSV parser robusto */
-function parseCSV(text){
-  const rows = [];
-  let row = [], cur = "", inQuotes = false;
-
-  for (let i=0;i<text.length;i++){
-    const c = text[i];
-    const next = text[i+1];
-
-    if (c === '"'){
-      if (inQuotes && next === '"'){ cur += '"'; i++; }
-      else inQuotes = !inQuotes;
-      continue;
-    }
-    if (!inQuotes && (c === ',' || c === '\n' || c === '\r')){
-      if (c === '\r' && next === '\n') continue;
-      row.push(cur);
-      cur = "";
-      if (c === '\n'){
-        if (row.some(cell => String(cell).trim().length)) rows.push(row.map(x => String(x).trim()));
-        row = [];
+    setInterval(() => {
+      if(timeEl.dataset.mode !== "updated"){
+        timeEl.textContent = `Verificando: ${nowHHMMSS()}`;
       }
-      continue;
+    }, 1000);
+  }
+
+  // CSV parser simples (suporta aspas)
+  function parseCSV(text){
+    const rows = [];
+    let row = [];
+    let cur = "";
+    let inQuotes = false;
+
+    for(let i=0;i<text.length;i++){
+      const ch = text[i];
+      const next = text[i+1];
+
+      if(ch === '"' && inQuotes && next === '"'){
+        cur += '"';
+        i++;
+        continue;
+      }
+      if(ch === '"'){
+        inQuotes = !inQuotes;
+        continue;
+      }
+      if(ch === ',' && !inQuotes){
+        row.push(cur);
+        cur = "";
+        continue;
+      }
+      if((ch === '\n' || ch === '\r') && !inQuotes){
+        if(ch === '\r' && next === '\n'){ i++; }
+        row.push(cur);
+        cur = "";
+        if(row.length > 1 || row[0].trim() !== ""){
+          rows.push(row);
+        }
+        row = [];
+        continue;
+      }
+      cur += ch;
     }
-    cur += c;
-  }
-  if (cur.length || row.length){
+    // last
     row.push(cur);
-    if (row.some(cell => String(cell).trim().length)) rows.push(row.map(x => String(x).trim()));
-  }
-  return rows;
-}
-
-function safeText(s){ return (s || "").replace(/</g,"&lt;"); }
-
-function toNumberBR(v){
-  let s = String(v || "").trim();
-  if(!s) return NaN;
-  s = s.replace(/[^\d,.\-]/g,"");
-  if (s.includes(",") && s.includes(".")) s = s.replace(/\./g,"").replace(",",".");
-  else if (s.includes(",") && !s.includes(".")) s = s.replace(",",".");
-  const n = parseFloat(s);
-  return Number.isFinite(n) ? n : NaN;
-}
-function toDiscount(v){
-  let s = String(v || "").trim();
-  if(!s) return 0;
-  s = s.replace(",",".");
-  const m = s.match(/-?\d+(\.\d+)?/);
-  const n = m ? parseFloat(m[0]) : 0;
-  return Number.isFinite(n) ? n : 0;
-}
-function toRating(v){
-  let s = String(v || "").trim();
-  if(!s) return 0;
-  s = s.replace(",",".");
-  const n = parseFloat(s);
-  if(!Number.isFinite(n)) return 0;
-  return Math.max(0, Math.min(5, n));
-}
-function formatBRL(n){
-  return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
-}
-function normalizeCoupon(v){
-  let s = String(v || "").trim();
-  if(!s) return "";
-  s = s.replace(/^cupom\s*:\s*/i, "").trim();
-  return s;
-}
-function normalizeSold(v){
-  let s = String(v || "").trim();
-  if(!s) return "";
-  if (/^\d+$/g.test(s)) return `+${s} vendidos`;
-  if (/^\+\d+$/g.test(s)) return `${s} vendidos`;
-  return s;
-}
-function ratingText(r){
-  if(!r) return "";
-  const txt = (Math.round(r*10)/10).toString().replace(".",",");
-  return `⭐ ${txt}`;
-}
-async function copyText(text){
-  try{
-    await navigator.clipboard.writeText(text);
-    toast("Copiado!");
-  }catch{
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
-    toast("Copiado!");
-  }
-}
-function shareWhatsApp(item){
-  const title = item?.title ? item.title : "Achadinho imperdível!";
-  const coupon = normalizeCoupon(item?.coupon);
-  const sold = normalizeSold(item?.sold);
-  const rating = ratingText(toRating(item?.rating));
-  const parts = [
-    "🔥 Achadinho!",
-    title,
-    coupon ? `🏷️ CUPOM: ${coupon}` : "",
-    sold ? `📦 ${sold}` : "",
-    rating ? `${rating}` : "",
-    "👉 Entre no grupo para pegar o link:",
-    location.href
-  ].filter(Boolean);
-
-  const text = encodeURIComponent(parts.join("\n"));
-  const url = `https://wa.me/?text=${text}`;
-  window.open(url, "_blank", "noopener");
-}
-
-function buildCard(item){
-  const a = document.createElement("a");
-  a.className = "carditem";
-  a.href = WA_GROUP;
-  a.target = "_blank";
-  a.rel = "noopener";
-
-  const img = document.createElement("img");
-  img.src = item.image;
-  img.alt = item.title || "Oferta";
-  img.onerror = () => { img.style.display = "none"; };
-
-  const info = document.createElement("div");
-  info.className = "cardinfo";
-
-  const strong = document.createElement("strong");
-  strong.innerHTML = safeText(item.title || "");
-
-  const prices = document.createElement("div");
-  prices.className = "prices";
-
-  const p = toNumberBR(item.price);
-  const d = toDiscount(item.discount);
-  const coupon = normalizeCoupon(item.coupon);
-
-  if (Number.isFinite(p) && p > 0 && d > 0){
-    const old = document.createElement("span");
-    old.className = "old";
-    old.textContent = formatBRL(p);
-
-    const final = p * (1 - d/100);
-
-    const neu = document.createElement("span");
-    neu.className = "newSmall";
-    neu.textContent = formatBRL(final);
-
-    const off = document.createElement("span");
-    off.className = "offSmall";
-    off.textContent = `${d}% OFF`;
-
-    prices.appendChild(old);
-    prices.appendChild(neu);
-    prices.appendChild(off);
-  } else {
-    const neu = document.createElement("span");
-    neu.className = "newSmall";
-    if (Number.isFinite(p) && p > 0) neu.textContent = formatBRL(p);
-    else neu.textContent = "Ver no grupo →";
-    prices.appendChild(neu);
+    if(row.length > 1 || row[0].trim() !== ""){
+      rows.push(row);
+    }
+    return rows;
   }
 
-  if (coupon){
-    const cp = document.createElement("span");
-    cp.className = "couponSmall";
-    cp.textContent = `CUPOM: ${coupon}`;
-    prices.appendChild(cp);
-  }
+  // =========================
+  // VIDEO INIT
+  // =========================
+  function initVideo(){
+    const video = document.getElementById("promoVideo");
+    const src = document.getElementById("videoSrc");
+    const btn = document.getElementById("toggleVideoBtn");
 
-  const meta = document.createElement("div");
-  meta.className = "metaSmall";
+    if(!video || !src || !btn) return;
 
-  const sold = normalizeSold(item.sold);
-  if (sold){
-    const s = document.createElement("span");
-    s.className = "soldSmall";
-    s.textContent = sold;
-    meta.appendChild(s);
-  }
+    // seta o src do vídeo
+    src.src = VIDEO_SRC;
+    video.load();
 
-  const r = toRating(item.rating);
-  if (r){
-    const rr = document.createElement("span");
-    rr.className = "ratingSmall";
-    rr.textContent = ratingText(r);
-    meta.appendChild(rr);
-  }
+    // tenta autoplay (precisa estar muted, já está)
+    video.play().catch(()=>{ /* ok, alguns browsers bloqueiam */ });
 
-  const actions = document.createElement("div");
-  actions.className = "cardActions";
-
-  const btnGroup = document.createElement("button");
-  btnGroup.className = "cardBtn primary";
-  btnGroup.type = "button";
-  btnGroup.textContent = "Ver no grupo";
-  btnGroup.onclick = (e)=>{ e.preventDefault(); window.open(WA_GROUP, "_blank", "noopener"); };
-  actions.appendChild(btnGroup);
-
-  if (coupon){
-    const btnCopy = document.createElement("button");
-    btnCopy.className = "cardBtn";
-    btnCopy.type = "button";
-    btnCopy.textContent = "Copiar cupom";
-    btnCopy.onclick = async (e)=>{ e.preventDefault(); await copyText(coupon); };
-    actions.appendChild(btnCopy);
-  }
-
-  const btnShare = document.createElement("button");
-  btnShare.className = "cardBtn";
-  btnShare.type = "button";
-  btnShare.textContent = "Compartilhar";
-  btnShare.onclick = (e)=>{ e.preventDefault(); shareWhatsApp(item); };
-  actions.appendChild(btnShare);
-
-  info.appendChild(strong);
-  info.appendChild(prices);
-  if (meta.childNodes.length) info.appendChild(meta);
-  info.appendChild(actions);
-
-  a.appendChild(img);
-  a.appendChild(info);
-  return a;
-}
-
-function markScrollable(track){
-  if(!track) return;
-  const needsScroll = track.scrollWidth > (track.clientWidth + 2);
-  track.classList.toggle("no-scroll", !needsScroll);
-}
-
-let countdownTimer = null;
-function startCountdown(){
-  const el = document.getElementById("countdown");
-  if(!el) return;
-
-  function tick(){
-    const now = new Date();
-    const end = new Date();
-    end.setHours(23,59,59,999);
-    const diff = Math.max(0, end - now);
-    const h = String(Math.floor(diff/3600000)).padStart(2,"0");
-    const m = String(Math.floor((diff%3600000)/60000)).padStart(2,"0");
-    const s = String(Math.floor((diff%60000)/1000)).padStart(2,"0");
-    el.textContent = `${h}:${m}:${s}`;
-  }
-
-  tick();
-  if(countdownTimer) clearInterval(countdownTimer);
-  countdownTimer = setInterval(tick, 1000);
-}
-
-function renderFeatured(best){
-  const wrap = document.getElementById("featuredWrap");
-  if(!best){ wrap.style.display="none"; return; }
-
-  document.getElementById("featuredImg").src = best.image;
-  document.getElementById("featuredTitle").textContent = best.title || "Destaque do dia";
-  document.getElementById("featuredCTA").href = WA_GROUP;
-
-  const oldEl = document.getElementById("featuredOld");
-  const newEl = document.getElementById("featuredNew");
-  const offEl = document.getElementById("featuredOff");
-  const cupEl = document.getElementById("featuredCoupon");
-  const soldEl = document.getElementById("featuredSold");
-  const ratingEl = document.getElementById("featuredRating");
-
-  const p = toNumberBR(best.price);
-  const d = toDiscount(best.discount);
-  const coupon = normalizeCoupon(best.coupon);
-
-  if (Number.isFinite(p) && p > 0 && d > 0){
-    oldEl.style.display = "";
-    offEl.style.display = "";
-    oldEl.textContent = "De: " + formatBRL(p);
-    newEl.textContent = "Por: " + formatBRL(p * (1 - d/100));
-    offEl.textContent = `${d}% OFF`;
-  } else if (Number.isFinite(p) && p > 0){
-    oldEl.style.display = "none";
-    offEl.style.display = "none";
-    newEl.textContent = "Preço: " + formatBRL(p);
-  } else {
-    oldEl.style.display = "none";
-    offEl.style.display = "none";
-    newEl.textContent = "Ver no grupo →";
-  }
-
-  if (coupon){
-    cupEl.style.display = "";
-    cupEl.textContent = `CUPOM: ${coupon}`;
-  } else {
-    cupEl.style.display = "none";
-    cupEl.textContent = "";
-  }
-
-  const sold = normalizeSold(best.sold);
-  if (sold){
-    soldEl.style.display = "";
-    soldEl.textContent = sold;
-  } else {
-    soldEl.style.display = "none";
-    soldEl.textContent = "";
-  }
-
-  const r = toRating(best.rating);
-  if (r){
-    ratingEl.style.display = "";
-    ratingEl.textContent = ratingText(r);
-  } else {
-    ratingEl.style.display = "none";
-    ratingEl.textContent = "";
-  }
-
-  const btnCopy = document.getElementById("featuredCopyCoupon");
-  if (coupon){
-    btnCopy.style.display = "";
-    btnCopy.onclick = async ()=>{ await copyText(coupon); };
-  } else {
-    btnCopy.style.display = "none";
-    btnCopy.onclick = null;
-  }
-  document.getElementById("featuredShare").onclick = ()=> shareWhatsApp(best);
-
-  wrap.style.display = "grid";
-  startCountdown();
-}
-
-async function fetchCSVNoCache(){
-  const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "cb=" + Date.now();
-  const res = await fetch(url, { cache:"no-store" });
-  if(!res.ok) throw new Error("Falha ao buscar CSV");
-  return res.text();
-}
-
-async function loadFromSheet(){
-  const ofertasWrap = document.getElementById("trackOfertas");
-  const promosWrap  = document.getElementById("trackPromos");
-
-  try{
-    const csv = await fetchCSVNoCache();
-    const rows = parseCSV(csv);
-    if (!rows.length) return;
-
-    const header = rows[0].map(h => (h || "").toLowerCase().trim());
-    const idx = (name) => header.indexOf(name);
-
-    const sI = idx("section");
-    const iI = idx("image");
-    const tI = idx("title");
-    const pI = idx("price");
-    const dI = idx("discount");
-    const cI = idx("coupon");
-    const soI = idx("sold");
-    const rI = idx("rating");
-
-    if (sI < 0 || iI < 0 || tI < 0) return;
-
-    const items = rows.slice(1).map(r => ({
-      section: (r[sI] || "").trim().toLowerCase(),
-      image:   (r[iI] || "").trim(),
-      title:   (r[tI] || "").trim(),
-      price:   pI >= 0 ? (r[pI] || "").trim() : "",
-      discount:dI >= 0 ? (r[dI] || "").trim() : "",
-      coupon:  cI >= 0 ? (r[cI] || "").trim() : "",
-      sold:    soI >= 0 ? (r[soI] || "").trim() : "",
-      rating:  rI >= 0 ? (r[rI] || "").trim() : ""
-    })).filter(x => x.section && x.image);
-
-    let best = null;
-    items.forEach(it=>{
-      const d = toDiscount(it.discount);
-      if(!best || d > toDiscount(best.discount)) best = it;
+    btn.addEventListener("click", () => {
+      if(video.paused){
+        video.play().catch(()=>{});
+        btn.textContent = "⏸ Pausar";
+      }else{
+        video.pause();
+        btn.textContent = "▶️ Reproduzir";
+      }
     });
-
-    const ofertas = items.filter(x => x.section === "oferta");
-    const promos  = items.filter(x => x.section === "promo");
-
-    ofertasWrap.innerHTML = "";
-    promosWrap.innerHTML  = "";
-
-    ofertas.forEach(item => ofertasWrap.appendChild(buildCard(item)));
-    promos.forEach(item  => promosWrap.appendChild(buildCard(item)));
-
-    renderFeatured(best);
-
-    requestAnimationFrame(()=>{
-      markScrollable(promosWrap);
-      markScrollable(ofertasWrap);
-    });
-
-  } catch(e){
-    // silencioso
   }
-}
 
-window.addEventListener("resize", () => {
-  markScrollable(document.getElementById("trackPromos"));
-  markScrollable(document.getElementById("trackOfertas"));
-});
+  // =========================
+  // RENDER
+  // =========================
+  let ALL_ITEMS = [];
 
-loadFromSheet();
-setInterval(loadFromSheet, AUTO_REFRESH_MS);
+  function forceReload(){
+    loadSheet(true);
+  }
+
+  function getQuery(){
+    return safeText(document.getElementById("q").value).toLowerCase();
+  }
+
+  function getSort(){
+    return document.getElementById("sort").value;
+  }
+
+  function sortItems(items, mode){
+    const a = [...items];
+
+    if(mode === "priceAsc"){
+      a.sort((x,y)=> (x.priceNum||Infinity) - (y.priceNum||Infinity));
+    } else if(mode === "priceDesc"){
+      a.sort((x,y)=> (y.priceNum||-Infinity) - (x.priceNum||-Infinity));
+    } else if(mode === "discountDesc"){
+      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
+    } else if(mode === "soldDesc"){
+      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
+    } else if(mode === "ratingDesc"){
+      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
+    } else {
+      // destaque: sold + desconto + rating
+      a.sort((x,y)=>{
+        const sx = (x.soldNum||0) * 2 + (x.discountNum||0) * 1.2 + (x.ratingNum||0) * 10;
+        const sy = (y.soldNum||0) * 2 + (y.discountNum||0) * 1.2 + (y.ratingNum||0) * 10;
+        return sy - sx;
+      });
+    }
+    return a;
+  }
+
+  function filterItems(items){
+    const q = getQuery();
+    if(!q) return items;
+
+    return items.filter(it => {
+      const hay = `${it.title} ${it.coupon||""}`.toLowerCase();
+      return hay.includes(q);
+    });
+  }
+
+  function render(){
+    const grid = document.getElementById("offers");
+    const loading = document.getElementById("loading");
+
+    const sorted = sortItems(filterItems(ALL_ITEMS), getSort());
+
+    grid.innerHTML = "";
+    loading.style.display = sorted.length ? "none" : "block";
+    loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
+
+    // KPIs
+    document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
+    document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
+
+    // Prova social / urgência
+    const soldToday = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
+    document.getElementById("kpi2").textContent = soldToday ? soldToday.toString() : "—";
+    document.getElementById("urgencyText").textContent =
+      "Quando aparece desconto alto, costuma acabar rápido. Se gostou, aproveite agora.";
+    document.getElementById("socialText").textContent =
+      soldToday ? `Hoje já teve ${soldToday} compras somadas nas ofertas da planilha.` : "Ofertas com boa avaliação e desconto tendem a vender mais rápido.";
+
+    for(const it of sorted){
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const img = document.createElement("div");
+      img.className = "imgbox";
+      img.innerHTML = `<img src="${it.image || ""}" alt="${escapeHtml(it.title)}" loading="lazy" referrerpolicy="no-referrer" />`;
+      card.appendChild(img);
+
+      const body = document.createElement("div");
+      body.className = "cardBody";
+
+      const title = document.createElement("h2");
+      title.className = "title";
+      title.textContent = it.title || "Oferta";
+      body.appendChild(title);
+
+      const row1 = document.createElement("div");
+      row1.className = "row";
+
+      const price = document.createElement("div");
+      price.className = "price";
+      price.textContent = it.price ? it.price : (isFinite(it.priceNum) ? moneyBRL(it.priceNum) : "—");
+      row1.appendChild(price);
+
+      const right = document.createElement("div");
+      right.style.display="flex";
+      right.style.gap="8px";
+      right.style.flexWrap="wrap";
+      right.style.justifyContent="flex-end";
+
+      if(it.discount){
+        const t = document.createElement("span");
+        t.className = "tag off";
+        t.textContent = it.discount;
+        right.appendChild(t);
+      }
+      if(it.coupon){
+        const t = document.createElement("span");
+        t.className = "tag coupon";
+        t.textContent = `CUPOM: ${it.coupon}`;
+        right.appendChild(t);
+      }
+      row1.appendChild(right);
+      body.appendChild(row1);
+
+      const row2 = document.createElement("div");
+      row2.className = "row";
+      row2.innerHTML = `
+        <div class="muted">${it.rating ? `⭐ ${it.rating}` : "⭐ —"} &nbsp;•&nbsp; ${it.sold ? `${it.sold} vendidos` : "— vendidos"}</div>
+        <div class="muted">Atualizado: ${nowHHMMSS()}</div>
+      `;
+      body.appendChild(row2);
+
+      const buy = document.createElement("div");
+      buy.className = "buy";
+
+      const btn1 = document.createElement("button");
+      btn1.className = "btnSmall btnBuy";
+      btn1.textContent = "Ver oferta";
+      btn1.onclick = () => openLink(it.link);
+      buy.appendChild(btn1);
+
+      const btn2 = document.createElement("button");
+      btn2.className = "btnSmall";
+      btn2.textContent = "Copiar cupom";
+      btn2.onclick = () => copyCoupon(it.coupon);
+      buy.appendChild(btn2);
+
+      body.appendChild(buy);
+      card.appendChild(body);
+      grid.appendChild(card);
+    }
+  }
+
+  function escapeHtml(s){
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
+  }
+
+  function openLink(url){
+    const u = safeText(url);
+    if(!u){ alert("Link não encontrado na planilha."); return; }
+    window.open(u, "_blank");
+  }
+
+  async function copyCoupon(coupon){
+    const c = safeText(coupon);
+    if(!c){ alert("Este item não tem cupom."); return; }
+    try{
+      await navigator.clipboard.writeText(c);
+      alert("Cupom copiado: " + c);
+    }catch{
+      prompt("Copie o cupom:", c);
+    }
+  }
+
+  // =========================
+  // LOAD SHEET
+  // =========================
+  async function loadSheet(isManual=false){
+    try{
+      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
+
+      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
+      const res = await fetch(url, { cache:"no-store" });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if(!rows.length) throw new Error("CSV vazio");
+
+      const header = rows[0].map(h => safeText(h).toLowerCase());
+      const idx = (name) => header.indexOf(name);
+
+      const iImage = idx("image");
+      const iTitle = idx("title");
+      const iPrice = idx("price");
+      const iDiscount = idx("discount");
+      const iCoupon = idx("coupon");
+      const iSold = idx("sold");
+      const iRating = idx("rating");
+      const iLink = idx("link") >= 0 ? idx("link") : idx("url");
+
+      const items = [];
+      for(let r=1; r<rows.length; r++){
+        const row = rows[r];
+        const title = safeText(row[iTitle]);
+        const image = safeText(row[iImage]);
+        const price = safeText(row[iPrice]);
+        const discount = safeText(row[iDiscount]);
+        const coupon = safeText(row[iCoupon]);
+        const sold = safeText(row[iSold]);
+        const rating = safeText(row[iRating]);
+        const link = safeText(row[iLink]);
+
+        if(!title && !image && !price && !link) continue;
+
+        const priceNum = toNumber(price);
+        const discountNum = toNumber(discount);
+        const soldNum = toNumber(sold);
+        const ratingNum = toNumber(rating);
+
+        items.push({
+          title: title || "Oferta",
+          image,
+          price,
+          priceNum,
+          discount,
+          discountNum: isFinite(discountNum) ? discountNum : 0,
+          coupon,
+          sold,
+          soldNum: isFinite(soldNum) ? soldNum : 0,
+          rating,
+          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
+          link
+        });
+      }
+
+      ALL_ITEMS = items;
+
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
+      render();
+
+    }catch(err){
+      console.error(err);
+      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("loading").textContent =
+        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+    }
+  }
+
+  // =========================
+  // EVENTS
+  // =========================
+  document.getElementById("q").addEventListener("input", () => render());
+  document.getElementById("sort").addEventListener("change", () => render());
+
+  // Start
+  initVideo();
+  startLiveClock();
+  loadSheet();
+
+  // Auto refresh
+  setInterval(() => loadSheet(false), REFRESH_MS);
 </script>
+
 </body>
 </html>
