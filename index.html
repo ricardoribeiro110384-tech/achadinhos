@@ -882,24 +882,23 @@
     const ms = dt.getTime() - Date.now();
     if(ms <= 0) return "⚠️ expirada";
 
-    const minutes = Math.floor(ms / 60000);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
+const minutesLeft = Math.ceil(ms / 60000);
+const hoursLeft = Math.ceil(ms / 3600000);
+const daysLeft = Math.ceil(ms / 86400000);
 
-    if(hours < 1){
-      return `⏰ expira em ${Math.max(1, minutes)} min`;
-    }
-    if(hours < URGENCY_SOON_HOURS){
-      return `⏰ expira em ${hours}h`;
-    }
-    if(hours < URGENCY_TODAY_HOURS){
-      return `⚠️ expira hoje`;
-    }
-    if(days === 1){
-      return `📅 expira amanhã`;
-    }
-    return `📅 expira em ${days} dias`;
-  }
+if (minutesLeft <= 60) {
+  return `⏰ expira em ${Math.max(1, minutesLeft)} min`;
+}
+
+if (hoursLeft <= URGENCY_SOON_HOURS) {
+  return `⏰ expira em ${hoursLeft}h`;
+}
+
+if (hoursLeft <= URGENCY_TODAY_HOURS) {
+  return `⚠️ expira hoje`;
+}
+
+return `📅 expira em ${daysLeft}d`;
 
   // =========================
   // BADGE AUTO
