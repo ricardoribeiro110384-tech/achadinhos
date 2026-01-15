@@ -782,9 +782,8 @@
   let SPOT_TOP_LIST = [];
 
   // ✅ Escassez automática por expiração
-  // ALTERAÇÃO: começou 12h antes (era 6h)
-  const URGENCY_SOON_HOURS = 12;    // começa a avisar "últimas horas" com 12h
-  const URGENCY_TODAY_HOURS = 24;   // "expira hoje" em até 24h
+  const URGENCY_SOON_HOURS = 6;     // "últimas horas" (badge)
+  const URGENCY_TODAY_HOURS = 24;   // "expira hoje" (badge)
 
   // =========================
   // STATE
@@ -792,7 +791,6 @@
   let ALL_ITEMS = [];
   let FILTER_COUPON_ONLY = false;
   let FILTER_TOP_DISCOUNT = false;
-
   let SPOT_ITEM = null;
 
   // =========================
@@ -843,48 +841,60 @@
   }
 
   // =========================
-  // DATA / EXPIRES
+  // DATA / EXPIRES / CREATED_AT
   // =========================
-  // Aceita: "YYYY-MM-DD", "YYYY-MM-DD HH:MM", "DD/MM/YYYY", "DD/MM/YYYY HH:MM"
-  function parseDateFlexible(s){
+  // Aceita: "YYYY-MM-DD", "YYYY-MM-DD HH:MM", "YYYY-MM-DD HH:MM:SS", "DD/MM/YYYY", "DD/MM/YYYY HH:MM"
+  function parseDateFlex(s, defaultHour, defaultMinute){
     const raw = safeText(s);
     if(!raw) return null;
 
     // YYYY-MM-DD (com ou sem hora)
-    let m = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?$/);
+    let m = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
     if(m){
       const Y = Number(m[1]);
       const Mo = Number(m[2]) - 1;
       const D = Number(m[3]);
-      const hh = m[4] != null ? Number(m[4]) : 23;
-      const mm = m[5] != null ? Number(m[5]) : 59;
-      const dt = new Date(Y, Mo, D, hh, mm, 59);
+      const hh = m[4] != null ? Number(m[4]) : defaultHour;
+      const mm = m[5] != null ? Number(m[5]) : defaultMinute;
+      const ss = m[6] != null ? Number(m[6]) : 0;
+      const dt = new Date(Y, Mo, D, hh, mm, ss);
       return isNaN(dt.getTime()) ? null : dt;
     }
 
     // DD/MM/YYYY (com ou sem hora)
-    m = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:[ T](\d{2}):(\d{2}))?$/);
+    m = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
     if(m){
       const D = Number(m[1]);
       const Mo = Number(m[2]) - 1;
       const Y = Number(m[3]);
-      const hh = m[4] != null ? Number(m[4]) : 23;
-      const mm = m[5] != null ? Number(m[5]) : 59;
-      const dt = new Date(Y, Mo, D, hh, mm, 59);
+      const hh = m[4] != null ? Number(m[4]) : defaultHour;
+      const mm = m[5] != null ? Number(m[5]) : defaultMinute;
+      const ss = m[6] != null ? Number(m[6]) : 0;
+      const dt = new Date(Y, Mo, D, hh, mm, ss);
       return isNaN(dt.getTime()) ? null : dt;
     }
 
     return null;
   }
 
+  // expires: se vier só data, considera fim do dia (23:59)
+  function parseExpires(s){
+    return parseDateFlex(s, 23, 59);
+  }
+
+  // created_at: se vier só data, considera começo do dia (00:00)
+  function parseCreatedAt(s){
+    return parseDateFlex(s, 0, 0);
+  }
+
   function isExpired(expiresText){
-    const dt = parseDateFlexible(expiresText);
+    const dt = parseExpires(expiresText);
     if(!dt) return false;
     return dt.getTime() < Date.now();
   }
 
   function diffToHuman(expiresText){
-    const dt = parseDateFlexible(expiresText);
+    const dt = parseExpires(expiresText);
     if(!dt) return "";
 
     const ms = dt.getTime() - Date.now();
@@ -910,21 +920,10 @@
   }
 
   // =========================
-  // CREATED_AT (NOVAS POSTAGENS EM CIMA)
-  // =========================
-  // Aceita: "YYYY-MM-DD", "YYYY-MM-DD HH:MM", "DD/MM/YYYY", "DD/MM/YYYY HH:MM"
-  // Se estiver vazio, cai para data 0.
-  function parseCreatedAt(s){
-    const dt = parseDateFlexible(s);
-    return dt ? dt : new Date(0);
-  }
-
-  // =========================
   // BADGE AUTO
   // =========================
   function pickAutoBadge(title, link){
     const hay = (`${safeText(title)} ${safeText(link)}`).toLowerCase();
-
     if(hay.includes("full")) return "FULL";
     if(hay.includes("prime")) return "Prime";
     if(hay.includes("frete grátis") || hay.includes("frete gratis") || hay.includes("fretegratis") || hay.includes("free shipping")) return "Frete Grátis";
@@ -1029,7 +1028,6 @@
     if(which === "discount"){
       FILTER_TOP_DISCOUNT = !FILTER_TOP_DISCOUNT;
       const elF = document.getElementById("chipDiscount");
-      // FIX: antes estava "RF" (variável inexistente) e quebrava tudo
       if(elF) elF.classList.toggle("chipOn", FILTER_TOP_DISCOUNT);
     }
     render();
@@ -1066,45 +1064,57 @@
     return out;
   }
 
+  // ✅ critério “últimas em cima” (created_at desc; se não tiver, usa ordem das linhas desc)
+  function compareNewest(a, b){
+    const ca = (a.createdAtMs && a.createdAtMs > 0) ? a.createdAtMs : 0;
+    const cb = (b.createdAtMs && b.createdAtMs > 0) ? b.createdAtMs : 0;
+    if(cb !== ca) return cb - ca;
+
+    const ra = (a.rowIndex ?? 0);
+    const rb = (b.rowIndex ?? 0);
+    return rb - ra;
+  }
+
   function sortItems(items, mode){
     const a = [...items];
 
     if(mode === "priceAsc"){
-      a.sort((x,y)=> (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity));
-      return a;
-    }
-    if(mode === "priceDesc"){
-      a.sort((x,y)=> (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity));
-      return a;
-    }
-    if(mode === "discountDesc"){
-      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
-      return a;
-    }
-    if(mode === "soldDesc"){
-      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
-      return a;
-    }
-    if(mode === "ratingDesc"){
-      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
-      return a;
-    }
+      a.sort((x,y)=>{
+        const r = (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity);
+        return r !== 0 ? r : compareNewest(x,y);
+      });
+    } else if(mode === "priceDesc"){
+      a.sort((x,y)=>{
+        const r = (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity);
+        return r !== 0 ? r : compareNewest(x,y);
+      });
+    } else if(mode === "discountDesc"){
+      a.sort((x,y)=>{
+        const r = (y.discountNum||0) - (x.discountNum||0);
+        return r !== 0 ? r : compareNewest(x,y);
+      });
+    } else if(mode === "soldDesc"){
+      a.sort((x,y)=>{
+        const r = (y.soldNum||0) - (x.soldNum||0);
+        return r !== 0 ? r : compareNewest(x,y);
+      });
+    } else if(mode === "ratingDesc"){
+      a.sort((x,y)=>{
+        const r = (y.ratingNum||0) - (x.ratingNum||0);
+        return r !== 0 ? r : compareNewest(x,y);
+      });
+    } else {
+      // ✅ "destaque": últimas SEMPRE em cima
+      a.sort((x,y)=>{
+        const newest = compareNewest(x,y);
+        if(newest !== 0) return newest;
 
-    // ✅ ALTERAÇÃO PRINCIPAL:
-    // No modo "destaque", mantém o seu score, MAS garante que os mais novos ficam no topo.
-    // (Últimas postagens sempre em cima)
-    a.sort((x,y)=>{
-      const cx = x.createdAt?.getTime ? x.createdAt.getTime() : 0;
-      const cy = y.createdAt?.getTime ? y.createdAt.getTime() : 0;
-
-      // 1) mais novo primeiro
-      if(cy !== cx) return cy - cx;
-
-      // 2) desempate por score antigo
-      const sx = (x.soldNum||0)*2 + (x.discountNum||0)*1.2 + (x.ratingNum||0)*10;
-      const sy = (y.soldNum||0)*2 + (y.discountNum||0)*1.2 + (y.ratingNum||0)*10;
-      return sy - sx;
-    });
+        const sx = (x.soldNum||0)*2 + (x.discountNum||0)*1.2 + (x.ratingNum||0)*10;
+        const sy = (y.soldNum||0)*2 + (y.discountNum||0)*1.2 + (y.ratingNum||0)*10;
+        const r = sy - sx;
+        return r !== 0 ? r : 0;
+      });
+    }
     return a;
   }
 
@@ -1392,7 +1402,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       const iExpires = idx("expires");
       const iBadge = idx("badge");
 
-      // ✅ NOVO: data/hora de postagem (para “últimas em cima”)
+      // ✅ NOVO: created_at (últimas em cima)
       const iCreated = idx("created_at");
 
       const iGroup = idx("group_count");
@@ -1432,10 +1442,6 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         const expiresRaw = iExpires >= 0 ? safeText(row[iExpires]) : "";
         if(expiresRaw && isExpired(expiresRaw)) continue;
 
-        // ✅ created_at (para ordenar recentes)
-        const createdRaw = iCreated >= 0 ? safeText(row[iCreated]) : "";
-        const createdAt = parseCreatedAt(createdRaw);
-
         // ✅ badge manual ou automático
         const badgeManual = iBadge >= 0 ? safeText(row[iBadge]) : "";
         const badgeAuto = badgeManual ? "" : pickAutoBadge(title, link);
@@ -1443,6 +1449,11 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
 
         // ✅ urgência automática
         const urgency = expiresRaw ? diffToHuman(expiresRaw) : "";
+
+        // ✅ created_at (para "últimas em cima")
+        const createdRaw = iCreated >= 0 ? safeText(row[iCreated]) : "";
+        const createdDt = createdRaw ? parseCreatedAt(createdRaw) : null;
+        const createdAtMs = createdDt ? createdDt.getTime() : 0;
 
         if(!title && !image && !originalRaw && !link) continue;
 
@@ -1481,21 +1492,19 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
           badge,
           urgency,
           expires: expiresRaw,
-          createdAt
+
+          // ✅ novo
+          created_at: createdRaw,
+          createdAtMs,
+          rowIndex: r
         });
       }
 
-      // ✅ guarda e mantém os mais novos primeiro na base
-      // (se alguém trocar o sort depois, o render respeita)
-      ALL_ITEMS = items.sort((a,b)=>{
-        const ta = a.createdAt?.getTime ? a.createdAt.getTime() : 0;
-        const tb = b.createdAt?.getTime ? b.createdAt.getTime() : 0;
-        return tb - ta;
-      });
+      ALL_ITEMS = items;
 
       // KPIs
-      document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
-      const soldTodaySum = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
+      document.getElementById("kpi1").textContent = items.length.toString();
+      const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
       document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";
 
       // Prova social
@@ -1510,7 +1519,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       SPOT_TOP_LIST = buildSpotTopList(ALL_ITEMS);
       startSpotRotation();
 
-      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${ALL_ITEMS.length} ofertas`);
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
       render();
 
     }catch(err){
