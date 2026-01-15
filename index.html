@@ -775,7 +775,7 @@
   let SPOT_TOP_LIST = [];
 
   // ✅ Escassez automática por expiração
-  const URGENCY_SOON_HOURS = 12;     // começa a avisar "últimas horas" com 6h
+  const URGENCY_SOON_HOURS = 6;     // começa a avisar "últimas horas" com 6h
   const URGENCY_TODAY_HOURS = 24;   // "expira hoje" em até 24h
 
   // =========================
@@ -881,21 +881,25 @@
 
     const ms = dt.getTime() - Date.now();
     if(ms <= 0) return "⚠️ expirada";
-const minutes = Math.floor(ms / 60000);
-const hours = Math.floor(minutes / 60);
-const days = Math.floor(hours / 24);
 
-if(hours < 1){
-  return `⏰ expira em ${Math.max(1, minutes)} min`;
-}
+    const minutes = Math.floor(ms / 60000);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
 
-if(hours < URGENCY_SOON_HOURS){
-  return `⏰ expira em ${hours}h`;
-}
-
-if(hours < URGENCY_TODAY_HOURS){
-  return `⚠️ expira hoje`;
-}
+    if(hours < 1){
+      return `⏰ expira em ${Math.max(1, minutes)} min`;
+    }
+    if(hours < URGENCY_SOON_HOURS){
+      return `⏰ expira em ${hours}h`;
+    }
+    if(hours < URGENCY_TODAY_HOURS){
+      return `⚠️ expira hoje`;
+    }
+    if(days === 1){
+      return `📅 expira amanhã`;
+    }
+    return `📅 expira em ${days} dias`;
+  }
 
   // =========================
   // BADGE AUTO
