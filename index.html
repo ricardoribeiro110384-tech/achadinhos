@@ -1030,28 +1030,38 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
 
   function renderSpotlight(){
     const box = document.getElementById("spotlight");
+    if(!box) return;
+
     if(!SPOT_ITEM){
       box.style.display = "none";
       return;
     }
 
-    document.getElementById("spotImg").src = SPOT_ITEM.image || "";
-    document.getElementById("spotTitle").textContent = SPOT_ITEM.title || "Oferta";
-    document.getElementById("spotNow").textContent = SPOT_ITEM.finalPriceText || "—";
+    const imgEl = document.getElementById("spotImg");
+    if(imgEl) imgEl.src = SPOT_ITEM.image || "";
+
+    const tEl = document.getElementById("spotTitle");
+    if(tEl) tEl.textContent = SPOT_ITEM.title || "Oferta";
+
+    const nowEl = document.getElementById("spotNow");
+    if(nowEl) nowEl.textContent = SPOT_ITEM.finalPriceText || "—";
 
     const old = document.getElementById("spotOld");
-    if(SPOT_ITEM.originalPriceText && SPOT_ITEM.originalPriceText !== SPOT_ITEM.finalPriceText){
-      old.style.display = "block";
-      old.textContent = SPOT_ITEM.originalPriceText;
-    } else {
-      old.style.display = "none";
+    if(old){
+      if(SPOT_ITEM.originalPriceText && SPOT_ITEM.originalPriceText !== SPOT_ITEM.finalPriceText){
+        old.style.display = "block";
+        old.textContent = SPOT_ITEM.originalPriceText;
+      } else {
+        old.style.display = "none";
+      }
     }
 
     const metaBits = [];
     if(SPOT_ITEM.discount) metaBits.push(`🔥 ${SPOT_ITEM.discount}`);
     if(SPOT_ITEM.rating) metaBits.push(`⭐ ${SPOT_ITEM.rating}`);
     if(SPOT_ITEM.sold) metaBits.push(`✅ ${SPOT_ITEM.sold} vendidos`);
-    document.getElementById("spotMeta").textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";
+    const mEl = document.getElementById("spotMeta");
+    if(mEl) mEl.textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";
 
     box.style.display = "grid";
   }
@@ -1063,7 +1073,6 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       return;
     }
 
-    // começa já com um
     SPOT_INDEX = 0;
     setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
 
@@ -1225,6 +1234,9 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         (idx("link") >= 0 ? idx("link") :
         (idx("url") >= 0 ? idx("url") : -1));
 
+      // ✅ NOVO: coluna active (1/0) para esconder item sem apagar linha
+      const iActive = idx("active");
+
       const iGroup = idx("group_count");
       const iPosts = idx("posts_today");
 
@@ -1252,6 +1264,12 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         const sold = safeText(row[iSold]);
         const rating = safeText(row[iRating]);
         const link = iLink >= 0 ? safeText(row[iLink]) : "";
+
+        // ✅ NOVO: lê active e pula se estiver desligado
+        // Regras: vazio ou 1 = ativo. 0/false/nao/não = desativa.
+        const activeRaw = iActive >= 0 ? safeText(row[iActive]).toLowerCase() : "";
+        const isActive = !(activeRaw === "0" || activeRaw === "false" || activeRaw === "nao" || activeRaw === "não");
+        if(!isActive) continue;
 
         if(!title && !image && !originalRaw && !link) continue;
 
@@ -1293,17 +1311,22 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       ALL_ITEMS = items;
 
       // KPIs
-      document.getElementById("kpi1").textContent = items.length.toString();
+      const k1 = document.getElementById("kpi1");
+      if(k1) k1.textContent = items.length.toString();
+
       const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-      document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";
+      const k2 = document.getElementById("kpi2");
+      if(k2) k2.textContent = soldTodaySum ? soldTodaySum.toString() : "—";
 
       // Prova social
       const gc = groupCount ?? DEFAULT_GROUP_COUNT;
       const pt = postsToday ?? DEFAULT_POSTS_TODAY;
-      document.getElementById("socialProof").textContent =
-        `✅ +${gc.toLocaleString("pt-BR")} pessoas já entraram no grupo • 🔥 ${pt} ofertas postadas hoje`;
+      const sp = document.getElementById("socialProof");
+      if(sp){
+        sp.textContent = `✅ +${gc.toLocaleString("pt-BR")} pessoas já entraram no grupo • 🔥 ${pt} ofertas postadas hoje`;
+      }
 
-      // ✅ monta lista do spotlight e inicia rotação
+      // ✅ monta lista do spotlight e inicia rotação (já só com itens ativos)
       SPOT_TOP_LIST = buildSpotTopList(ALL_ITEMS);
       startSpotRotation();
 
@@ -1314,9 +1337,10 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       console.error(err);
       setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
       const loading = document.getElementById("loading");
-      loading.style.display = "block";
-      loading.textContent =
-        "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+      if(loading){
+        loading.style.display = "block";
+        loading.textContent = "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
+      }
     }
   }
 
