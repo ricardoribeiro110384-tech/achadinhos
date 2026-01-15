@@ -2,14 +2,14 @@
 <html lang="pt-br">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-H5DTVXXB59"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5DTVXXB59"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H5DTVXXB59');
+  </script>
 
-  gtag('config', 'G-H5DTVXXB59');
-</script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Achadinhos Oficial</title>
@@ -639,7 +639,6 @@
     <div class="hero-inner">
       <div>
         <h1>As melhores ofertas do dia — sem enrolação. <span style="color:#bbf7d0">Clique e garanta.</span></h1>
-        
 
         <div class="ctaRow">
           <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
@@ -735,7 +734,6 @@
     <div class="notice">
       <div class="badge">🔥</div>
       <div>
-       
         <p id="urgencyText">🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.</p>
       </div>
     </div>
@@ -784,7 +782,8 @@
   let SPOT_TOP_LIST = [];
 
   // ✅ Escassez automática por expiração
-  const URGENCY_SOON_HOURS = 6;     // começa a avisar "últimas horas" com 6h
+  // ALTERAÇÃO: começou 12h antes (era 6h)
+  const URGENCY_SOON_HOURS = 12;    // começa a avisar "últimas horas" com 12h
   const URGENCY_TODAY_HOURS = 24;   // "expira hoje" em até 24h
 
   // =========================
@@ -911,22 +910,26 @@
   }
 
   // =========================
+  // CREATED_AT (NOVAS POSTAGENS EM CIMA)
+  // =========================
+  // Aceita: "YYYY-MM-DD", "YYYY-MM-DD HH:MM", "DD/MM/YYYY", "DD/MM/YYYY HH:MM"
+  // Se estiver vazio, cai para data 0.
+  function parseCreatedAt(s){
+    const dt = parseDateFlexible(s);
+    return dt ? dt : new Date(0);
+  }
+
+  // =========================
   // BADGE AUTO
   // =========================
   function pickAutoBadge(title, link){
     const hay = (`${safeText(title)} ${safeText(link)}`).toLowerCase();
 
-    // FULL / Mercado Envios / Envios Full
     if(hay.includes("full")) return "FULL";
-    // Prime (Amazon)
     if(hay.includes("prime")) return "Prime";
-    // Frete grátis
     if(hay.includes("frete grátis") || hay.includes("frete gratis") || hay.includes("fretegratis") || hay.includes("free shipping")) return "Frete Grátis";
-    // Oferta relâmpago / lightning / flash
     if(hay.includes("relâmpago") || hay.includes("relampago") || hay.includes("lightning") || hay.includes("flash")) return "Relâmpago";
-    // Cupom
     if(hay.includes("cupom") || hay.includes("coupon")) return "Cupom";
-    // Promo / desconto
     if(hay.includes("promo") || hay.includes("oferta") || hay.includes("desconto")) return "Promo";
     return "";
   }
@@ -1026,7 +1029,8 @@
     if(which === "discount"){
       FILTER_TOP_DISCOUNT = !FILTER_TOP_DISCOUNT;
       const elF = document.getElementById("chipDiscount");
-      if(RF) RF.classList.toggle("chipOn", FILTER_TOP_DISCOUNT);
+      // FIX: antes estava "RF" (variável inexistente) e quebrava tudo
+      if(elF) elF.classList.toggle("chipOn", FILTER_TOP_DISCOUNT);
     }
     render();
   }
@@ -1064,23 +1068,43 @@
 
   function sortItems(items, mode){
     const a = [...items];
+
     if(mode === "priceAsc"){
       a.sort((x,y)=> (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity));
-    } else if(mode === "priceDesc"){
-      a.sort((x,y)=> (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity));
-    } else if(mode === "discountDesc"){
-      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
-    } else if(mode === "soldDesc"){
-      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
-    } else if(mode === "ratingDesc"){
-      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
-    } else {
-      a.sort((x,y)=>{
-        const sx = (x.soldNum||0)*2 + (x.discountNum||0)*1.2 + (x.ratingNum||0)*10;
-        const sy = (y.soldNum||0)*2 + (y.discountNum||0)*1.2 + (y.ratingNum||0)*10;
-        return sy - sx;
-      });
+      return a;
     }
+    if(mode === "priceDesc"){
+      a.sort((x,y)=> (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity));
+      return a;
+    }
+    if(mode === "discountDesc"){
+      a.sort((x,y)=> (y.discountNum||0) - (x.discountNum||0));
+      return a;
+    }
+    if(mode === "soldDesc"){
+      a.sort((x,y)=> (y.soldNum||0) - (x.soldNum||0));
+      return a;
+    }
+    if(mode === "ratingDesc"){
+      a.sort((x,y)=> (y.ratingNum||0) - (x.ratingNum||0));
+      return a;
+    }
+
+    // ✅ ALTERAÇÃO PRINCIPAL:
+    // No modo "destaque", mantém o seu score, MAS garante que os mais novos ficam no topo.
+    // (Últimas postagens sempre em cima)
+    a.sort((x,y)=>{
+      const cx = x.createdAt?.getTime ? x.createdAt.getTime() : 0;
+      const cy = y.createdAt?.getTime ? y.createdAt.getTime() : 0;
+
+      // 1) mais novo primeiro
+      if(cy !== cx) return cy - cx;
+
+      // 2) desempate por score antigo
+      const sx = (x.soldNum||0)*2 + (x.discountNum||0)*1.2 + (x.ratingNum||0)*10;
+      const sy = (y.soldNum||0)*2 + (y.discountNum||0)*1.2 + (y.ratingNum||0)*10;
+      return sy - sx;
+    });
     return a;
   }
 
@@ -1163,7 +1187,6 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       old.style.display = "none";
     }
 
-    // ✅ meta com badge + urgência
     const metaBits = [];
     if(SPOT_ITEM.badge) metaBits.push(`🏷️ ${SPOT_ITEM.badge}`);
     if(SPOT_ITEM.urgency) metaBits.push(`${SPOT_ITEM.urgency}`);
@@ -1266,7 +1289,6 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       right.style.flexWrap="wrap";
       right.style.justifyContent="flex-end";
 
-      // ✅ BADGE (manual ou automático)
       if(it.badge){
         const t = document.createElement("span");
         t.className = "tag";
@@ -1277,7 +1299,6 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         right.appendChild(t);
       }
 
-      // ✅ Urgência automática (se expira)
       if(it.urgency){
         const t = document.createElement("span");
         t.className = "tag";
@@ -1371,6 +1392,9 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       const iExpires = idx("expires");
       const iBadge = idx("badge");
 
+      // ✅ NOVO: data/hora de postagem (para “últimas em cima”)
+      const iCreated = idx("created_at");
+
       const iGroup = idx("group_count");
       const iPosts = idx("posts_today");
 
@@ -1407,6 +1431,10 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         // ✅ expires
         const expiresRaw = iExpires >= 0 ? safeText(row[iExpires]) : "";
         if(expiresRaw && isExpired(expiresRaw)) continue;
+
+        // ✅ created_at (para ordenar recentes)
+        const createdRaw = iCreated >= 0 ? safeText(row[iCreated]) : "";
+        const createdAt = parseCreatedAt(createdRaw);
 
         // ✅ badge manual ou automático
         const badgeManual = iBadge >= 0 ? safeText(row[iBadge]) : "";
@@ -1452,15 +1480,22 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
           link,
           badge,
           urgency,
-          expires: expiresRaw
+          expires: expiresRaw,
+          createdAt
         });
       }
 
-      ALL_ITEMS = items;
+      // ✅ guarda e mantém os mais novos primeiro na base
+      // (se alguém trocar o sort depois, o render respeita)
+      ALL_ITEMS = items.sort((a,b)=>{
+        const ta = a.createdAt?.getTime ? a.createdAt.getTime() : 0;
+        const tb = b.createdAt?.getTime ? b.createdAt.getTime() : 0;
+        return tb - ta;
+      });
 
       // KPIs
-      document.getElementById("kpi1").textContent = items.length.toString();
-      const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
+      document.getElementById("kpi1").textContent = ALL_ITEMS.length.toString();
+      const soldTodaySum = ALL_ITEMS.reduce((acc,it)=> acc + (it.soldNum||0), 0);
       document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";
 
       // Prova social
@@ -1475,7 +1510,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       SPOT_TOP_LIST = buildSpotTopList(ALL_ITEMS);
       startSpotRotation();
 
-      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${ALL_ITEMS.length} ofertas`);
       render();
 
     }catch(err){
