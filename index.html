@@ -1157,16 +1157,35 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   }
 
   // =========================
-  // SPOTLIGHT ROTATIVO
+  // ✅ SPOTLIGHT ROTATIVO (MELHORADO)
   // =========================
+  // Prioriza MAIOR DESCONTO. Desempate: vendidos, rating, preço menor.
+  // Também garante rotação sempre ativa (evita “parar”).
   function buildSpotTopList(items){
-    if(!items.length) return [];
-    const scored = [...items].sort((a,b)=>{
-      const sa = (a.discountNum||0)*1.3 + (a.ratingNum||0)*10 + (a.soldNum||0)*0.02;
-      const sb = (b.discountNum||0)*1.3 + (b.ratingNum||0)*10 + (b.soldNum||0)*0.02;
-      return sb - sa;
+    if(!items || !items.length) return [];
+
+    const withDiscount = items.filter(it => (it.discountNum || 0) > 0);
+    const pool = withDiscount.length ? withDiscount : items;
+
+    const sorted = [...pool].sort((a,b)=>{
+      const da = (a.discountNum || 0);
+      const db = (b.discountNum || 0);
+      if(db !== da) return db - da;
+
+      const sa = (a.soldNum || 0);
+      const sb = (b.soldNum || 0);
+      if(sb !== sa) return sb - sa;
+
+      const ra = (a.ratingNum || 0);
+      const rb = (b.ratingNum || 0);
+      if(rb !== ra) return rb - ra;
+
+      const pa = (a.finalPriceNum || Infinity);
+      const pb = (b.finalPriceNum || Infinity);
+      return pa - pb;
     });
-    return scored.slice(0, Math.min(12, scored.length));
+
+    return sorted.slice(0, Math.min(12, sorted.length));
   }
 
   function setSpotItem(it){
@@ -1207,16 +1226,21 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   }
 
   function startSpotRotation(){
+    // ✅ sempre reseta o timer antes
     if(SPOT_TIMER) clearInterval(SPOT_TIMER);
-    if(!SPOT_TOP_LIST.length){
+
+    if(!SPOT_TOP_LIST || !SPOT_TOP_LIST.length){
       setSpotItem(null);
       return;
     }
+
+    // ✅ garante índice válido
     SPOT_INDEX = 0;
     setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
 
+    // ✅ cria rotação nova (não “fica presa”)
     SPOT_TIMER = setInterval(() => {
-      if(!SPOT_TOP_LIST.length) return;
+      if(!SPOT_TOP_LIST || !SPOT_TOP_LIST.length) return;
       SPOT_INDEX = (SPOT_INDEX + 1) % SPOT_TOP_LIST.length;
       setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
     }, SPOT_ROTATE_MS);
@@ -1409,7 +1433,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       const iBadge = idx("badge");
       const iCreated = idx("created_at");
 
-      // ✅ NOVO: CTA por produto (texto)
+      // ✅ CTA por produto (texto)
       const iCta = idx("cta");
 
       const iGroup = idx("group_count");
@@ -1525,7 +1549,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         sp.textContent = `✅ +${gc.toLocaleString("pt-BR")} pessoas já entraram no grupo • 🔥 ${pt} ofertas postadas hoje`;
       }
 
-      // Spotlight
+      // ✅ Spotlight com MAIOR DESCONTO + rotação garantida
       SPOT_TOP_LIST = buildSpotTopList(ALL_ITEMS);
       startSpotRotation();
 
@@ -1554,6 +1578,5 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   loadSheet();
   setInterval(() => loadSheet(false), REFRESH_MS);
 </script>
-
-</body>
+<body>  
 </html>
