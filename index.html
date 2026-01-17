@@ -786,7 +786,7 @@
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
   const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
   const VIDEO_URL = "video.mp4";
-  const REFRESH_MS = 20 * 1000; // 20 segundos
+  const REFRESH_MS = 20 * 1000; // 20s (você achou longo demais: pode ajustar aqui)
 
   const DEFAULT_GROUP_COUNT = 1200;
   const DEFAULT_POSTS_TODAY = 27;
@@ -798,8 +798,8 @@
   let SPOT_TOP_LIST = [];
 
   // ✅ Escassez automática por expiração
-  const URGENCY_SOON_HOURS = 6;     // "últimas horas" (badge)
-  const URGENCY_TODAY_HOURS = 24;   // "expira hoje" (badge)
+  const URGENCY_SOON_HOURS = 6;     // "últimas horas"
+  const URGENCY_TODAY_HOURS = 24;   // "expira hoje"
 
   // =========================
   // STATE
@@ -938,6 +938,8 @@
     const dot = document.getElementById("statusDot");
     const label = document.getElementById("updatedLabel");
     const time = document.getElementById("updatedTime");
+    if (!dot || !label || !time) return;
+
     if (mode === "ok"){
       dot.style.background = "var(--brand)";
       dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
@@ -1062,7 +1064,6 @@
     return out;
   }
 
-  // ✅ critério “últimas em cima” (created_at desc; se não tiver, usa ordem das linhas desc)
   function compareNewest(a, b){
     const ca = (a.createdAtMs && a.createdAtMs > 0) ? a.createdAtMs : 0;
     const cb = (b.createdAtMs && b.createdAtMs > 0) ? b.createdAtMs : 0;
@@ -1157,39 +1158,36 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   }
 
   // =========================
-  // ✅ SPOTLIGHT ROTATIVO (MELHORADO)
+  // ✅ OFERTA DO MINUTO — MELHORIAS (ANTI-TRAVAR)
   // =========================
-  // Prioriza MAIOR DESCONTO. Desempate: vendidos, rating, preço menor.
-  // Também garante rotação sempre ativa (evita “parar”).
+
+  // 1) Rotaciona mesmo quando a aba volta do background
+  // 2) Reinicia rotação após refresh da planilha
+  // 3) Evita repetir o mesmo produto (se tiver mais de 1)
+  // 4) Fallback: se lista ficou vazia, usa ALL_ITEMS
+  // 5) Watchdog: se passar tempo demais sem trocar, força troca
+
+  const SPOT_WATCHDOG_MS = Math.max(45000, SPOT_ROTATE_MS * 2); // força trocar se travar
+  let SPOT_LAST_CHANGE = 0;
+
   function buildSpotTopList(items){
-    if(!items || !items.length) return [];
+    if(!items.length) return [];
 
-    const withDiscount = items.filter(it => (it.discountNum || 0) > 0);
-    const pool = withDiscount.length ? withDiscount : items;
+    // tira itens sem imagem/título (só para não ficar feio no spotlight)
+    const base = items.filter(it => safeText(it.title) && safeText(it.image));
 
-    const sorted = [...pool].sort((a,b)=>{
-      const da = (a.discountNum || 0);
-      const db = (b.discountNum || 0);
-      if(db !== da) return db - da;
-
-      const sa = (a.soldNum || 0);
-      const sb = (b.soldNum || 0);
-      if(sb !== sa) return sb - sa;
-
-      const ra = (a.ratingNum || 0);
-      const rb = (b.ratingNum || 0);
-      if(rb !== ra) return rb - ra;
-
-      const pa = (a.finalPriceNum || Infinity);
-      const pb = (b.finalPriceNum || Infinity);
-      return pa - pb;
+    const scored = [...(base.length ? base : items)].sort((a,b)=>{
+      const sa = (a.discountNum||0)*1.3 + (a.ratingNum||0)*10 + (a.soldNum||0)*0.02;
+      const sb = (b.discountNum||0)*1.3 + (b.ratingNum||0)*10 + (b.soldNum||0)*0.02;
+      return sb - sa;
     });
 
-    return sorted.slice(0, Math.min(12, sorted.length));
+    return scored.slice(0, Math.min(12, scored.length));
   }
 
   function setSpotItem(it){
     SPOT_ITEM = it || null;
+    SPOT_LAST_CHANGE = Date.now();
     renderSpotlight();
   }
 
@@ -1202,16 +1200,23 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       return;
     }
 
-    document.getElementById("spotImg").src = SPOT_ITEM.image || "";
-    document.getElementById("spotTitle").textContent = SPOT_ITEM.title || "Oferta";
-    document.getElementById("spotNow").textContent = SPOT_ITEM.finalPriceText || "—";
+    const imgEl = document.getElementById("spotImg");
+    if(imgEl) imgEl.src = SPOT_ITEM.image || "";
+
+    const titleEl = document.getElementById("spotTitle");
+    if(titleEl) titleEl.textContent = SPOT_ITEM.title || "Oferta";
+
+    const nowEl = document.getElementById("spotNow");
+    if(nowEl) nowEl.textContent = SPOT_ITEM.finalPriceText || "—";
 
     const old = document.getElementById("spotOld");
-    if(SPOT_ITEM.originalPriceText && SPOT_ITEM.originalPriceText !== SPOT_ITEM.finalPriceText){
-      old.style.display = "block";
-      old.textContent = SPOT_ITEM.originalPriceText;
-    } else {
-      old.style.display = "none";
+    if(old){
+      if(SPOT_ITEM.originalPriceText && SPOT_ITEM.originalPriceText !== SPOT_ITEM.finalPriceText){
+        old.style.display = "block";
+        old.textContent = SPOT_ITEM.originalPriceText;
+      } else {
+        old.style.display = "none";
+      }
     }
 
     const metaBits = [];
@@ -1220,31 +1225,82 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
     if(SPOT_ITEM.discount) metaBits.push(`🔥 ${SPOT_ITEM.discount}`);
     if(SPOT_ITEM.rating) metaBits.push(`⭐ ${SPOT_ITEM.rating}`);
     if(SPOT_ITEM.sold) metaBits.push(`✅ ${SPOT_ITEM.sold} vendidos`);
-    document.getElementById("spotMeta").textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";
+
+    const metaEl = document.getElementById("spotMeta");
+    if(metaEl) metaEl.textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";
 
     box.style.display = "grid";
   }
 
-  function startSpotRotation(){
-    // ✅ sempre reseta o timer antes
-    if(SPOT_TIMER) clearInterval(SPOT_TIMER);
+  function pickNextSpotItem(){
+    const list = (SPOT_TOP_LIST && SPOT_TOP_LIST.length) ? SPOT_TOP_LIST : (ALL_ITEMS || []);
+    if(!list.length) return null;
 
-    if(!SPOT_TOP_LIST || !SPOT_TOP_LIST.length){
+    // se tiver só 1 item, é esse mesmo (não tem como alternar)
+    if(list.length === 1) return list[0];
+
+    // avança índice
+    SPOT_INDEX = (SPOT_INDEX + 1) % list.length;
+
+    // evita repetir o mesmo item por acidente
+    let next = list[SPOT_INDEX];
+    if(SPOT_ITEM && next && safeText(next.title) === safeText(SPOT_ITEM.title) && safeText(next.image) === safeText(SPOT_ITEM.image)){
+      SPOT_INDEX = (SPOT_INDEX + 1) % list.length;
+      next = list[SPOT_INDEX];
+    }
+    return next || list[0];
+  }
+
+  function startSpotRotation(){
+    // limpa timers
+    if(SPOT_TIMER) { clearInterval(SPOT_TIMER); SPOT_TIMER = null; }
+
+    const list = (SPOT_TOP_LIST && SPOT_TOP_LIST.length) ? SPOT_TOP_LIST : (ALL_ITEMS || []);
+    if(!list.length){
       setSpotItem(null);
       return;
     }
 
-    // ✅ garante índice válido
-    SPOT_INDEX = 0;
-    setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
+    // se não tem item atual ou não pertence mais à lista, inicia do começo
+    if(!SPOT_ITEM || !list.includes(SPOT_ITEM)){
+      SPOT_INDEX = 0;
+      setSpotItem(list[0]);
+    } else {
+      // garante que o índice bate com o item atual
+      const idx = list.indexOf(SPOT_ITEM);
+      if(idx >= 0) SPOT_INDEX = idx;
+    }
 
-    // ✅ cria rotação nova (não “fica presa”)
+    // inicia rotação
     SPOT_TIMER = setInterval(() => {
-      if(!SPOT_TOP_LIST || !SPOT_TOP_LIST.length) return;
-      SPOT_INDEX = (SPOT_INDEX + 1) % SPOT_TOP_LIST.length;
-      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
+      const next = pickNextSpotItem();
+      if(next) setSpotItem(next);
     }, SPOT_ROTATE_MS);
   }
+
+  // watchdog anti-travar
+  setInterval(() => {
+    if(!SPOT_ITEM) return;
+    const elapsed = Date.now() - (SPOT_LAST_CHANGE || 0);
+    if(elapsed > SPOT_WATCHDOG_MS){
+      const next = pickNextSpotItem();
+      if(next) setSpotItem(next);
+    }
+  }, 5000);
+
+  // quando troca visibilidade (aba volta), força retomar e trocar
+  document.addEventListener("visibilitychange", () => {
+    if(document.visibilityState === "visible"){
+      startSpotRotation();
+      const next = pickNextSpotItem();
+      if(next) setSpotItem(next);
+    }
+  });
+
+  // quando volta foco (mobile), também ajuda
+  window.addEventListener("focus", () => {
+    startSpotRotation();
+  });
 
   function spotOpen(){
     if(!SPOT_ITEM) return;
@@ -1271,7 +1327,8 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
     loading.style.display = sorted.length ? "none" : "block";
     loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
 
-    document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
+    const pill = document.getElementById("countPill");
+    if(pill) pill.textContent = `${ALL_ITEMS.length} ofertas`;
 
     for(const it of sorted){
       const card = document.createElement("article");
@@ -1290,7 +1347,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       title.textContent = it.title || "Oferta";
       body.appendChild(title);
 
-      // ✅ CTA por produto (sem link, só texto)
+      // ✅ CTA por produto (sem link, só texto) — mantém seu layout (só adiciona)
       if(it.cta){
         const cta = document.createElement("div");
         cta.className = "ctaTag";
@@ -1404,6 +1461,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   async function loadSheet(isManual=false){
     try{
       setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
+
       const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
       const res = await fetch(url, { cache:"no-store" });
       if(!res.ok) throw new Error("HTTP " + res.status);
@@ -1427,13 +1485,10 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         (idx("link") >= 0 ? idx("link") :
         (idx("url") >= 0 ? idx("url") : -1));
 
-      // ✅ Controle por planilha
       const iActive = idx("active");
       const iExpires = idx("expires");
       const iBadge = idx("badge");
       const iCreated = idx("created_at");
-
-      // ✅ CTA por produto (texto)
       const iCta = idx("cta");
 
       const iGroup = idx("group_count");
@@ -1463,28 +1518,26 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         const sold = safeText(row[iSold]);
         const rating = safeText(row[iRating]);
         const link = iLink >= 0 ? safeText(row[iLink]) : "";
-
-        // ✅ CTA (texto)
         const cta = iCta >= 0 ? safeText(row[iCta]) : "";
 
-        // ✅ active (default ligado)
+        // active (default ligado)
         const activeRaw = iActive >= 0 ? safeText(row[iActive]).toLowerCase() : "";
         const isActive = !(activeRaw === "0" || activeRaw === "false" || activeRaw === "nao" || activeRaw === "não");
         if(!isActive) continue;
 
-        // ✅ expires
+        // expires
         const expiresRaw = iExpires >= 0 ? safeText(row[iExpires]) : "";
         if(expiresRaw && isExpired(expiresRaw)) continue;
 
-        // ✅ badge manual ou automático
+        // badge manual ou automático
         const badgeManual = iBadge >= 0 ? safeText(row[iBadge]) : "";
         const badgeAuto = badgeManual ? "" : pickAutoBadge(title, link);
         const badge = badgeManual || badgeAuto;
 
-        // ✅ urgência automática
+        // urgência automática
         const urgency = expiresRaw ? diffToHuman(expiresRaw) : "";
 
-        // ✅ created_at (para "últimas em cima")
+        // created_at
         const createdRaw = iCreated >= 0 ? safeText(row[iCreated]) : "";
         const createdDt = createdRaw ? parseCreatedAt(createdRaw) : null;
         const createdAtMs = createdDt ? createdDt.getTime() : 0;
@@ -1537,9 +1590,12 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       ALL_ITEMS = items;
 
       // KPIs
-      document.getElementById("kpi1").textContent = items.length.toString();
+      const k1 = document.getElementById("kpi1");
+      const k2 = document.getElementById("kpi2");
+      if(k1) k1.textContent = items.length.toString();
+
       const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-      document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";
+      if(k2) k2.textContent = soldTodaySum ? soldTodaySum.toString() : "—";
 
       // Prova social
       const gc = groupCount ?? DEFAULT_GROUP_COUNT;
@@ -1549,7 +1605,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         sp.textContent = `✅ +${gc.toLocaleString("pt-BR")} pessoas já entraram no grupo • 🔥 ${pt} ofertas postadas hoje`;
       }
 
-      // ✅ Spotlight com MAIOR DESCONTO + rotação garantida
+      // ✅ Atualiza lista e REINICIA rotação (isso evita travar após refresh)
       SPOT_TOP_LIST = buildSpotTopList(ALL_ITEMS);
       startSpotRotation();
 
