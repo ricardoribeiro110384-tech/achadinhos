@@ -1350,856 +1350,856 @@ header{
   </div>
 </button>
 
-<script defer>
-  // =========================
-  // CONFIG
-  // =========================
-  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-  const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-  const VIDEO_URL = "video.mp4";
-
-  // ⚠️ IMPORTANTE:
-  // Se REFRESH_MS for menor que SPOT_ROTATE_MS, e você reiniciar o timer do spotlight toda vez que carregar a planilha,
-  // o spotlight "fica preso" e não rotaciona.
-  // Este script corrige isso: a rotação do spotlight é independente do refresh da planilha.
-  const REFRESH_MS = 20 * 1000;   // 20s
-  const SPOT_ROTATE_MS = 25 * 1000; // 25s
-
-  const DEFAULT_GROUP_COUNT = 1200;
-  const DEFAULT_POSTS_TODAY = 27;
-
-  // Escassez por expiração
-  const URGENCY_SOON_HOURS = 6;
-  const URGENCY_TODAY_HOURS = 24;
-
-  // =========================
-  // STATE
-  // =========================
-  let ALL_ITEMS = [];
-  let FILTER_COUPON_ONLY = false;
-  let FILTER_TOP_DISCOUNT = false;
-
-  let SPOT_ITEM = null;
-  let SPOT_TOP_LIST = [];
-  let SPOT_INDEX = 0;
-
-  let SPOT_TIMER = null;       // timer do spotlight
-  let SHEET_TIMER = null;      // timer do refresh da planilha
-  let LAST_SPOT_TICK = 0;
-
-  // =========================
-  // HELPERS
-  // =========================
-  function nowHHMMSS(){
-    const d = new Date();
-    const hh = String(d.getHours()).padStart(2,'0');
-    const mm = String(d.getMinutes()).padStart(2,'0');
-    const ss = String(d.getSeconds()).padStart(2,'0');
-    return `${hh}:${mm}:${ss}`;
-  }
-
-  function moneyBRLFromNumber(n){
-    if (!isFinite(n)) return "";
-    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
-  }
-
-  function toNumber(str){
-    if (str == null) return NaN;
-    const s = String(str).trim()
-      .replace(/\s/g,'')
-      .replace(/\./g,'')
-      .replace(',', '.')
-      .replace(/[^\d.-]/g,'');
-    const n = Number(s);
-    return isFinite(n) ? n : NaN;
-  }
-
-  function safeText(x){
-    return (x ?? "").toString().replace(/\s+/g,' ').trim();
-  }
-
-  function escapeHtml(s){
-    return (s ?? "").toString()
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;");
-  }
-
-  function scrollToOffers(){
-    document.getElementById("offers")?.scrollIntoView({behavior:"smooth", block:"start"});
-  }
-
-  function openGroup(){
-    window.open(WHATSAPP_GROUP_LINK, "_blank");
-  }
-
-  // =========================
-  // DATA / EXPIRES / CREATED_AT
-  // =========================
-  function parseDateFlex(s, defaultHour, defaultMinute){
-    const raw = safeText(s);
-    if(!raw) return null;
-
-    let m = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
-    if(m){
-      const Y = Number(m[1]);
-      const Mo = Number(m[2]) - 1;
-      const D = Number(m[3]);
-      const hh = m[4] != null ? Number(m[4]) : defaultHour;
-      const mm = m[5] != null ? Number(m[5]) : defaultMinute;
-      const ss = m[6] != null ? Number(m[6]) : 0;
-      const dt = new Date(Y, Mo, D, hh, mm, ss);
-      return isNaN(dt.getTime()) ? null : dt;
-    }
-
-    m = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
-    if(m){
-      const D = Number(m[1]);
-      const Mo = Number(m[2]) - 1;
-      const Y = Number(m[3]);
-      const hh = m[4] != null ? Number(m[4]) : defaultHour;
-      const mm = m[5] != null ? Number(m[5]) : defaultMinute;
-      const ss = m[6] != null ? Number(m[6]) : 0;
-      const dt = new Date(Y, Mo, D, hh, mm, ss);
-      return isNaN(dt.getTime()) ? null : dt;
-    }
-
-    return null;
-  }
-
-  function parseExpires(s){ return parseDateFlex(s, 23, 59); }
-  function parseCreatedAt(s){ return parseDateFlex(s, 0, 0); }
-
-  function isExpired(expiresText){
-    const dt = parseExpires(expiresText);
-    if(!dt) return false;
-    return dt.getTime() < Date.now();
-  }
-
-  function diffToHuman(expiresText){
-    const dt = parseExpires(expiresText);
-    if(!dt) return "";
-
-    const ms = dt.getTime() - Date.now();
-    if(ms <= 0) return "⚠️ expirada";
-
-    const minutes = Math.floor(ms / 60000);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if(hours < 1) return `⏰ expira em ${Math.max(1, minutes)} min`;
-    if(hours < URGENCY_SOON_HOURS) return `⏰ expira em ${hours}h`;
-    if(hours < URGENCY_TODAY_HOURS) return `⚠️ expira hoje`;
-    if(days === 1) return `📅 expira amanhã`;
-    return `📅 expira em ${days} dias`;
-  }
-
-  // =========================
-  // BADGE AUTO
-  // =========================
-  function pickAutoBadge(title, link){
-    const hay = (`${safeText(title)} ${safeText(link)}`).toLowerCase();
-    if(hay.includes("full")) return "FULL";
-    if(hay.includes("prime")) return "Prime";
-    if(hay.includes("frete grátis") || hay.includes("frete gratis") || hay.includes("fretegratis") || hay.includes("free shipping")) return "Frete Grátis";
-    if(hay.includes("relâmpago") || hay.includes("relampago") || hay.includes("lightning") || hay.includes("flash")) return "Relâmpago";
-    if(hay.includes("cupom") || hay.includes("coupon")) return "Cupom";
-    if(hay.includes("promo") || hay.includes("oferta") || hay.includes("desconto")) return "Promo";
-    return "";
-  }
-
-  // =========================
-  // STATUS
-  // =========================
-  function setStatus(mode, text){
-    const dot = document.getElementById("statusDot");
-    const label = document.getElementById("updatedLabel");
-    const time = document.getElementById("updatedTime");
-    if(!dot || !label || !time) return;
-
-    if (mode === "ok"){
-      dot.style.background = "var(--brand)";
-      dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
-      label.innerHTML = "<b>Atualizado</b>";
-      time.dataset.mode = "updated";
-      time.textContent = text;
-    } else if (mode === "loading"){
-      dot.style.background = "var(--accent)";
-      dot.style.boxShadow = "0 0 0 4px rgba(245,158,11,.12)";
-      label.innerHTML = "<b>Carregando</b>";
-      time.dataset.mode = "checking";
-      time.textContent = text;
-    } else {
-      dot.style.background = "var(--danger)";
-      dot.style.boxShadow = "0 0 0 4px rgba(239,68,68,.12)";
-      label.innerHTML = "<b>Falha</b>";
-      time.dataset.mode = "checking";
-      time.textContent = text;
-    }
-  }
-
-  function startLiveClock(){
-    const timeEl = document.getElementById("updatedTime");
-    if(!timeEl) return;
-    setInterval(() => {
-      if(timeEl.dataset.mode !== "updated"){
-        timeEl.textContent = `Verificando: ${nowHHMMSS()}`;
-      }
-    }, 1000);
-  }
-
-  function parseCSV(text){
-    const rows = [];
-    let row = [];
-    let cur = "";
-    let inQuotes = false;
-
-    for(let i=0;i<text.length;i++){
-      const ch = text[i];
-      const next = text[i+1];
-      if(ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }
-      if(ch === '"'){ inQuotes = !inQuotes; continue; }
-      if(ch === ',' && !inQuotes){ row.push(cur); cur = ""; continue; }
-      if((ch === '\n' || ch === '\r') && !inQuotes){
-        if(ch === '\r' && next === '\n'){ i++; }
-        row.push(cur); cur = "";
-        if(row.length > 1 || row[0].trim() !== "") rows.push(row);
-        row = [];
-        continue;
-      }
-      cur += ch;
-    }
-    row.push(cur);
-    if(row.length > 1 || row[0].trim() !== "") rows.push(row);
-    return rows;
-  }
-
-  // =========================
-  // VIDEO
-  // =========================
-  function setupVideo(){
-    const vid = document.getElementById("promoVideo");
-    if(!vid) return;
-    vid.src = VIDEO_URL;
-    vid.muted = true;
-    vid.playsInline = true;
-    vid.autoplay = true;
-    vid.play().catch(()=>{});
-  }
-
-  function enableVideoAudio(){
-    const vid = document.getElementById("promoVideo");
-    if(!vid) return;
-    vid.muted = false;
-    vid.volume = 1;
-    vid.play().catch(()=>{});
-  }
-
-  // =========================
-  // CHIPS
-  // =========================
-  function toggleChip(which){
-    if(which === "coupon"){
-      FILTER_COUPON_ONLY = !FILTER_COUPON_ONLY;
-      document.getElementById("chipCoupon")?.classList.toggle("chipOn", FILTER_COUPON_ONLY);
-    }
-    if(which === "discount"){
-      FILTER_TOP_DISCOUNT = !FILTER_TOP_DISCOUNT;
-      document.getElementById("chipDiscount")?.classList.toggle("chipOn", FILTER_TOP_DISCOUNT);
-    }
-    render();
-  }
-
-  // =========================
-  // SORT / FILTER
-  // =========================
-  function forceReload(){ loadSheet(true); }
-
-  function getQuery(){
-    return safeText(document.getElementById("q")?.value).toLowerCase();
-  }
-
-  function getSort(){
-    return document.getElementById("sort")?.value || "best";
-  }
-
-  function filterItems(items){
-    const q = getQuery();
-    let out = items;
-
-    if(q){
-      out = out.filter(it => (`${it.title} ${it.coupon||""} ${it.badge||""} ${it.cta||""}`.toLowerCase()).includes(q));
-    }
-    if(FILTER_COUPON_ONLY){
-      out = out.filter(it => !!safeText(it.coupon));
-    }
-    if(FILTER_TOP_DISCOUNT){
-      const sorted = [...out].sort((a,b)=>(b.discountNum||0)-(a.discountNum||0));
-      const keep = Math.max(10, Math.ceil(sorted.length * 0.20));
-      out = sorted.slice(0, keep);
-    }
-    return out;
-  }
-
-  function compareNewest(a, b){
-    const ca = (a.createdAtMs && a.createdAtMs > 0) ? a.createdAtMs : 0;
-    const cb = (b.createdAtMs && b.createdAtMs > 0) ? b.createdAtMs : 0;
-    if(cb !== ca) return cb - ca;
-    const ra = (a.rowIndex ?? 0);
-    const rb = (b.rowIndex ?? 0);
-    return rb - ra;
-  }
-
-  function sortItems(items, mode){
-    const a = [...items];
-
-    if(mode === "priceAsc"){
-      a.sort((x,y)=>{
-        const r = (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else if(mode === "priceDesc"){
-      a.sort((x,y)=>{
-        const r = (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else if(mode === "discountDesc"){
-      a.sort((x,y)=>{
-        const r = (y.discountNum||0) - (x.discountNum||0);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else if(mode === "soldDesc"){
-      a.sort((x,y)=>{
-        const r = (y.soldNum||0) - (x.soldNum||0);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else if(mode === "ratingDesc"){
-      a.sort((x,y)=>{
-        const r = (y.ratingNum||0) - (x.ratingNum||0);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else {
-      // "destaque": últimas em cima
-      a.sort((x,y)=>{
-        const newest = compareNewest(x,y);
-        if(newest !== 0) return newest;
-
-        const sx = (x.soldNum||0)*2 + (x.discountNum||0)*1.2 + (x.ratingNum||0)*10;
-        const sy = (y.soldNum||0)*2 + (y.discountNum||0)*1.2 + (y.ratingNum||0)*10;
-        const r = sy - sx;
-        return r !== 0 ? r : 0;
-      });
-    }
-    return a;
-  }
-
-  function openOffer(it){
-    const u = safeText(it.link);
-    window.open(u || WHATSAPP_GROUP_LINK, "_blank");
-  }
-
-  async function shareOffer(it){
-    const title = safeText(it.title) || "Oferta";
-    const url = safeText(it.link) || WHATSAPP_GROUP_LINK;
-    const text = `🔥 OFERTA: ${title}\n👉 Link: ${url}\n\nEntre no grupo: ${WHATSAPP_GROUP_LINK}`;
-    try{
-      if(navigator.share){
-        await navigator.share({ title: "Achadinhos Oficial", text, url });
-        return;
-      }
-    }catch(_){}
-    try{
-      await navigator.clipboard.writeText(text);
-      alert("Copiado! Agora é só colar no WhatsApp/Instagram.");
-    }catch{
-      prompt("Copie e compartilhe:", text);
-    }
-  }
-
-  async function copyCouponAndOpenWhatsApp(it){
-    const c = safeText(it.coupon);
-    const title = safeText(it.title) || "Oferta";
-    if(!c){ alert("Este item não tem cupom."); return; }
-
-    const msg =
-`🔥 CUPOM + OFERTA
-Produto: ${title}
-Cupom: ${c}
-
-👉 Quero o link dessa oferta (se tiver) e instruções pra usar o cupom.
-Grupo: ${WHATSAPP_GROUP_LINK}`;
-
-    try{ await navigator.clipboard.writeText(c); }catch(_){}
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
-  }
-
-  // =========================
-  // ✅ OFERTA DO MINUTO (ROTACAO CORRIGIDA)
-  // =========================
-  function buildSpotTopList(items){
-    if(!items.length) return [];
-    const scored = [...items].sort((a,b)=>{
-      const sa = (a.discountNum||0)*1.3 + (a.ratingNum||0)*10 + (a.soldNum||0)*0.02;
-      const sb = (b.discountNum||0)*1.3 + (b.ratingNum||0)*10 + (b.soldNum||0)*0.02;
-      return sb - sa;
-    });
-    return scored.slice(0, Math.min(12, scored.length));
-  }
-
-  function setSpotItem(it){
-    SPOT_ITEM = it || null;
-    renderSpotlight();
-  }
-
-  function renderSpotlight(){
-    const box = document.getElementById("spotlight");
-    if(!box) return;
-
-    if(!SPOT_ITEM){
-      box.style.display = "none";
-      return;
-    }
-
-    document.getElementById("spotImg").src = SPOT_ITEM.image || "";
-    document.getElementById("spotTitle").textContent = SPOT_ITEM.title || "Oferta";
-    document.getElementById("spotNow").textContent = SPOT_ITEM.finalPriceText || "—";
-
-    const old = document.getElementById("spotOld");
-    if(old){
-      if(SPOT_ITEM.originalPriceText && SPOT_ITEM.originalPriceText !== SPOT_ITEM.finalPriceText){
-        old.style.display = "block";
-        old.textContent = SPOT_ITEM.originalPriceText;
-      } else {
-        old.style.display = "none";
-      }
-    }
-
-    const metaBits = [];
-    if(SPOT_ITEM.badge) metaBits.push(`🏷️ ${SPOT_ITEM.badge}`);
-    if(SPOT_ITEM.urgency) metaBits.push(`${SPOT_ITEM.urgency}`);
-    if(SPOT_ITEM.discount) metaBits.push(`🔥 ${SPOT_ITEM.discount}`);
-    if(SPOT_ITEM.rating) metaBits.push(`⭐ ${SPOT_ITEM.rating}`);
-    if(SPOT_ITEM.sold) metaBits.push(`✅ ${SPOT_ITEM.sold} vendidos`);
-    document.getElementById("spotMeta").textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";
-
-    box.style.display = "grid";
-  }
-
-  // ✅ avanca 1 item (sem depender da planilha)
-  function spotNext(){
-    if(!SPOT_TOP_LIST.length){
-      setSpotItem(null);
-      return;
-    }
-    SPOT_INDEX = (SPOT_INDEX + 1) % SPOT_TOP_LIST.length;
-    setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
-    LAST_SPOT_TICK = Date.now();
-  }
-
-  // ✅ inicia (ou retoma) rotação sem “matar” por causa do refresh
-  function startSpotRotation(){
-    // se já existe timer rodando, não recria
-    if(SPOT_TIMER) return;
-
-    if(!SPOT_TOP_LIST.length){
-      setSpotItem(null);
-      return;
-    }
-
-    // garante um item inicial
-    if(!SPOT_ITEM){
-      SPOT_INDEX = 0;
-      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
-      LAST_SPOT_TICK = Date.now();
-    }
-
-    // usa setInterval só uma vez
-    SPOT_TIMER = setInterval(() => {
-      // se a aba ficou em background e voltou, pode dar "travada": garante avanço
-      spotNext();
-    }, SPOT_ROTATE_MS);
-  }
-
-  // ✅ quando a planilha atualiza, só atualiza a lista — sem reiniciar o timer
-  function updateSpotListFromSheet(){
-    const newList = buildSpotTopList(ALL_ITEMS);
-
-    // se ficou vazio
-    if(!newList.length){
-      SPOT_TOP_LIST = [];
-      SPOT_INDEX = 0;
-      setSpotItem(null);
-      return;
-    }
-
-    // tenta manter o item atual, se ainda existir
-    const currentKey = SPOT_ITEM ? `${SPOT_ITEM.title}||${SPOT_ITEM.image}||${SPOT_ITEM.finalPriceText}` : "";
-    SPOT_TOP_LIST = newList;
-
-    let keepIndex = -1;
-    if(currentKey){
-      keepIndex = SPOT_TOP_LIST.findIndex(x => `${x.title}||${x.image}||${x.finalPriceText}` === currentKey);
-    }
-
-    if(keepIndex >= 0){
-      SPOT_INDEX = keepIndex;
-      // re-render pra atualizar meta/preço caso tenha mudado
-      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
-    } else {
-      // se não dá pra manter, reseta pro primeiro
-      SPOT_INDEX = 0;
-      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
-      LAST_SPOT_TICK = Date.now();
-    }
-  }
-
-  function spotOpen(){
-    if(!SPOT_ITEM) return;
-    openOffer(SPOT_ITEM);
-  }
-
-  function spotShare(){
-    if(!SPOT_ITEM) return;
-    shareOffer(SPOT_ITEM);
-  }
-
-  // =========================
-  // MAIN RENDER
-  // =========================
-  function render(){
-    const grid = document.getElementById("offers");
-    const loading = document.getElementById("loading");
-    if(!grid || !loading) return;
-
-    const filtered = filterItems(ALL_ITEMS);
-    const sorted = sortItems(filtered, getSort());
-
-    grid.innerHTML = "";
-    loading.style.display = sorted.length ? "none" : "block";
-    loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
-
-    document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
-
-    for(const it of sorted){
-      const card = document.createElement("article");
-      card.className = "card";
-
-      const img = document.createElement("div");
-      img.className = "imgbox";
-      img.innerHTML = `<img src="${it.image || ""}" alt="${escapeHtml(it.title)}" loading="lazy" referrerpolicy="no-referrer" />`;
-      card.appendChild(img);
-
-      const body = document.createElement("div");
-      body.className = "cardBody";
-
-      const title = document.createElement("h2");
-      title.className = "title";
-      title.textContent = it.title || "Oferta";
-      body.appendChild(title);
-
-      // CTA (texto)
-      if(it.cta){
-        const cta = document.createElement("div");
-        cta.className = "ctaTag";
-        cta.textContent = it.cta;
-        body.appendChild(cta);
-      }
-
-      const prices = document.createElement("div");
-      prices.className = "prices";
-
-      const nowP = document.createElement("div");
-      nowP.className = "priceNow";
-      nowP.textContent = it.finalPriceText || "—";
-      prices.appendChild(nowP);
-
-      if(it.originalPriceText && it.originalPriceText !== it.finalPriceText){
-        const oldP = document.createElement("div");
-        oldP.className = "priceOld";
-        oldP.textContent = it.originalPriceText;
-        prices.appendChild(oldP);
-      }
-
-      body.appendChild(prices);
-
-      const row1 = document.createElement("div");
-      row1.className = "row";
-
-      const left = document.createElement("div");
-      left.className = "muted";
-      left.textContent = `${it.rating ? `⭐ ${it.rating}` : "⭐ —"} • ${it.sold ? `${it.sold} vendidos` : "— vendidos"}`;
-      row1.appendChild(left);
-
-      const right = document.createElement("div");
-      right.style.display="flex";
-      right.style.gap="8px";
-      right.style.flexWrap="wrap";
-      right.style.justifyContent="flex-end";
-
-      if(it.badge){
-        const t = document.createElement("span");
-        t.className = "tag";
-        t.style.border = "1px solid rgba(59,130,246,.32)";
-        t.style.background = "rgba(59,130,246,.12)";
-        t.style.color = "#bfdbfe";
-        t.textContent = it.badge;
-        right.appendChild(t);
-      
-      }
-
-      if(it.urgency){
-        const t = document.createElement("span");
-        t.className = "tag";
-        t.style.border = "1px solid rgba(245,158,11,.30)";
-        t.style.background = "rgba(245,158,11,.14)";
-        t.style.color = "#fde68a";
-        t.textContent = it.urgency;
-        right.appendChild(t);
-      }
-
-      if(it.discount){
-        const t = document.createElement("span");
-        t.className = "tag off";
-        t.textContent = it.discount;
-        right.appendChild(t);
-      }
-      if(it.coupon){
-        const t = document.createElement("span");
-        t.className = "tag coupon";
-        t.textContent = `CUPOM: ${it.coupon}`;
-        right.appendChild(t);
-      }
-
-      row1.appendChild(right);
-      body.appendChild(row1);
-
-      const buy = document.createElement("div");
-      buy.className = "buy";
-
-      const btn1 = document.createElement("button");
-      btn1.className = "btnSmall btnBuy";
-      btn1.textContent = "Ver oferta";
-      btn1.onclick = () => openOffer(it);
-      buy.appendChild(btn1);
-
-      const btn2 = document.createElement("button");
-      btn2.className = "btnSmall btnGroup";
-      btn2.textContent = "Entrar no grupo";
-      btn2.onclick = () => openGroup();
-      buy.appendChild(btn2);
-
-      const btn3 = document.createElement("button");
-      btn3.className = "btnSmall btnShare";
-      btn3.textContent = "Compartilhar";
-      btn3.onclick = () => shareOffer(it);
-      buy.appendChild(btn3);
-
-      const btn4 = document.createElement("button");
-      btn4.className = "btnSmall";
-      btn4.textContent = "Copiar cupom";
-      btn4.onclick = () => copyCouponAndOpenWhatsApp(it);
-      buy.appendChild(btn4);
-
-      body.appendChild(buy);
-      card.appendChild(body);
-      grid.appendChild(card);
-    }
-  }
-
-  // =========================
-  // LOAD SHEET
-  // =========================
-  async function loadSheet(isManual=false){
-    try{
-      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
-      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
-      const res = await fetch(url, { cache:"no-store" });
-      if(!res.ok) throw new Error("HTTP " + res.status);
-
-      const text = await res.text();
-      const rows = parseCSV(text);
-      if(!rows.length) throw new Error("CSV vazio");
-
-      const header = rows[0].map(h => safeText(h).toLowerCase());
-      const idx = (name) => header.indexOf(name);
-
-      const iImage = idx("image");
-      const iTitle = idx("title");
-      const iPrice = idx("price");
-      const iDiscount = idx("discount");
-      const iCoupon = idx("coupon");
-      const iSold = idx("sold");
-      const iRating = idx("rating");
-      const iLink =
-        idx("affiliate") >= 0 ? idx("affiliate") :
-        (idx("link") >= 0 ? idx("link") :
-        (idx("url") >= 0 ? idx("url") : -1));
-
-      const iActive = idx("active");
-      const iExpires = idx("expires");
-      const iBadge = idx("badge");
-      const iCreated = idx("created_at");
-      const iCta = idx("cta");
-
-      const iGroup = idx("group_count");
-      const iPosts = idx("posts_today");
-
-      let groupCount = null;
-      let postsToday = null;
-
-      const items = [];
-      for(let r=1; r<rows.length; r++){
-        const row = rows[r] || [];
-
-        if(groupCount == null && iGroup >= 0){
-          const g = toNumber(row[iGroup]);
-          if(isFinite(g) && g > 0) groupCount = Math.round(g);
-        }
-        if(postsToday == null && iPosts >= 0){
-          const p = toNumber(row[iPosts]);
-          if(isFinite(p) && p > 0) postsToday = Math.round(p);
-        }
-
-        const title = safeText(row[iTitle]);
-        const image = safeText(row[iImage]);
-        const originalRaw = safeText(row[iPrice]);
-        const discountRaw = safeText(row[iDiscount]);
-        const coupon = safeText(row[iCoupon]);
-        const sold = safeText(row[iSold]);
-        const rating = safeText(row[iRating]);
-        const link = iLink >= 0 ? safeText(row[iLink]) : "";
-        const cta = iCta >= 0 ? safeText(row[iCta]) : "";
-
-        const activeRaw = iActive >= 0 ? safeText(row[iActive]).toLowerCase() : "";
-        const isActive = !(activeRaw === "0" || activeRaw === "false" || activeRaw === "nao" || activeRaw === "não");
-        if(!isActive) continue;
-
-        const expiresRaw = iExpires >= 0 ? safeText(row[iExpires]) : "";
-        if(expiresRaw && isExpired(expiresRaw)) continue;
-
-        const badgeManual = iBadge >= 0 ? safeText(row[iBadge]) : "";
-        const badgeAuto = badgeManual ? "" : pickAutoBadge(title, link);
-        const badge = badgeManual || badgeAuto;
-
-        const urgency = expiresRaw ? diffToHuman(expiresRaw) : "";
-
-        const createdRaw = iCreated >= 0 ? safeText(row[iCreated]) : "";
-        const createdDt = createdRaw ? parseCreatedAt(createdRaw) : null;
-        const createdAtMs = createdDt ? createdDt.getTime() : 0;
-
-        if(!title && !image && !originalRaw && !link) continue;
-
-        const originalNum = toNumber(originalRaw);
-
-        let discountNum = toNumber(discountRaw);
-        if(!isFinite(discountNum)){
-          const m = (discountRaw || "").match(/(\d+(?:[.,]\d+)?)/);
-          discountNum = m ? toNumber(m[1]) : 0;
-        }
-        if(!isFinite(discountNum)) discountNum = 0;
-
-        let finalNum = originalNum;
-        if(isFinite(originalNum) && discountNum > 0 && discountNum < 100){
-          finalNum = +(originalNum * (1 - discountNum/100)).toFixed(2);
-        }
-
-        const soldNum = toNumber(sold);
-        const ratingNum = toNumber(rating);
-
-        items.push({
-          title: title || "Oferta",
-          image,
-          originalPriceText: isFinite(originalNum) ? moneyBRLFromNumber(originalNum) : (originalRaw || ""),
-          originalPriceNum: isFinite(originalNum) ? originalNum : NaN,
-          finalPriceText: isFinite(finalNum) ? moneyBRLFromNumber(finalNum) : (originalRaw || ""),
-          finalPriceNum: isFinite(finalNum) ? finalNum : NaN,
-          discount: discountRaw,
-          discountNum: isFinite(discountNum) ? discountNum : 0,
-          coupon,
-          sold,
-          soldNum: isFinite(soldNum) ? soldNum : 0,
-          rating,
-          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          link,
-          badge,
-          urgency,
-          expires: expiresRaw,
-          cta,
-          created_at: createdRaw,
-          createdAtMs,
-          rowIndex: r
-        });
-      }
-
-      ALL_ITEMS = items;
-
-      // KPIs
-      document.getElementById("kpi1").textContent = items.length.toString();
-      const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-      document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";
-
-      // Prova social
-      const gc = groupCount ?? DEFAULT_GROUP_COUNT;
-      const pt = postsToday ?? DEFAULT_POSTS_TODAY;
-      const sp = document.getElementById("socialProof");
-      if(sp){
-        sp.textContent = `✅ +${gc.toLocaleString("pt-BR")} pessoas já entraram no grupo • 🔥 ${pt} ofertas postadas hoje`;
-      }
-
-      // ✅ Atualiza lista do spotlight sem reiniciar o timer
-      updateSpotListFromSheet();
-      startSpotRotation();
-
-      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
-      render();
-
-    }catch(err){
-      console.error(err);
-      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
-      const loading = document.getElementById("loading");
-      if(loading){
-        loading.style.display = "block";
-        loading.textContent = "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
-      }
-    }
-  }
-
-  // =========================
-  // ✅ TIMERS (SEM BUG)
-  // =========================
-  function startSheetRefresh(){
-    if(SHEET_TIMER) clearInterval(SHEET_TIMER);
-    SHEET_TIMER = setInterval(() => loadSheet(false), REFRESH_MS);
-  }
-
-  // se a aba ficar em background, o navegador pode "pausar" intervalos.
-  // ao voltar, garantimos que tudo retoma:
-  document.addEventListener("visibilitychange", () => {
-    if(!document.hidden){
-      // retoma spotlight se tiver parado
-      if(!SPOT_TIMER) startSpotRotation();
-
-      // se ficou muito tempo parado, força um avanço e re-render
-      if(Date.now() - LAST_SPOT_TICK > (SPOT_ROTATE_MS + 2000)){
-        spotNext();
-      }
-      // atualiza planilha ao voltar
-      loadSheet(false);
-    }
-  });
-
-  // =========================
-  // START
-  // =========================
-  document.getElementById("q")?.addEventListener("input", () => render());
-  document.getElementById("sort")?.addEventListener("change", () => render());
-
-  startLiveClock();
-  setupVideo();
-  loadSheet(true);
-  startSheetRefresh();
-<script defer>
+<script>  
+  // =========================  
+  // CONFIG  
+  // =========================  
+  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";  
+  const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";  
+  const VIDEO_URL = "video.mp4";  
+  
+  // ⚠️ IMPORTANTE:  
+  // Se REFRESH_MS for menor que SPOT_ROTATE_MS, e você reiniciar o timer do spotlight toda vez que carregar a planilha,  
+  // o spotlight "fica preso" e não rotaciona.  
+  // Este script corrige isso: a rotação do spotlight é independente do refresh da planilha.  
+  const REFRESH_MS = 20 * 1000;   // 20s  
+  const SPOT_ROTATE_MS = 25 * 1000; // 25s  
+  
+  const DEFAULT_GROUP_COUNT = 1200;  
+  const DEFAULT_POSTS_TODAY = 27;  
+  
+  // Escassez por expiração  
+  const URGENCY_SOON_HOURS = 6;  
+  const URGENCY_TODAY_HOURS = 24;  
+  
+  // =========================  
+  // STATE  
+  // =========================  
+  let ALL_ITEMS = [];  
+  let FILTER_COUPON_ONLY = false;  
+  let FILTER_TOP_DISCOUNT = false;  
+  
+  let SPOT_ITEM = null;  
+  let SPOT_TOP_LIST = [];  
+  let SPOT_INDEX = 0;  
+  
+  let SPOT_TIMER = null;       // timer do spotlight  
+  let SHEET_TIMER = null;      // timer do refresh da planilha  
+  let LAST_SPOT_TICK = 0;  
+  
+  // =========================  
+  // HELPERS  
+  // =========================  
+  function nowHHMMSS(){  
+    const d = new Date();  
+    const hh = String(d.getHours()).padStart(2,'0');  
+    const mm = String(d.getMinutes()).padStart(2,'0');  
+    const ss = String(d.getSeconds()).padStart(2,'0');  
+    return `${hh}:${mm}:${ss}`;  
+  }  
+  
+  function moneyBRLFromNumber(n){  
+    if (!isFinite(n)) return "";  
+    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });  
+  }  
+  
+  function toNumber(str){  
+    if (str == null) return NaN;  
+    const s = String(str).trim()  
+      .replace(/\s/g,'')  
+      .replace(/\./g,'')  
+      .replace(',', '.')  
+      .replace(/[^\d.-]/g,'');  
+    const n = Number(s);  
+    return isFinite(n) ? n : NaN;  
+  }  
+  
+  function safeText(x){  
+    return (x ?? "").toString().replace(/\s+/g,' ').trim();  
+  }  
+  
+  function escapeHtml(s){  
+    return (s ?? "").toString()  
+      .replaceAll("&","&amp;")  
+      .replaceAll("<","&lt;")  
+      .replaceAll(">","&gt;")  
+      .replaceAll('"',"&quot;");  
+  }  
+  
+  function scrollToOffers(){  
+    document.getElementById("offers")?.scrollIntoView({behavior:"smooth", block:"start"});  
+  }  
+  
+  function openGroup(){  
+    window.open(WHATSAPP_GROUP_LINK, "_blank");  
+  }  
+  
+  // =========================  
+  // DATA / EXPIRES / CREATED_AT  
+  // =========================  
+  function parseDateFlex(s, defaultHour, defaultMinute){  
+    const raw = safeText(s);  
+    if(!raw) return null;  
+  
+    let m = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);  
+    if(m){  
+      const Y = Number(m[1]);  
+      const Mo = Number(m[2]) - 1;  
+      const D = Number(m[3]);  
+      const hh = m[4] != null ? Number(m[4]) : defaultHour;  
+      const mm = m[5] != null ? Number(m[5]) : defaultMinute;  
+      const ss = m[6] != null ? Number(m[6]) : 0;  
+      const dt = new Date(Y, Mo, D, hh, mm, ss);  
+      return isNaN(dt.getTime()) ? null : dt;  
+    }  
+  
+    m = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);  
+    if(m){  
+      const D = Number(m[1]);  
+      const Mo = Number(m[2]) - 1;  
+      const Y = Number(m[3]);  
+      const hh = m[4] != null ? Number(m[4]) : defaultHour;  
+      const mm = m[5] != null ? Number(m[5]) : defaultMinute;  
+      const ss = m[6] != null ? Number(m[6]) : 0;  
+      const dt = new Date(Y, Mo, D, hh, mm, ss);  
+      return isNaN(dt.getTime()) ? null : dt;  
+    }  
+  
+    return null;  
+  }  
+  
+  function parseExpires(s){ return parseDateFlex(s, 23, 59); }  
+  function parseCreatedAt(s){ return parseDateFlex(s, 0, 0); }  
+  
+  function isExpired(expiresText){  
+    const dt = parseExpires(expiresText);  
+    if(!dt) return false;  
+    return dt.getTime() < Date.now();  
+  }  
+  
+  function diffToHuman(expiresText){  
+    const dt = parseExpires(expiresText);  
+    if(!dt) return "";  
+  
+    const ms = dt.getTime() - Date.now();  
+    if(ms <= 0) return "⚠️ expirada";  
+  
+    const minutes = Math.floor(ms / 60000);  
+    const hours = Math.floor(minutes / 60);  
+    const days = Math.floor(hours / 24);  
+  
+    if(hours < 1) return `⏰ expira em ${Math.max(1, minutes)} min`;  
+    if(hours < URGENCY_SOON_HOURS) return `⏰ expira em ${hours}h`;  
+    if(hours < URGENCY_TODAY_HOURS) return `⚠️ expira hoje`;  
+    if(days === 1) return `📅 expira amanhã`;  
+    return `📅 expira em ${days} dias`;  
+  }  
+  
+  // =========================  
+  // BADGE AUTO  
+  // =========================  
+  function pickAutoBadge(title, link){  
+    const hay = (`${safeText(title)} ${safeText(link)}`).toLowerCase();  
+    if(hay.includes("full")) return "FULL";  
+    if(hay.includes("prime")) return "Prime";  
+    if(hay.includes("frete grátis") || hay.includes("frete gratis") || hay.includes("fretegratis") || hay.includes("free shipping")) return "Frete Grátis";  
+    if(hay.includes("relâmpago") || hay.includes("relampago") || hay.includes("lightning") || hay.includes("flash")) return "Relâmpago";  
+    if(hay.includes("cupom") || hay.includes("coupon")) return "Cupom";  
+    if(hay.includes("promo") || hay.includes("oferta") || hay.includes("desconto")) return "Promo";  
+    return "";  
+  }  
+  
+  // =========================  
+  // STATUS  
+  // =========================  
+  function setStatus(mode, text){  
+    const dot = document.getElementById("statusDot");  
+    const label = document.getElementById("updatedLabel");  
+    const time = document.getElementById("updatedTime");  
+    if(!dot || !label || !time) return;  
+  
+    if (mode === "ok"){  
+      dot.style.background = "var(--brand)";  
+      dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";  
+      label.innerHTML = "<b>Atualizado</b>";  
+      time.dataset.mode = "updated";  
+      time.textContent = text;  
+    } else if (mode === "loading"){  
+      dot.style.background = "var(--accent)";  
+      dot.style.boxShadow = "0 0 0 4px rgba(245,158,11,.12)";  
+      label.innerHTML = "<b>Carregando</b>";  
+      time.dataset.mode = "checking";  
+      time.textContent = text;  
+    } else {  
+      dot.style.background = "var(--danger)";  
+      dot.style.boxShadow = "0 0 0 4px rgba(239,68,68,.12)";  
+      label.innerHTML = "<b>Falha</b>";  
+      time.dataset.mode = "checking";  
+      time.textContent = text;  
+    }  
+  }  
+  
+  function startLiveClock(){  
+    const timeEl = document.getElementById("updatedTime");  
+    if(!timeEl) return;  
+    setInterval(() => {  
+      if(timeEl.dataset.mode !== "updated"){  
+        timeEl.textContent = `Verificando: ${nowHHMMSS()}`;  
+      }  
+    }, 1000);  
+  }  
+  
+  function parseCSV(text){  
+    const rows = [];  
+    let row = [];  
+    let cur = "";  
+    let inQuotes = false;  
+  
+    for(let i=0;i<text.length;i++){  
+      const ch = text[i];  
+      const next = text[i+1];  
+      if(ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }  
+      if(ch === '"'){ inQuotes = !inQuotes; continue; }  
+      if(ch === ',' && !inQuotes){ row.push(cur); cur = ""; continue; }  
+      if((ch === '\n' || ch === '\r') && !inQuotes){  
+        if(ch === '\r' && next === '\n'){ i++; }  
+        row.push(cur); cur = "";  
+        if(row.length > 1 || row[0].trim() !== "") rows.push(row);  
+        row = [];  
+        continue;  
+      }  
+      cur += ch;  
+    }  
+    row.push(cur);  
+    if(row.length > 1 || row[0].trim() !== "") rows.push(row);  
+    return rows;  
+  }  
+  
+  // =========================  
+  // VIDEO  
+  // =========================  
+  function setupVideo(){  
+    const vid = document.getElementById("promoVideo");  
+    if(!vid) return;  
+    vid.src = VIDEO_URL;  
+    vid.muted = true;  
+    vid.playsInline = true;  
+    vid.autoplay = true;  
+    vid.play().catch(()=>{});  
+  }  
+  
+  function enableVideoAudio(){  
+    const vid = document.getElementById("promoVideo");  
+    if(!vid) return;  
+    vid.muted = false;  
+    vid.volume = 1;  
+    vid.play().catch(()=>{});  
+  }  
+  
+  // =========================  
+  // CHIPS  
+  // =========================  
+  function toggleChip(which){  
+    if(which === "coupon"){  
+      FILTER_COUPON_ONLY = !FILTER_COUPON_ONLY;  
+      document.getElementById("chipCoupon")?.classList.toggle("chipOn", FILTER_COUPON_ONLY);  
+    }  
+    if(which === "discount"){  
+      FILTER_TOP_DISCOUNT = !FILTER_TOP_DISCOUNT;  
+      document.getElementById("chipDiscount")?.classList.toggle("chipOn", FILTER_TOP_DISCOUNT);  
+    }  
+    render();  
+  }  
+  
+  // =========================  
+  // SORT / FILTER  
+  // =========================  
+  function forceReload(){ loadSheet(true); }  
+  
+  function getQuery(){  
+    return safeText(document.getElementById("q")?.value).toLowerCase();  
+  }  
+  
+  function getSort(){  
+    return document.getElementById("sort")?.value || "best";  
+  }  
+  
+  function filterItems(items){  
+    const q = getQuery();  
+    let out = items;  
+  
+    if(q){  
+      out = out.filter(it => (`${it.title} ${it.coupon||""} ${it.badge||""} ${it.cta||""}`.toLowerCase()).includes(q));  
+    }  
+    if(FILTER_COUPON_ONLY){  
+      out = out.filter(it => !!safeText(it.coupon));  
+    }  
+    if(FILTER_TOP_DISCOUNT){  
+      const sorted = [...out].sort((a,b)=>(b.discountNum||0)-(a.discountNum||0));  
+      const keep = Math.max(10, Math.ceil(sorted.length * 0.20));  
+      out = sorted.slice(0, keep);  
+    }  
+    return out;  
+  }  
+  
+  function compareNewest(a, b){  
+    const ca = (a.createdAtMs && a.createdAtMs > 0) ? a.createdAtMs : 0;  
+    const cb = (b.createdAtMs && b.createdAtMs > 0) ? b.createdAtMs : 0;  
+    if(cb !== ca) return cb - ca;  
+    const ra = (a.rowIndex ?? 0);  
+    const rb = (b.rowIndex ?? 0);  
+    return rb - ra;  
+  }  
+  
+  function sortItems(items, mode){  
+    const a = [...items];  
+  
+    if(mode === "priceAsc"){  
+      a.sort((x,y)=>{  
+        const r = (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity);  
+        return r !== 0 ? r : compareNewest(x,y);  
+      });  
+    } else if(mode === "priceDesc"){  
+      a.sort((x,y)=>{  
+        const r = (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity);  
+        return r !== 0 ? r : compareNewest(x,y);  
+      });  
+    } else if(mode === "discountDesc"){  
+      a.sort((x,y)=>{  
+        const r = (y.discountNum||0) - (x.discountNum||0);  
+        return r !== 0 ? r : compareNewest(x,y);  
+      });  
+    } else if(mode === "soldDesc"){  
+      a.sort((x,y)=>{  
+        const r = (y.soldNum||0) - (x.soldNum||0);  
+        return r !== 0 ? r : compareNewest(x,y);  
+      });  
+    } else if(mode === "ratingDesc"){  
+      a.sort((x,y)=>{  
+        const r = (y.ratingNum||0) - (x.ratingNum||0);  
+        return r !== 0 ? r : compareNewest(x,y);  
+      });  
+    } else {  
+      // "destaque": últimas em cima  
+      a.sort((x,y)=>{  
+        const newest = compareNewest(x,y);  
+        if(newest !== 0) return newest;  
+  
+        const sx = (x.soldNum||0)*2 + (x.discountNum||0)*1.2 + (x.ratingNum||0)*10;  
+        const sy = (y.soldNum||0)*2 + (y.discountNum||0)*1.2 + (y.ratingNum||0)*10;  
+        const r = sy - sx;  
+        return r !== 0 ? r : 0;  
+      });  
+    }  
+    return a;  
+  }  
+  
+  function openOffer(it){  
+    const u = safeText(it.link);  
+    window.open(u || WHATSAPP_GROUP_LINK, "_blank");  
+  }  
+  
+  async function shareOffer(it){  
+    const title = safeText(it.title) || "Oferta";  
+    const url = safeText(it.link) || WHATSAPP_GROUP_LINK;  
+    const text = `🔥 OFERTA: ${title}\n👉 Link: ${url}\n\nEntre no grupo: ${WHATSAPP_GROUP_LINK}`;  
+    try{  
+      if(navigator.share){  
+        await navigator.share({ title: "Achadinhos Oficial", text, url });  
+        return;  
+      }  
+    }catch(_){}  
+    try{  
+      await navigator.clipboard.writeText(text);  
+      alert("Copiado! Agora é só colar no WhatsApp/Instagram.");  
+    }catch{  
+      prompt("Copie e compartilhe:", text);  
+    }  
+  }  
+  
+  async function copyCouponAndOpenWhatsApp(it){  
+    const c = safeText(it.coupon);  
+    const title = safeText(it.title) || "Oferta";  
+    if(!c){ alert("Este item não tem cupom."); return; }  
+  
+    const msg =  
+`🔥 CUPOM + OFERTA  
+Produto: ${title}  
+Cupom: ${c}  
+  
+👉 Quero o link dessa oferta (se tiver) e instruções pra usar o cupom.  
+Grupo: ${WHATSAPP_GROUP_LINK}`;  
+  
+    try{ await navigator.clipboard.writeText(c); }catch(_){}  
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");  
+  }  
+  
+  // =========================  
+  // ✅ OFERTA DO MINUTO (ROTACAO CORRIGIDA)  
+  // =========================  
+  function buildSpotTopList(items){  
+    if(!items.length) return [];  
+    const scored = [...items].sort((a,b)=>{  
+      const sa = (a.discountNum||0)*1.3 + (a.ratingNum||0)*10 + (a.soldNum||0)*0.02;  
+      const sb = (b.discountNum||0)*1.3 + (b.ratingNum||0)*10 + (b.soldNum||0)*0.02;  
+      return sb - sa;  
+    });  
+    return scored.slice(0, Math.min(12, scored.length));  
+  }  
+  
+  function setSpotItem(it){  
+    SPOT_ITEM = it || null;  
+    renderSpotlight();  
+  }  
+  
+  function renderSpotlight(){  
+    const box = document.getElementById("spotlight");  
+    if(!box) return;  
+  
+    if(!SPOT_ITEM){  
+      box.style.display = "none";  
+      return;  
+    }  
+  
+    document.getElementById("spotImg").src = SPOT_ITEM.image || "";  
+    document.getElementById("spotTitle").textContent = SPOT_ITEM.title || "Oferta";  
+    document.getElementById("spotNow").textContent = SPOT_ITEM.finalPriceText || "—";  
+  
+    const old = document.getElementById("spotOld");  
+    if(old){  
+      if(SPOT_ITEM.originalPriceText && SPOT_ITEM.originalPriceText !== SPOT_ITEM.finalPriceText){  
+        old.style.display = "block";  
+        old.textContent = SPOT_ITEM.originalPriceText;  
+      } else {  
+        old.style.display = "none";  
+      }  
+    }  
+  
+    const metaBits = [];  
+    if(SPOT_ITEM.badge) metaBits.push(`🏷️ ${SPOT_ITEM.badge}`);  
+    if(SPOT_ITEM.urgency) metaBits.push(`${SPOT_ITEM.urgency}`);  
+    if(SPOT_ITEM.discount) metaBits.push(`🔥 ${SPOT_ITEM.discount}`);  
+    if(SPOT_ITEM.rating) metaBits.push(`⭐ ${SPOT_ITEM.rating}`);  
+    if(SPOT_ITEM.sold) metaBits.push(`✅ ${SPOT_ITEM.sold} vendidos`);  
+    document.getElementById("spotMeta").textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";  
+  
+    box.style.display = "grid";  
+  }  
+  
+  // ✅ avanca 1 item (sem depender da planilha)  
+  function spotNext(){  
+    if(!SPOT_TOP_LIST.length){  
+      setSpotItem(null);  
+      return;  
+    }  
+    SPOT_INDEX = (SPOT_INDEX + 1) % SPOT_TOP_LIST.length;  
+    setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);  
+    LAST_SPOT_TICK = Date.now();  
+  }  
+  
+  // ✅ inicia (ou retoma) rotação sem “matar” por causa do refresh  
+  function startSpotRotation(){  
+    // se já existe timer rodando, não recria  
+    if(SPOT_TIMER) return;  
+  
+    if(!SPOT_TOP_LIST.length){  
+      setSpotItem(null);  
+      return;  
+    }  
+  
+    // garante um item inicial  
+    if(!SPOT_ITEM){  
+      SPOT_INDEX = 0;  
+      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);  
+      LAST_SPOT_TICK = Date.now();  
+    }  
+  
+    // usa setInterval só uma vez  
+    SPOT_TIMER = setInterval(() => {  
+      // se a aba ficou em background e voltou, pode dar "travada": garante avanço  
+      spotNext();  
+    }, SPOT_ROTATE_MS);  
+  }  
+  
+  // ✅ quando a planilha atualiza, só atualiza a lista — sem reiniciar o timer  
+  function updateSpotListFromSheet(){  
+    const newList = buildSpotTopList(ALL_ITEMS);  
+  
+    // se ficou vazio  
+    if(!newList.length){  
+      SPOT_TOP_LIST = [];  
+      SPOT_INDEX = 0;  
+      setSpotItem(null);  
+      return;  
+    }  
+  
+    // tenta manter o item atual, se ainda existir  
+    const currentKey = SPOT_ITEM ? `${SPOT_ITEM.title}||${SPOT_ITEM.image}||${SPOT_ITEM.finalPriceText}` : "";  
+    SPOT_TOP_LIST = newList;  
+  
+    let keepIndex = -1;  
+    if(currentKey){  
+      keepIndex = SPOT_TOP_LIST.findIndex(x => `${x.title}||${x.image}||${x.finalPriceText}` === currentKey);  
+    }  
+  
+    if(keepIndex >= 0){  
+      SPOT_INDEX = keepIndex;  
+      // re-render pra atualizar meta/preço caso tenha mudado  
+      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);  
+    } else {  
+      // se não dá pra manter, reseta pro primeiro  
+      SPOT_INDEX = 0;  
+      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);  
+      LAST_SPOT_TICK = Date.now();  
+    }  
+  }  
+  
+  function spotOpen(){  
+    if(!SPOT_ITEM) return;  
+    openOffer(SPOT_ITEM);  
+  }  
+  
+  function spotShare(){  
+    if(!SPOT_ITEM) return;  
+    shareOffer(SPOT_ITEM);  
+  }  
+  
+  // =========================  
+  // MAIN RENDER  
+  // =========================  
+  function render(){  
+    const grid = document.getElementById("offers");  
+    const loading = document.getElementById("loading");  
+    if(!grid || !loading) return;  
+  
+    const filtered = filterItems(ALL_ITEMS);  
+    const sorted = sortItems(filtered, getSort());  
+  
+    grid.innerHTML = "";  
+    loading.style.display = sorted.length ? "none" : "block";  
+    loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";  
+  
+    document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;  
+  
+    for(const it of sorted){  
+      const card = document.createElement("article");  
+      card.className = "card";  
+  
+      const img = document.createElement("div");  
+      img.className = "imgbox";  
+      img.innerHTML = `<img src="${it.image || ""}" alt="${escapeHtml(it.title)}" loading="lazy" referrerpolicy="no-referrer" />`;  
+      card.appendChild(img);  
+  
+      const body = document.createElement("div");  
+      body.className = "cardBody";  
+  
+      const title = document.createElement("h2");  
+      title.className = "title";  
+      title.textContent = it.title || "Oferta";  
+      body.appendChild(title);  
+  
+      // CTA (texto)  
+      if(it.cta){  
+        const cta = document.createElement("div");  
+        cta.className = "ctaTag";  
+        cta.textContent = it.cta;  
+        body.appendChild(cta);  
+      }  
+  
+      const prices = document.createElement("div");  
+      prices.className = "prices";  
+  
+      const nowP = document.createElement("div");  
+      nowP.className = "priceNow";  
+      nowP.textContent = it.finalPriceText || "—";  
+      prices.appendChild(nowP);  
+  
+      if(it.originalPriceText && it.originalPriceText !== it.finalPriceText){  
+        const oldP = document.createElement("div");  
+        oldP.className = "priceOld";  
+        oldP.textContent = it.originalPriceText;  
+        prices.appendChild(oldP);  
+      }  
+  
+      body.appendChild(prices);  
+  
+      const row1 = document.createElement("div");  
+      row1.className = "row";  
+  
+      const left = document.createElement("div");  
+      left.className = "muted";  
+      left.textContent = `${it.rating ? `⭐ ${it.rating}` : "⭐ —"} • ${it.sold ? `${it.sold} vendidos` : "— vendidos"}`;  
+      row1.appendChild(left);  
+  
+      const right = document.createElement("div");  
+      right.style.display="flex";  
+      right.style.gap="8px";  
+      right.style.flexWrap="wrap";  
+      right.style.justifyContent="flex-end";  
+  
+      if(it.badge){  
+        const t = document.createElement("span");  
+        t.className = "tag";  
+        t.style.border = "1px solid rgba(59,130,246,.32)";  
+        t.style.background = "rgba(59,130,246,.12)";  
+        t.style.color = "#bfdbfe";  
+        t.textContent = it.badge;  
+        right.appendChild(t);  
+        
+      }  
+  
+      if(it.urgency){  
+        const t = document.createElement("span");  
+        t.className = "tag";  
+        t.style.border = "1px solid rgba(245,158,11,.30)";  
+        t.style.background = "rgba(245,158,11,.14)";  
+        t.style.color = "#fde68a";  
+        t.textContent = it.urgency;  
+        right.appendChild(t);  
+      }  
+  
+      if(it.discount){  
+        const t = document.createElement("span");  
+        t.className = "tag off";  
+        t.textContent = it.discount;  
+        right.appendChild(t);  
+      }  
+      if(it.coupon){  
+        const t = document.createElement("span");  
+        t.className = "tag coupon";  
+        t.textContent = `CUPOM: ${it.coupon}`;  
+        right.appendChild(t);  
+      }  
+  
+      row1.appendChild(right);  
+      body.appendChild(row1);  
+  
+      const buy = document.createElement("div");  
+      buy.className = "buy";  
+  
+      const btn1 = document.createElement("button");  
+      btn1.className = "btnSmall btnBuy";  
+      btn1.textContent = "Ver oferta";  
+      btn1.onclick = () => openOffer(it);  
+      buy.appendChild(btn1);  
+  
+      const btn2 = document.createElement("button");  
+      btn2.className = "btnSmall btnGroup";  
+      btn2.textContent = "Entrar no grupo";  
+      btn2.onclick = () => openGroup();  
+      buy.appendChild(btn2);  
+  
+      const btn3 = document.createElement("button");  
+      btn3.className = "btnSmall btnShare";  
+      btn3.textContent = "Compartilhar";  
+      btn3.onclick = () => shareOffer(it);  
+      buy.appendChild(btn3);  
+  
+      const btn4 = document.createElement("button");  
+      btn4.className = "btnSmall";  
+      btn4.textContent = "Copiar cupom";  
+      btn4.onclick = () => copyCouponAndOpenWhatsApp(it);  
+      buy.appendChild(btn4);  
+  
+      body.appendChild(buy);  
+      card.appendChild(body);  
+      grid.appendChild(card);  
+    }  
+  }  
+  
+  // =========================  
+  // LOAD SHEET  
+  // =========================  
+  async function loadSheet(isManual=false){  
+    try{  
+      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());  
+      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();  
+      const res = await fetch(url, { cache:"no-store" });  
+      if(!res.ok) throw new Error("HTTP " + res.status);  
+  
+      const text = await res.text();  
+      const rows = parseCSV(text);  
+      if(!rows.length) throw new Error("CSV vazio");  
+  
+      const header = rows[0].map(h => safeText(h).toLowerCase());  
+      const idx = (name) => header.indexOf(name);  
+  
+      const iImage = idx("image");  
+      const iTitle = idx("title");  
+      const iPrice = idx("price");  
+      const iDiscount = idx("discount");  
+      const iCoupon = idx("coupon");  
+      const iSold = idx("sold");  
+      const iRating = idx("rating");  
+      const iLink =  
+        idx("affiliate") >= 0 ? idx("affiliate") :  
+        (idx("link") >= 0 ? idx("link") :  
+        (idx("url") >= 0 ? idx("url") : -1));  
+  
+      const iActive = idx("active");  
+      const iExpires = idx("expires");  
+      const iBadge = idx("badge");  
+      const iCreated = idx("created_at");  
+      const iCta = idx("cta");  
+  
+      const iGroup = idx("group_count");  
+      const iPosts = idx("posts_today");  
+  
+      let groupCount = null;  
+      let postsToday = null;  
+  
+      const items = [];  
+      for(let r=1; r<rows.length; r++){  
+        const row = rows[r] || [];  
+  
+        if(groupCount == null && iGroup >= 0){  
+          const g = toNumber(row[iGroup]);  
+          if(isFinite(g) && g > 0) groupCount = Math.round(g);  
+        }  
+        if(postsToday == null && iPosts >= 0){  
+          const p = toNumber(row[iPosts]);  
+          if(isFinite(p) && p > 0) postsToday = Math.round(p);  
+        }  
+  
+        const title = safeText(row[iTitle]);  
+        const image = safeText(row[iImage]);  
+        const originalRaw = safeText(row[iPrice]);  
+        const discountRaw = safeText(row[iDiscount]);  
+        const coupon = safeText(row[iCoupon]);  
+        const sold = safeText(row[iSold]);  
+        const rating = safeText(row[iRating]);  
+        const link = iLink >= 0 ? safeText(row[iLink]) : "";  
+        const cta = iCta >= 0 ? safeText(row[iCta]) : "";  
+  
+        const activeRaw = iActive >= 0 ? safeText(row[iActive]).toLowerCase() : "";  
+        const isActive = !(activeRaw === "0" || activeRaw === "false" || activeRaw === "nao" || activeRaw === "não");  
+        if(!isActive) continue;  
+  
+        const expiresRaw = iExpires >= 0 ? safeText(row[iExpires]) : "";  
+        if(expiresRaw && isExpired(expiresRaw)) continue;  
+  
+        const badgeManual = iBadge >= 0 ? safeText(row[iBadge]) : "";  
+        const badgeAuto = badgeManual ? "" : pickAutoBadge(title, link);  
+        const badge = badgeManual || badgeAuto;  
+  
+        const urgency = expiresRaw ? diffToHuman(expiresRaw) : "";  
+  
+        const createdRaw = iCreated >= 0 ? safeText(row[iCreated]) : "";  
+        const createdDt = createdRaw ? parseCreatedAt(createdRaw) : null;  
+        const createdAtMs = createdDt ? createdDt.getTime() : 0;  
+  
+        if(!title && !image && !originalRaw && !link) continue;  
+  
+        const originalNum = toNumber(originalRaw);  
+  
+        let discountNum = toNumber(discountRaw);  
+        if(!isFinite(discountNum)){  
+          const m = (discountRaw || "").match(/(\d+(?:[.,]\d+)?)/);  
+          discountNum = m ? toNumber(m[1]) : 0;  
+        }  
+        if(!isFinite(discountNum)) discountNum = 0;  
+  
+        let finalNum = originalNum;  
+        if(isFinite(originalNum) && discountNum > 0 && discountNum < 100){  
+          finalNum = +(originalNum * (1 - discountNum/100)).toFixed(2);  
+        }  
+  
+        const soldNum = toNumber(sold);  
+        const ratingNum = toNumber(rating);  
+  
+        items.push({  
+          title: title || "Oferta",  
+          image,  
+          originalPriceText: isFinite(originalNum) ? moneyBRLFromNumber(originalNum) : (originalRaw || ""),  
+          originalPriceNum: isFinite(originalNum) ? originalNum : NaN,  
+          finalPriceText: isFinite(finalNum) ? moneyBRLFromNumber(finalNum) : (originalRaw || ""),  
+          finalPriceNum: isFinite(finalNum) ? finalNum : NaN,  
+          discount: discountRaw,  
+          discountNum: isFinite(discountNum) ? discountNum : 0,  
+          coupon,  
+          sold,  
+          soldNum: isFinite(soldNum) ? soldNum : 0,  
+          rating,  
+          ratingNum: isFinite(ratingNum) ? ratingNum : 0,  
+          link,  
+          badge,  
+          urgency,  
+          expires: expiresRaw,  
+          cta,  
+          created_at: createdRaw,  
+          createdAtMs,  
+          rowIndex: r  
+        });  
+      }  
+  
+      ALL_ITEMS = items;  
+  
+      // KPIs  
+      document.getElementById("kpi1").textContent = items.length.toString();  
+      const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);  
+      document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";  
+  
+      // Prova social  
+      const gc = groupCount ?? DEFAULT_GROUP_COUNT;  
+      const pt = postsToday ?? DEFAULT_POSTS_TODAY;  
+      const sp = document.getElementById("socialProof");  
+      if(sp){  
+        sp.textContent = `✅ +${gc.toLocaleString("pt-BR")} pessoas já entraram no grupo • 🔥 ${pt} ofertas postadas hoje`;  
+      }  
+  
+      // ✅ Atualiza lista do spotlight sem reiniciar o timer  
+      updateSpotListFromSheet();  
+      startSpotRotation();  
+  
+      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);  
+      render();  
+  
+    }catch(err){  
+      console.error(err);  
+      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);  
+      const loading = document.getElementById("loading");  
+      if(loading){  
+        loading.style.display = "block";  
+        loading.textContent = "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";  
+      }  
+    }  
+  }  
+  
+  // =========================  
+  // ✅ TIMERS (SEM BUG)  
+  // =========================  
+  function startSheetRefresh(){  
+    if(SHEET_TIMER) clearInterval(SHEET_TIMER);  
+    SHEET_TIMER = setInterval(() => loadSheet(false), REFRESH_MS);  
+  }  
+  
+  // se a aba ficar em background, o navegador pode "pausar" intervalos.  
+  // ao voltar, garantimos que tudo retoma:  
+  document.addEventListener("visibilitychange", () => {  
+    if(!document.hidden){  
+      // retoma spotlight se tiver parado  
+      if(!SPOT_TIMER) startSpotRotation();  
+  
+      // se ficou muito tempo parado, força um avanço e re-render  
+      if(Date.now() - LAST_SPOT_TICK > (SPOT_ROTATE_MS + 2000)){  
+        spotNext();  
+      }  
+      // atualiza planilha ao voltar  
+      loadSheet(false);  
+    }  
+  });  
+  
+  // =========================  
+  // START  
+  // =========================  
+  document.getElementById("q")?.addEventListener("input", () => render());  
+  document.getElementById("sort")?.addEventListener("change", () => render());  
+  
+  startLiveClock();  
+  setupVideo();  
+  loadSheet(true);  
+  startSheetRefresh();  
+</script>  
 <body>  
 </html>
 
