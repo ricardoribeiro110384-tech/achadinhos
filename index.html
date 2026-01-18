@@ -751,6 +751,65 @@ body{ color: var(--text); }
   border: 1px dashed rgba(15,23,42,.18);
   color: rgba(100,116,139,.95);
 }
+    /* =========================
+   PATCH: textos apagados (tema claro)
+   Cole no FINAL do <style>
+   ========================= */
+
+/* 1) Texto geral em fundo claro */
+:root{
+  --text:#0f172a;       /* texto principal escuro */
+  --muted:#475569;      /* texto secundário mais forte */
+  --border:rgba(15,23,42,.12);
+}
+
+/* 2) Hero: título + destaque verde que ficou apagado */
+.hero h1{ color: var(--text) !important; }
+.hero p{ color: var(--muted) !important; }
+
+/* Corrige esse trecho: "Clique e garanta." (span inline) */
+.hero h1 span{
+  color:#166534 !important;        /* verde escuro */
+  font-weight:1000;
+}
+
+/* 3) Textos pequenos (sub/muted/mini) que estavam claros demais */
+.sub, .muted, .mini, .kpiCard span, .notice p{
+  color: var(--muted) !important;
+}
+
+/* 4) Header sticky (a faixa escura do topo) -> deixa claro e legível */
+header{
+  background: rgba(255,255,255,.92) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.status{
+  background: rgba(255,255,255,.92) !important;
+  border: 1px solid var(--border) !important;
+}
+.status b{ color: var(--text) !important; }
+#updatedTime{ color: var(--muted) !important; }
+
+/* 5) KPI cards e notices: reforça contraste do texto */
+.kpiCard b, .notice h3{
+  color: var(--text) !important;
+}
+.kpiCard{
+  background: rgba(255,255,255,.95) !important;
+  border: 1px solid var(--border) !important;
+}
+.notice{
+  background: rgba(255,255,255,.95) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* 6) Busca / select (placeholder e texto) */
+.search input{ color: var(--text) !important; }
+.search input::placeholder{ color: rgba(71,85,105,.95) !important; }
+.select{ color: var(--text) !important; }
+
+/* 7) Só para garantir: textos em cards */
+.card .title{ color: var(--text) !important; }
   </style>
 </head>
 
