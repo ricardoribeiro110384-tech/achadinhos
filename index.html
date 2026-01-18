@@ -864,6 +864,64 @@ header .brand{
   color:#fff !important;
   border:none;
 }
+    /* ===============================
+   BOX DO VÍDEO (FUNDO + CONTRASTE)
+   =============================== */
+.videoWrap{
+  background: linear-gradient(
+    180deg,
+    #ffd000 0%,
+    #ffedb3 35%,
+    #ffffff 100%
+  ) !important;
+
+  border: 2px solid #ffd000;
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.18),
+    inset 0 0 0 1px rgba(255,255,255,.6);
+
+  padding: 10px;
+}
+
+/* ===============================
+   FAIXA SUPERIOR DO VÍDEO
+   =============================== */
+.videoTop{
+  background: linear-gradient(
+    90deg,
+    #ffb800,
+    #ffd000
+  ) !important;
+
+  color:#1a1400 !important;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid rgba(0,0,0,.15);
+}
+
+/* Texto da faixa */
+.videoTop b,
+.videoTop .mini{
+  color:#1a1400 !important;
+  font-weight:900;
+}
+
+/* Botão "Ativar áudio" */
+.videoTop .btnTiny{
+  background:#111 !important;
+  color:#fff !important;
+  border:none;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+}
+
+/* ===============================
+   ÁREA DO VÍDEO (FRAME)
+   =============================== */
+.videoFrame{
+  background:#000;
+  border-radius: 0 0 10px 10px;
+  overflow:hidden;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,.4);
+}
   </style>
 </head>
 
