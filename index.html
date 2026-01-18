@@ -2199,88 +2199,63 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   setupVideo();
   loadSheet(true);
   startSheetRefresh();
-  <script>
-/* =========================
-   PATCH DE PERFORMANCE (colar no final do script)
-   ========================= */
+  // =========================
+// PATCH PERFORMANCE SEGURO
+// (cole no FINAL do seu <script>, após startSheetRefresh())
+// =========================
 
+// Debounce simples (evita travar no mobile ao digitar)
+function debounce(fn, wait=180){
+  let t = null;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
+// Render em fila (evita render duplicado na mesma “batida”)
+let __renderQueued = false;
+function renderQueued(){
+  if(__renderQueued) return;
+  __renderQueued = true;
+  requestAnimationFrame(() => {
+    __renderQueued = false;
+    try{ render(); }catch(e){ console.error("render error:", e); }
+    try{ optimizeImagesLCP(); }catch(e){}
+  });
+}
+
+// Reaplica listeners com debounce (sem depender do patch antigo)
 (function(){
-  // 1) Debounce: evita renderizar a cada tecla (melhora MUITO no celular)
-  function debounce(fn, wait=180){
-    let t=null;
-    return function(...args){
-      clearTimeout(t);
-      t=setTimeout(()=>fn.apply(this,args), wait);
-    }
-  }
-
-  // substitui listeners atuais por versões com debounce (sem quebrar o layout)
   const qEl = document.getElementById("q");
   const sortEl = document.getElementById("sort");
 
   if(qEl){
-    qEl.oninput = debounce(() => {
-      try{ render(); }catch(e){}
-    }, 180);
+    qEl.addEventListener("input", debounce(() => renderQueued(), 180), { passive:true });
   }
   if(sortEl){
-    sortEl.onchange = () => {
-      try{ render(); }catch(e){}
-    };
+    sortEl.addEventListener("change", () => renderQueued(), { passive:true });
   }
-
-  // 2) Evita render duplicado em atualizações rápidas
-  //   - cria uma fila simples: se chamar render() várias vezes, só roda 1
-  const _render = window.render;
-  let _renderQueued = false;
-  if(typeof _render === "function"){
-    window.render = function(){
-      if(_renderQueued) return;
-      _renderQueued = true;
-      requestAnimationFrame(() => {
-        _renderQueued = false;
-        _render();
-        // depois de renderizar, otimiza imagens (abaixo)
-        try{ optimizeImagesLCP(); }catch(e){}
-      });
-    }
-  }
-
-  // 3) Otimização de imagens:
-  //   - primeiras 4 ofertas: eager + high priority (carrega rápido)
-  //   - resto: lazy (já está) e baixa prioridade
-  function optimizeImagesLCP(){
-    const imgs = document.querySelectorAll("#offers img");
-    imgs.forEach((img, idx) => {
-      if(idx < 4){
-        img.loading = "eager";
-        img.fetchPriority = "high";
-        img.decoding = "async";
-      }else{
-        img.loading = "lazy";
-        img.fetchPriority = "low";
-        img.decoding = "async";
-      }
-    });
-  }
-
-  // 4) Se o refresh da planilha estiver pesado, aumente só no mobile (opcional)
-  //    - mantém 20s no PC e coloca 35s no celular para aliviar travadas
-  try{
-    const isMobile = matchMedia("(max-width: 620px)").matches;
-    if(isMobile && typeof startSheetRefresh === "function"){
-      // cancela o timer atual e reinicia com intervalo maior no mobile
-      // OBS: depende de SHEET_TIMER existir no escopo (no seu já existe)
-      if(window.SHEET_TIMER) clearInterval(window.SHEET_TIMER);
-
-      const MOBILE_REFRESH_MS = 35 * 1000;
-      window.SHEET_TIMER = setInterval(() => {
-        try{ loadSheet(false); }catch(e){}
-      }, MOBILE_REFRESH_MS);
-    }
-  }catch(e){}
-
 })();
+
+// Otimiza carregamento das primeiras imagens (LCP)
+function optimizeImagesLCP(){
+  const imgs = document.querySelectorAll("#offers img");
+  imgs.forEach((img, idx) => {
+    img.decoding = "async";
+    if(idx < 4){
+      img.loading = "eager";
+      try{ img.fetchPriority = "high"; }catch(_){}
+    }else{
+      img.loading = "lazy";
+      try{ img.fetchPriority = "low"; }catch(_){}
+    }
+  });
+}
+
+// Garante que depois de cada render as imagens são ajustadas
+// (chama uma vez agora)
+try{ optimizeImagesLCP(); }catch(_){}
 </script>
 </script>
 <body>  
