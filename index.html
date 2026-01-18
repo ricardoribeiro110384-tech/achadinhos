@@ -496,21 +496,24 @@
       font-weight:900;
       min-height: 36px;
     }
+/* ✅ CTA por produto (Estoque limitado / Sucesso de vendas) — AMARELO */
+.ctaTag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:12px;
 
-    /* ✅ CTA por produto (somente texto) */
-    .ctaTag{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:12px;
-      border:1px solid rgba(245,158,11,.30);
-      background: rgba(245,158,11,.12);
-      color:#fde68a;
-      font-weight:1000;
-      font-size:13px;
-      line-height:1.25;
-    }
+  background: linear-gradient(180deg, #ffd000, #ffb800) !important;
+  border:1px solid #e6a700 !important;
+
+  color:#1a1400 !important;
+  font-weight:1000 !important;
+  font-size:13px;
+  line-height:1.25;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
 
     .prices{
       display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
