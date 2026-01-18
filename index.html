@@ -1119,6 +1119,22 @@ header{
   color:#1a1400 !important;
   box-shadow: 0 10px 20px rgba(255,184,0,.18);
 }
+    /* Urgência: desconto e CTA chamam MUITO mais atenção */
+@keyframes pulsePromo{
+  0%{ transform: scale(1); filter: brightness(1); }
+  50%{ transform: scale(1.02); filter: brightness(1.06); }
+  100%{ transform: scale(1); filter: brightness(1); }
+}
+
+/* Desconto pulsando leve */
+.tag.off{
+  animation: pulsePromo 1.2s ease-in-out infinite;
+}
+
+/* CTA por produto pulsando (bem comercial) */
+.ctaTag{
+  animation: pulsePromo 1.4s ease-in-out infinite;
+}
   </style>
 </head>
 
