@@ -968,6 +968,89 @@ header .brand{
 .card .tag *{
   color: #1a1400 !important;
 }
+    /* =========================
+   BOOST CONVERSAO (SEM MEXER NO HTML)
+   Cole NO FINAL do <style>
+   ========================= */
+
+/* Fundo mais "comercial" e menos vazio */
+body{
+  background:
+    radial-gradient(1100px 520px at 15% 0%, rgba(255,208,0,.28), transparent 55%),
+    radial-gradient(900px 520px at 85% 10%, rgba(34,197,94,.18), transparent 55%),
+    linear-gradient(180deg, #f7f8fb, #eef2f7);
+  color:#0b1220;
+}
+
+/* Texto padrão mais escuro (tirar "apagado") */
+:root{
+  --text:#0b1220;
+  --muted:#334155;
+  --border: rgba(15,23,42,.14);
+  --shadow: 0 12px 30px rgba(2,6,23,.10);
+}
+
+/* Header “mais premium” */
+header{
+  background: rgba(255,255,255,.92);
+  border-bottom: 1px solid rgba(15,23,42,.10);
+  box-shadow: 0 8px 20px rgba(2,6,23,.06);
+}
+.brand .sub{ color:#475569; font-weight:800; }
+.status{
+  background: rgba(255,255,255,.88);
+  border:1px solid rgba(15,23,42,.12);
+  color:#334155;
+}
+.status b{ color:#0b1220; }
+.pill{
+  background: rgba(255,208,0,.20);
+  border:1px solid rgba(255,184,0,.35);
+  color:#1a1400;
+}
+
+/* Hero mais memorável + menos “clean demais” */
+.hero{
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.70));
+  border:1px solid rgba(15,23,42,.10);
+  box-shadow: 0 16px 40px rgba(2,6,23,.10);
+}
+.hero:before{
+  background:
+    radial-gradient(620px 240px at 18% 0%, rgba(255,208,0,.38), transparent 60%),
+    radial-gradient(520px 260px at 78% 0%, rgba(34,197,94,.22), transparent 55%);
+}
+.hero h1{
+  font-size:26px;
+  letter-spacing:-.4px;
+  color:#0b1220;
+}
+.hero p{ color:#334155; }
+
+/* Botões com mais hierarquia */
+.btn{
+  background: rgba(255,255,255,.92);
+  border:1px solid rgba(15,23,42,.12);
+  box-shadow: 0 10px 20px rgba(2,6,23,.08);
+  color:#0b1220;
+}
+.btnPrimary{
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color:#052014;
+  box-shadow: 0 14px 28px rgba(34,197,94,.22);
+}
+
+/* Chips mais “promo” */
+.chip{
+  background: rgba(255,255,255,.92);
+  border:1px solid rgba(15,23,42,.12);
+  color:#0b1220;
+  box-shadow: 0 10px 20px rgba(2,6,23,.06);
+}
+.chipOn{
+  background: linear-gradient(135deg, rgba(34,197,94,.22), rgba(255,208,0,.22));
+  border:1px solid rgba(34,197,94,.30);
+}
   </style>
 </head>
 
