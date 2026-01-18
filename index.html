@@ -2199,64 +2199,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   setupVideo();
   loadSheet(true);
   startSheetRefresh();
-  // =========================
-// PATCH PERFORMANCE SEGURO
-// (cole no FINAL do seu <script>, após startSheetRefresh())
-// =========================
-
-// Debounce simples (evita travar no mobile ao digitar)
-function debounce(fn, wait=180){
-  let t = null;
-  return (...args) => {
-    clearTimeout(t);
-    t = setTimeout(() => fn(...args), wait);
-  };
-}
-
-// Render em fila (evita render duplicado na mesma “batida”)
-let __renderQueued = false;
-function renderQueued(){
-  if(__renderQueued) return;
-  __renderQueued = true;
-  requestAnimationFrame(() => {
-    __renderQueued = false;
-    try{ render(); }catch(e){ console.error("render error:", e); }
-    try{ optimizeImagesLCP(); }catch(e){}
-  });
-}
-
-// Reaplica listeners com debounce (sem depender do patch antigo)
-(function(){
-  const qEl = document.getElementById("q");
-  const sortEl = document.getElementById("sort");
-
-  if(qEl){
-    qEl.addEventListener("input", debounce(() => renderQueued(), 180), { passive:true });
-  }
-  if(sortEl){
-    sortEl.addEventListener("change", () => renderQueued(), { passive:true });
-  }
-})();
-
-// Otimiza carregamento das primeiras imagens (LCP)
-function optimizeImagesLCP(){
-  const imgs = document.querySelectorAll("#offers img");
-  imgs.forEach((img, idx) => {
-    img.decoding = "async";
-    if(idx < 4){
-      img.loading = "eager";
-      try{ img.fetchPriority = "high"; }catch(_){}
-    }else{
-      img.loading = "lazy";
-      try{ img.fetchPriority = "low"; }catch(_){}
-    }
-  });
-}
-
-// Garante que depois de cada render as imagens são ajustadas
-// (chama uma vez agora)
-try{ optimizeImagesLCP(); }catch(_){}
-</script>
+ 
 <body>  
 </html>
 
