@@ -1148,6 +1148,31 @@ header{
   box-shadow: 0 12px 26px rgba(2,6,23,.08);
 }
 .notice p{ color:#0b1220; }
+    /* ===== FIX MOBILE: mostrar copy abaixo do logo ===== */
+@media (max-width: 520px){
+  .toptag{
+    display:block !important;
+    font-size:13px !important;
+    font-weight:900 !important;
+    opacity:1 !important;
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:unset !important;
+    line-height:1.2 !important;
+    max-width:75vw !important;
+    color:#1a1a1a !important;
+  }
+
+  .topbar{
+    padding:16px 14px !important;
+  }
+
+  .toptext{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+}
   </style>
 </head>
 
