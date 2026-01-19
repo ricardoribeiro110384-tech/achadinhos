@@ -2343,6 +2343,49 @@ render = function(){
   _renderOriginal();
   requestAnimationFrame(applyEconomyBadges);
 };
+  <script defer>
+/* ... seu script inteiro acima ... */
+
+/* =========================
+   REMOVER FAIXA "Você economiza" (redundante)
+   ========================= */
+function removeFaixaEconomia(){
+  // roda em todos os cards
+  document.querySelectorAll(".card").forEach(card => {
+    // procura qualquer elemento que contenha o texto
+    const el = Array.from(card.querySelectorAll("div,span,p,small"))
+      .find(n => (n.textContent || "").includes("Você economiza"));
+
+    if(!el) return;
+
+    // remove o "container" mais provável da faixa
+    const container =
+      el.closest(".saveRow,.savingsRow,.dealRow,.discountRow,.tagRow,.row,.prices") ||
+      el.closest("div") ||
+      el.parentElement;
+
+    // só remove se não for o card inteiro
+    if(container && container !== card && container !== card.querySelector(".cardBody")){
+      container.remove();
+    }
+  });
+}
+
+/* Hook: sempre que renderizar, remove a faixa */
+(function hookRender(){
+  if(typeof render !== "function") return;
+
+  const _render = render;
+  render = function(){
+    _render();
+    removeFaixaEconomia();
+  };
+
+  // também tenta logo ao abrir (caso já esteja renderizado)
+  setTimeout(removeFaixaEconomia, 200);
+  setTimeout(removeFaixaEconomia, 800);
+})();
+</script>
 </script>
 <body>  
 </html>
