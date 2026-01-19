@@ -1209,6 +1209,33 @@ header{
 .saveMoney b{
   font-size: 14px;
 }
+    .imgBadge{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:5;
+  background:rgba(0,0,0,.75);
+  padding:8px;
+  border-radius:12px;
+  color:#fff;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+.imgBadgeOff{
+  font-weight:900;
+  font-size:14px;
+  padding:5px 10px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#ff2d55,#ff9500);
+  margin-bottom:6px;
+  display:inline-block;
+}
+
+.imgBadgeSave{
+  font-size:13px;
+  font-weight:800;
+  color:#fde68a;
+}
   </style>
 </head>
 
@@ -2244,6 +2271,46 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   setupVideo();
   loadSheet(true);
   startSheetRefresh();
+  // =========================
+// OVERLAY AGRESSIVO – ECONOMIA NO CARD (SEM ALTERAR RENDER)
+// =========================
+function applyEconomyBadges(){
+  document.querySelectorAll(".card").forEach(card => {
+    // evita duplicar
+    if(card.querySelector(".imgBadge")) return;
+
+    const imgBox = card.querySelector(".imgbox");
+    const priceNow = card.querySelector(".priceNow");
+    const priceOld = card.querySelector(".priceOld");
+
+    if(!imgBox || !priceNow || !priceOld) return;
+
+    const now = Number(priceNow.textContent.replace(/[^\d,]/g,'').replace(',','.'));
+    const old = Number(priceOld.textContent.replace(/[^\d,]/g,'').replace(',','.'));
+
+    if(!isFinite(now) || !isFinite(old) || old <= now) return;
+
+    const save = +(old - now).toFixed(2);
+    const pct = Math.round((save / old) * 100);
+
+    const badge = document.createElement("div");
+    badge.className = "imgBadge";
+    badge.innerHTML = `
+      <div class="imgBadgeOff">${pct}% OFF</div>
+      <div class="imgBadgeSave">Economize R$ ${save.toFixed(2).replace('.',',')}</div>
+    `;
+
+    imgBox.style.position = "relative";
+    imgBox.appendChild(badge);
+  });
+}
+
+// reaplica após render e refresh
+const _renderOriginal = render;
+render = function(){
+  _renderOriginal();
+  requestAnimationFrame(applyEconomyBadges);
+};
 </script>
 <body>  
 </html>
