@@ -1268,176 +1268,7 @@ header{
 .discountRow{
   display: none !important;
 }
-    /* =========================
-   ECONOMIA / %OFF (overlay na imagem)
-   Classe criada no JS: .imgBadge
-   ========================= */
-
-.imgbox{
-  position: relative; /* garante overlay */
-  overflow: hidden;
-}
-
-.imgBadge{
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  pointer-events: none;
-  max-width: 70%;
-}
-
-.imgBadgeOff{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: .2px;
-  line-height: 1;
-  color: #111;
-  background: #ffd400; /* amarelo forte */
-  box-shadow: 0 10px 22px rgba(0,0,0,.18);
-  border: 1px solid rgba(0,0,0,.12);
-}
-
-.imgBadgeSave{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-weight: 800;
-  font-size: 11px;
-  line-height: 1.1;
-  color: #fff;
-  background: rgba(0,0,0,.78);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 10px 22px rgba(0,0,0,.18);
-  border: 1px solid rgba(255,255,255,.14);
-}
-
-/* Mobile: ainda menor pra não cobrir */
-@media (max-width: 520px){
-  .imgBadge{ top: 8px; left: 8px; max-width: 78%; gap: 5px; }
-  .imgBadgeOff{ font-size: 11px; padding: 5px 9px; }
-  .imgBadgeSave{ font-size: 10px; padding: 5px 9px; }
-}
-
-/* =========================
-   REMOVE a faixa/tag "OFF" antiga (amarela no card)
-   ========================= */
-.tag.off{
-  display: none !important;
-}
-
-/* =========================
-   BARRA "VOCÊ ECONOMIZA" (saveBar no corpo do card)
-   ========================= */
-.saveBar{
-  margin-top: 10px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  background: linear-gradient(90deg, rgba(255,212,0,.22), rgba(255,255,255,.06));
-  border: 1px solid rgba(255,212,0,.35);
-}
-
-.savePct{
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 10px;
-  border-radius: 999px;
-  font-weight: 900;
-  font-size: 12px;
-  color: #111;
-  background: #ffd400;
-  box-shadow: 0 10px 22px rgba(0,0,0,.15);
-}
-
-.saveMoney{
-  flex: 1 1 auto;
-  font-weight: 800;
-  font-size: 13px;
-  color: rgba(255,255,255,.92); /* ajusta se seu fundo for claro */
-}
-
-.saveMoney b{
-  color: #ffd400;
-  font-weight: 950;
-}
-
-/* Mobile: quebra bonitinho */
-@media (max-width: 520px){
-  .saveBar{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .saveMoney{ font-size: 13px; }
-}
-
-/* =========================
-   CONTRASTE GERAL (textos apagados)
-   Ajusta caso seu fundo seja claro
-   ========================= */
-.title{
-  color: rgba(255,255,255,.95);
-}
-
-.muted{
-  color: rgba(255,255,255,.78);
-}
-
-.priceNow{
-  color: #fff;
-  font-weight: 950;
-}
-
-.priceOld{
-  color: rgba(255,255,255,.65);
-  text-decoration: line-through;
-}
-
-/* Botões mais visíveis */
-.btnSmall{
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.08);
-  color: #fff;
-}
-
-.btnSmall:hover{
-  background: rgba(255,255,255,.14);
-}
-
-.btnBuy{
-  background: #ffd400 !important;
-  color: #111 !important;
-  border: 1px solid rgba(0,0,0,.12) !important;
-  font-weight: 900;
-}
-
-.btnGroup{
-  background: rgba(34,197,94,.16) !important;
-  color: #eafff2 !important;
-  border: 1px solid rgba(34,197,94,.35) !important;
-}
-
-.btnShare{
-  background: rgba(59,130,246,.16) !important;
-  color: #eaf2ff !important;
-  border: 1px solid rgba(59,130,246,.35) !important;
-}
+   
   </style>
 </head>
 
@@ -1622,7 +1453,7 @@ header{
   const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
   const VIDEO_URL = "video.mp4";
 
-  const REFRESH_MS = 20 * 1000;     // 20s
+  const REFRESH_MS = 20 * 1000;   // 20s
   const SPOT_ROTATE_MS = 25 * 1000; // 25s
 
   const DEFAULT_GROUP_COUNT = 1200;
@@ -1643,8 +1474,8 @@ header{
   let SPOT_TOP_LIST = [];
   let SPOT_INDEX = 0;
 
-  let SPOT_TIMER = null;
-  let SHEET_TIMER = null;
+  let SPOT_TIMER = null;       // timer do spotlight
+  let SHEET_TIMER = null;      // timer do refresh da planilha
   let LAST_SPOT_TICK = 0;
 
   // =========================
@@ -1940,6 +1771,7 @@ header{
         return r !== 0 ? r : compareNewest(x,y);
       });
     } else {
+      // "destaque": últimas em cima
       a.sort((x,y)=>{
         const newest = compareNewest(x,y);
         if(newest !== 0) return newest;
@@ -1994,7 +1826,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   }
 
   // =========================
-  // ✅ OFERTA DO MINUTO
+  // ✅ OFERTA DO MINUTO (ROTACAO CORRIGIDA)
   // =========================
   function buildSpotTopList(items){
     if(!items.length) return [];
@@ -2037,11 +1869,15 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
     const metaBits = [];
     if(SPOT_ITEM.badge) metaBits.push(`🏷️ ${SPOT_ITEM.badge}`);
     if(SPOT_ITEM.urgency) metaBits.push(`${SPOT_ITEM.urgency}`);
+    if(SPOT_ITEM.discount) metaBits.push(`🔥 ${SPOT_ITEM.discount}`);
     if(SPOT_ITEM.rating) metaBits.push(`⭐ ${SPOT_ITEM.rating}`);
     if(SPOT_ITEM.sold) metaBits.push(`✅ ${SPOT_ITEM.sold} vendidos`);
+
+    // ✅ mostra economia também no spotlight (se existir)
     if(SPOT_ITEM.saveText) metaBits.push(`💰 economize ${SPOT_ITEM.saveText}`);
 
     document.getElementById("spotMeta").textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";
+
     box.style.display = "grid";
   }
 
@@ -2057,15 +1893,18 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
 
   function startSpotRotation(){
     if(SPOT_TIMER) return;
+
     if(!SPOT_TOP_LIST.length){
       setSpotItem(null);
       return;
     }
+
     if(!SPOT_ITEM){
       SPOT_INDEX = 0;
       setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
       LAST_SPOT_TICK = Date.now();
     }
+
     SPOT_TIMER = setInterval(() => {
       spotNext();
     }, SPOT_ROTATE_MS);
@@ -2073,6 +1912,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
 
   function updateSpotListFromSheet(){
     const newList = buildSpotTopList(ALL_ITEMS);
+
     if(!newList.length){
       SPOT_TOP_LIST = [];
       SPOT_INDEX = 0;
@@ -2123,8 +1963,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
     loading.style.display = sorted.length ? "none" : "block";
     loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
 
-    const countPill = document.getElementById("countPill");
-    if(countPill) countPill.textContent = `${ALL_ITEMS.length} ofertas`;
+    document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
 
     for(const it of sorted){
       const card = document.createElement("article");
@@ -2132,17 +1971,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
 
       const img = document.createElement("div");
       img.className = "imgbox";
-      img.style.position = "relative";
       img.innerHTML = `<img src="${it.image || ""}" alt="${escapeHtml(it.title)}" loading="lazy" referrerpolicy="no-referrer" />`;
-
-      // ✅ selo pequeno -% (não tampa a imagem)
-      if(it.pctNum && it.pctNum > 0){
-        const b = document.createElement("div");
-        b.className = "imgBadgeMini";
-        b.textContent = `-${it.pctNum}%`;
-        img.appendChild(b);
-      }
-
       card.appendChild(img);
 
       const body = document.createElement("div");
@@ -2153,6 +1982,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       title.textContent = it.title || "Oferta";
       body.appendChild(title);
 
+      // CTA (texto)
       if(it.cta){
         const cta = document.createElement("div");
         cta.className = "ctaTag";
@@ -2177,8 +2007,8 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
 
       body.appendChild(prices);
 
-      // ✅ ECONOMIA + % OFF (bem claro)
-      if(it.saveNum && it.saveNum > 0 && it.pctNum && it.pctNum > 0){
+      // ✅ ECONOMIA + % OFF (bem chamativo)
+      if(it.saveNum && it.saveNum > 0){
         const saveBar = document.createElement("div");
         saveBar.className = "saveBar";
         saveBar.innerHTML = `
@@ -2222,8 +2052,13 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
         right.appendChild(t);
       }
 
-      // ❌ REMOVIDO: tag amarelo/“off”
-      // if(it.discount){ ... }
+      // (mantive seus tags)
+     // if(it.discount){
+     //   const t = document.createElement("span");
+      //  t.className = "tag off";
+      //  t.textContent = it.discount;
+      //  right.appendChild(t);
+     // }
 
       if(it.coupon){
         const t = document.createElement("span");
@@ -2389,7 +2224,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
           saveNum,
           saveText: isFinite(saveNum) ? moneyBRLFromNumber(saveNum) : "",
           pctNum,
-          pctText: (pctNum && pctNum > 0) ? `${pctNum}% OFF` : "",
+          pctText: pctNum ? `${pctNum}% OFF` : "",
 
           discount: discountRaw,
           discountNum: isFinite(discountNum) ? discountNum : 0,
@@ -2412,12 +2247,9 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
       ALL_ITEMS = items;
 
       // KPIs
-      const kpi1 = document.getElementById("kpi1");
-      const kpi2 = document.getElementById("kpi2");
-      if(kpi1) kpi1.textContent = items.length.toString();
-
+      document.getElementById("kpi1").textContent = items.length.toString();
       const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-      if(kpi2) kpi2.textContent = soldTodaySum ? soldTodaySum.toString() : "—";
+      document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";
 
       // Prova social
       const gc = groupCount ?? DEFAULT_GROUP_COUNT;
@@ -2445,7 +2277,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   }
 
   // =========================
-  // TIMERS
+  // ✅ TIMERS (SEM BUG)
   // =========================
   function startSheetRefresh(){
     if(SHEET_TIMER) clearInterval(SHEET_TIMER);
@@ -2472,6 +2304,9 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   setupVideo();
   loadSheet(true);
   startSheetRefresh();
+  
 </script>
+<body>  
+
 </html>
 
