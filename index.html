@@ -2303,47 +2303,7 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   setupVideo();
   loadSheet(true);
   startSheetRefresh();
-  // =========================
-// OVERLAY AGRESSIVO – ECONOMIA NO CARD (SEM ALTERAR RENDER)
-// =========================
-function applyEconomyBadges(){
-  document.querySelectorAll(".card").forEach(card => {
-    // evita duplicar
-    if(card.querySelector(".imgBadge")) return;
-
-    const imgBox = card.querySelector(".imgbox");
-    const priceNow = card.querySelector(".priceNow");
-    const priceOld = card.querySelector(".priceOld");
-
-    if(!imgBox || !priceNow || !priceOld) return;
-
-    const now = Number(priceNow.textContent.replace(/[^\d,]/g,'').replace(',','.'));
-    const old = Number(priceOld.textContent.replace(/[^\d,]/g,'').replace(',','.'));
-
-    if(!isFinite(now) || !isFinite(old) || old <= now) return;
-
-    const save = +(old - now).toFixed(2);
-    const pct = Math.round((save / old) * 100);
-
-    const badge = document.createElement("div");
-    badge.className = "imgBadge";
-    badge.innerHTML = `
-      <div class="imgBadgeOff">${pct}% OFF</div>
-      <div class="imgBadgeSave">Economize R$ ${save.toFixed(2).replace('.',',')}</div>
-    `;
-
-    imgBox.style.position = "relative";
-    imgBox.appendChild(badge);
-  });
-}
-
-// reaplica após render e refresh
-const _renderOriginal = render;
-render = function(){
-  _renderOriginal();
-  requestAnimationFrame(applyEconomyBadges);
-};
- </script>
+  
 </script>
 <body>  
 </html>
