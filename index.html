@@ -1743,6 +1743,61 @@ header{
 .btnGroup{
   display: none !important;
 }
+    /* ===============================
+   MOSTRAR TEXTO COMPLETO (SEM CORTAR)
+   Cole no FINAL do <style>
+   =============================== */
+
+/* 1) TÍTULO do produto (h2.title) */
+.card .title{
+  min-height: unset !important;
+  height: auto !important;
+  max-height: none !important;
+
+  overflow: visible !important;
+  text-overflow: unset !important;
+  white-space: normal !important;
+
+  display: block !important;
+
+  /* remove truncamento por line-clamp (se existir) */
+  -webkit-line-clamp: unset !important;
+  -webkit-box-orient: unset !important;
+}
+
+/* 2) Se o seu título estiver sendo “clampado” via display:-webkit-box */
+.card .title{
+  display: block !important;
+}
+
+/* 3) CTA (faixa amarela tipo “Estoque limitado”) */
+.card .ctaTag{
+  max-height: none !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+/* 4) Economia/Desconto (se existir algum texto junto) */
+.card .saveBar,
+.card .saveMoney{
+  max-height: none !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+/* 5) Garante que nada “corte” o conteúdo por overflow */
+.card,
+.cardBody{
+  overflow: visible !important;
+}
+
+/* 6) Ajuste mobile para caber melhor */
+@media (max-width: 520px){
+  .card .title{
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+  }
+}
   </style>
 </head>
 
