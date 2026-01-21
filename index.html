@@ -2877,6 +2877,13 @@ render = function(){
   _renderKeep();
   requestAnimationFrame(applyShopeeBadge);
 };
+  document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("button").forEach(btn => {
+    if (btn.textContent.trim().toLowerCase() === "ver oferta") {
+      btn.textContent = "Ver oferta no Mercado Livre";
+    }
+  });
+});
 </script>
 <body>  
 
