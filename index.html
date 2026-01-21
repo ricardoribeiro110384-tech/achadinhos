@@ -2884,6 +2884,47 @@ render = function(){
     }
   });
 });
+  // =========================
+// FIX: renomear "Ver oferta" em TODOS os cards (inclui render dinâmico)
+// Cole no FINAL do <script>
+// =========================
+(function(){
+  function renameButtons(root=document){
+    // pega botões e links que tenham exatamente "Ver oferta"
+    root.querySelectorAll("button, a").forEach(el => {
+      const t = (el.textContent || "").trim();
+      if (t === "Ver oferta") {
+        el.textContent = "Ver oferta no Mercado Livre";
+      }
+    });
+  }
+
+  function startObserver(){
+    const target = document.getElementById("offers") || document.body;
+
+    // aplica já
+    renameButtons(document);
+
+    // observa mudanças (quando o render recria os cards)
+    const obs = new MutationObserver((mutations) => {
+      for (const m of mutations){
+        for (const node of m.addedNodes){
+          if (node.nodeType === 1) renameButtons(node);
+        }
+      }
+      // fallback pra garantir
+      renameButtons(document);
+    });
+
+    obs.observe(target, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startObserver);
+  } else {
+    startObserver();
+  }
+})();
 </script>
 <body>  
 
