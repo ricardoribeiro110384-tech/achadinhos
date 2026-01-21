@@ -1537,6 +1537,27 @@ header{
     font-size:11px !important;
   }
 }
+    /* ===== TÍTULO SEM CORTAR FEIO (2 linhas no mobile / 3 no desktop) ===== */
+.card .title{
+  min-height: unset !important;
+  max-height: unset !important;
+
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+
+  /* desktop */
+  -webkit-line-clamp: 3;
+  line-height: 1.25 !important;
+}
+
+/* mobile: só 2 linhas pra não “estourar” o card */
+@media (max-width: 640px){
+  .card .title{
+    -webkit-line-clamp: 2;
+  }
+}
   </style>
 </head>
 
