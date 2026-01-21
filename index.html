@@ -1847,6 +1847,34 @@ header{
   padding: 0 !important;
   margin: 0 !important;
 }
+    /* ============================
+   PATCH: remover "Entrar no grupo" DO TOPO
+   Cole no FINAL do CSS
+   ============================ */
+
+/* Some com QUALQUER botão/link do topo que seja o de grupo */
+.topbar button[onclick*="openGroup"],
+.topbar a[onclick*="openGroup"],
+header button[onclick*="openGroup"],
+header a[onclick*="openGroup"],
+button[onclick*="openGroup"],
+a[onclick*="openGroup"]{
+  display:none !important;
+}
+
+/* Se esse botão estiver dentro de uma faixa/linha acima (ex.: .wrap / .controls / .ctaRow) */
+.wrap button[onclick*="openGroup"],
+.controls button[onclick*="openGroup"],
+.ctaRow button[onclick*="openGroup"]{
+  display:none !important;
+}
+
+/* (BÔNUS) se o "Entrar no grupo" for um <a> com href do WhatsApp/Grupo */
+a[href*="chat.whatsapp.com"],
+a[href*="wa.me"],
+a[href*="whatsapp.com"]{
+  display:none !important;
+}
   </style>
 </head>
 
