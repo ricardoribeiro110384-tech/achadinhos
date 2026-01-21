@@ -2031,6 +2031,44 @@ header{
   69%  { transform:translateX(-200%); }
   100% { transform:translateX(-200%); }
 }
+    /* garante que o bloco do banner não tenha altura travada e não corte */
+.videoFrame,
+#videoWrap .videoFrame{
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* carrossel */
+.bannerCarousel{
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* track: cada imagem ocupa 100% da largura */
+.bannerTrack{
+  display: flex;
+  gap: 0;
+  will-change: transform;
+  animation: bannerSlide 12s infinite;
+}
+
+/* imagem SEM corte */
+.bannerTrack img{
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain; /* <- impede corte */
+}
+
+/* animação */
+@keyframes bannerSlide{
+  0%, 28%   { transform: translateX(0%); }
+  33%, 61%  { transform: translateX(-100%); }
+  66%, 94%  { transform: translateX(-200%); }
+  100%      { transform: translateX(-200%); }
+}
   </style>
 </head>
 
