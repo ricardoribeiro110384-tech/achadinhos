@@ -2004,6 +2004,33 @@ header{
     margin-top: -12px !important;
   }
 }
+    .bannerCarousel{
+  width:100%;
+  overflow:hidden;
+  border-radius:12px;
+}
+
+.bannerTrack{
+  display:flex;
+  width:300%;
+  animation: bannerSlide 12s infinite;
+}
+
+.bannerTrack img{
+  width:100%;
+  height:auto;
+  object-fit:cover;
+  display:block;
+}
+
+@keyframes bannerSlide{
+  0%   { transform:translateX(0); }
+  33%  { transform:translateX(0); }
+  36%  { transform:translateX(-100%); }
+  66%  { transform:translateX(-100%); }
+  69%  { transform:translateX(-200%); }
+  100% { transform:translateX(-200%); }
+}
   </style>
 </head>
 
@@ -2073,12 +2100,13 @@ header{
             <button class="btnTiny" onclick="enableVideoAudio()">🔊 Ativar áudio</button>
           </div>
           <div class="videoFrame">
-  <img
-    src="banner.jpeg"
-    alt="Ofertas em destaque"
-    style="width:100%;height:auto;display:block;border-radius:10px;"
-    loading="eager"
-  />
+ I<div class="bannerCarousel">
+  <div class="bannerTrack">
+    <img src="banner1.jpeg" alt="Banner 1">
+    <img src="banner2.jpeg" alt="Banner 2">
+    <img src="banner3.jpeg" alt="Banner 3">
+  </div>
+</div>
 </div>
         </div>
       </div>
