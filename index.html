@@ -1646,6 +1646,42 @@ header{
   .mlBadge .mlOff{ font-size:11px; padding:3px 7px; }
   .mlBadge .mlSave{ font-size:11px; }
 }
+    /* PATCH: selo menor e menos invasivo (sobrepõe o CSS anterior) */
+.mlBadge{
+  right:8px !important;
+  bottom:8px !important;
+
+  padding:4px 6px !important;
+  border-radius:8px !important;
+
+  background:rgba(0,0,0,.40) !important;
+  max-width:60% !important;
+}
+
+.mlBadge .mlOff{
+  font-size:10px !important;
+  padding:2px 6px !important;
+  border-radius:999px !important;
+}
+
+.mlBadge .mlSave{
+  font-size:10px !important;
+  line-height:1.1 !important;
+  white-space:nowrap !important;
+  color:#ffe9a6 !important;
+}
+
+/* mobile: menor ainda */
+@media (max-width: 520px){
+  .mlBadge{
+    right:6px !important;
+    bottom:6px !important;
+    padding:3px 5px !important;
+    max-width:58% !important;
+  }
+  .mlBadge .mlOff{ font-size:9px !important; padding:2px 5px !important; }
+  .mlBadge .mlSave{ font-size:9px !important; }
+}
   </style>
 </head>
 
