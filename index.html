@@ -1947,6 +1947,63 @@ header{
     margin-top: -6px !important; /* 🔥 cola de verdade */
   }
 }
+    /* =========================================
+   ZERAR ESPAÇO ENTRE FAIXA AMARELA E BANNER
+   (VERSÃO AGRESSIVA)
+   Cole NO FINAL do <style>
+   ========================================= */
+
+/* 1) Encolhe a faixa amarela (altura) */
+.topbar .wrap{
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+/* 2) Remove qualquer margem/padding logo após a topbar */
+.topbar{ margin-bottom:0 !important; padding-bottom:0 !important; }
+.topbar + *{ margin-top:0 !important; padding-top:0 !important; }
+
+/* 3) Se existir header sticky abaixo, mata o espaço dele */
+header{
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+/* 4) Remove “respiro” padrão do container */
+.wrap{
+  padding-top: 0 !important;
+}
+
+/* 5) Cola o banner/hero no topo */
+.hero, .banner, .videoWrap{
+  margin-top: 0 !important;
+}
+
+/* 6) Se tiver um “spacer” fantasma com height/min-height */
+.spacer, .gap, .sep, .divider{
+  display:none !important;
+  height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* 7) MOBILE: cola de verdade (sem sobrar branco) */
+@media (max-width: 520px){
+  .topbar .wrap{
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* puxa o conteúdo pra cima (compensa qualquer bloco invisível) */
+  .topbar + *{
+    margin-top: -16px !important;
+  }
+
+  .hero, .banner, .videoWrap{
+    margin-top: -12px !important;
+  }
+}
   </style>
 </head>
 
