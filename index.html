@@ -1682,6 +1682,59 @@ header{
   .mlBadge .mlOff{ font-size:9px !important; padding:2px 5px !important; }
   .mlBadge .mlSave{ font-size:9px !important; }
 }
+    /* =========================================
+   SELO %OFF – CANTO SUPERIOR ESQUERDO (MINI)
+   ========================================= */
+
+/* garante que a imagem seja referência */
+.imgbox{
+  position:relative;
+}
+
+/* selo */
+.mlBadge{
+  position:absolute;
+  top:6px !important;
+  left:6px !important;
+  right:auto !important;
+  bottom:auto !important;
+
+  padding:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  max-width:none !important;
+}
+
+/* apenas o %OFF */
+.mlBadge .mlOff{
+  display:inline-block;
+  font-size:11px !important;
+  font-weight:900;
+  padding:3px 7px !important;
+  border-radius:6px !important;
+
+  background:linear-gradient(135deg,#ff3b3b,#ff7a18);
+  color:#fff !important;
+
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+
+/* remove texto de economia da imagem */
+.mlBadge .mlSave{
+  display:none !important;
+}
+
+/* MOBILE – ainda menor */
+@media (max-width:520px){
+  .mlBadge{
+    top:5px !important;
+    left:5px !important;
+  }
+  .mlBadge .mlOff{
+    font-size:10px !important;
+    padding:2px 6px !important;
+  }
+}
   </style>
 </head>
 
