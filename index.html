@@ -1798,7 +1798,55 @@ header{
     line-height: 1.25 !important;
   }
 }
-   
+   /* ===============================
+   LIMPEZA GERAL – SOBREPOSIÇÃO
+   =============================== */
+
+/* 1️⃣ Remove botão "Entrar no grupo" do topo */
+.topBar button,
+.topBar .btn,
+.topBar .enterGroup,
+.topBar button[onclick*="openGroup"]{
+  display: none !important;
+}
+
+/* 2️⃣ Remove cards de métricas (ofertas / vendidos hoje) */
+.kpi,
+.kpiCard{
+  display: none !important;
+}
+
+/* 3️⃣ Remove botões da seção
+   "As melhores ofertas do dia" */
+.hero .ctaRow,
+.hero .btn,
+.hero button{
+  display: none !important;
+}
+
+/* 4️⃣ Remove textos dessa seção,
+   mantendo apenas o banner/imagem */
+.hero h1,
+.hero p,
+.hero .heroText{
+  display: none !important;
+}
+
+/* 5️⃣ Garante que o banner continue visível */
+.hero img,
+.hero .banner,
+.hero .heroImage{
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* 6️⃣ Ajuste para não sobrar espaços vazios */
+.hero{
+  padding: 0 !important;
+  margin: 0 !important;
+}
   </style>
 </head>
 
