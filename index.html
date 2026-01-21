@@ -1862,7 +1862,36 @@ header{
 .topbar{
   padding-bottom: 0 !important;
 }
-   
+   /* ============================
+   REMOVER ESPAÇO ENTRE TOPO E BANNER
+   ============================ */
+
+/* Remove margem do primeiro bloco após a topbar */
+.topbar + *{
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Caso o banner esteja dentro de .hero */
+.hero{
+  margin-top: 6px !important;
+}
+
+/* Se houver container geral */
+.wrap{
+  padding-top: 8px !important;
+}
+
+/* Mobile: ainda mais justo */
+@media (max-width: 520px){
+  .hero{
+    margin-top: 4px !important;
+  }
+
+  .wrap{
+    padding-top: 6px !important;
+  }
+}
   </style>
 </head>
 
