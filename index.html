@@ -1583,6 +1583,69 @@ header{
     font-size: 12px !important;
   }
 }
+    /* 1) some com a faixa de economia (remove a barra inteira) */
+.saveBar{ display:none !important; }
+
+/* 2) garante posição relativa na imagem pra receber o selo */
+.imgbox{ position:relative !important; }
+
+/* 3) selo estilo Shopee (canto da imagem) */
+.mlBadge{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  z-index:6;
+
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+
+  padding:6px 8px;
+  border-radius:10px;
+
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(4px);
+  color:#fff;
+
+  max-width:75%;
+}
+
+.mlBadge .mlOff{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:1000;
+  font-size:12px;
+  letter-spacing:.2px;
+
+  padding:3px 8px;
+  border-radius:999px;
+
+  background:linear-gradient(90deg,#ff2d2d,#ff9500);
+  color:#fff;
+}
+
+.mlBadge .mlSave{
+  font-weight:900;
+  font-size:12px;
+  line-height:1.15;
+  color:#fde68a;
+  white-space:nowrap;
+}
+
+/* mobile: ainda mais compacto */
+@media (max-width: 520px){
+  .mlBadge{
+    right:8px;
+    bottom:8px;
+    padding:5px 7px;
+    border-radius:9px;
+    max-width:82%;
+  }
+  .mlBadge .mlOff{ font-size:11px; padding:3px 7px; }
+  .mlBadge .mlSave{ font-size:11px; }
+}
   </style>
 </head>
 
@@ -2623,7 +2686,44 @@ Grupo: ${WHATSAPP_GROUP_LINK}`;
   setupVideo();
   loadSheet(true);
   startSheetRefresh();	
-  
+  function applyShopeeBadge(){
+  document.querySelectorAll(".card").forEach(card => {
+    const imgBox = card.querySelector(".imgbox");
+    if(!imgBox) return;
+
+    // evita duplicar
+    if(imgBox.querySelector(".mlBadge")) return;
+
+    // pega preço atual e antigo do card
+    const priceNowEl = card.querySelector(".priceNow");
+    const priceOldEl = card.querySelector(".priceOld");
+    if(!priceNowEl || !priceOldEl) return;
+
+    const now = Number(priceNowEl.textContent.replace(/[^\d,]/g,'').replace(',','.'));
+    const old = Number(priceOldEl.textContent.replace(/[^\d,]/g,'').replace(',','.'));
+    if(!isFinite(now) || !isFinite(old) || old <= now) return;
+
+    const save = +(old - now).toFixed(2);
+    const pct  = Math.round((save / old) * 100);
+    if(pct <= 0) return;
+
+    const badge = document.createElement("div");
+    badge.className = "mlBadge";
+    badge.innerHTML = `
+      <div class="mlOff">${pct}% OFF</div>
+      <div class="mlSave">Economize R$ ${save.toFixed(2).replace('.',',')}</div>
+    `;
+
+    imgBox.appendChild(badge);
+  });
+}
+
+/* reaplica sempre depois que a lista renderizar */
+const _renderKeep = render;
+render = function(){
+  _renderKeep();
+  requestAnimationFrame(applyShopeeBadge);
+};
 </script>
 <body>  
 
