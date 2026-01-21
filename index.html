@@ -1892,6 +1892,61 @@ header{
     padding-top: 6px !important;
   }
 }
+    /* ===============================
+   COLAR BANNER NA FAIXA AMARELA
+   =============================== */
+
+/* 1. Zera qualquer espaçamento geral após a topbar */
+.topbar{
+  margin-bottom: 0 !important;
+  padding-bottom: 8px !important; /* mantém respiração mínima */
+}
+
+/* 2. QUALQUER elemento logo após a topbar */
+.topbar + *{
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* 3. Hero / banner principal */
+.hero,
+.banner,
+.videoWrap{
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* 4. Container geral */
+.wrap{
+  padding-top: 4px !important;
+}
+
+/* 5. Caso o banner esteja dentro de grid */
+.grid,
+.controls,
+.kpi{
+  margin-top: 0 !important;
+}
+
+/* ===============================
+   MOBILE – COLAR DE VEZ
+   =============================== */
+@media (max-width: 520px){
+
+  .topbar{
+    padding-bottom: 6px !important;
+  }
+
+  .wrap{
+    padding-top: 2px !important;
+  }
+
+  .hero,
+  .banner,
+  .videoWrap{
+    margin-top: -6px !important; /* 🔥 cola de verdade */
+  }
+}
   </style>
 </head>
 
