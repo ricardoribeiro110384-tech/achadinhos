@@ -1558,6 +1558,31 @@ header{
     -webkit-line-clamp: 2;
   }
 }
+    /* ===== NÃO CORTAR "Você economiza..." na faixa ===== */
+.saveBar{
+  flex-wrap: wrap !important;     /* permite quebrar */
+  align-items: center !important;
+}
+
+.saveMoney{
+  overflow: visible !important;
+  text-overflow: initial !important;
+  white-space: normal !important; /* permite 2 linhas */
+  line-height: 1.2 !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* Se o texto estiver MUITO grande, no mobile quebra melhor */
+@media (max-width: 640px){
+  .savePct{ 
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+  }
+  .saveMoney{
+    font-size: 12px !important;
+  }
+}
   </style>
 </head>
 
