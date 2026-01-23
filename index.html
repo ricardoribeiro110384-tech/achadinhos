@@ -19,6 +19,7 @@
       --danger:#c40000;
       --chip:#0a0a0a;
       --blue:#1b75ff;
+      --ring: 0 0 0 4px rgba(0,0,0,.08);
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -40,7 +41,7 @@
     .logo img{width:100%;height:100%;object-fit:contain;padding:6px}
     .titleBox{flex:1 1 auto;min-width:220px}
     h1{margin:0;font-size:24px;line-height:1.1}
-    .sub{margin:6px 0 0;color:rgba(0,0,0,.72);font-weight:700;font-size:13px}
+    .sub{margin:6px 0 0;color:rgba(0,0,0,.72);font-weight:800;font-size:13px}
 
     /* HOME */
     .home{padding:18px 16px 28px}
@@ -67,12 +68,12 @@
     }
     .block:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(0,0,0,.14)}
     .emoji{font-size:22px}
-    .bt{margin:10px 0 0;font-size:17px;font-weight:900}
-    .bd{margin:6px 0 0;color:var(--muted);font-weight:600;font-size:13px;line-height:1.25}
+    .bt{margin:10px 0 0;font-size:17px;font-weight:1000}
+    .bd{margin:6px 0 0;color:var(--muted);font-weight:650;font-size:13px;line-height:1.25}
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 10px;border-radius:999px;
-      background:rgba(0,0,0,.06);font-weight:900;font-size:12px;
+      background:rgba(0,0,0,.06);font-weight:1000;font-size:12px;
       margin-top:12px;
     }
     .arrow{
@@ -87,7 +88,7 @@
     .offers{padding:14px 16px 28px; display:none;}
     .controls{display:grid;gap:10px;margin-top:12px}
     @media(min-width:860px){
-      .controls{grid-template-columns: 1fr 290px 170px;align-items:center}
+      .controls{grid-template-columns: 1fr 280px 140px;align-items:center}
     }
     .search{
       background:#fff;border-radius:999px;padding:12px 14px;
@@ -100,13 +101,50 @@
       box-shadow: 0 10px 22px rgba(0,0,0,.10);
     }
     .select select{
-      width:100%;border:0;outline:0;background:transparent;font-weight:900;font-size:14px;
+      width:100%;border:0;outline:0;background:transparent;font-weight:1000;font-size:14px;
     }
     .btn{
       background:#111;color:#fff;border:0;border-radius:999px;
       padding:12px 14px;font-weight:1000;cursor:pointer;
       box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      white-space:nowrap;
     }
+
+    /* Atalhos dentro da tela de ofertas */
+    .quickBar{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      overflow:auto;
+      padding-bottom:6px;
+      -webkit-overflow-scrolling:touch;
+    }
+    .quickBar::-webkit-scrollbar{height:8px}
+    .quickBar::-webkit-scrollbar-thumb{background:rgba(0,0,0,.18);border-radius:999px}
+    .qbtn{
+      flex:0 0 auto;
+      border:0;
+      cursor:pointer;
+      background:#fff;
+      border-radius:999px;
+      padding:10px 12px;
+      font-weight:1000;
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      white-space:nowrap;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .qbtn:hover{transform:translateY(-1px)}
+    .qbtn.active{box-shadow: var(--shadow), var(--ring)}
+    .qdot{
+      width:10px;height:10px;border-radius:999px;background:#111;opacity:.9;
+    }
+    .qbtn[data-k="ate99"] .qdot{background:#0b7}
+    .qbtn[data-k="mais"] .qdot{background:#1b75ff}
+    .qbtn[data-k="flash"] .qdot{background:#ff7a00}
+    .qbtn[data-k="tudo"] .qdot{background:#444}
 
     .state{padding:12px 0;color:#111;font-weight:1000}
     .err{
@@ -170,7 +208,7 @@
     .chip.blue{background:var(--blue)}
     .body{padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px;flex:1}
     .t{font-weight:1000;font-size:16px;line-height:1.2}
-    .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-weight:900}
+    .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-weight:1000}
     .star{color:#f0b400}
     .prices{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
     .full{color:#777;text-decoration:line-through;font-weight:900}
@@ -191,6 +229,25 @@
       border-radius: 14px;
       box-shadow: 0 12px 28px rgba(255,122,0,.28);
     }
+
+    /* Botão flutuante: voltar ao topo */
+    .toTop{
+      position:fixed;
+      right:14px;
+      bottom:14px;
+      width:54px;height:54px;
+      border-radius:999px;
+      border:0;
+      background:#111;
+      color:#fff;
+      font-size:18px;
+      font-weight:1000;
+      cursor:pointer;
+      box-shadow: 0 16px 34px rgba(0,0,0,.22);
+      display:none;
+      z-index:20;
+    }
+    .toTop.show{display:block}
 
     footer{
       margin-top:18px;
@@ -229,6 +286,15 @@
         </div>
 
         <button class="btn" id="btnHome">← Home</button>
+      </div>
+
+      <!-- Barra de atalhos (aparece só em ofertas) -->
+      <div class="quickBar wrap" id="quickBar" style="display:none;">
+        <button class="qbtn" data-k="dia"><span class="qdot"></span>⚡ Dia</button>
+        <button class="qbtn" data-k="ate99"><span class="qdot"></span>💸 Até 99</button>
+        <button class="qbtn" data-k="mais"><span class="qdot"></span>🛒 Mais pedidos</button>
+        <button class="qbtn" data-k="flash"><span class="qdot"></span>⏱️ Relâmpago</button>
+        <button class="qbtn" data-k="tudo"><span class="qdot"></span>📋 Tudo</button>
       </div>
 
       <div class="timerBar wrap" id="timerBar">
@@ -277,7 +343,7 @@
 
       <div class="block" data-b="tudo">
         <div class="emoji">📋</div>
-        <div class="bt">Ver tudo</div>
+        <div class="bt">Ver tudo</divdiv>
         <div class="bd">Lista completa de ofertas da planilha</div>
         <div class="pill">Abrir lista</div>
         <div class="arrow">›</div>
@@ -291,6 +357,8 @@
     <div id="errBox"></div>
     <div class="grid" id="grid"></div>
   </section>
+
+  <button class="toTop" id="toTop" title="Voltar ao topo">↑</button>
 
   <footer>
     Não somos loja oficial. Apenas divulgamos ofertas do Mercado Livre.
@@ -435,6 +503,12 @@
     grid.appendChild(frag);
   }
 
+  function setActiveQuick(blockKey){
+    document.querySelectorAll("#quickBar .qbtn").forEach(b=>{
+      b.classList.toggle("active", b.getAttribute("data-k") === blockKey);
+    });
+  }
+
   function stopFlashTimer(){
     if(timerInt){ clearInterval(timerInt); timerInt = null; }
   }
@@ -467,6 +541,7 @@
   function applyBlock(blockKey){
     CURRENT = blockKey;
     $("preset").value = blockKey;
+    setActiveQuick(blockKey);
 
     $("hdrTitle").textContent = TITLES[blockKey] || "Ofertas";
     $("hdrSub").textContent = "Toque no produto para abrir no Mercado Livre";
@@ -489,6 +564,7 @@
     $("home").style.display = "";
     $("offers").style.display = "none";
     $("controls").style.display = "none";
+    $("quickBar").style.display = "none";
     $("timerBar").classList.remove("show");
     stopFlashTimer();
 
@@ -501,6 +577,7 @@
     $("home").style.display = "none";
     $("offers").style.display = "block";
     $("controls").style.display = "grid";
+    $("quickBar").style.display = "flex";
     $("q").value = "";
     $("errBox").innerHTML = "";
     $("state").textContent = "Carregando ofertas…";
@@ -520,15 +597,32 @@
     }
   }
 
+  function setupToTop(){
+    const btn = $("toTop");
+    btn.addEventListener("click", ()=> window.scrollTo({top:0,behavior:"smooth"}));
+    window.addEventListener("scroll", ()=>{
+      const show = window.scrollY > 450 && $("offers").style.display === "block";
+      btn.classList.toggle("show", show);
+    }, {passive:true});
+  }
+
   document.addEventListener("DOMContentLoaded", async ()=>{
-    // carregar dados 1x
     await load();
 
-    // clique nos blocos
+    // clique nos blocos (HOME)
     document.querySelectorAll(".block").forEach(el=>{
       el.addEventListener("click", ()=>{
         const b = el.getAttribute("data-b") || "dia";
         showOffers(b);
+      });
+    });
+
+    // atalhos (OFERTAS)
+    document.querySelectorAll("#quickBar .qbtn").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        const k = el.getAttribute("data-k") || "dia";
+        applyBlock(k);
+        window.scrollTo({top:0,behavior:"smooth"});
       });
     });
 
@@ -542,7 +636,9 @@
       t=setTimeout(()=> applyBlock(CURRENT), 180);
     });
 
-    // rota inicial (se abrir com hash)
+    setupToTop();
+
+    // rota inicial
     if(location.hash === "#ofertas"){
       showOffers("dia");
     } else {
