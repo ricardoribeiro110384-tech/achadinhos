@@ -192,6 +192,45 @@
       text-align:center;
       font-weight:700;
     }
+    /* esconder R$ mín, R$ máx e botão Limpar */
+#minPrice, #maxPrice { display:none !important; }
+#minPrice, #maxPrice { visibility:hidden !important; }
+#minPrice, #maxPrice { width:0 !important; padding:0 !important; margin:0 !important; border:0 !important; }
+
+#minPrice { }
+#maxPrice { }
+
+#minPrice, #maxPrice { pointer-events:none !important; }
+
+#clear { display:none !important; }
+    <script>
+(function removeMinMaxPillsEverywhere(){
+  const killTexts = new Set(["R$ mín","R$ máx","R$ min","R$ max","min","max"]);
+
+  function clean(){
+    const nodes = document.querySelectorAll("button, a, div, span, label");
+    nodes.forEach(el=>{
+      const t = (el.textContent || "").replace(/\s+/g," ").trim();
+      // remove apenas os que são "pílulas" curtas (evita apagar textos grandes)
+      if (killTexts.has(t) && t.length <= 6) {
+        el.remove();
+      }
+    });
+  }
+
+  // roda agora e depois que o site renderizar produtos/filtros
+  clean();
+  setTimeout(clean, 300);
+  setTimeout(clean, 900);
+})();
+</script>
+  /* Remove os campos R$ mín e R$ máx (mobile e PC) */
+input[placeholder="R$ mín"],
+input[placeholder="R$ máx"],
+input[placeholder="R$ min"],
+input[placeholder="R$ max"]{
+  display:none !important;
+}
   </style>
 </head>
 
@@ -223,16 +262,6 @@
           <option value="price_asc">Menor preço</option>
           <option value="price_desc">Maior preço</option>
         </select>
-      </div>
-
-      <div class="field" title="Preço mínimo (R$)">
-        <label>R$ mín</label>
-        <input id="minPrice" inputmode="decimal" placeholder="0" />
-      </div>
-
-      <div class="field" title="Preço máximo (R$)">
-        <label>R$ máx</label>
-        <input id="maxPrice" inputmode="decimal" placeholder="9999" />
       </div>
 
       <button id="clear" class="btn secondary" type="button">Limpar</button>
@@ -450,7 +479,9 @@
     const full = Number.isFinite(p.fullPrice) ? money(p.fullPrice) : "";
     const final = Number.isFinite(p.finalPrice) ? money(p.finalPrice) : full;
 
-    const ratingTxt = (p.rating !== null && Number.isFinite(p.rating)) ? p.rating.toFixed(1).replace(".",",") : null;
+    let r = p.rating;
+if (r !== null && Number.isFinite(r) && r >= 10) r = r / 10; // ex: 48 -> 4.8
+const ratingTxt = (r !== null && Number.isFinite(r)) ? r.toFixed(1) : null; // exibe 4.9
 
     const div = document.createElement("div");
     div.className = "card";
@@ -544,7 +575,19 @@
   elMore.addEventListener("click", renderNext);
 
   init();
+(function(){
+  function hideMinMax(){
+    document.querySelectorAll('input').forEach(i=>{
+      const ph = (i.getAttribute('placeholder')||'').toLowerCase().trim();
+      if (ph.includes('mín') || ph.includes('min') || ph.includes('máx') || ph.includes('max')) {
+        i.style.display = 'none';
+      }
+    });
+  }
+  hideMinMax();
+  setTimeout(hideMinMax, 300);
+  setTimeout(hideMinMax, 900);
+})();
 </script>
-
 </body>
 </html>
