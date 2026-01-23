@@ -233,6 +233,40 @@
     #go{
   display:none !important;
 }
+    /* ===== Fix alinhamento dos campos no mobile ===== */
+.controls{
+  display: grid !important;
+  grid-template-columns: 1fr !important; /* mobile: 1 por linha */
+  gap: 12px !important;
+  align-items: stretch !important;
+  margin-top: 14px !important;
+}
+
+/* garante que cada campo ocupe toda a largura */
+.searchWrap,
+.selectWrap,
+.controls > *{
+  width: 100% !important;
+}
+
+/* padroniza altura e alinhamento */
+.searchWrap input,
+.controls select{
+  width: 100% !important;
+  height: 52px !important;
+  border-radius: 999px !important;
+}
+
+/* evita “sobra” de padding/margem quebrando o layout */
+.searchWrap{ margin: 0 !important; }
+.selectWrap{ margin: 0 !important; }
+
+/* tablet/pc: volta a 2 colunas alinhadas */
+@media (min-width: 720px){
+  .controls{
+    grid-template-columns: 1.2fr 0.8fr !important;
+  }
+}
   </style>
 </head>
 
