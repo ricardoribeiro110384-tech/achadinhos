@@ -1,463 +1,235 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#ffcc00" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Achadinhos do Dia</title>
-
+  <meta name="theme-color" content="#f2c100" />
   <style>
     :root{
-      --yellow:#ffcc00;
-      --yellow2:#ffb300;
-      --black:#111;
-      --bg:#f4f4f4;
-      --card:#fff;
+      --yellow:#f2c100;
+      --yellow2:#f6d44a;
+      --bg:#f6f6f6;
+      --card:#ffffff;
+      --text:#111;
       --muted:#6b6b6b;
-      --shadow:0 10px 30px rgba(0,0,0,.08);
-      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.10);
+      --radius:20px;
+      --orange:#ff6a00;
+      --black:#111;
       --danger:#b00020;
-      --danger2:#ff2d2d;
+      --blue:#1877f2;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:#111;
-    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
     a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 14px 40px}
 
-    /* HEADER */
     header{
-      background: linear-gradient(135deg,var(--yellow),var(--yellow2));
-      padding:14px 14px 16px;
-      position:sticky;
-      top:0;
-      z-index:10;
-      box-shadow:0 6px 18px rgba(0,0,0,.08);
+      background:linear-gradient(180deg,var(--yellow),var(--yellow2));
+      padding:16px 0 14px;
+      position:sticky;top:0;z-index:50;
+      box-shadow:0 6px 18px rgba(0,0,0,.12);
     }
     .top{
-      max-width:1100px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      gap:12px;
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+      padding:0 14px;
+      max-width:1100px;margin:0 auto;
     }
     .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-      flex:1;
+      display:flex;align-items:center;gap:10px;min-width:260px;
     }
     .logo{
-      height:44px;
-      width:auto;
-      max-width:120px;
-      object-fit:contain;
-      display:block;
-      border-radius:12px;
-      background:rgba(255,255,255,.25);
+      width:44px;height:44px;border-radius:12px;object-fit:contain;background:#fff;
+      box-shadow:0 8px 20px rgba(0,0,0,.15);
       padding:6px;
+      flex:0 0 auto;
     }
-    .brandText{min-width:0}
-    .brandText h1{
-      margin:0;
-      font-size:24px;
-      font-weight:950;
-      letter-spacing:-.3px;
-      line-height:1.05;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .brandText p{
-      margin:4px 0 0;
-      font-size:13px;
-      color:rgba(0,0,0,.7);
-      font-weight:650;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+    .brandText h1{margin:0;font-size:22px;line-height:1}
+    .brandText p{margin:5px 0 0;font-size:13px;color:#2a2a2a;font-weight:600;opacity:.85}
 
-    /* CONTROLS */
     .controls{
-      max-width:1100px;
-      margin:12px auto 0;
-      display:grid;
-      gap:10px;
-      grid-template-columns: 1fr 1fr;
-      padding:0 14px;
+      display:flex;gap:10px;flex:1;align-items:center;justify-content:flex-end;flex-wrap:wrap;
+      min-width:260px;
     }
-    .searchWrap{
-      background:#fff;
-      border-radius:999px;
-      display:flex;
-      align-items:center;
-      padding:10px 12px;
-      gap:10px;
-      box-shadow: 0 8px 18px rgba(0,0,0,.08);
-      border:1px solid rgba(0,0,0,.06);
+    .pill{
+      background:#fff;border:0;border-radius:999px;
+      padding:12px 14px;display:flex;align-items:center;gap:10px;
+      box-shadow:0 10px 22px rgba(0,0,0,.10);
+      min-height:44px;
     }
-    .searchWrap span{opacity:.75}
-    #q{
-      border:0;
-      outline:0;
-      width:100%;
-      font-size:15px;
-      background:transparent;
+    .pill input{
+      border:0;outline:0;background:transparent;
+      font-size:15px;min-width:180px;width:min(320px,60vw);
     }
-    .selectWrap{
-      background:#fff;
-      border-radius:999px;
-      padding:10px 12px;
-      box-shadow: 0 8px 18px rgba(0,0,0,.08);
-      border:1px solid rgba(0,0,0,.06);
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-    .selectWrap span{opacity:.75}
-    #preset{
-      border:0;
-      outline:0;
-      width:100%;
-      font-size:15px;
-      background:transparent;
-      appearance:none;
+    select.pillSelect{
+      appearance:none;border:0;outline:0;background:#fff;
+      border-radius:999px;padding:12px 14px;min-height:44px;
+      box-shadow:0 10px 22px rgba(0,0,0,.10);
+      font-size:15px;font-weight:800;
+      min-width:210px;
     }
     .cta{
-      grid-column:1 / -1;
-      background:var(--black);
-      color:#fff;
-      border:0;
-      border-radius:999px;
-      padding:14px 16px;
-      font-size:16px;
-      font-weight:900;
-      letter-spacing:.2px;
-      box-shadow: 0 10px 20px rgba(0,0,0,.18);
-      cursor:pointer;
+      border:0;border-radius:999px;
+      padding:12px 18px;
+      background:var(--black);color:#fff;font-weight:900;
+      cursor:pointer;min-height:44px;
+      box-shadow:0 12px 26px rgba(0,0,0,.18);
+      display:flex;align-items:center;gap:10px;
     }
     .cta:active{transform:translateY(1px)}
+    .hint{max-width:1100px;margin:8px auto 0;padding:0 14px;color:#222;font-weight:700;font-size:12px;opacity:.75}
 
-    /* HERO */
-    .hero{
-      max-width:1100px;
-      margin:14px auto 0;
-      padding:0 14px;
+    main{padding-top:16px}
+    .titleRow{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      margin:12px 0 10px;
     }
-    .heroBox{
-      background:linear-gradient(135deg,#fff7c4, #fff);
-      border-radius:24px;
-      border:1px solid rgba(0,0,0,.08);
-      box-shadow:var(--shadow);
-      padding:18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      animation:fadeDown .55s ease both;
-    }
-    .heroBox h2{
-      margin:0;
-      font-size:18px;
-      font-weight:950;
-      letter-spacing:-.2px;
-    }
-    .heroBox p{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-weight:650;
-      font-size:13px;
-    }
-    .heroBtn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      background:var(--black);
-      color:#fff;
-      border-radius:999px;
-      padding:12px 14px;
-      text-decoration:none;
-      font-weight:900;
-      white-space:nowrap;
-    }
-    @keyframes fadeDown{
-      from{opacity:0;transform:translateY(-10px)}
-      to{opacity:1;transform:none}
-    }
+    .titleRow h2{margin:0;font-size:26px}
+    .titleRow .sub{color:var(--muted);font-weight:700}
 
-    /* MAIN */
-    main{
-      max-width:1100px;
-      margin:0 auto;
-      padding:14px 14px 40px;
-    }
-    .sectionHead{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:10px;
-      margin:18px 0 10px;
-    }
-    .sectionHead h3{
-      margin:0;
-      font-size:18px;
-      font-weight:950;
-      letter-spacing:-.2px;
-    }
-    .sectionHead small{
-      color:var(--muted);
-      font-weight:750;
-    }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      background:#111;
-      color:#fff;
-      border-radius:999px;
-      padding:8px 10px;
-      font-weight:950;
-      font-size:12px;
-      white-space:nowrap;
-    }
-
-    /* GRID */
     .grid{
       display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap:12px;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
     }
-    @media (min-width: 820px){
-      .grid{grid-template-columns: repeat(4, minmax(0,1fr));}
-      .controls{grid-template-columns: 1.2fr .8fr; }
-    }
+    @media (max-width:980px){ .grid{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:720px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:420px){ .grid{grid-template-columns:1fr} }
 
-    /* CARD */
     .card{
       background:var(--card);
       border-radius:var(--radius);
+      box-shadow:var(--shadow);
       overflow:hidden;
-      border:1px solid rgba(0,0,0,.08);
-      box-shadow: var(--shadow);
+      display:flex;flex-direction:column;
       transform:translateY(0);
-      transition: transform .18s ease;
-      animation: fadeUp .45s ease both;
+      transition:transform .15s ease, box-shadow .15s ease;
     }
-    .card:hover{transform:translateY(-4px)}
-    @keyframes fadeUp{
-      from{opacity:0;transform:translateY(12px)}
-      to{opacity:1;transform:none}
-    }
+    .card:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.14)}
     .imgWrap{
       position:relative;
       background:#fff;
-      border-bottom:1px solid rgba(0,0,0,.06);
-      aspect-ratio: 1/1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:10px;
+      padding:12px;
+      border-bottom:1px solid #f0f0f0;
     }
-    .imgWrap img{
+    .img{
       width:100%;
-      height:100%;
-      object-fit:contain;
+      height:200px;
+      object-fit:contain; /* NÃO ESTOURA */
       display:block;
     }
-    .pillRow{
-      position:absolute;
-      top:10px;
-      left:10px;
-      right:10px;
-      display:flex;
-      gap:8px;
-      justify-content:space-between;
-      pointer-events:none;
+
+    .badgeTop{
+      position:absolute;left:10px;top:10px;
+      display:flex;gap:8px;flex-wrap:wrap;
     }
-    .pill{
-      background:rgba(17,17,17,.92);
-      color:#fff;
-      border-radius:999px;
-      padding:6px 10px;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.2px;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      max-width:100%;
+    .chip{
+      background:#111;color:#fff;
+      font-weight:900;font-size:12px;
+      padding:6px 10px;border-radius:999px;
+      box-shadow:0 10px 20px rgba(0,0,0,.18);
       white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
     }
-    .pill.blue{background:rgba(0,95,255,.92)}
-    .pill.off{animation:pulse 1.4s infinite}
-    @keyframes pulse{
-      0%{transform:scale(1)}
-      50%{transform:scale(1.06)}
-      100%{transform:scale(1)}
-    }
+    .chip.blue{background:var(--blue)}
+    .chip.off{background:#111}
+    .chip.sold{background:var(--blue)}
 
-    .content{
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      min-height:175px;
+    .body{
+      padding:12px 12px 14px;
+      display:flex;flex-direction:column;gap:10px;
+      flex:1;
     }
-    .title{
-      font-weight:900;
-      font-size:14px;
-      line-height:1.2;
-      display:-webkit-box;
-      -webkit-line-clamp:3;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
-      min-height:50px;
+    .name{
+      font-weight:900;font-size:15px;line-height:1.25;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+      min-height:56px;
     }
-
-    /* META (rating / cupom / timer) */
     .meta{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      color:var(--muted);
-      font-weight:750;
-      font-size:13px;
-      min-height:20px;
+      display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:800;font-size:13px;
     }
-    .metaLeft{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-
-    /* TIMER (relâmpago) */
-    .timer{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      background:linear-gradient(135deg,var(--danger),var(--danger2));
-      color:#fff;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:950;
-      letter-spacing:.2px;
-      box-shadow:0 10px 18px rgba(176,0,32,.22);
-      white-space:nowrap;
-      animation: timerPulse 1.25s infinite;
-    }
-    .timer span{
-      font-variant-numeric: tabular-nums;
-    }
-    @keyframes timerPulse{
-      0%{transform:scale(1); filter:brightness(1)}
-      50%{transform:scale(1.05); filter:brightness(1.05)}
-      100%{transform:scale(1); filter:brightness(1)}
-    }
-
-    .prices{
-      display:flex;
-      align-items:baseline;
-      justify-content:space-between;
-      gap:10px;
+    .star{color:#c58a00}
+    .priceRow{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
     }
     .old{
       color:#8a8a8a;
+      font-weight:900;
       text-decoration:line-through;
-      font-weight:800;
-      font-size:13px;
-      white-space:nowrap;
+      font-size:14px;
     }
     .new{
-      color:#d60000;
-      font-weight:950;
-      font-size:22px;
-      letter-spacing:-.4px;
-      white-space:nowrap;
+      color:#d10000;
+      font-weight:1000;
+      font-size:26px;
+      letter-spacing:-.5px;
     }
-    .offBadge{
-      background:#111;
-      color:#fff;
+    .badgeOff{
+      background:#111;color:#fff;
+      font-weight:1000;
+      padding:8px 12px;border-radius:999px;
+      font-size:14px;
+      min-width:68px;text-align:center;
+    }
+
+    .flashTimer{
+      margin-top:6px;
+      font-weight:1000;
+      font-size:13px;
+      color:var(--danger);
+      background:#fff1f1;
+      border:1px dashed #f3b3b3;
+      padding:6px 10px;
       border-radius:999px;
-      padding:8px 10px;
-      font-weight:950;
-      font-size:12px;
-      white-space:nowrap;
-      align-self:flex-end;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:fit-content;
     }
+    .progressWrap{
+      height:8px;width:92px;background:#ffd5d5;border-radius:999px;overflow:hidden;
+    }
+    .progressBar{
+      height:100%;background:var(--danger);width:0%;
+    }
+
     .btn{
       margin-top:auto;
-      display:block;
-      text-align:center;
-      background:linear-gradient(135deg,#ff5a00,#ff2d2d);
-      color:#fff;
-      text-decoration:none;
-      font-weight:950;
-      border-radius:999px;
-      padding:12px 10px;
-      box-shadow: 0 10px 18px rgba(255,60,0,.22);
+      border:0;border-radius:14px;
+      padding:12px 12px;
+      background:var(--orange);
+      color:#fff;font-weight:1000;
+      cursor:pointer;
+      display:flex;justify-content:center;align-items:center;gap:10px;
     }
+    .btn:active{transform:translateY(1px)}
 
-    /* STATUS / SKELETON */
-    .status{
-      background:#fff;
-      border:1px solid rgba(0,0,0,.08);
-      border-radius:16px;
-      padding:12px;
-      box-shadow: var(--shadow);
-      margin:12px 0;
-      display:none;
-      font-weight:800;
-    }
-    .status.show{display:block}
-    .status.error{
-      border-color: rgba(176,0,32,.25);
-      color:var(--danger);
-      background:#fff2f4;
-    }
-    .skeletonGrid{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap:12px;
-    }
-    @media (min-width: 820px){
-      .skeletonGrid{grid-template-columns: repeat(4, minmax(0,1fr));}
-    }
-    .sk{
-      height:320px;
-      border-radius:var(--radius);
-      background:linear-gradient(90deg,#eee,#f6f6f6,#eee);
+    .skeleton{
+      background:linear-gradient(90deg,#f1f1f1,#e9e9e9,#f1f1f1);
       background-size:200% 100%;
-      animation: shimmer 1.2s infinite linear;
-      border:1px solid rgba(0,0,0,.06);
+      animation:sh 1.1s infinite linear;
+      border-radius:var(--radius);
+      height:330px;
     }
-    @keyframes shimmer{
-      0%{background-position: 0% 0}
-      100%{background-position: 200% 0}
+    @keyframes sh{0%{background-position:0% 0}100%{background-position:-200% 0}}
+
+    .error{
+      background:#ffe9e9;border:1px solid #ffc4c4;
+      color:#7a0b12;
+      padding:12px 14px;border-radius:14px;
+      font-weight:900;
     }
 
-    /* FOOTER DISCLAIMER */
     footer{
-      margin-top:22px;
-      background:#111;
-      color:#cfcfcf;
-      padding:18px 14px;
-      text-align:center;
-      font-weight:650;
+      margin-top:28px;
+      background:#111;color:#fff;
       border-radius:18px;
+      padding:16px 14px;
+      text-align:center;
+      font-weight:800;
+      opacity:.95;
     }
-    footer strong{color:#fff}
+    footer small{display:block;opacity:.8;margin-top:6px;font-weight:700}
   </style>
 </head>
 
@@ -465,544 +237,417 @@
   <header>
     <div class="top">
       <div class="brand">
-        <img class="logo" src="logo.png" alt="Achadinhos ML" loading="eager" />
+        <img src="logo.png" alt="Logo" class="logo" />
         <div class="brandText">
           <h1>Achadinhos do Dia</h1>
           <p>Ofertas do Mercado Livre que realmente valem a pena</p>
         </div>
       </div>
-    </div>
 
-    <div class="controls">
-      <div class="searchWrap">
-        <span>🔎</span>
-        <input id="q" type="search" placeholder="Buscar produto..." autocomplete="off" />
-      </div>
+      <div class="controls">
+        <div class="pill" title="Pesquisar">
+          <span>🔎</span>
+          <input id="q" type="search" placeholder="Buscar produto..." autocomplete="off" />
+        </div>
 
-      <div class="selectWrap">
-        <span>⚙️</span>
-        <select id="preset" aria-label="Modo">
-          <option value="home" selected>🏠 Home (4 blocos)</option>
-          <option value="all">📦 Ver tudo (lista)</option>
+        <select id="mode" class="pillSelect" title="Selecionar bloco">
+          <option value="dia">⚡ Achadinhos do Dia</option>
+          <option value="99">💸 Até R$ 99,00</option>
+          <option value="pedidos">🛒 Mais pedidos</option>
+          <option value="flash">⏰ Oferta relâmpago</option>
         </select>
-      </div>
 
-      <button class="cta" id="btnGo">⚡ Atualizar ofertas</button>
+        <button id="go" class="cta" type="button">⚡ Ver ofertas</button>
+      </div>
     </div>
+    <div class="hint"></div>
   </header>
 
-  <div class="hero">
-    <div class="heroBox">
-      <div>
-        <h2>🔥 TOP OFERTAS DO DIA</h2>
-        <p>Desconto real + frete grátis. Clique e vá direto pro Mercado Livre.</p>
+  <div class="wrap">
+    <main>
+      <div class="titleRow">
+        <div>
+          <h2 id="h2">Achadinhos do Dia</h2>
+          <div class="sub" id="sub">Carregando ofertas…</div>
+        </div>
       </div>
-      <a class="heroBtn" href="#top">Ver agora</a>
-    </div>
-  </div>
 
-  <main>
-    <div id="status" class="status"></div>
-
-    <div id="skeleton" class="skeletonGrid" aria-hidden="true">
-      <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
-      <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
-    </div>
-
-    <!-- HOME: 4 blocos -->
-    <section id="homeBlocks" style="display:none;">
-      <section id="topBlock">
-        <div class="sectionHead">
-   
-          <small id="topCount"></small>
-        </div>
-        <div class="grid" id="gridTop"></div>
-      </section>
-
-      <section id="ate99Block">
-        <div class="sectionHead">
-          <h3>💸 ATÉ R$ 99,00</h3>
-          <small id="ate99Count"></small>
-        </div>
-        <div class="grid" id="gridAte99"></div>
-      </section>
-
-      <section id="relampagoBlock">
-        <div class="sectionHead">
-          <h3>⚡ OFERTAS RELÂMPAGO</h3>
-          <small class="chip">⏰ termina em breve</small>
-        </div>
-        <div class="grid" id="gridRelampago"></div>
-      </section>
-
-      <section id="maisBlock">
-        <div class="sectionHead">
-          <h3>🧲 MAIS OFERTAS</h3>
-          <small id="maisCount"></small>
-        </div>
-        <div class="grid" id="gridMais"></div>
-      </section>
-    </section>
-
-    <!-- LISTA ÚNICA -->
-    <section class="grid" id="gridAll" style="display:none;"></section>
+      <div id="msg"></div>
+      <div id="grid" class="grid"></div>
+    </main>
 
     <footer>
-      <strong>Não somos loja oficial.</strong> Apenas divulgamos ofertas do Mercado Livre.
+      Não somos uma loja oficial. Apenas divulgamos ofertas do Mercado Livre.
+      <small>Preços e disponibilidade podem mudar a qualquer momento.</small>
     </footer>
-  </main>
+  </div>
 
   <script defer>
-    // ✅ Link da sua planilha (CSV publicado)
+    // ====== CONFIG ======
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
+    const CACHE_KEY = "achadinhos_csv_cache_v1";
+    const CACHE_TTL_MS = 10 * 60 * 1000; // 10 min
+    const FLASH_DURATION_MS = 60 * 60 * 1000; // 1h
 
-    // ELEMENTOS
-    const elStatus = document.getElementById("status");
-    const elSkeleton = document.getElementById("skeleton");
-    const elPreset = document.getElementById("preset");
-    const elQ = document.getElementById("q");
-    const elBtnGo = document.getElementById("btnGo");
+    // ====== STATE ======
+    let all = [];
+    let view = [];
+    let lastMode = "dia";
 
-    const elHome = document.getElementById("homeBlocks");
-    const elAll = document.getElementById("gridAll");
+    const el = (id)=>document.getElementById(id);
+    const grid = el("grid");
+    const msg = el("msg");
+    const h2 = el("h2");
+    const sub = el("sub");
+    const q = el("q");
+    const mode = el("mode");
+    const go = el("go");
 
-    const elTop = document.getElementById("gridTop");
-    const elAte99 = document.getElementById("gridAte99");
-    const elRelampago = document.getElementById("gridRelampago");
-    const elMais = document.getElementById("gridMais");
-
-    const topCount = document.getElementById("topCount");
-    const ate99Count = document.getElementById("ate99Count");
-    const maisCount = document.getElementById("maisCount");
-
-    let ALL = [];
-    let timerIntervalId = null;
-
-    function showStatus(msg, type="info"){
-      elStatus.textContent = msg;
-      elStatus.className = "status show" + (type==="error" ? " error" : "");
-    }
-    function hideStatus(){
-      elStatus.className = "status";
-      elStatus.textContent = "";
+    // ====== UTIL ======
+    function moneyBR(v){
+      if (!isFinite(v)) return "";
+      return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
     }
 
-    // ---------- PARSERS ----------
-    function parsePriceBR(v){
-      if(v==null) return NaN;
-      const s = String(v).trim();
-      if(!s) return NaN;
-      const n = s
-        .replace(/[R$\s]/g,"")
-        .replace(/\./g,"")
-        .replace(",",".")
-        .replace(/[^0-9.]/g,"");
-      const out = Number(n);
-      return Number.isFinite(out) ? out : NaN;
-    }
-    function parseDiscount(v){
-      if(v==null) return 0;
-      const s = String(v).toLowerCase();
-      const m = s.match(/(\d{1,3})\s*%/);
-      let p = m ? Number(m[1]) : 0;
-      if(!Number.isFinite(p)) p = 0;
-      if(p < 0) p = 0;
-      if(p > 95) p = 95;
-      return p;
-    }
-    function parseSold(v){
-      if(v==null) return 0;
-      const s0 = String(v).trim().toLowerCase();
-      if(!s0) return 0;
-      let s = s0.replace(/\./g,"").replace(/,/g,".");
-      const mil = s.match(/([\d.]+)\s*mil/);
-      if(mil){
-        const n = Number(mil[1]);
-        return Number.isFinite(n) ? Math.round(n * 1000) : 0;
-      }
-      const n = Number(s.replace(/[^0-9.]/g,""));
-      return Number.isFinite(n) ? Math.round(n) : 0;
-    }
-    function parseRating(v){
-      if(v==null) return NaN;
-      const s = String(v).trim().replace(",",".");
-      const n = Number(s);
-      return Number.isFinite(n) ? n : NaN;
-    }
-    function moneyBR(n){
-      if(!Number.isFinite(n)) return "";
-      return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+    function parseNumberBR(x){
+      if (x == null) return NaN;
+      const s = String(x).trim();
+      if (!s) return NaN;
+      // aceita "287,12" "287.12" "R$ 287,12"
+      const cleaned = s.replace(/[R$\s]/g,"").replace(/\./g,"").replace(",",".");
+      const n = Number(cleaned);
+      return isFinite(n) ? n : NaN;
     }
 
-    // ---------- CSV ----------
-    function splitCSVLine(line){
-      const out = [];
-      let cur = "";
-      let inQ = false;
-      for(let i=0;i<line.length;i++){
-        const ch = line[i];
-        if(ch === '"'){
-          if(inQ && line[i+1] === '"'){ cur += '"'; i++; }
-          else inQ = !inQ;
-        } else if(ch === "," && !inQ){
-          out.push(cur);
-          cur = "";
-        } else {
-          cur += ch;
-        }
-      }
-      out.push(cur);
-      return out.map(v => v.trim());
+    function parseDiscount(x){
+      // aceita "50% OFF" "53%OFF" "53%" "OFF 53%" etc
+      if (x == null) return 0;
+      const s = String(x).toUpperCase();
+      const m = s.match(/(\d{1,2}|\d{3})\s*%/);
+      if (!m) return 0;
+      const p = Number(m[1]);
+      if (!isFinite(p)) return 0;
+      return Math.max(0, Math.min(95, p));
     }
+
+    function parseSold(x){
+      // aceita "1000", "1.000", "10 mil", "10 MIL", "100 mil"
+      if (x == null) return 0;
+      const s = String(x).toLowerCase().trim();
+      if (!s) return 0;
+
+      const isMil = s.includes("mil");
+      const cleaned = s.replace(/[^\d,\.]/g,"");
+      if (!cleaned) return 0;
+
+      // "1.000" -> 1000 ; "10" + mil -> 10000
+      const num = Number(cleaned.replace(/\./g,"").replace(",","."));
+      if (!isFinite(num)) return 0;
+      return isMil ? Math.round(num * 1000) : Math.round(num);
+    }
+
     function parseCSV(text){
-      const lines = text.replace(/\r/g,"").split("\n").filter(l=>l.trim().length);
-      if(lines.length < 2) return [];
-      const header = splitCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+      // CSV simples do Google: sem quebra de linha em campos.
+      const lines = text.replace(/\r/g,"").split("\n").filter(Boolean);
+      if (!lines.length) return [];
+      const headers = splitCSVLine(lines[0]).map(h=>h.trim());
       const rows = [];
-      for(let i=1;i<lines.length;i++){
+      for (let i=1;i<lines.length;i++){
         const cols = splitCSVLine(lines[i]);
         const obj = {};
-        header.forEach((h,idx)=> obj[h] = cols[idx] ?? "");
+        headers.forEach((h,idx)=>obj[h]=cols[idx] ?? "");
         rows.push(obj);
       }
       return rows;
     }
 
-    // Cache local (10 min)
-    const CACHE_KEY = "achadinhos_csv_cache_home_v2";
-    const CACHE_TTL_MS = 10 * 60 * 1000;
-
-    async function fetchCSVFast(){
-      const cached = localStorage.getItem(CACHE_KEY);
-      if(cached){
-        try{
-          const j = JSON.parse(cached);
-          if(j.ts && (Date.now() - j.ts) < CACHE_TTL_MS && j.text){
-            return j.text;
-          }
-        }catch(e){}
+    function splitCSVLine(line){
+      const out = [];
+      let cur = "", inQ = false;
+      for (let i=0;i<line.length;i++){
+        const ch = line[i];
+        if (ch === '"'){
+          if (inQ && line[i+1] === '"'){ cur += '"'; i++; }
+          else inQ = !inQ;
+        } else if (ch === "," && !inQ){
+          out.push(cur); cur = "";
+        } else {
+          cur += ch;
+        }
       }
-      const res = await fetch(CSV_URL, { cache: "no-store" });
-      if(!res.ok) throw new Error("Falha ao carregar planilha");
-      const text = await res.text();
-      try{
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), text }));
-      }catch(e){}
-      return text;
+      out.push(cur);
+      return out;
     }
 
-    // ---------- NORMALIZAÇÃO / DEDUP ----------
-    function normalizeProducts(rows){
+    function dedupeByLink(items){
       const seen = new Set();
       const out = [];
-
-      for(const r of rows){
-        const image = (r.image || r.img || "").trim();
-        const title = (r.title || r.nome || "").trim();
-        const link  = (r.link || r.url || "").trim();
-
-        if(!image || !title || !link) continue;
-
-        const priceFull = parsePriceBR(r.price);
-        const discountP = parseDiscount(r.discount);
-        const rating = parseRating(r.rating);
-        const sold = parseSold(r.sold);
-
-        const priceFinal = (Number.isFinite(priceFull) ? (priceFull * (1 - discountP/100)) : NaN);
-
-        const key = (link || (title+"|"+image)).toLowerCase();
-        if(seen.has(key)) continue;
-        seen.add(key);
-
-        out.push({
-          image, title, link,
-          priceFull,
-          discountP,
-          priceFinal,
-          rating,
-          sold,
-          coupon: (r.coupon || "").trim()
-        });
+      for (const it of items){
+        const k = (it.link||"").trim();
+        if (!k || seen.has(k)) continue;
+        seen.add(k);
+        out.push(it);
       }
       return out;
     }
 
-    // ---------- TIMER RELÂMPAGO (persistente por produto) ----------
-    function hashStr(str){
-      // hash simples p/ gerar um número consistente
-      let h = 0;
-      for(let i=0;i<str.length;i++){
-        h = (h * 31 + str.charCodeAt(i)) >>> 0;
+    function showSkeleton(n=8){
+      grid.innerHTML = "";
+      for (let i=0;i<n;i++){
+        const d = document.createElement("div");
+        d.className = "skeleton";
+        grid.appendChild(d);
       }
-      return h;
     }
 
-    function relampagoKey(link){
-      return "rel_end_" + hashStr(link);
+    function setError(text){
+      msg.innerHTML = `<div class="error">${text}</div>`;
+    }
+    function clearError(){ msg.innerHTML = ""; }
+
+    // ====== FETCH + CACHE ======
+    async function loadData(){
+      showSkeleton(8);
+      clearError();
+
+      // cache
+      try{
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+        if (cached && cached.ts && (Date.now() - cached.ts) < CACHE_TTL_MS && cached.csv){
+          return buildItemsFromCSV(cached.csv, true);
+        }
+      }catch{}
+
+      // fetch
+      const r = await fetch(CSV_URL, {cache:"no-store"});
+      if (!r.ok) throw new Error("Falha ao carregar a planilha (HTTP "+r.status+")");
+      const csv = await r.text();
+
+      try{
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ts:Date.now(), csv}));
+      }catch{}
+
+      return buildItemsFromCSV(csv, false);
     }
 
-    function getRelampagoEnd(link){
-      const key = relampagoKey(link);
+    function buildItemsFromCSV(csv, fromCache){
+      const rows = parseCSV(csv);
+
+      const items = rows.map(r=>{
+        const priceFull = parseNumberBR(r.price);
+        const disc = parseDiscount(r.discount);
+        const final = (isFinite(priceFull) ? priceFull * (1 - disc/100) : NaN);
+
+        return {
+          image: (r.image||"").trim(),
+          title: (r.title||"").trim(),
+          price: priceFull,
+          discount: disc,
+          finalPrice: final,
+          coupon: (r.coupon||"").trim(),
+          sold: parseSold(r.sold),
+          rating: Number(String(r.rating||"").replace(",", ".")) || 0,
+          link: (r.link||"").trim(),
+        };
+      });
+
+      // limpa inválidos + dedupe
+      const cleaned = dedupeByLink(items).filter(p => p.link && p.title && p.image);
+
+      all = cleaned;
+      sub.textContent = fromCache
+        ? `Carregado do cache • Itens: ${all.length}`
+        : `Carregado da planilha • Itens: ${all.length}`;
+
+      return all;
+    }
+
+    // ====== RENDER ======
+    function cardHTML(p, isFlash){
+      const soldLabel = p.sold ? `${p.sold.toLocaleString("pt-BR")} vendidos` : "";
+      const offLabel = p.discount ? `${p.discount}% OFF` : "";
+      const old = moneyBR(p.price);
+      const now = moneyBR(p.finalPrice);
+
+      const chips = `
+        <div class="badgeTop">
+          ${offLabel ? `<div class="chip off">${offLabel}</div>` : ``}
+          ${soldLabel ? `<div class="chip sold">${soldLabel}</div>` : ``}
+        </div>
+      `;
+
+      const timer = isFlash ? `
+        <div class="flashTimer" data-id="${encodeURIComponent(p.link)}">
+          ⏰ <span class="t">--:--:--</span>
+          <span class="progressWrap"><span class="progressBar"></span></span>
+        </div>
+      ` : ``;
+
+      return `
+        <article class="card">
+          <div class="imgWrap">
+            ${chips}
+            <img class="img" loading="lazy" src="${p.image}" alt="${escapeHTML(p.title)}">
+          </div>
+          <div class="body">
+            <div class="name">${escapeHTML(p.title)}</div>
+            <div class="meta">
+              ${p.rating ? `<span class="star">⭐</span><span>${String(p.rating).replace(".", ",")}</span>` : `<span></span>`}
+            </div>
+
+            <div class="priceRow">
+              <div>
+                <div class="old">${old}</div>
+                <div class="new">${now}</div>
+              </div>
+              <div class="badgeOff">-${p.discount}%</div>
+            </div>
+
+            ${timer}
+
+            <button class="btn" onclick="window.open('${p.link}','_blank')">⚡ Ver oferta</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function escapeHTML(s){
+      return String(s||"").replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[c]));
+    }
+
+    function applyMode(m){
+      lastMode = m;
+      clearError();
+
+      const query = q.value.trim().toLowerCase();
+
+      const base = all.filter(p=>{
+        if (!query) return true;
+        return (p.title||"").toLowerCase().includes(query);
+      });
+
+      if (!base.length){
+        grid.innerHTML = "";
+        setError("Nenhum produto encontrado para essa busca.");
+        sub.textContent = `Itens: 0`;
+        return;
+      }
+
+      if (m === "dia"){
+        h2.textContent = "Achadinhos do Dia";
+        // mistura boa: prioridade por desconto e vendidos, sem extremos
+        view = [...base].sort((a,b)=>{
+          const sa = (a.sold*0.6) + (a.discount*25);
+          const sb = (b.sold*0.6) + (b.discount*25);
+          return sb - sa;
+        }).slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "99"){
+        h2.textContent = "Até R$ 99,00";
+        view = [...base].filter(p=>isFinite(p.finalPrice) && p.finalPrice <= 99)
+          .sort((a,b)=>a.finalPrice - b.finalPrice)
+          .slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "pedidos"){
+        h2.textContent = "Mais pedidos";
+        view = [...base].sort((a,b)=>b.sold - a.sold).slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "flash"){
+        h2.textContent = "Oferta relâmpago";
+        view = [...base].sort((a,b)=>b.discount - a.discount).slice(0, 24);
+        renderGrid(true);
+        startFlashTimers(); // <<<<<< timer volta aqui
+      }
+
+      sub.textContent = `Itens exibidos: ${view.length}`;
+    }
+
+    function renderGrid(isFlash){
+      grid.innerHTML = view.map(p => cardHTML(p, isFlash)).join("");
+    }
+
+    // ====== TIMER (reinicia e persiste) ======
+    function getFlashKey(id){ return "flash_end_" + id; }
+
+    function ensureEndTime(id){
+      const key = getFlashKey(id);
       const now = Date.now();
-      const saved = Number(localStorage.getItem(key) || 0);
+      let end = Number(localStorage.getItem(key) || 0);
 
-      if(saved && saved > now + 1000){
-        return saved;
+      if (!end || end < now){
+        end = now + FLASH_DURATION_MS;
+        localStorage.setItem(key, String(end));
       }
-
-      // gera uma duração “realista” (45–120 min) e varia por produto
-      const base = 45 * 60 * 1000;
-      const extra = (hashStr(link) % (75 * 60 * 1000)); // até +75min
-      const end = now + base + extra;
-
-      try{ localStorage.setItem(key, String(end)); }catch(e){}
       return end;
     }
 
-    function setRelampagoEnd(link, end){
-      const key = relampagoKey(link);
-      try{ localStorage.setItem(key, String(end)); }catch(e){}
+    function fmt(ms){
+      const s = Math.max(0, Math.floor(ms/1000));
+      const hh = String(Math.floor(s/3600)).padStart(2,"0");
+      const mm = String(Math.floor((s%3600)/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${hh}:${mm}:${ss}`;
     }
 
-    function fmtHMS(ms){
-      const t = Math.max(0, ms);
-      const h = Math.floor(t / 3600000);
-      const m = Math.floor((t % 3600000) / 60000);
-      const s = Math.floor((t % 60000) / 1000);
-      return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
-    }
+    let flashInterval = null;
+    function startFlashTimers(){
+      if (flashInterval) clearInterval(flashInterval);
 
-    function startTimers(){
-      // garante 1 intervalo só
-      if(timerIntervalId) clearInterval(timerIntervalId);
+      const nodes = Array.from(document.querySelectorAll(".flashTimer"));
+      if (!nodes.length) return;
 
-      const tick = () => {
-        const nodes = document.querySelectorAll("[data-timer-end]");
+      const state = nodes.map(n=>{
+        const id = n.getAttribute("data-id");
+        const end = ensureEndTime(id);
+        return { n, id, end };
+      });
+
+      function tick(){
         const now = Date.now();
-
-        nodes.forEach(node=>{
-          const end = Number(node.dataset.timerEnd || 0);
-          let diff = end - now;
-
-          if(diff <= 0){
-            // renova (novo ciclo)
-            const link = node.dataset.timerLink || "";
-            const base = 45 * 60 * 1000;
-            const extra = (hashStr(link + String(now)) % (75 * 60 * 1000));
-            const newEnd = Date.now() + base + extra;
-            node.dataset.timerEnd = String(newEnd);
-            if(link) setRelampagoEnd(link, newEnd);
-            diff = newEnd - Date.now();
+        for (const it of state){
+          // se passou, reinicia
+          if (it.end <= now){
+            it.end = now + FLASH_DURATION_MS;
+            localStorage.setItem(getFlashKey(it.id), String(it.end));
           }
+          const left = it.end - now;
+          const tEl = it.n.querySelector(".t");
+          const bar = it.n.querySelector(".progressBar");
+          if (tEl) tEl.textContent = fmt(left);
 
-          node.textContent = fmtHMS(diff);
-        });
-      };
+          const pct = 100 - Math.min(100, Math.max(0, (left / FLASH_DURATION_MS) * 100));
+          if (bar) bar.style.width = pct.toFixed(0) + "%";
+        }
+      }
 
       tick();
-      timerIntervalId = setInterval(tick, 1000);
+      flashInterval = setInterval(tick, 250);
     }
 
-    // ---------- RENDER ----------
-    function escapeHtml(s){
-      return String(s)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
+    // ====== EVENTS ======
+    go.addEventListener("click", ()=>applyMode(mode.value));
+    mode.addEventListener("change", ()=>applyMode(mode.value));
+    q.addEventListener("input", ()=>applyMode(lastMode));
 
-    function renderCard(p, opts = {}){
-      const isRelampago = !!opts.relampago;
-      const card = document.createElement("article");
-      card.className = "card";
-
-      const soldTxt = p.sold ? (p.sold >= 1000 ? (Math.round(p.sold/1000) + ".000 vendidos") : (p.sold + " vendidos")) : "";
-      const discTxt = p.discountP ? (p.discountP + "% OFF") : "";
-      const ratingTxt = Number.isFinite(p.rating) ? p.rating.toFixed(1).replace(".",",") : "";
-
-      // timer end (só no relâmpago)
-      const timerEnd = isRelampago ? getRelampagoEnd(p.link) : 0;
-
-      card.innerHTML = `
-        <div class="imgWrap">
-          <div class="pillRow">
-            ${discTxt ? `<span class="pill off">${discTxt}</span>` : `<span></span>`}
-            ${p.sold ? `<span class="pill blue">${soldTxt}</span>` : `<span></span>`}
-          </div>
-          <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async" />
-        </div>
-
-        <div class="content">
-          <div class="title">${escapeHtml(p.title)}</div>
-
-          <div class="meta">
-            <div class="metaLeft">
-              ${ratingTxt ? `⭐ ${ratingTxt}` : ``}
-              ${p.coupon ? `• 🎟️ cupom` : ``}
-            </div>
-
-            ${isRelampago ? `
-              <div class="timer" title="Oferta relâmpago">
-                ⏰ <span data-timer-end="${timerEnd}" data-timer-link="${escapeHtml(p.link)}"></span>
-              </div>
-            ` : ``}
-          </div>
-
-          <div class="prices">
-            <div>
-              ${Number.isFinite(p.priceFull) ? `<div class="old">${moneyBR(p.priceFull)}</div>` : `<div class="old"></div>`}
-              ${Number.isFinite(p.priceFinal) ? `<div class="new">${moneyBR(p.priceFinal)}</div>` : `<div class="new"></div>`}
-            </div>
-            ${p.discountP ? `<div class="offBadge">-${p.discountP}%</div>` : ``}
-          </div>
-
-          <a class="btn" href="${escapeHtml(p.link)}" target="_blank" rel="nofollow noopener">Ver oferta</a>
-        </div>
-      `;
-      return card;
-    }
-
-    function renderList(container, list, limit, opts = {}){
-      container.innerHTML = "";
-      const out = (typeof limit === "number") ? list.slice(0, limit) : list;
-      out.forEach((p, idx)=>{
-        const c = renderCard(p, opts);
-        c.style.animationDelay = Math.min(idx * 10, 180) + "ms";
-        container.appendChild(c);
-      });
-      return out.length;
-    }
-
-    // ---------- HOME (4 blocos) ----------
-    function applyHomeBlocks(){
-      const q = elQ.value.trim().toLowerCase();
-      let list = [...ALL];
-
-      if(q){
-        list = list.filter(p => p.title.toLowerCase().includes(q));
-      }
-
-      // 1) TOP OFERTAS DO DIA (6) — score por: vendidos + desconto + nota
-      const scored = list.map(p=>{
-        const score =
-          (Math.min((p.sold||0)/100, 200)) +             // vendidos (peso alto)
-          ((p.discountP||0) * 2.2) +                      // desconto
-          (Number.isFinite(p.rating) ? p.rating * 8 : 0); // rating
-        return { p, score };
-      }).sort((a,b)=> b.score - a.score).map(x=>x.p);
-
-      const top6 = scored.slice(0, 6);
-      const topLinks = new Set(top6.map(x=>x.link));
-      const remaining = list.filter(x => !topLinks.has(x.link));
-
-      // 2) ATÉ 99 (8)
-      const ate99 = remaining
-        .filter(p => Number.isFinite(p.priceFinal) && p.priceFinal <= 99)
-        .sort((a,b)=> (a.priceFinal||999999) - (b.priceFinal||999999))
-        .slice(0, 8);
-
-      const ate99Links = new Set(ate99.map(x=>x.link));
-      const remaining2 = remaining.filter(x => !ate99Links.has(x.link));
-
-      // 3) RELÂMPAGO (6) — maior desconto
-      const relampago = remaining2
-        .slice()
-        .sort((a,b)=> (b.discountP||0) - (a.discountP||0))
-        .slice(0, 6);
-
-      const relLinks = new Set(relampago.map(x=>x.link));
-      const remaining3 = remaining2.filter(x => !relLinks.has(x.link));
-
-      // 4) MAIS OFERTAS (15) — resto organizado
-      const mais = remaining3
-        .slice()
-        .sort((a,b)=> (b.sold||0) - (a.sold||0))
-        .slice(0, 15);
-
-      const nTop = renderList(elTop, top6, undefined, { relampago:false });
-      const nAte = renderList(elAte99, ate99, undefined, { relampago:false });
-      const nRel = renderList(elRelampago, relampago, undefined, { relampago:true });
-      const nMais = renderList(elMais, mais, undefined, { relampago:false });
-
-      topCount.textContent = nTop ? `${nTop} destaques` : ``;
-      ate99Count.textContent = nAte ? `${nAte} ofertas` : ``;
-      maisCount.textContent = nMais ? `${nMais} opções` : ``;
-
-      // esconder bloco se vazio
-      document.getElementById("ate99Block").style.display = nAte ? "" : "none";
-      document.getElementById("relampagoBlock").style.display = nRel ? "" : "none";
-      document.getElementById("maisBlock").style.display = nMais ? "" : "none";
-
-      // liga timers (somente se tiver relâmpago renderizado)
-      startTimers();
-    }
-
-    // ---------- ALL (lista única) ----------
-    function applyAll(){
-      const q = elQ.value.trim().toLowerCase();
-      let list = [...ALL];
-      if(q) list = list.filter(p => p.title.toLowerCase().includes(q));
-      list.sort((a,b)=> (b.sold||0) - (a.sold||0));
-      renderList(elAll, list, 30, { relampago:false });
-      startTimers(); // ok chamar — se não tiver timer, não muda nada
-    }
-
-    function applyView(){
-      const mode = elPreset.value; // home | all
-      if(mode === "all"){
-        elHome.style.display = "none";
-        elAll.style.display = "grid";
-        applyAll();
-      }else{
-        elAll.style.display = "none";
-        elHome.style.display = "block";
-        applyHomeBlocks();
-      }
-    }
-
-    // ---------- INIT ----------
-    async function init(){
-      hideStatus();
-      elSkeleton.style.display = "grid";
-      elHome.style.display = "none";
-      elAll.style.display = "none";
-
+    // ====== INIT ======
+    (async function init(){
       try{
-        const text = await fetchCSVFast();
-        const rows = parseCSV(text);
-        ALL = normalizeProducts(rows);
-
-        if(!ALL.length){
-          showStatus("A planilha carregou, mas não achei produtos válidos. Verifique colunas: image, title, price, discount, sold, rating, link.", "error");
-          elSkeleton.style.display = "none";
-          return;
-        }
-
-        elSkeleton.style.display = "none";
-        applyView();
+        await loadData();
+        applyMode("dia");
       }catch(err){
-        elSkeleton.style.display = "none";
-        showStatus("Não carregou as ofertas: " + (err?.message || "Failed to fetch") + ". Verifique se o CSV está público e se o link está correto.", "error");
+        grid.innerHTML = "";
+        setError("Não carregou as ofertas: " + (err?.message || "Failed to fetch"));
+        sub.textContent = "Erro ao carregar.";
       }
-    }
-
-    // EVENTOS
-    elBtnGo.addEventListener("click", () => {
-      applyView();
-      window.scrollTo({ top: document.querySelector("main").offsetTop - 10, behavior: "smooth" });
-    });
-
-    let t;
-    elQ.addEventListener("input", () => {
-      clearTimeout(t);
-      t = setTimeout(applyView, 150);
-    });
-
-    elPreset.addEventListener("change", applyView);
-
-    document.addEventListener("DOMContentLoaded", init);
+    })();
   </script>
 </body>
 </html>
