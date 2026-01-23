@@ -1,581 +1,287 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#111111"/>
-  <title>Achadinhos do Dia — Achadinhos Oficial</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔥 Achadinhos do Dia</title>
 
-  <style>
-    :root{
-      --bg:#f4f4f4; --card:#fff; --text:#111; --muted:#6b6b6b;
-      --brand:#ffcc00; --dark:#111; --danger:#e60000; --ok:#0a8f3c;
-      --shadow:0 2px 14px rgba(0,0,0,.10); --radius:14px; --stroke:rgba(0,0,0,.08);
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
-
-    header{background:var(--brand);padding:18px 0;border-bottom:1px solid rgba(0,0,0,.08)}
-    .top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .brand h1{margin:0;font-size:22px;font-weight:900}
-    .brand p{margin:4px 0 0;font-size:13px}
-    .top-actions{display:flex;gap:10px;flex-wrap:wrap;width:100%}
-
-    .pill{
-      background:#fff;border:1px solid var(--stroke);border-radius:999px;
-      padding:10px 12px;display:flex;gap:8px;align-items:center;
-      box-shadow:var(--shadow);flex:1;min-width:140px
-    }
-    .pill input,.pill select{border:none;outline:none;background:transparent;font-size:13px;width:100%}
-    .cta{
-      background:var(--dark);color:#fff;padding:12px 14px;border-radius:12px;
-      font-weight:900;font-size:13px;white-space:nowrap
-    }
-
-    h2{font-size:18px;margin:0}
-    .sub{font-size:13px;color:var(--muted);margin-top:4px}
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:12px;margin-top:12px
-    }
-    .card{
-      background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-      border:1px solid var(--stroke);overflow:hidden;
-      display:flex;flex-direction:column;min-height:342px
-    }
-
-    /* ✅ imagem inteira (sem cortar) + quadrada */
-    .imgwrap{
-      position:relative;background:#fff;padding:10px;aspect-ratio:1/1;
-      display:flex;align-items:center;justify-content:center;
-      border-bottom:1px solid var(--stroke);
-    }
-    .imgwrap img{width:100%;height:100%;object-fit:contain;display:block}
-
-    .chip{
-      position:absolute;top:10px;left:10px;
-      background:rgba(17,17,17,.92);color:#fff;
-      font-size:12px;font-weight:900;
-      padding:6px 10px;border-radius:999px;
-      max-width:88%;
-      overflow:hidden;text-overflow:ellipsis;white-space:nowrap
-    }
-
-    .content{padding:10px;display:flex;flex-direction:column;gap:8px;flex:1}
-    .title{
-      font-size:13px;font-weight:900;line-height:1.2;min-height:34px;
-      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-    }
-    .metaRow{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}
-    .pillMini{background:#f2f2f2;border:1px solid var(--stroke);padding:4px 8px;border-radius:999px}
-
-    /* ✅ preço e-commerce (conversão) */
-    .priceRow{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
-    .priceCol{display:flex;flex-direction:column;gap:2px}
-    .oldPrice{font-size:13px;color:#777;text-decoration:line-through}
-    .price{font-size:20px;font-weight:900;color:var(--danger)}
-    .off{
-      font-size:12px;font-weight:900;color:var(--ok);
-      background:#eaffea;padding:6px 10px;border-radius:999px
-    }
-
-    .btn{
-      margin-top:auto;background:var(--brand);
-      padding:12px;border-radius:12px;
-      text-align:center;font-weight:900;font-size:13px;
-      border:1px solid var(--stroke);
-    }
-
-    .section{margin-top:24px}
-    .state{
-      background:#fff;border:1px solid var(--stroke);
-      border-radius:var(--radius);
-      padding:12px 14px;box-shadow:var(--shadow);
-      font-size:13px;color:var(--muted);line-height:1.35
-    }
-    .state.error{background:#fff3f3;border-color:#ffd3d3;color:#9d0000}
-    .hidden{display:none !important}
-
-    footer{
-      margin-top:26px;background:var(--dark);
-      color:#aaa;font-size:12px;text-align:center;
-      padding:16px
-    }
-    /* 1) NUNCA deixar imagem estourar o card */
-.product-card img,
-.offer-card img,
-.card img,
-img.prod-img,
-img.product-image {
-  width: 100%;
-  max-width: 100%;
-  height: 180px;           /* ajuste: 160~220 */
-  max-height: 180px;
-  object-fit: contain;     /* mostra tudo sem cortar */
-  display: block;
-  background: #fff;        /* evita “vazios” feios */
-  border-radius: 14px;
+<style>
+:root{
+  --bg:#f6f6f6;
+  --card:#ffffff;
+  --primary:#ff7a00;
+  --green:#1bbf6b;
+  --red:#d62828;
+  --text:#222;
+  --muted:#777;
 }
 
-/* 2) Se seu layout tiver container da imagem */
-.img-wrap,
-.product-image-wrap,
-.image-box {
-  width: 100%;
-  height: 180px;           /* igual ao da imagem */
-  overflow: hidden;
-  border-radius: 14px;
-  background: #fff;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
 }
 
-/* 3) Garantir que o card não estique por conteúdo */
-.product-card,
-.offer-card,
-.card {
-  overflow: hidden;
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#ff8a00,#ff5f00);
+  padding:18px;
+  color:#fff;
+}
+header h1{
+  margin:0;
+  font-size:22px;
+}
+header p{
+  margin:6px 0 0;
+  opacity:.9;
 }
 
-/* 4) Desktop pode ser um pouco maior (opcional) */
-@media (min-width: 900px){
-  .product-card img,
-  .offer-card img,
-  .card img,
-  img.prod-img,
-  img.product-image {
-    height: 220px;
-    max-height: 220px;
-  }
-  .img-wrap,
-  .product-image-wrap,
-  .image-box {
-    height: 220px;
-  }
+/* SEARCH */
+.search{
+  margin-top:12px;
+  display:flex;
+  gap:8px;
 }
-  </style>
+.search input, .search select{
+  flex:1;
+  padding:12px;
+  border-radius:999px;
+  border:none;
+  outline:none;
+}
+
+/* SECTION */
+.section{
+  padding:16px;
+}
+.section h2{
+  margin:0 0 4px;
+  font-size:18px;
+}
+.section p{
+  margin:0 0 12px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:14px;
+  align-items:start;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:16px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+/* IMAGE WRAPPER (FIX DEFINITIVO) */
+.img-wrap{
+  width:100%;
+  height:190px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.img-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+/* CONTENT */
+.card-body{
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.title{
+  font-size:14px;
+  line-height:1.2;
+  height:2.4em;
+  overflow:hidden;
+}
+.price-old{
+  font-size:13px;
+  color:#888;
+  text-decoration:line-through;
+}
+.price-new{
+  font-size:20px;
+  font-weight:800;
+  color:var(--red);
+}
+.badges{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.badge{
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#eee;
+}
+.badge.off{background:#0ea5e9;color:#fff}
+.badge.sold{background:#111;color:#fff}
+
+/* BUTTON */
+.card a{
+  margin:12px;
+  text-align:center;
+  background:var(--primary);
+  color:#fff;
+  padding:12px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* STATUS */
+#status{
+  background:#ffe0e0;
+  color:#900;
+  padding:10px;
+  border-radius:12px;
+  margin:12px;
+}
+</style>
 </head>
 
 <body>
+
 <header>
-  <div class="wrap top">
-    <div class="brand">
-      <h1>🔥 Achadinhos do Dia</h1>
-      <p>Ofertas do Mercado Livre que realmente valem a pena</p>
-    </div>
+  <h1>🔥 Achadinhos do Dia</h1>
+  <p>Ofertas do Mercado Livre que realmente valem a pena</p>
 
-    <div class="top-actions">
-      <div class="pill">🔎 <input id="q" placeholder="Buscar produto..."></div>
-
-      <div class="pill">🧩
-        <select id="filtro">
-          <option value="all">Todas (página completa)</option>
-          <option value="achadinhos">⚡ Achadinhos do Dia</option>
-          <option value="ate99">💸 Até R$ 99,00</option>
-          <option value="mais_pedidos">🛒 Mais pedidos</option>
-          <option value="relampago">⚡ Oferta relâmpago</option>
-        </select>
-      </div>
-
-      <a href="#ofertas" class="cta">⚡ Ver ofertas</a>
-    </div>
+  <div class="search">
+    <input id="q" placeholder="Buscar produto...">
+    <select id="filtro">
+      <option value="sold">Mais pedidos</option>
+      <option value="discount">Oferta relâmpago</option>
+      <option value="99">Até R$ 99</option>
+    </select>
   </div>
 </header>
 
-<main class="wrap">
-  <section id="ofertas" class="section" data-sec="achadinhos">
-    <h2>⚡ Achadinhos do Dia</h2>
-    <div class="sub">Ordenado por “sold” (mais pedidos primeiro)</div>
-    <div id="status" class="state">Carregando ofertas da planilha…</div>
-    <div id="sec-achadinhos" class="grid"></div>
-  </section>
+<div id="status">Carregando ofertas…</div>
 
-  <section class="section" data-sec="ate99">
-    <h2>💸 Até R$ 99,00</h2>
-    <div class="sub">Preço baixo converte mais</div>
-    <div id="sec-ate99" class="grid"></div>
-  </section>
+<section class="section">
+  <h2>⚡ Achadinhos do Dia</h2>
+  <p>Ordenado por mais pedidos</p>
+  <div id="grid" class="grid"></div>
+</section>
 
-  <section class="section" data-sec="mais_pedidos">
-    <h2>🛒 Mais pedidos</h2>
-    <div class="sub">Selecionados por “sold” alto</div>
-    <div id="sec-mais_pedidos" class="grid"></div>
-  </section>
-
-  <section class="section" data-sec="relampago">
-    <h2>⚡ Oferta relâmpago</h2>
-    <div class="sub">Maior desconto primeiro</div>
-    <div id="sec-relampago" class="grid"></div>
-  </section>
-</main>
-
-<footer>
-  Não somos loja oficial. Apenas indicamos ofertas do Mercado Livre.
-</footer>
-
-<script>
-/* ✅ LINK DA SUA PLANILHA (CSV publicado) */
-const SHEET_CSV_URL =
+<script defer>
+/* ================= CONFIG ================= */
+const CSV_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
 
+/* ================= HELPERS ================= */
 const $ = id => document.getElementById(id);
-let ALL = [];
 
-/* =========================
-   Utils
-========================= */
-function setStatus(msg, isError=false){
-  const el = $("status");
-  if(!el) return;
-  el.className = "state" + (isError ? " error" : "");
-  el.textContent = msg;
-}
-
-function safeText(s){
-  return String(s||"").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-}
-
-function formatBRL(n){
-  try { return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
-  catch { return "R$ " + n; }
-}
-
-function parseBRL(v){
-  if(!v) return NaN;
-  const s = String(v).trim()
-    .replace(/\./g,'')
-    .replace(',', '.')
-    .replace(/[^\d.]/g,'');
-  const n = Number(s);
-  return Number.isFinite(n) ? n : NaN;
-}
-
-function parseDiscountPercent(v){
-  if(!v) return 0;
-  const s = String(v).toUpperCase();
-  const m = s.match(/(\d{1,3})\s*%/);
-  if(!m) return 0;
-  const n = Number(m[1]);
-  if(!Number.isFinite(n)) return 0;
-  return Math.max(0, Math.min(95, n)); // trava
-}
-
-function calcFinalPrice(fullPrice, discountPct){
-  if(!Number.isFinite(fullPrice)) return NaN;
-  if(!(discountPct > 0 && discountPct < 95)) return fullPrice; // sem desconto válido, final = cheio
-  const final = fullPrice * (1 - (discountPct/100));
-  return Math.round(final * 100) / 100;
-}
-
-function soldToNumber(v){
-  if(!v) return 0;
-  const s = String(v).trim().toUpperCase();
-  const base = s.replace(/\./g,'').replace(',','.');
-  const num = parseFloat(base.replace(/[^\d.]/g,''));
-  if(!Number.isFinite(num)) return 0;
-  if(s.includes("MIL")) return Math.round(num * 1000);
-  return Math.round(num);
-}
-
-/* =========================
-   CSV parsing
-========================= */
-function parseCSV(text){
-  const rows = [];
-  let cur = [], val = "", inQuotes = false;
-
-  for (let i = 0; i < text.length; i++){
-    const c = text[i];
-    const next = text[i+1];
-
-    if (c === '"' && inQuotes && next === '"'){ val += '"'; i++; continue; }
-    if (c === '"'){ inQuotes = !inQuotes; continue; }
-
-    if (c === ',' && !inQuotes){ cur.push(val); val = ""; continue; }
-
-    if ((c === '\n' || c === '\r') && !inQuotes){
-      if (val.length || cur.length){ cur.push(val); rows.push(cur); }
-      cur = []; val = "";
-      continue;
+function parseCSV(t){
+  return t.trim().split("\n").map(r=>{
+    const a=[]; let c="",q=false;
+    for(let i=0;i<r.length;i++){
+      const ch=r[i];
+      if(ch=='"'){q=!q;continue}
+      if(ch==","&&!q){a.push(c);c="";continue}
+      c+=ch;
     }
-    val += c;
-  }
-  if (val.length || cur.length){ cur.push(val); rows.push(cur); }
-  return rows;
+    a.push(c); return a;
+  });
+}
+const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const num = v => Number(String(v).replace(",",".").replace(/[^\d.]/g,""))||0;
+const pct = v => Number(String(v).replace(/[^\d]/g,""))||0;
+
+/* ================= LOAD ================= */
+let ALL=[];
+
+fetch(CSV_URL)
+.then(r=>r.text())
+.then(t=>{
+  const rows=parseCSV(t);
+  const h=rows[0];
+  const idx=k=>h.indexOf(k);
+
+  ALL=rows.slice(1).map(r=>{
+    const full=num(r[idx("price")]);
+    const d=pct(r[idx("discount")]);
+    const final=full*(1-d/100);
+
+    return{
+      image:r[idx("image")],
+      title:r[idx("title")],
+      full,
+      final,
+      discount:d,
+      sold:r[idx("sold")],
+      soldN:num(r[idx("sold")]),
+      link:r[idx("link")]
+    };
+  }).filter(p=>p.title&&p.image&&p.link);
+
+  $("status").remove();
+  render();
+  $("q").oninput=render;
+  $("filtro").onchange=render;
+})
+.catch(e=>{
+  $("status").innerText="Não carregou as ofertas: "+e;
+});
+
+/* ================= RENDER ================= */
+function render(){
+  let list=[...ALL];
+  const q=$("q").value.toLowerCase();
+  if(q) list=list.filter(p=>p.title.toLowerCase().includes(q));
+
+  const f=$("filtro").value;
+  if(f==="sold") list.sort((a,b)=>b.soldN-a.soldN);
+  if(f==="discount") list.sort((a,b)=>b.discount-a.discount);
+  if(f==="99") list=list.filter(p=>p.final<=99);
+
+  const g=$("grid");
+  g.innerHTML="";
+  list.forEach(p=>g.appendChild(card(p)));
 }
 
-function normKey(k){
-  return String(k||"").trim().toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, "_");
-}
-
-function mapHeaders(headers){
-  const idx = {};
-  headers.forEach((h,i)=> idx[normKey(h)] = i);
-
-  const pick = (...names) => {
-    for (const n of names){
-      const key = normKey(n);
-      if (key in idx) return idx[key];
-    }
-    return -1;
-  };
-
-  // ✅ seu padrão: image | title | price | discount | coupon | sold | rating | link
-  return {
-    image: pick("image","imagem","img","foto"),
-    title: pick("title","titulo","título","nome","produto"),
-    price: pick("price","preco","preço","valor"),          // ✅ preço cheio
-    discount: pick("discount","desconto","off"),           // ✅ % desconto
-    coupon: pick("coupon","cupom"),
-    sold: pick("sold","vendidos","vendas"),
-    rating: pick("rating","avaliacao","avaliação","nota"),
-    link: pick("link","url","link_afiliado","url_afiliado")
-  };
-}
-
-/* =========================
-   Rendering helpers
-========================= */
-function dedupeByLink(list){
-  const seen = new Set();
-  const out = [];
-  for(const p of list){
-    const k = (p.link||"").trim();
-    if(!k) continue;
-    if(seen.has(k)) continue;
-    seen.add(k);
-    out.push(p);
-  }
-  return out;
-}
-
-function takeUnique(arr, n, used){
-  const out = [];
-  for(const p of arr){
-    const k = (p.link||"").trim();
-    if(!k || used.has(k)) continue;
-    used.add(k);
-    out.push(p);
-    if(out.length >= n) break;
-  }
-  return out;
-}
-
-function buildCard(p){
-  const d = document.createElement("div");
-  d.className = "card";
-
-  const imgSrc = p.image || "https://via.placeholder.com/600x600?text=Produto";
-  const chip = p.discount_txt ? p.discount_txt : (p.coupon ? ("CUPOM " + p.coupon) : "");
-
-  // ✅ preço cheio = price; preço final = price_final calculado com discount_pct
-  const full = p.price_full;
-  const final = p.price_final;
-  const hasFull = Number.isFinite(full);
-  const hasFinal = Number.isFinite(final);
-  const showRiscado = hasFull && hasFinal && final < full;
-
-  const fullTxt = hasFull ? formatBRL(full) : (p.price_raw || "Ver preço");
-  const finalTxt = hasFinal ? formatBRL(final) : (p.price_raw || "Ver preço");
-
-  d.innerHTML = `
-    <div class="imgwrap">
-      <img src="${imgSrc}" alt="${safeText(p.title||"Produto")}" loading="lazy">
-      ${chip ? `<div class="chip">${safeText(chip)}</div>` : ""}
+function card(p){
+  const d=document.createElement("div");
+  d.className="card";
+  d.innerHTML=`
+    <div class="img-wrap">
+      <img src="${p.image}" loading="lazy">
     </div>
-
-    <div class="content">
-      <div class="title">${safeText(p.title || "Sem título")}</div>
-
-      <div class="priceRow">
-        <div class="priceCol">
-          ${showRiscado ? `<div class="oldPrice">${safeText(fullTxt)}</div>` : ``}
-          <div class="price">${safeText(showRiscado ? finalTxt : fullTxt)}</div>
-        </div>
-
-        ${p.discount_txt ? `<div class="off">${safeText(p.discount_txt)}</div>` : ""}
+    <div class="card-body">
+      <div class="title">${p.title}</div>
+      <div class="price-old">${brl(p.full)}</div>
+      <div class="price-new">${brl(p.final)}</div>
+      <div class="badges">
+        ${p.discount?`<span class="badge off">${p.discount}% OFF</span>`:""}
+        ${p.sold?`<span class="badge sold">${p.sold} vendidos</span>`:""}
       </div>
-
-      <div class="metaRow">
-        ${p.sold_txt ? `<span class="pillMini">🛒 ${safeText(p.sold_txt)}</span>` : ""}
-        ${p.rating_txt ? `<span class="pillMini">⭐ ${safeText(p.rating_txt)}</span>` : ""}
-        ${p.coupon ? `<span class="pillMini">🏷️ ${safeText(p.coupon)}</span>` : ""}
-      </div>
-
-      <a class="btn" href="${p.link || "#"}" target="_blank" rel="noopener">Ver oferta</a>
     </div>
+    <a href="${p.link}" target="_blank">Ver oferta</a>
   `;
   return d;
 }
-
-function mount(id, list){
-  const el = $(id);
-  el.innerHTML = "";
-  list.forEach(p => el.appendChild(buildCard(p)));
-}
-
-function showOnlySection(key){
-  const secs = document.querySelectorAll("section[data-sec]");
-  secs.forEach(s=>{
-    const match = (s.getAttribute("data-sec") === key);
-    s.classList.toggle("hidden", !match);
-  });
-}
-
-function showAllSections(){
-  const secs = document.querySelectorAll("section[data-sec]");
-  secs.forEach(s=> s.classList.remove("hidden"));
-}
-
-/* =========================
-   Main render
-========================= */
-function render(){
-  const q = ($("q").value||"").toLowerCase().trim();
-  const filtro = $("filtro").value;
-
-  let f = ALL.slice();
-
-  if(q){
-    f = f.filter(p =>
-      (p.title||"").toLowerCase().includes(q) ||
-      (p.discount_txt||"").toLowerCase().includes(q) ||
-      (p.coupon||"").toLowerCase().includes(q)
-    );
-  }
-
-  f = dedupeByLink(f);
-
-  const bySold = f.slice().sort((a,b)=> (b.sold||0) - (a.sold||0));
-  const byDiscount = f.slice().sort((a,b)=> (b.discount_pct||0) - (a.discount_pct||0));
-
-  // ✅ Base de preço final (para filtros)
-  const byFinalPriceAsc = f.slice().sort((a,b)=>{
-    const ap = Number.isFinite(a.price_final) ? a.price_final : (Number.isFinite(a.price_full) ? a.price_full : 1e15);
-    const bp = Number.isFinite(b.price_final) ? b.price_final : (Number.isFinite(b.price_full) ? b.price_full : 1e15);
-    return ap - bp;
-  });
-
-  if(filtro === "all"){
-    showAllSections();
-    const used = new Set();
-
-    const achadinhos = takeUnique(bySold, 12, used);
-
-    const ate99Base = byFinalPriceAsc.filter(p => {
-      const v = Number.isFinite(p.price_final) ? p.price_final : p.price_full;
-      return Number.isFinite(v) && v <= 99;
-    });
-    const ate99 = takeUnique(ate99Base, 18, used);
-
-    const maisPedidosBase = bySold.filter(p => (p.sold||0) >= 1000);
-    const maisPedidos = takeUnique(maisPedidosBase, 18, used);
-
-    const relampagoBase = byDiscount.filter(p => (p.discount_pct||0) >= 45);
-    const relampago = takeUnique(relampagoBase, 18, used);
-
-    mount("sec-achadinhos", achadinhos);
-    mount("sec-ate99", ate99);
-    mount("sec-mais_pedidos", maisPedidos);
-    mount("sec-relampago", relampago);
-    return;
-  }
-
-  showOnlySection(filtro);
-
-  if(filtro === "achadinhos"){
-    mount("sec-achadinhos", bySold.slice(0, 60));
-  }
-  if(filtro === "ate99"){
-    const ate99Base = byFinalPriceAsc.filter(p => {
-      const v = Number.isFinite(p.price_final) ? p.price_final : p.price_full;
-      return Number.isFinite(v) && v <= 99;
-    });
-    mount("sec-ate99", ate99Base.slice(0, 80));
-  }
-  if(filtro === "mais_pedidos"){
-    const maisPedidosBase = bySold.filter(p => (p.sold||0) >= 1000);
-    mount("sec-mais_pedidos", maisPedidosBase.slice(0, 80));
-  }
-  if(filtro === "relampago"){
-    const relampagoBase = byDiscount.filter(p => (p.discount_pct||0) >= 45);
-    mount("sec-relampago", relampagoBase.slice(0, 80));
-  }
-}
-
-/* =========================
-   Load CSV
-========================= */
-async function load(){
-  try{
-    setStatus("Carregando ofertas da planilha…");
-    const res = await fetch(SHEET_CSV_URL, { cache:"no-store" });
-    if(!res.ok) throw new Error("HTTP " + res.status);
-
-    const text = await res.text();
-    const rows = parseCSV(text);
-    if(!rows.length) throw new Error("CSV vazio");
-
-    const headers = rows[0];
-    const m = mapHeaders(headers);
-
-    const missing = [];
-    if(m.image === -1) missing.push("image");
-    if(m.title === -1) missing.push("title");
-    if(m.price === -1) missing.push("price");
-    if(m.discount === -1) missing.push("discount");
-    if(m.link === -1) missing.push("link");
-    if(missing.length){
-      throw new Error("Faltam colunas: " + missing.join(", "));
-    }
-
-    const data = rows.slice(1).map(r=>{
-      const get = (key) => (m[key] >= 0 ? (r[m[key]] ?? "").trim() : "");
-
-      const priceRaw = get("price");
-      const discountRaw = get("discount");
-
-      const priceFull = parseBRL(priceRaw);
-      const discountPct = parseDiscountPercent(discountRaw);
-      const priceFinal = calcFinalPrice(priceFull, discountPct);
-
-      return {
-        image: get("image"),
-        title: get("title"),
-        price_raw: priceRaw,
-        price_full: priceFull,              // ✅ cheio
-        discount_txt: discountRaw,          // ex: "44% OFF"
-        discount_pct: discountPct,          // número
-        price_final: priceFinal,            // ✅ calculado
-        coupon: get("coupon"),
-        sold_txt: get("sold"),
-        sold: soldToNumber(get("sold")),
-        rating_txt: get("rating"),
-        rating: Number(String(get("rating")||"").replace(",", ".").replace(/[^\d.]/g,"")) || 0,
-        link: get("link")
-      };
-    }).filter(p => p.title && p.link);
-
-    ALL = dedupeByLink(data);
-    if(!ALL.length) throw new Error("Nenhuma linha válida (precisa title + link).");
-
-    const st = $("status");
-    if(st) st.remove();
-
-    $("q").addEventListener("input", render);
-    $("filtro").addEventListener("change", render);
-
-    render();
-  }catch(err){
-    console.error(err);
-    setStatus("Não carregou as ofertas: " + err.message, true);
-  }
-}
-load();
 </script>
+
 </body>
 </html>
