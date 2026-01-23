@@ -224,6 +224,13 @@
   setTimeout(clean, 900);
 })();
 </script>
+  /* Remove os campos R$ mín e R$ máx (mobile e PC) */
+input[placeholder="R$ mín"],
+input[placeholder="R$ máx"],
+input[placeholder="R$ min"],
+input[placeholder="R$ max"]{
+  display:none !important;
+}
   </style>
 </head>
 
