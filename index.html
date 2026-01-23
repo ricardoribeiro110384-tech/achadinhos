@@ -1,369 +1,653 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Achadinhos Oficial</title>
-  <link rel="icon" href="logo.png"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Achadinhos do Dia</title>
+  <meta name="theme-color" content="#f2c100" />
   <style>
     :root{
-      --yellow:#f5c400; --yellow2:#ffdb3a;
-      --bg:#f4f4f4; --card:#fff; --text:#111; --muted:#666;
-      --shadow:0 12px 30px rgba(0,0,0,.10); --radius:18px;
-      --danger:#c40000; --chip:#111; --blue:#1b75ff;
+      --yellow:#f2c100;
+      --yellow2:#f6d44a;
+      --bg:#f6f6f6;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#6b6b6b;
+      --shadow:0 10px 30px rgba(0,0,0,.10);
+      --radius:20px;
+      --orange:#ff6a00;
+      --black:#111;
+      --danger:#b00020;
+      --blue:#1877f2;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 14px 40px}
+
     header{
-      background:linear-gradient(180deg,var(--yellow2),var(--yellow));
-      padding:16px; position:sticky; top:0; z-index:10;
-      box-shadow:0 6px 18px rgba(0,0,0,.10);
+      background:linear-gradient(180deg,var(--yellow),var(--yellow2));
+      padding:16px 0 14px;
+      position:sticky;top:0;z-index:50;
+      box-shadow:0 6px 18px rgba(0,0,0,.12);
     }
-    .wrap{max-width:1040px;margin:0 auto}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:42px;height:42px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.12)}
-    .logo img{width:100%;height:100%;object-fit:contain;padding:6px}
-    h1{margin:0;font-size:22px;line-height:1.1}
-    .sub{margin:6px 0 0;color:rgba(0,0,0,.72);font-weight:800;font-size:13px}
+    .top{
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+      padding:0 14px;
+      max-width:1100px;margin:0 auto;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;min-width:260px;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:12px;object-fit:contain;background:#fff;
+      box-shadow:0 8px 20px rgba(0,0,0,.15);
+      padding:6px;
+      flex:0 0 auto;
+    }
+    .brandText h1{margin:0;font-size:22px;line-height:1}
+    .brandText p{margin:5px 0 0;font-size:13px;color:#2a2a2a;font-weight:600;opacity:.85}
 
-    main{padding:16px}
-    .blocks{
-      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
-      margin-bottom:14px;
-    }
-    @media(min-width:720px){ .blocks{grid-template-columns:repeat(5,minmax(0,1fr));} }
-    .b{
-      background:var(--card);border-radius:14px;box-shadow:var(--shadow);
-      padding:12px;cursor:pointer;font-weight:1000;text-align:center;
-      user-select:none;
-    }
-    .b.active{outline:3px solid rgba(0,0,0,.12)}
     .controls{
-      display:grid;gap:10px;margin:12px 0;
-      grid-template-columns:1fr;
+      display:flex;gap:10px;flex:1;align-items:center;justify-content:flex-end;flex-wrap:wrap;
+      min-width:260px;
     }
-    @media(min-width:860px){ .controls{grid-template-columns:1fr 220px;} }
-    .search{
-      background:#fff;border-radius:999px;padding:12px 14px;display:flex;gap:10px;align-items:center;
-      box-shadow:0 10px 22px rgba(0,0,0,.10);
-    }
-    .search input{border:0;outline:0;width:100%;font-size:15px}
     .pill{
-      background:#fff;border-radius:999px;padding:12px 14px;font-weight:1000;
-      box-shadow:0 10px 22px rgba(0,0,0,.10); text-align:center;
+      background:#fff;border:0;border-radius:999px;
+      padding:12px 14px;display:flex;align-items:center;gap:10px;
+      box-shadow:0 10px 22px rgba(0,0,0,.10);
+      min-height:44px;
     }
+    .pill input{
+      border:0;outline:0;background:transparent;
+      font-size:15px;min-width:180px;width:min(320px,60vw);
+    }
+    select.pillSelect{
+      appearance:none;border:0;outline:0;background:#fff;
+      border-radius:999px;padding:12px 14px;min-height:44px;
+      box-shadow:0 10px 22px rgba(0,0,0,.10);
+      font-size:15px;font-weight:800;
+      min-width:210px;
+    }
+    .cta{
+      border:0;border-radius:999px;
+      padding:12px 18px;
+      background:var(--black);color:#fff;font-weight:900;
+      cursor:pointer;min-height:44px;
+      box-shadow:0 12px 26px rgba(0,0,0,.18);
+      display:flex;align-items:center;gap:10px;
+    }
+    .cta:active{transform:translateY(1px)}
+    .hint{max-width:1100px;margin:8px auto 0;padding:0 14px;color:#222;font-weight:700;font-size:12px;opacity:.75}
 
-    .state{font-weight:1000;margin:10px 0;color:#111}
-    .err{background:#ffe6e6;border:1px solid #ffb0b0;border-radius:14px;padding:12px 14px;color:#7a0000;font-weight:1000}
+    main{padding-top:16px}
+    .titleRow{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      margin:12px 0 10px;
+    }
+    .titleRow h2{margin:0;font-size:26px}
+    .titleRow .sub{color:var(--muted);font-weight:700}
 
     .grid{
-      display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:14px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
     }
-    @media(min-width:640px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
-    @media(min-width:980px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+    @media (max-width:980px){ .grid{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:720px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:420px){ .grid{grid-template-columns:1fr} }
 
-    a.cardLink{display:block;text-decoration:none;color:inherit}
-    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;min-height:420px}
-    .img{height:250px;background:#fff;display:grid;place-items:center;position:relative;border-bottom:1px solid rgba(0,0,0,.06)}
-    .img img{width:100%;height:100%;object-fit:contain;padding:10px}
-    .chips{position:absolute;left:10px;top:10px;display:flex;gap:8px;flex-wrap:wrap}
-    .chip{background:var(--chip);color:#fff;font-weight:1000;font-size:12px;padding:6px 10px;border-radius:999px;box-shadow:0 10px 22px rgba(0,0,0,.16)}
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;flex-direction:column;
+      transform:translateY(0);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.14)}
+    .imgWrap{
+      position:relative;
+      background:#fff;
+      padding:12px;
+      border-bottom:1px solid #f0f0f0;
+    }
+    .img{
+      width:100%;
+      height:200px;
+      object-fit:contain; /* NÃO ESTOURA */
+      display:block;
+    }
+
+    .badgeTop{
+      position:absolute;left:10px;top:10px;
+      display:flex;gap:8px;flex-wrap:wrap;
+    }
+    .chip{
+      background:#111;color:#fff;
+      font-weight:900;font-size:12px;
+      padding:6px 10px;border-radius:999px;
+      box-shadow:0 10px 20px rgba(0,0,0,.18);
+      white-space:nowrap;
+    }
     .chip.blue{background:var(--blue)}
-    .body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1}
-    .t{font-weight:1000;font-size:16px;line-height:1.2}
-    .prices{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-    .full{color:#777;text-decoration:line-through;font-weight:900}
-    .final{color:var(--danger);font-weight:1000;font-size:30px;letter-spacing:-.5px}
-    .badge{background:#111;color:#fff;border-radius:999px;padding:8px 12px;font-weight:1000}
+    .chip.off{background:#111}
+    .chip.sold{background:var(--blue)}
 
-    .loadWrap{margin-top:14px;display:flex;justify-content:center}
-    button.btn{background:#111;color:#fff;border:0;border-radius:999px;padding:12px 14px;font-weight:1000;cursor:pointer;box-shadow:0 10px 22px rgba(0,0,0,.18)}
-    footer{margin-top:18px;padding:14px 16px 22px;color:#fff;background:#111;text-align:center;font-weight:900}
-    footer small{display:block;color:rgba(255,255,255,.72);font-weight:700;margin-top:6px}
+    .body{
+      padding:12px 12px 14px;
+      display:flex;flex-direction:column;gap:10px;
+      flex:1;
+    }
+    .name{
+      font-weight:900;font-size:15px;line-height:1.25;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+      min-height:56px;
+    }
+    .meta{
+      display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:800;font-size:13px;
+    }
+    .star{color:#c58a00}
+    .priceRow{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+    }
+    .old{
+      color:#8a8a8a;
+      font-weight:900;
+      text-decoration:line-through;
+      font-size:14px;
+    }
+    .new{
+      color:#d10000;
+      font-weight:1000;
+      font-size:26px;
+      letter-spacing:-.5px;
+    }
+    .badgeOff{
+      background:#111;color:#fff;
+      font-weight:1000;
+      padding:8px 12px;border-radius:999px;
+      font-size:14px;
+      min-width:68px;text-align:center;
+    }
+
+    .flashTimer{
+      margin-top:6px;
+      font-weight:1000;
+      font-size:13px;
+      color:var(--danger);
+      background:#fff1f1;
+      border:1px dashed #f3b3b3;
+      padding:6px 10px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:fit-content;
+    }
+    .progressWrap{
+      height:8px;width:92px;background:#ffd5d5;border-radius:999px;overflow:hidden;
+    }
+    .progressBar{
+      height:100%;background:var(--danger);width:0%;
+    }
+
+    .btn{
+      margin-top:auto;
+      border:0;border-radius:14px;
+      padding:12px 12px;
+      background:var(--orange);
+      color:#fff;font-weight:1000;
+      cursor:pointer;
+      display:flex;justify-content:center;align-items:center;gap:10px;
+    }
+    .btn:active{transform:translateY(1px)}
+
+    .skeleton{
+      background:linear-gradient(90deg,#f1f1f1,#e9e9e9,#f1f1f1);
+      background-size:200% 100%;
+      animation:sh 1.1s infinite linear;
+      border-radius:var(--radius);
+      height:330px;
+    }
+    @keyframes sh{0%{background-position:0% 0}100%{background-position:-200% 0}}
+
+    .error{
+      background:#ffe9e9;border:1px solid #ffc4c4;
+      color:#7a0b12;
+      padding:12px 14px;border-radius:14px;
+      font-weight:900;
+    }
+
+    footer{
+      margin-top:28px;
+      background:#111;color:#fff;
+      border-radius:18px;
+      padding:16px 14px;
+      text-align:center;
+      font-weight:800;
+      opacity:.95;
+    }
+    footer small{display:block;opacity:.8;margin-top:6px;font-weight:700}
   </style>
 </head>
+
 <body>
-<header>
-  <div class="wrap brand">
-    <div class="logo"><img src="logo.png" alt="Achadinhos"/></div>
-    <div>
-      <h1>Achadinhos Oficial</h1>
-      <div class="sub">Clique no produto para abrir no Mercado Livre</div>
+  <header>
+    <div class="top">
+      <div class="brand">
+        <img src="logo.png" alt="Logo" class="logo" />
+        <div class="brandText">
+          <h1>Achadinhos do Dia</h1>
+          <p>Ofertas do Mercado Livre que realmente valem a pena</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="pill" title="Pesquisar">
+          <span>🔎</span>
+          <input id="q" type="search" placeholder="Buscar produto..." autocomplete="off" />
+        </div>
+
+        <select id="mode" class="pillSelect" title="Selecionar bloco">
+          <option value="dia">⚡ Achadinhos do Dia</option>
+          <option value="99">💸 Até R$ 99,00</option>
+          <option value="pedidos">🛒 Mais pedidos</option>
+          <option value="flash">⏰ Oferta relâmpago</option>
+        </select>
+
+        <button id="go" class="cta" type="button">⚡ Ver ofertas</button>
+      </div>
     </div>
+    <div class="hint"></div>
+  </header>
+
+  <div class="wrap">
+    <main>
+      <div class="titleRow">
+        <div>
+          <h2 id="h2">Achadinhos do Dia</h2>
+          <div class="sub" id="sub">Carregando ofertas…</div>
+        </div>
+      </div>
+
+      <div id="msg"></div>
+      <div id="grid" class="grid"></div>
+    </main>
+
+    <footer>
+      Não somos uma loja oficial. Apenas divulgamos ofertas do Mercado Livre.
+      <small>Preços e disponibilidade podem mudar a qualquer momento.</small>
+    </footer>
   </div>
-</header>
 
-<main class="wrap">
-  <div class="blocks" id="blocks">
-    <div class="b active" data-b="tudo">📋 Ver tudo</div>
-    <div class="b" data-b="dia">⚡ Ofertas do dia</div>
-    <div class="b" data-b="flash">⏱️ Relâmpago</div>
-    <div class="b" data-b="mais">🛒 Mais pedidos</div>
-    <div class="b" data-b="ate99">💸 Até 99</div>
-  </div>
+  <script defer>
+    // ====== CONFIG ======
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
+    const CACHE_KEY = "achadinhos_csv_cache_v1";
+    const CACHE_TTL_MS = 10 * 60 * 1000; // 10 min
+    const FLASH_DURATION_MS = 60 * 60 * 1000; // 1h
 
-  <div class="controls">
-    <div class="search">
-      <span>🔎</span>
-      <input id="q" type="search" placeholder="Buscar produto..." autocomplete="off"/>
-    </div>
-    <div class="pill" id="pillInfo">Carregando…</div>
-  </div>
+    // ====== STATE ======
+    let all = [];
+    let view = [];
+    let lastMode = "dia";
 
-  <div id="msg"></div>
-  <div class="grid" id="grid"></div>
+    const el = (id)=>document.getElementById(id);
+    const grid = el("grid");
+    const msg = el("msg");
+    const h2 = el("h2");
+    const sub = el("sub");
+    const q = el("q");
+    const mode = el("mode");
+    const go = el("go");
 
-  <div class="loadWrap">
-    <button class="btn" id="loadMore" style="display:none;">Carregar mais</button>
-  </div>
-</main>
-
-<footer>
-  Não somos loja oficial. Apenas divulgamos ofertas do Mercado Livre.
-  <small>Os preços podem mudar a qualquer momento no site do Mercado Livre.</small>
-</footer>
-
-<script defer>
-  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-  const PAGE_SIZE = 24;
-
-  const $ = (id)=>document.getElementById(id);
-  let ALL = [];
-  let CURRENT = "tudo";
-  let shownCount = PAGE_SIZE;
-
-  function parsePriceBR(v){
-    const s = String(v ?? "").trim();
-    if(!s) return NaN;
-    const clean = s.replace(/\./g,"").replace(",",".");
-    const n = Number(clean);
-    return isFinite(n) ? n : NaN;
-  }
-  function getDiscountPct(row){
-    const s = String(row.discount ?? "").toUpperCase();
-    const m = s.match(/(\d+(\.\d+)?)/);
-    return m ? Number(m[1]) : 0;
-  }
-  function parseSold(v){
-    const s = String(v ?? "").trim().toLowerCase().replace(/\./g,"").replace(",",".");
-    if(!s) return 0;
-    if (s.includes("mil")) {
-      const n = parseFloat(s.replace("mil","").trim());
-      return isNaN(n) ? 0 : Math.round(n*1000);
+    // ====== UTIL ======
+    function moneyBR(v){
+      if (!isFinite(v)) return "";
+      return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
     }
-    const n = parseFloat(s);
-    return isNaN(n) ? 0 : Math.round(n);
-  }
-  function moneyBR(n){
-    if(!isFinite(n)) return "";
-    return n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-  }
-  function calcFinal(row){
-    const full = parsePriceBR(row.price);
-    const pct = getDiscountPct(row);
-    if(!isFinite(full) || full<=0) return NaN;
-    return Math.max(0, full * (1 - pct/100));
-  }
 
-  // ✅ CSV robusto (com aspas e vírgulas no título)
-  function parseCSV(text){
-    const rows = [];
-    let row = [];
-    let cur = "";
-    let inQuotes = false;
+    function parseNumberBR(x){
+      if (x == null) return NaN;
+      const s = String(x).trim();
+      if (!s) return NaN;
+      // aceita "287,12" "287.12" "R$ 287,12"
+      const cleaned = s.replace(/[R$\s]/g,"").replace(/\./g,"").replace(",",".");
+      const n = Number(cleaned);
+      return isFinite(n) ? n : NaN;
+    }
 
-    text = String(text || "").replace(/\r/g, "");
+    function parseDiscount(x){
+      // aceita "50% OFF" "53%OFF" "53%" "OFF 53%" etc
+      if (x == null) return 0;
+      const s = String(x).toUpperCase();
+      const m = s.match(/(\d{1,2}|\d{3})\s*%/);
+      if (!m) return 0;
+      const p = Number(m[1]);
+      if (!isFinite(p)) return 0;
+      return Math.max(0, Math.min(95, p));
+    }
 
-    for (let i = 0; i < text.length; i++){
-      const ch = text[i];
-      const next = text[i+1];
+    function parseSold(x){
+      // aceita "1000", "1.000", "10 mil", "10 MIL", "100 mil"
+      if (x == null) return 0;
+      const s = String(x).toLowerCase().trim();
+      if (!s) return 0;
 
-      if (ch === '"'){
-        if (inQuotes && next === '"'){ cur += '"'; i++; }
-        else { inQuotes = !inQuotes; }
-        continue;
+      const isMil = s.includes("mil");
+      const cleaned = s.replace(/[^\d,\.]/g,"");
+      if (!cleaned) return 0;
+
+      // "1.000" -> 1000 ; "10" + mil -> 10000
+      const num = Number(cleaned.replace(/\./g,"").replace(",","."));
+      if (!isFinite(num)) return 0;
+      return isMil ? Math.round(num * 1000) : Math.round(num);
+    }
+
+    function parseCSV(text){
+      // CSV simples do Google: sem quebra de linha em campos.
+      const lines = text.replace(/\r/g,"").split("\n").filter(Boolean);
+      if (!lines.length) return [];
+      const headers = splitCSVLine(lines[0]).map(h=>h.trim());
+      const rows = [];
+      for (let i=1;i<lines.length;i++){
+        const cols = splitCSVLine(lines[i]);
+        const obj = {};
+        headers.forEach((h,idx)=>obj[h]=cols[idx] ?? "");
+        rows.push(obj);
       }
+      return rows;
+    }
 
-      if (ch === "," && !inQuotes){
-        row.push(cur); cur = ""; continue;
+    function splitCSVLine(line){
+      const out = [];
+      let cur = "", inQ = false;
+      for (let i=0;i<line.length;i++){
+        const ch = line[i];
+        if (ch === '"'){
+          if (inQ && line[i+1] === '"'){ cur += '"'; i++; }
+          else inQ = !inQ;
+        } else if (ch === "," && !inQ){
+          out.push(cur); cur = "";
+        } else {
+          cur += ch;
+        }
       }
-      if (ch === "\n" && !inQuotes){
-        row.push(cur); rows.push(row);
-        row = []; cur = ""; continue;
+      out.push(cur);
+      return out;
+    }
+
+    function dedupeByLink(items){
+      const seen = new Set();
+      const out = [];
+      for (const it of items){
+        const k = (it.link||"").trim();
+        if (!k || seen.has(k)) continue;
+        seen.add(k);
+        out.push(it);
       }
-      cur += ch;
+      return out;
     }
-    if (cur.length || row.length){ row.push(cur); rows.push(row); }
 
-    const cleanRows = rows.filter(r => r.some(c => String(c).trim() !== ""));
-    if (!cleanRows.length) return [];
-
-    const headers = cleanRows.shift().map(h => String(h||"").trim());
-    const out = [];
-
-    for (const r of cleanRows){
-      const obj = {};
-      headers.forEach((h, idx)=> obj[h] = String(r[idx] ?? "").trim());
-
-      obj.fullPrice = parsePriceBR(obj.price);
-      obj.discountPct = getDiscountPct(obj);
-      obj.finalPrice = calcFinal(obj);
-      obj.soldNum = parseSold(obj.sold);
-
-      if (obj.link && obj.image && obj.title) out.push(obj);
+    function showSkeleton(n=8){
+      grid.innerHTML = "";
+      for (let i=0;i<n;i++){
+        const d = document.createElement("div");
+        d.className = "skeleton";
+        grid.appendChild(d);
+      }
     }
-    return out;
-  }
 
-  function scoreDia(r){
-    return (r.discountPct * 3) + Math.log10((r.soldNum || 0) + 1);
-  }
-
-  function applySearch(list){
-    const q = $("q").value.trim().toLowerCase();
-    if(!q) return list;
-    return list.filter(r => String(r.title).toLowerCase().includes(q));
-  }
-
-  function getSortedList(blockKey){
-    let list = ALL.slice();
-
-    if(blockKey === "flash"){
-      list.sort((a,b)=> (b.discountPct - a.discountPct) || (b.soldNum - a.soldNum));
-    } else if(blockKey === "mais"){
-      list.sort((a,b)=> (b.soldNum - a.soldNum) || (b.discountPct - a.discountPct));
-    } else if(blockKey === "ate99"){
-      list = list.filter(r => isFinite(r.finalPrice) && r.finalPrice <= 99)
-                 .sort((a,b)=> a.finalPrice - b.finalPrice);
-    } else if(blockKey === "dia"){
-      list.sort((a,b)=> scoreDia(b) - scoreDia(a));
-    } else {
-      // tudo: mantém ordem da planilha
+    function setError(text){
+      msg.innerHTML = `<div class="error">${text}</div>`;
     }
-    return applySearch(list);
-  }
+    function clearError(){ msg.innerHTML = ""; }
 
-  function getDisplayList(){
-    const base = getSortedList(CURRENT);
-    if(CURRENT !== "tudo") return base; // mostra tudo do bloco
-    return base.slice(0, shownCount);   // tudo paginado
-  }
+    // ====== FETCH + CACHE ======
+    async function loadData(){
+      showSkeleton(8);
+      clearError();
 
-  function render(items){
-    const grid = $("grid");
-    grid.innerHTML = "";
-    if(!items.length){
-      grid.innerHTML = `<div class="err">Nenhum produto encontrado.</div>`;
-      return;
+      // cache
+      try{
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+        if (cached && cached.ts && (Date.now() - cached.ts) < CACHE_TTL_MS && cached.csv){
+          return buildItemsFromCSV(cached.csv, true);
+        }
+      }catch{}
+
+      // fetch
+      const r = await fetch(CSV_URL, {cache:"no-store"});
+      if (!r.ok) throw new Error("Falha ao carregar a planilha (HTTP "+r.status+")");
+      const csv = await r.text();
+
+      try{
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ts:Date.now(), csv}));
+      }catch{}
+
+      return buildItemsFromCSV(csv, false);
     }
-    const frag = document.createDocumentFragment();
 
-    items.forEach(r=>{
-      const off = r.discountPct ? `${Math.round(r.discountPct)}% OFF` : "OFERTA";
-      const soldTxt = r.soldNum ? `${r.soldNum.toLocaleString("pt-BR")} vendidos` : "";
-      const a = document.createElement("a");
-      a.className = "cardLink";
-      a.href = r.link;
-      a.target = "_blank";
-      a.rel = "noopener";
+    function buildItemsFromCSV(csv, fromCache){
+      const rows = parseCSV(csv);
 
-      a.innerHTML = `
+      const items = rows.map(r=>{
+        const priceFull = parseNumberBR(r.price);
+        const disc = parseDiscount(r.discount);
+        const final = (isFinite(priceFull) ? priceFull * (1 - disc/100) : NaN);
+
+        return {
+          image: (r.image||"").trim(),
+          title: (r.title||"").trim(),
+          price: priceFull,
+          discount: disc,
+          finalPrice: final,
+          coupon: (r.coupon||"").trim(),
+          sold: parseSold(r.sold),
+          rating: Number(String(r.rating||"").replace(",", ".")) || 0,
+          link: (r.link||"").trim(),
+        };
+      });
+
+      // limpa inválidos + dedupe
+      const cleaned = dedupeByLink(items).filter(p => p.link && p.title && p.image);
+
+      all = cleaned;
+      sub.textContent = fromCache
+        ? `Carregado do cache • Itens: ${all.length}`
+        : `Carregado da planilha • Itens: ${all.length}`;
+
+      return all;
+    }
+
+    // ====== RENDER ======
+    function cardHTML(p, isFlash){
+      const soldLabel = p.sold ? `${p.sold.toLocaleString("pt-BR")} vendidos` : "";
+      const offLabel = p.discount ? `${p.discount}% OFF` : "";
+      const old = moneyBR(p.price);
+      const now = moneyBR(p.finalPrice);
+
+      const chips = `
+        <div class="badgeTop">
+          ${offLabel ? `<div class="chip off">${offLabel}</div>` : ``}
+          ${soldLabel ? `<div class="chip sold">${soldLabel}</div>` : ``}
+        </div>
+      `;
+
+      const timer = isFlash ? `
+        <div class="flashTimer" data-id="${encodeURIComponent(p.link)}">
+          ⏰ <span class="t">--:--:--</span>
+          <span class="progressWrap"><span class="progressBar"></span></span>
+        </div>
+      ` : ``;
+
+      return `
         <article class="card">
-          <div class="img">
-            <div class="chips">
-              <div class="chip">${off}</div>
-              ${soldTxt ? `<div class="chip blue">${soldTxt}</div>` : ``}
-            </div>
-            <img loading="lazy" src="${r.image}" alt="${(r.title||"").replace(/"/g,"")}"/>
+          <div class="imgWrap">
+            ${chips}
+            <img class="img" loading="lazy" src="${p.image}" alt="${escapeHTML(p.title)}">
           </div>
           <div class="body">
-            <div class="t">${r.title}</div>
-            <div class="prices">
-              <div>
-                <div class="full">${isFinite(r.fullPrice) ? moneyBR(r.fullPrice) : ""}</div>
-                <div class="final">${isFinite(r.finalPrice) ? moneyBR(r.finalPrice) : ""}</div>
-              </div>
-              <div class="badge">-${Math.round(r.discountPct)}%</div>
+            <div class="name">${escapeHTML(p.title)}</div>
+            <div class="meta">
+              ${p.rating ? `<span class="star">⭐</span><span>${String(p.rating).replace(".", ",")}</span>` : `<span></span>`}
             </div>
+
+            <div class="priceRow">
+              <div>
+                <div class="old">${old}</div>
+                <div class="new">${now}</div>
+              </div>
+              <div class="badgeOff">-${p.discount}%</div>
+            </div>
+
+            ${timer}
+
+            <button class="btn" onclick="window.open('${p.link}','_blank')">⚡ Ver oferta</button>
           </div>
         </article>
       `;
-      frag.appendChild(a);
-    });
-
-    grid.appendChild(frag);
-  }
-
-  function updateUI(){
-    // active block
-    document.querySelectorAll(".b").forEach(el=>{
-      el.classList.toggle("active", el.getAttribute("data-b") === CURRENT);
-    });
-
-    const base = getSortedList(CURRENT);
-    const items = getDisplayList();
-
-    if(CURRENT === "tudo"){
-      $("pillInfo").textContent = `Mostrando ${items.length} de ${base.length}`;
-      $("loadMore").style.display = (shownCount < base.length) ? "" : "none";
-    } else {
-      $("pillInfo").textContent = `Itens: ${base.length}`;
-      $("loadMore").style.display = "none";
     }
 
-    render(items);
-  }
+    function escapeHTML(s){
+      return String(s||"").replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[c]));
+    }
 
-  async function load(){
-    try{
-      $("msg").innerHTML = "";
-      const res = await fetch(CSV_URL, { cache:"no-store" });
-      if(!res.ok) throw new Error("Falha ao buscar planilha");
-      const text = await res.text();
-      ALL = parseCSV(text);
+    function applyMode(m){
+      lastMode = m;
+      clearError();
 
-      // dedupe por link (segurança)
-      const seen = new Set();
-      ALL = ALL.filter(r=>{
-        const k = String(r.link||"").trim();
-        if(!k || seen.has(k)) return false;
-        seen.add(k); return true;
+      const query = q.value.trim().toLowerCase();
+
+      const base = all.filter(p=>{
+        if (!query) return true;
+        return (p.title||"").toLowerCase().includes(query);
       });
 
-      if(!ALL.length) throw new Error("Planilha vazia ou colunas incompatíveis");
-      updateUI();
-    } catch(e){
-      $("msg").innerHTML = `<div class="err">Erro: ${String(e.message||e)}</div>`;
-      $("pillInfo").textContent = "Erro ao carregar";
+      if (!base.length){
+        grid.innerHTML = "";
+        setError("Nenhum produto encontrado para essa busca.");
+        sub.textContent = `Itens: 0`;
+        return;
+      }
+
+      if (m === "dia"){
+        h2.textContent = "Achadinhos do Dia";
+        // mistura boa: prioridade por desconto e vendidos, sem extremos
+        view = [...base].sort((a,b)=>{
+          const sa = (a.sold*0.6) + (a.discount*25);
+          const sb = (b.sold*0.6) + (b.discount*25);
+          return sb - sa;
+        }).slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "99"){
+        h2.textContent = "Até R$ 99,00";
+        view = [...base].filter(p=>isFinite(p.finalPrice) && p.finalPrice <= 99)
+          .sort((a,b)=>a.finalPrice - b.finalPrice)
+          .slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "pedidos"){
+        h2.textContent = "Mais pedidos";
+        view = [...base].sort((a,b)=>b.sold - a.sold).slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "flash"){
+        h2.textContent = "Oferta relâmpago";
+        view = [...base].sort((a,b)=>b.discount - a.discount).slice(0, 24);
+        renderGrid(true);
+        startFlashTimers(); // <<<<<< timer volta aqui
+      }
+
+      sub.textContent = `Itens exibidos: ${view.length}`;
     }
-  }
 
-  document.addEventListener("DOMContentLoaded", async ()=>{
-    await load();
+    function renderGrid(isFlash){
+      grid.innerHTML = view.map(p => cardHTML(p, isFlash)).join("");
+    }
 
-    document.getElementById("blocks").addEventListener("click", (ev)=>{
-      const el = ev.target.closest(".b");
-      if(!el) return;
-      CURRENT = el.getAttribute("data-b") || "tudo";
-      shownCount = PAGE_SIZE;
-      updateUI();
-      window.scrollTo({top:0,behavior:"smooth"});
-    });
+    // ====== TIMER (reinicia e persiste) ======
+    function getFlashKey(id){ return "flash_end_" + id; }
 
-    let t=null;
-    $("q").addEventListener("input", ()=>{
-      clearTimeout(t);
-      t=setTimeout(()=>{
-        shownCount = PAGE_SIZE;
-        updateUI();
-      }, 180);
-    });
+    function ensureEndTime(id){
+      const key = getFlashKey(id);
+      const now = Date.now();
+      let end = Number(localStorage.getItem(key) || 0);
 
-    $("loadMore").addEventListener("click", ()=>{
-      shownCount += PAGE_SIZE;
-      updateUI();
-    });
-  });
-</script>
+      if (!end || end < now){
+        end = now + FLASH_DURATION_MS;
+        localStorage.setItem(key, String(end));
+      }
+      return end;
+    }
+
+    function fmt(ms){
+      const s = Math.max(0, Math.floor(ms/1000));
+      const hh = String(Math.floor(s/3600)).padStart(2,"0");
+      const mm = String(Math.floor((s%3600)/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${hh}:${mm}:${ss}`;
+    }
+
+    let flashInterval = null;
+    function startFlashTimers(){
+      if (flashInterval) clearInterval(flashInterval);
+
+      const nodes = Array.from(document.querySelectorAll(".flashTimer"));
+      if (!nodes.length) return;
+
+      const state = nodes.map(n=>{
+        const id = n.getAttribute("data-id");
+        const end = ensureEndTime(id);
+        return { n, id, end };
+      });
+
+      function tick(){
+        const now = Date.now();
+        for (const it of state){
+          // se passou, reinicia
+          if (it.end <= now){
+            it.end = now + FLASH_DURATION_MS;
+            localStorage.setItem(getFlashKey(it.id), String(it.end));
+          }
+          const left = it.end - now;
+          const tEl = it.n.querySelector(".t");
+          const bar = it.n.querySelector(".progressBar");
+          if (tEl) tEl.textContent = fmt(left);
+
+          const pct = 100 - Math.min(100, Math.max(0, (left / FLASH_DURATION_MS) * 100));
+          if (bar) bar.style.width = pct.toFixed(0) + "%";
+        }
+      }
+
+      tick();
+      flashInterval = setInterval(tick, 250);
+    }
+
+    // ====== EVENTS ======
+    go.addEventListener("click", ()=>applyMode(mode.value));
+    mode.addEventListener("change", ()=>applyMode(mode.value));
+    q.addEventListener("input", ()=>applyMode(lastMode));
+
+    // ====== INIT ======
+    (async function init(){
+      try{
+        await loadData();
+        applyMode("dia");
+      }catch(err){
+        grid.innerHTML = "";
+        setError("Não carregou as ofertas: " + (err?.message || "Failed to fetch"));
+        sub.textContent = "Erro ao carregar.";
+      }
+    })();
+  </script>
 </body>
 </html>
