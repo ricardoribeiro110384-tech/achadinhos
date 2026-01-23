@@ -586,6 +586,20 @@ const ratingTxt = (r !== null && Number.isFinite(r)) ? r.toFixed(1) : null; // e
 
   init();
 </script>
-
+<script>
+(function(){
+  function hideMinMax(){
+    document.querySelectorAll('input').forEach(i=>{
+      const ph = (i.getAttribute('placeholder')||'').toLowerCase().trim();
+      if (ph.includes('mín') || ph.includes('min') || ph.includes('máx') || ph.includes('max')) {
+        i.style.display = 'none';
+      }
+    });
+  }
+  hideMinMax();
+  setTimeout(hideMinMax, 300);
+  setTimeout(hideMinMax, 900);
+})();
+</script>
 </body>
 </html>
