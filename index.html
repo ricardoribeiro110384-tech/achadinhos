@@ -1,421 +1,550 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Achadinhos Oficial</title>
-  <link rel="icon" href="logo.png"/>
+
   <style>
     :root{
-      --yellow:#f5c400; --yellow2:#ffdb3a;
-      --bg:#f4f4f4; --card:#fff; --text:#111; --muted:#666;
-      --shadow:0 12px 30px rgba(0,0,0,.10); --radius:18px;
-      --danger:#c40000; --chip:#111; --blue:#1b75ff;
-      --btn:#ff6a00;
+      --yellow:#f6c100;
+      --bg:#f3f3f3;
+      --card:#ffffff;
+      --text:#101010;
+      --muted:#6b6b6b;
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+      --radius: 22px;
+      --btn:#111;
+      --btnText:#fff;
+      --accent:#ff6a00;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    header{
-      background:linear-gradient(180deg,var(--yellow2),var(--yellow));
-      padding:16px; position:sticky; top:0; z-index:10;
-      box-shadow:0 6px 18px rgba(0,0,0,.10);
-    }
-    .wrap{max-width:1040px;margin:0 auto}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:42px;height:42px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.12)}
-    .logo img{width:100%;height:100%;object-fit:contain;padding:6px}
-    h1{margin:0;font-size:22px;line-height:1.1}
-    .sub{margin:6px 0 0;color:rgba(0,0,0,.72);font-weight:800;font-size:13px}
+    .wrap{max-width:1100px;margin:0 auto;padding:14px}
 
-    main{padding:16px}
-    .blocks{
-      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
-      margin-bottom:14px;
+    header{
+      background:linear-gradient(180deg,var(--yellow),#f7d24d);
+      padding:16px 14px 18px;
+      border-bottom-left-radius:28px;
+      border-bottom-right-radius:28px;
+      box-shadow: var(--shadow);
     }
-    @media(min-width:720px){ .blocks{grid-template-columns:repeat(5,minmax(0,1fr));} }
-    .b{
-      background:var(--card);border-radius:14px;box-shadow:var(--shadow);
-      padding:12px;cursor:pointer;font-weight:1000;text-align:center;
-      user-select:none;
+    .headRow{
+      max-width:1100px;margin:0 auto;
+      display:flex; gap:12px; align-items:center;
+      padding:0 14px;
     }
-    .b.active{outline:3px solid rgba(0,0,0,.12)}
+    .logo{
+      width:54px;height:54px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;
+      box-shadow: 0 8px 18px rgba(0,0,0,.12);
+      overflow:hidden; flex:0 0 auto;
+    }
+    .logo img{width:100%;height:100%;object-fit:contain}
+    .brand h1{margin:0;font-size:22px;line-height:1.1}
+    .brand p{margin:6px 0 0;color:#2c2c2c;font-weight:600}
 
     .controls{
-      display:grid;gap:10px;margin:12px 0;
-      grid-template-columns:1fr;
-    }
-    @media(min-width:860px){ .controls{grid-template-columns:1fr 220px;} }
-    .search{
-      background:#fff;border-radius:999px;padding:12px 14px;display:flex;gap:10px;align-items:center;
-      box-shadow:0 10px 22px rgba(0,0,0,.10);
-    }
-    .search input{border:0;outline:0;width:100%;font-size:15px}
-    .pill{
-      background:#fff;border-radius:999px;padding:12px 14px;font-weight:1000;
-      box-shadow:0 10px 22px rgba(0,0,0,.10); text-align:center;
+      max-width:1100px;margin:12px auto 0;
+      padding:0 14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
     }
 
-    .err{background:#ffe6e6;border:1px solid #ffb0b0;border-radius:14px;padding:12px 14px;color:#7a0000;font-weight:1000}
+    .bar{
+      background:rgba(255,255,255,.65);
+      backdrop-filter: blur(8px);
+      border-radius:999px;
+      padding:10px 12px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .search{
+      flex:1 1 240px;
+      display:flex; gap:10px; align-items:center;
+      background:#fff;border-radius:999px;padding:10px 12px;
+      border:1px solid rgba(0,0,0,.06);
+      min-width:220px;
+    }
+    .search input{
+      border:0; outline:0; width:100%;
+      font-size:16px;
+    }
+
+    .field{
+      display:flex;align-items:center;gap:8px;
+      background:#fff;border-radius:999px;padding:10px 12px;
+      border:1px solid rgba(0,0,0,.06);
+    }
+    .field label{font-size:13px;color:var(--muted);font-weight:700}
+    .field input, .field select{
+      border:0; outline:0;
+      font-size:14px;
+      background:transparent;
+      min-width:120px;
+    }
+    .field input{width:110px}
+    .btn{
+      background:var(--btn);
+      color:var(--btnText);
+      border:0;
+      border-radius:999px;
+      padding:12px 14px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow: 0 14px 26px rgba(0,0,0,.16);
+      white-space:nowrap;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.secondary{
+      background:#fff;color:#111;border:1px solid rgba(0,0,0,.12);
+      box-shadow:none;
+    }
+
+    main{max-width:1100px;margin:14px auto 70px;padding:0 14px}
+    .status{
+      background:#fff;border-radius:999px;padding:10px 14px;
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      box-shadow: var(--shadow);
+      color:var(--muted);
+      font-weight:700;
+    }
+    .status b{color:#111}
 
     .grid{
-      display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:14px;
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
     }
-    @media(min-width:640px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
-    @media(min-width:980px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+    @media (max-width: 980px){ .grid{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 520px){ .grid{grid-template-columns: 1fr;} }
 
-    /* ✅ CARD sem recorte */
     .card{
       background:var(--card);
       border-radius:var(--radius);
-      box-shadow:var(--shadow);
+      box-shadow: var(--shadow);
       overflow:hidden;
       display:flex;
       flex-direction:column;
-      height:auto;          /* <- sem altura fixa */
-      min-height:0;         /* <- remove min-height que causa “corte” */
+      min-height: 440px;
     }
-
-    /* ✅ imagem com proporção estável (não estoura nem some) */
-    .img{
-      background:#fff;
-      position:relative;
-      border-bottom:1px solid rgba(0,0,0,.06);
-      aspect-ratio: 4 / 3;     /* <- evita bagunça com imagens “altas” */
+    .imgWrap{position:relative;background:#fff}
+    .imgWrap img{
       width:100%;
-      display:grid;
-      place-items:center;
-    }
-    .img img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      padding:10px;
-    }
-
-    .chips{position:absolute;left:10px;top:10px;display:flex;gap:8px;flex-wrap:wrap}
-    .chip{background:var(--chip);color:#fff;font-weight:1000;font-size:12px;padding:6px 10px;border-radius:999px;box-shadow:0 10px 22px rgba(0,0,0,.16)}
-    .chip.blue{background:var(--blue)}
-
-    .body{padding:14px;display:flex;flex-direction:column;gap:10px}
-    .t{font-weight:1000;font-size:16px;line-height:1.2}
-    .prices{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-    .full{color:#777;text-decoration:line-through;font-weight:900}
-    .final{color:var(--danger);font-weight:1000;font-size:30px;letter-spacing:-.5px}
-    .badge{background:#111;color:#fff;border-radius:999px;padding:8px 12px;font-weight:1000;white-space:nowrap}
-
-    /* ✅ botão no rodapé do card */
-    .cta{padding:0 14px 14px}
-    .cta a{
+      height:260px;
+      object-fit:contain; /* não corta */
       display:block;
+      background:#fff;
+    }
+    .pill{
+      position:absolute;top:10px;left:10px;
+      background:#111;color:#fff;
+      padding:7px 10px;border-radius:999px;
+      font-weight:900;font-size:13px;
+    }
+    .pill.blue{
+      left:auto; right:10px;
+      background:#1b6cff;
+    }
+
+    .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .title{margin:0;font-size:16px;line-height:1.25}
+    .meta{display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:700}
+    .prices{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+    .old{color:#8a8a8a;text-decoration:line-through;font-weight:800}
+    .new{color:#c90000;font-weight:1000;font-size:34px;letter-spacing:-.5px}
+    .disc{
+      margin-left:auto;
+      background:#111;color:#fff;
+      padding:8px 12px;border-radius:999px;
+      font-weight:1000;
+    }
+    .cta{
+      margin-top:auto;
+      display:flex;gap:10px;
+    }
+    .cta a{
+      flex:1;
       text-decoration:none;
-      background:var(--btn);
+      background:var(--accent);
       color:#fff;
       text-align:center;
-      font-weight:1000;
       padding:12px 14px;
-      border-radius:999px;
-      box-shadow:0 10px 22px rgba(0,0,0,.16);
+      border-radius:16px;
+      font-weight:1000;
+      display:inline-flex;justify-content:center;align-items:center;gap:8px;
     }
-    .cta a:active{transform:scale(.99)}
+    .cta a:active{transform:translateY(1px)}
+    .loadMore{
+      margin:16px auto 0;
+      display:flex;justify-content:center;
+    }
 
-    .loadWrap{margin-top:14px;display:flex;justify-content:center}
-    button.btn{background:#111;color:#fff;border:0;border-radius:999px;padding:12px 14px;font-weight:1000;cursor:pointer;box-shadow:0 10px 22px rgba(0,0,0,.18)}
-    footer{margin-top:18px;padding:14px 16px 22px;color:#fff;background:#111;text-align:center;font-weight:900}
-    footer small{display:block;color:rgba(255,255,255,.72);font-weight:700;margin-top:6px}
-
-    /* evita qualquer “corte” por layout externo */
-    .grid, .card, .body{min-width:0}
-    .blocks {
-  display: none !important;
-}
+    footer{
+      margin-top:18px;
+      background:#111;color:#cfcfcf;
+      padding:16px 14px;
+      text-align:center;
+      font-weight:700;
+    }
   </style>
 </head>
 
 <body>
+
 <header>
-  <div class="wrap brand">
-    <div class="logo"><img src="logo.png" alt="Achadinhos"/></div>
-    <div>
+  <div class="headRow">
+    <div class="logo">
+      <img src="logo.png" alt="Achadinhos Oficial">
+    </div>
+    <div class="brand">
       <h1>Achadinhos Oficial</h1>
-      <div class="sub">Ofertas do Mercado Livre que realmente valem a pena</div>
+      <p>Ofertas do Mercado Livre que realmente valem a pena</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="bar">
+      <div class="search" title="Buscar pelo nome do produto">
+        🔎 <input id="q" type="search" placeholder="Buscar produto..." autocomplete="off" />
+      </div>
+
+      <div class="field" title="Ordenar resultados">
+        <label>Ordenar</label>
+        <select id="sort">
+          <option value="sold_desc">Mais vendidos</option>
+          <option value="discount_desc">Maior desconto</option>
+          <option value="rating_desc">Melhor avaliação</option>
+          <option value="price_asc">Menor preço</option>
+          <option value="price_desc">Maior preço</option>
+        </select>
+      </div>
+
+      <div class="field" title="Preço mínimo (R$)">
+        <label>R$ mín</label>
+        <input id="minPrice" inputmode="decimal" placeholder="0" />
+      </div>
+
+      <div class="field" title="Preço máximo (R$)">
+        <label>R$ máx</label>
+        <input id="maxPrice" inputmode="decimal" placeholder="9999" />
+      </div>
+
+      <button id="clear" class="btn secondary" type="button">Limpar</button>
     </div>
   </div>
 </header>
 
-<main class="wrap">
-  <div class="blocks" id="blocks">
-    <div class="b active" data-b="tudo">📋 Ver tudo</div>
-    <div class="b" data-b="dia">⚡ Ofertas do dia</div>
-    <div class="b" data-b="flash">⏱️ Relâmpago</div>
-    <div class="b" data-b="mais">🛒 Mais pedidos</div>
-    <div class="b" data-b="ate99">💸 Até 99</div>
+<main>
+  <div class="status">
+    <span id="statusLeft"><b>Carregando...</b></span>
+    <span id="statusRight"></span>
   </div>
 
-  <div class="controls">
-    <div class="search">
-      <span>🔎</span>
-      <input id="q" type="search" placeholder="Buscar produto..." autocomplete="off"/>
-    </div>
-    <div class="pill" id="pillInfo">Carregando…</div>
+  <div id="grid" class="grid"></div>
+
+  <div class="loadMore">
+    <button id="more" class="btn" type="button" style="display:none;">Carregar mais</button>
   </div>
 
-  <div id="msg"></div>
-  <div class="grid" id="grid"></div>
-
-  <div class="loadWrap">
-    <button class="btn" id="loadMore" style="display:none;">Carregar mais</button>
-  </div>
+  <footer>
+    Não somos loja oficial. Apenas divulgamos ofertas do Mercado Livre.
+  </footer>
 </main>
 
-<footer>
-  Não somos loja oficial. Apenas divulgamos ofertas do Mercado Livre.
-  <small>Os preços podem mudar a qualquer momento no Mercado Livre.</small>
-</footer>
-
 <script defer>
-  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
+  // ✅ TROQUE PELO SEU CSV PUBLICADO
+  const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhh2oOPrSTXYeBKgnOObgib3q1Q5bMD3PQewuZXQJSfXOjaSmq9rJv6sUVgen50vz_nUCtlz7I3kng/pub?output=csv";
+
+  // paginação
   const PAGE_SIZE = 24;
 
-  const $ = (id)=>document.getElementById(id);
-  let ALL = [];
-  let CURRENT = "tudo";
-  let shownCount = PAGE_SIZE;
+  // estado
+  let all = [];
+  let filtered = [];
+  let shown = 0;
 
-  function parsePriceBR(v){
-    const s = String(v ?? "").trim();
-    if(!s) return NaN;
-    const clean = s.replace(/\./g,"").replace(",",".");
-    const n = Number(clean);
-    return isFinite(n) ? n : NaN;
-  }
-  function getDiscountPct(row){
-    const s = String(row.discount ?? "").toUpperCase();
-    const m = s.match(/(\d+(\.\d+)?)/);
-    return m ? Number(m[1]) : 0;
-  }
-  function parseSold(v){
-    const s = String(v ?? "").trim().toLowerCase().replace(/\./g,"").replace(",",".");
-    if(!s) return 0;
-    if (s.includes("mil")) {
-      const n = parseFloat(s.replace("mil","").trim());
-      return isNaN(n) ? 0 : Math.round(n*1000);
-    }
-    const n = parseFloat(s);
-    return isNaN(n) ? 0 : Math.round(n);
-  }
-  function moneyBR(n){
-    if(!isFinite(n)) return "";
-    return n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-  }
-  function calcFinal(row){
-    const full = parsePriceBR(row.price);
-    const pct = getDiscountPct(row);
-    if(!isFinite(full) || full<=0) return NaN;
-    return Math.max(0, full * (1 - pct/100));
+  const elGrid = document.getElementById("grid");
+  const elMore = document.getElementById("more");
+  const elQ = document.getElementById("q");
+  const elSort = document.getElementById("sort");
+  const elMin = document.getElementById("minPrice");
+  const elMax = document.getElementById("maxPrice");
+  const elClear = document.getElementById("clear");
+  const stLeft = document.getElementById("statusLeft");
+  const stRight = document.getElementById("statusRight");
+
+  // -------- helpers
+  const toNumber = (v) => {
+    if (v === null || v === undefined) return NaN;
+    const s = String(v).trim();
+    if (!s) return NaN;
+
+    // troca vírgula por ponto, remove espaços
+    const norm = s.replace(/\s/g,"").replace(/\./g,"").replace(",","."); // ex "1.234,56" -> "1234.56"
+    const num = Number(norm);
+    return Number.isFinite(num) ? num : NaN;
+  };
+
+  const parseDiscount = (v) => {
+    // espera "44% OFF" ou "44%" etc.
+    const s = String(v ?? "").toUpperCase();
+    const m = s.match(/(\d+(?:[.,]\d+)?)\s*%/);
+    if (!m) return 0;
+    const n = Number(String(m[1]).replace(",","."));
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  const parseSold = (v) => {
+    // exemplos: "1000", "1.000", "10 mil", "10 MIL", "100 mil"
+    const s = String(v ?? "").toLowerCase().replace(/\./g,"").trim();
+    if (!s) return 0;
+    const m = s.match(/(\d+(?:[.,]\d+)?)(\s*(mil|k))?/);
+    if (!m) return 0;
+    let n = Number(String(m[1]).replace(",","."));
+    if (!Number.isFinite(n)) return 0;
+    if (m[3] === "mil" || m[3] === "k") n *= 1000;
+    return Math.round(n);
+  };
+
+  const money = (n) => {
+    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+  };
+
+  const safeText = (s) => (s ?? "").toString();
+
+  function computeFinalPrice(fullPrice, discountPct){
+    // fullPrice é o preço cheio (coluna price)
+    // final = price * (1 - discount/100)
+    const p = fullPrice;
+    const d = discountPct;
+    if (!Number.isFinite(p) || p <= 0) return NaN;
+    const fin = p * (1 - (d/100));
+    return Math.max(0, fin);
   }
 
-  // CSV robusto (aspas e vírgulas no título)
+  // CSV parser simples (suporta campos com aspas)
   function parseCSV(text){
     const rows = [];
     let row = [];
     let cur = "";
     let inQuotes = false;
 
-    text = String(text || "").replace(/\r/g, "");
-
-    for (let i = 0; i < text.length; i++){
+    for (let i=0; i<text.length; i++){
       const ch = text[i];
       const next = text[i+1];
 
-      if (ch === '"'){
-        if (inQuotes && next === '"'){ cur += '"'; i++; }
-        else { inQuotes = !inQuotes; }
+      if (ch === '"' ){
+        if (inQuotes && next === '"'){
+          cur += '"'; i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
         continue;
       }
 
-      if (ch === "," && !inQuotes){
-        row.push(cur); cur = ""; continue;
+      if (!inQuotes && ch === ","){
+        row.push(cur); cur = "";
+        continue;
       }
-      if (ch === "\n" && !inQuotes){
-        row.push(cur); rows.push(row);
-        row = []; cur = ""; continue;
+
+      if (!inQuotes && (ch === "\n" || ch === "\r")){
+        if (ch === "\r" && next === "\n") i++;
+        row.push(cur); cur = "";
+        rows.push(row); row = [];
+        continue;
       }
+
       cur += ch;
     }
-    if (cur.length || row.length){ row.push(cur); rows.push(row); }
-
-    const cleanRows = rows.filter(r => r.some(c => String(c).trim() !== ""));
-    if (!cleanRows.length) return [];
-
-    const headers = cleanRows.shift().map(h => String(h||"").trim());
-    const out = [];
-
-    for (const r of cleanRows){
-      const obj = {};
-      headers.forEach((h, idx)=> obj[h] = String(r[idx] ?? "").trim());
-
-      obj.fullPrice = parsePriceBR(obj.price);
-      obj.discountPct = getDiscountPct(obj);
-      obj.finalPrice = calcFinal(obj);
-      obj.soldNum = parseSold(obj.sold);
-
-      if (obj.link && obj.image && obj.title) out.push(obj);
+    // last
+    if (cur.length || row.length){
+      row.push(cur);
+      rows.push(row);
     }
-    return out;
+
+    const header = rows.shift().map(h => h.trim());
+    return rows
+      .filter(r => r.some(c => String(c).trim() !== ""))
+      .map(r => {
+        const obj = {};
+        header.forEach((h, idx) => obj[h] = r[idx] ?? "");
+        return obj;
+      });
   }
 
-  function scoreDia(r){
-    return (r.discountPct * 3) + Math.log10((r.soldNum || 0) + 1);
+  function normalize(item){
+    const title = safeText(item.title);
+    const image = safeText(item.image);
+    const link  = safeText(item.link);
+
+    const fullPrice = toNumber(item.price);
+    const discountPct = parseDiscount(item.discount);
+    const rating = toNumber(item.rating);
+    const sold = parseSold(item.sold);
+
+    const finalPrice = computeFinalPrice(fullPrice, discountPct);
+
+    return {
+      title,
+      image,
+      link,
+      fullPrice,
+      discountPct,
+      rating: Number.isFinite(rating) ? rating : null,
+      sold,
+      finalPrice,
+    };
   }
 
-  function applySearch(list){
-    const q = $("q").value.trim().toLowerCase();
-    if(!q) return list;
-    return list.filter(r => String(r.title).toLowerCase().includes(q));
+  function applyFilters(){
+    const q = elQ.value.trim().toLowerCase();
+    const minP = toNumber(elMin.value);
+    const maxP = toNumber(elMax.value);
+
+    filtered = all.filter(p => {
+      if (!p.title || !p.image || !p.link) return false;
+
+      if (q){
+        if (!p.title.toLowerCase().includes(q)) return false;
+      }
+
+      // filtra pelo preço final (com desconto). se não tiver, usa cheio.
+      const basePrice = Number.isFinite(p.finalPrice) ? p.finalPrice : p.fullPrice;
+
+      if (Number.isFinite(minP) && basePrice < minP) return false;
+      if (Number.isFinite(maxP) && basePrice > maxP) return false;
+
+      return true;
+    });
+
+    sortFiltered();
+    shown = 0;
+    elGrid.innerHTML = "";
+    renderNext();
   }
 
-  function getSortedList(blockKey){
-    let list = ALL.slice();
+  function sortFiltered(){
+    const s = elSort.value;
 
-    if(blockKey === "flash"){
-      list.sort((a,b)=> (b.discountPct - a.discountPct) || (b.soldNum - a.soldNum));
-    } else if(blockKey === "mais"){
-      list.sort((a,b)=> (b.soldNum - a.soldNum) || (b.discountPct - a.discountPct));
-    } else if(blockKey === "ate99"){
-      list = list.filter(r => isFinite(r.finalPrice) && r.finalPrice <= 99)
-                 .sort((a,b)=> a.finalPrice - b.finalPrice);
-    } else if(blockKey === "dia"){
-      list.sort((a,b)=> scoreDia(b) - scoreDia(a));
-    } else {
-      // tudo: ordem da planilha
-    }
-    return applySearch(list);
+    const getPrice = (p) => Number.isFinite(p.finalPrice) ? p.finalPrice : p.fullPrice;
+
+    filtered.sort((a,b) => {
+      if (s === "sold_desc") return (b.sold||0) - (a.sold||0);
+      if (s === "discount_desc") return (b.discountPct||0) - (a.discountPct||0);
+      if (s === "rating_desc") return ( (b.rating??-1) - (a.rating??-1) );
+      if (s === "price_asc") return getPrice(a) - getPrice(b);
+      if (s === "price_desc") return getPrice(b) - getPrice(a);
+      return 0;
+    });
   }
 
-  function getDisplayList(){
-    const base = getSortedList(CURRENT);
-    if(CURRENT !== "tudo") return base; // bloco mostra todos dele
-    return base.slice(0, shownCount);   // tudo paginado
+  function renderCard(p){
+    const discTxt = `-${Math.round(p.discountPct || 0)}%`;
+    const soldTxt = p.sold ? `${p.sold.toLocaleString("pt-BR")} vendidos` : "";
+    const full = Number.isFinite(p.fullPrice) ? money(p.fullPrice) : "";
+    const final = Number.isFinite(p.finalPrice) ? money(p.finalPrice) : full;
+
+    const ratingTxt = (p.rating !== null && Number.isFinite(p.rating)) ? p.rating.toFixed(1).replace(".",",") : null;
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div class="imgWrap">
+        <img loading="lazy" src="${p.image}" alt="${p.title}">
+        <div class="pill">${Math.round(p.discountPct || 0)}% OFF</div>
+        ${soldTxt ? `<div class="pill blue">${soldTxt}</div>` : ""}
+      </div>
+      <div class="body">
+        <h3 class="title">${p.title}</h3>
+        <div class="meta">
+          ${ratingTxt ? `⭐ ${ratingTxt}` : ``}
+        </div>
+        <div class="prices">
+          <div class="old">${full}</div>
+          <div class="new">${final}</div>
+          <div class="disc">${discTxt}</div>
+        </div>
+        <div class="cta">
+          <a href="${p.link}" target="_blank" rel="noopener">⚡ Ver oferta</a>
+        </div>
+      </div>
+    `;
+    return div;
   }
 
-  function render(items){
-    const grid = $("grid");
-    grid.innerHTML = "";
+  function renderNext(){
+    const total = filtered.length;
 
-    if(!items.length){
-      grid.innerHTML = `<div class="err">Nenhum produto encontrado.</div>`;
+    if (total === 0){
+      stLeft.innerHTML = `<b>Nenhum produto encontrado</b>`;
+      stRight.textContent = "";
+      elMore.style.display = "none";
       return;
     }
 
-    const frag = document.createDocumentFragment();
+    const next = filtered.slice(shown, shown + PAGE_SIZE);
+    next.forEach(p => elGrid.appendChild(renderCard(p)));
+    shown += next.length;
 
-    items.forEach(r=>{
-      const off = r.discountPct ? `${Math.round(r.discountPct)}% OFF` : "OFERTA";
-      const soldTxt = r.soldNum ? `${r.soldNum.toLocaleString("pt-BR")} vendidos` : "";
+    stLeft.innerHTML = `<b>Mostrando ${Math.min(shown,total)} de ${total}</b>`;
+    stRight.textContent = "";
 
-      const card = document.createElement("article");
-      card.className = "card";
-
-      card.innerHTML = `
-        <div class="img">
-          <div class="chips">
-            <div class="chip">${off}</div>
-            ${soldTxt ? `<div class="chip blue">${soldTxt}</div>` : ``}
-          </div>
-          <img loading="lazy" src="${r.image}" alt="${(r.title||"").replace(/"/g,"")}"/>
-        </div>
-
-        <div class="body">
-          <div class="t">${r.title}</div>
-          <div class="prices">
-            <div>
-              <div class="full">${isFinite(r.fullPrice) ? moneyBR(r.fullPrice) : ""}</div>
-              <div class="final">${isFinite(r.finalPrice) ? moneyBR(r.finalPrice) : ""}</div>
-            </div>
-            <div class="badge">-${Math.round(r.discountPct)}%</div>
-          </div>
-        </div>
-
-        <div class="cta">
-          <a href="${r.link}" target="_blank" rel="noopener">Ver oferta</a>
-        </div>
-      `;
-
-      frag.appendChild(card);
-    });
-
-    grid.appendChild(frag);
+    elMore.style.display = shown < total ? "inline-flex" : "none";
   }
 
-  function updateUI(){
-    document.querySelectorAll(".b").forEach(el=>{
-      el.classList.toggle("active", el.getAttribute("data-b") === CURRENT);
-    });
-
-    const base = getSortedList(CURRENT);
-    const items = getDisplayList();
-
-    if(CURRENT === "tudo"){
-      $("pillInfo").textContent = `Mostrando ${items.length} de ${base.length}`;
-      $("loadMore").style.display = (shownCount < base.length) ? "" : "none";
-    } else {
-      $("pillInfo").textContent = `Itens: ${base.length}`;
-      $("loadMore").style.display = "none";
-    }
-
-    render(items);
-  }
-
-  async function load(){
+  async function init(){
     try{
-      $("msg").innerHTML = "";
-      const res = await fetch(CSV_URL, { cache:"no-store" });
-      if(!res.ok) throw new Error("Falha ao buscar planilha");
+      stLeft.innerHTML = `<b>Carregando...</b>`;
+      const res = await fetch(SHEET_CSV, { cache: "no-store" });
+      if (!res.ok) throw new Error("Falha ao abrir planilha");
       const text = await res.text();
-      ALL = parseCSV(text);
 
-      // dedupe por link
-      const seen = new Set();
-      ALL = ALL.filter(r=>{
-        const k = String(r.link||"").trim();
-        if(!k || seen.has(k)) return false;
-        seen.add(k); return true;
-      });
+      const raw = parseCSV(text);
+      all = raw.map(normalize).filter(p => p.title && p.image && p.link);
 
-      if(!ALL.length) throw new Error("Planilha vazia ou colunas incompatíveis");
-      updateUI();
-    } catch(e){
-      $("msg").innerHTML = `<div class="err">Erro: ${String(e.message||e)}</div>`;
-      $("pillInfo").textContent = "Erro ao carregar";
+      applyFilters();
+    }catch(err){
+      stLeft.innerHTML = `<b>Não carregou as ofertas</b>`;
+      stRight.textContent = "Verifique se o link CSV está público.";
+      console.error(err);
     }
   }
 
-  document.addEventListener("DOMContentLoaded", async ()=>{
-    await load();
-
-    $("blocks").addEventListener("click", (ev)=>{
-      const el = ev.target.closest(".b");
-      if(!el) return;
-      CURRENT = el.getAttribute("data-b") || "tudo";
-      shownCount = PAGE_SIZE;
-      updateUI();
-      window.scrollTo({top:0,behavior:"smooth"});
-    });
-
-    let t=null;
-    $("q").addEventListener("input", ()=>{
-      clearTimeout(t);
-      t=setTimeout(()=>{
-        shownCount = PAGE_SIZE;
-        updateUI();
-      }, 180);
-    });
-
-    $("loadMore").addEventListener("click", ()=>{
-      shownCount += PAGE_SIZE;
-      updateUI();
-    });
+  // eventos
+  let t = null;
+  elQ.addEventListener("input", () => {
+    clearTimeout(t);
+    t = setTimeout(applyFilters, 220);
   });
+  elSort.addEventListener("change", applyFilters);
+  elMin.addEventListener("input", () => {
+    clearTimeout(t);
+    t = setTimeout(applyFilters, 220);
+  });
+  elMax.addEventListener("input", () => {
+    clearTimeout(t);
+    t = setTimeout(applyFilters, 220);
+  });
+
+  elClear.addEventListener("click", () => {
+    elQ.value = "";
+    elMin.value = "";
+    elMax.value = "";
+    elSort.value = "sold_desc";
+    applyFilters();
+  });
+
+  elMore.addEventListener("click", renderNext);
+
+  init();
 </script>
+
 </body>
 </html>
