@@ -1,34 +1,554 @@
-/* ===== Fix alinhamento dos campos no mobile ===== */
-.controls{
-  display: grid !important;
-  grid-template-columns: 1fr !important; /* mobile: 1 por linha */
-  gap: 12px !important;
-  align-items: stretch !important;
-  margin-top: 14px !important;
-}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Achadinhos do Dia</title>
+  <link rel="icon" href="logo.png" />
+  <style>
+    :root{
+      --yellow:#f5c400;
+      --yellow2:#ffdb3a;
+      --bg:#f4f4f4;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --shadow: 0 12px 30px rgba(0,0,0,.10);
+      --radius: 18px;
+      --cta:#ff7a00;
+      --danger:#c40000;
+      --chip:#0a0a0a;
+      --blue:#1b75ff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:inherit}
 
-/* garante que cada campo ocupe toda a largura */
-.searchWrap,
-.selectWrap,
-.controls > *{
-  width: 100% !important;
-}
+    header{
+      background:linear-gradient(180deg,var(--yellow2),var(--yellow));
+      padding:16px;
+      position:sticky;top:0;z-index:10;
+      box-shadow: 0 6px 18px rgba(0,0,0,.10);
+    }
+    .wrap{max-width:1040px;margin:0 auto}
+    .brandRow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .logo{
+      width:42px;height:42px;border-radius:14px;background:#fff;
+      display:grid;place-items:center;overflow:hidden;flex:0 0 auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    }
+    .logo img{width:100%;height:100%;object-fit:contain;padding:6px}
+    .titleBox{flex:1 1 auto;min-width:220px}
+    h1{margin:0;font-size:24px;line-height:1.1}
+    .sub{margin:6px 0 0;color:rgba(0,0,0,.72);font-weight:700;font-size:13px}
 
-/* padroniza altura e alinhamento */
-.searchWrap input,
-.controls select{
-  width: 100% !important;
-  height: 52px !important;
-  border-radius: 999px !important;
-}
+    /* HOME */
+    .home{padding:18px 16px 28px}
+    .gridHome{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+    @media (min-width:720px){
+      .gridHome{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    }
+    .block{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      text-decoration:none;
+      color:inherit;
+      position:relative;
+      overflow:hidden;
+      min-height:118px;
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .block:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(0,0,0,.14)}
+    .emoji{font-size:22px}
+    .bt{margin:10px 0 0;font-size:17px;font-weight:900}
+    .bd{margin:6px 0 0;color:var(--muted);font-weight:600;font-size:13px;line-height:1.25}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      background:rgba(0,0,0,.06);font-weight:900;font-size:12px;
+      margin-top:12px;
+    }
+    .arrow{
+      position:absolute;right:14px;bottom:12px;
+      width:40px;height:40px;border-radius:999px;
+      background:#111;color:#fff;display:grid;place-items:center;
+      font-size:18px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+    }
 
-/* evita “sobra” de padding/margem quebrando o layout */
-.searchWrap{ margin: 0 !important; }
-.selectWrap{ margin: 0 !important; }
+    /* OFERTAS */
+    .offers{padding:14px 16px 28px; display:none;}
+    .controls{display:grid;gap:10px;margin-top:12px}
+    @media(min-width:860px){
+      .controls{grid-template-columns: 1fr 290px 170px;align-items:center}
+    }
+    .search{
+      background:#fff;border-radius:999px;padding:12px 14px;
+      display:flex;gap:10px;align-items:center;
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+    }
+    .search input{border:0;outline:0;width:100%;font-size:15px}
+    .select{
+      background:#fff;border-radius:999px;padding:10px 12px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+    }
+    .select select{
+      width:100%;border:0;outline:0;background:transparent;font-weight:900;font-size:14px;
+    }
+    .btn{
+      background:#111;color:#fff;border:0;border-radius:999px;
+      padding:12px 14px;font-weight:1000;cursor:pointer;
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
 
-/* tablet/pc: volta a 2 colunas alinhadas */
-@media (min-width: 720px){
-  .controls{
-    grid-template-columns: 1.2fr 0.8fr !important;
+    .state{padding:12px 0;color:#111;font-weight:1000}
+    .err{
+      background:#ffe6e6;border:1px solid #ffb0b0;border-radius:14px;
+      padding:12px 14px;color:#7a0000;font-weight:1000;
+      margin:10px 0 0;
+    }
+
+    .timerBar{
+      display:none;
+      margin-top:10px;
+      background:rgba(0,0,0,.06);
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:1000;
+      color:#111;
+    }
+    .timerBar.show{display:block}
+    .timer{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .timer strong{font-size:14px}
+    .timer span{font-variant-numeric:tabular-nums;font-size:14px}
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(1,minmax(0,1fr));
+      gap:14px;
+    }
+    @media(min-width:640px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    @media(min-width:980px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;flex-direction:column;
+      min-height: 420px;
+    }
+    .imgWrap{
+      background:#fff;
+      height: 250px;
+      display:grid;place-items:center;
+      position:relative;
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    .imgWrap img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      padding:10px;
+    }
+    .chipRow{
+      position:absolute;left:10px;top:10px;display:flex;gap:8px;flex-wrap:wrap;
+    }
+    .chip{
+      background:var(--chip);color:#fff;font-weight:1000;font-size:12px;
+      padding:6px 10px;border-radius:999px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.16);
+    }
+    .chip.blue{background:var(--blue)}
+    .body{padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .t{font-weight:1000;font-size:16px;line-height:1.2}
+    .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-weight:900}
+    .star{color:#f0b400}
+    .prices{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+    .full{color:#777;text-decoration:line-through;font-weight:900}
+    .final{color:var(--danger);font-weight:1000;font-size:30px;letter-spacing:-.5px}
+    .badgeOff{
+      background:#111;color:#fff;border-radius:999px;
+      padding:8px 12px;font-weight:1000;
+    }
+    .cta{
+      margin-top:auto;
+      display:block;
+      text-align:center;
+      background:linear-gradient(180deg,#ff9a3a,var(--cta));
+      color:#fff;
+      text-decoration:none;
+      font-weight:1000;
+      padding:14px 12px;
+      border-radius: 14px;
+      box-shadow: 0 12px 28px rgba(255,122,0,.28);
+    }
+
+    footer{
+      margin-top:18px;
+      padding:14px 16px 22px;
+      color:#fff;background:#111;text-align:center;font-weight:900;
+    }
+    footer small{display:block;color:rgba(255,255,255,.72);font-weight:700;margin-top:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brandRow">
+        <div class="logo"><img src="logo.png" alt="Achadinhos" /></div>
+        <div class="titleBox">
+          <h1 id="hdrTitle">🔥 Achadinhos do Dia</h1>
+          <div class="sub" id="hdrSub">Ofertas do Mercado Livre que realmente valem a pena</div>
+        </div>
+      </div>
+
+      <!-- Controles só aparecem na tela de ofertas -->
+      <div class="controls wrap" id="controls" style="display:none;">
+        <div class="search">
+          <span>🔎</span>
+          <input id="q" type="search" placeholder="Buscar produto..." autocomplete="off" />
+        </div>
+
+        <div class="select">
+          <select id="preset">
+            <option value="dia">⚡ Achadinhos do Dia</option>
+            <option value="ate99">💸 Até R$ 99,00</option>
+            <option value="mais">🛒 Mais pedidos</option>
+            <option value="flash">⏱️ Oferta relâmpago</option>
+            <option value="tudo">📋 Ver tudo (lista)</option>
+          </select>
+        </div>
+
+        <button class="btn" id="btnHome">← Home</button>
+      </div>
+
+      <div class="timerBar wrap" id="timerBar">
+        <div class="timer">
+          <strong>⏱️ Oferta relâmpago termina em:</strong>
+          <span id="timerTxt">--:--:--</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <section class="home wrap" id="home">
+    <div class="gridHome">
+      <div class="block" data-b="dia">
+        <div class="emoji">⚡</div>
+        <div class="bt">Achadinhos do Dia</div>
+        <div class="bd">Seleção equilibrada: desconto + vendidos</div>
+        <div class="pill">Ver agora</div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="block" data-b="ate99">
+        <div class="emoji">💸</div>
+        <div class="bt">Até R$ 99,00</div>
+        <div class="bd">Preço baixo converte mais</div>
+        <div class="pill">Filtrar por preço</div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="block" data-b="mais">
+        <div class="emoji">🛒</div>
+        <div class="bt">Mais pedidos</div>
+        <div class="bd">Ordena pelos mais vendidos</div>
+        <div class="pill">Top vendidos</div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="block" data-b="flash">
+        <div class="emoji">⏱️</div>
+        <div class="bt">Oferta relâmpago</div>
+        <div class="bd">Maior desconto primeiro + timer</div>
+        <div class="pill">Corre que acaba</div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="block" data-b="tudo">
+        <div class="emoji">📋</div>
+        <div class="bt">Ver tudo</div>
+        <div class="bd">Lista completa de ofertas da planilha</div>
+        <div class="pill">Abrir lista</div>
+        <div class="arrow">›</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFERTAS -->
+  <section class="offers wrap" id="offers">
+    <div class="state" id="state">Carregando ofertas…</div>
+    <div id="errBox"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <footer>
+    Não somos loja oficial. Apenas divulgamos ofertas do Mercado Livre.
+    <small>Os preços podem mudar a qualquer momento no site do Mercado Livre.</small>
+  </footer>
+
+<script defer>
+  /* ✅ SUA PLANILHA CSV */
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
+
+  const LIMIT = { dia:24, ate99:24, mais:24, flash:24, tudo:2000 };
+  const TITLES = {
+    dia:"⚡ Achadinhos do Dia",
+    ate99:"💸 Até R$ 99,00",
+    mais:"🛒 Mais pedidos",
+    flash:"⏱️ Oferta relâmpago",
+    tudo:"📋 Ver tudo"
+  };
+
+  const $ = (id)=>document.getElementById(id);
+  let ALL = [];
+  let CURRENT = "dia";
+
+  /* timer relâmpago: reinicia a cada 30 min */
+  const FLASH_WINDOW_MIN = 30;
+  let timerInt = null;
+
+  function parsePriceBR(v){
+    const s = String(v ?? "").trim();
+    if(!s) return NaN;
+    const clean = s.replace(/\./g,"").replace(",",".");
+    const n = Number(clean);
+    return isFinite(n) ? n : NaN;
   }
-}
+  function getDiscountPct(row){
+    const s = String(row.discount ?? "").toUpperCase();
+    const m = s.match(/(\d+(\.\d+)?)/);
+    return m ? Number(m[1]) : 0;
+  }
+  function parseSold(v){
+    const s = String(v ?? "").trim().toLowerCase().replace(/\./g,"").replace(",",".");
+    if(!s) return 0;
+    if (s.includes("mil")) {
+      const n = parseFloat(s.replace("mil","").trim());
+      return isNaN(n) ? 0 : Math.round(n*1000);
+    }
+    const n = parseFloat(s);
+    return isNaN(n) ? 0 : Math.round(n);
+  }
+  function moneyBR(n){
+    if(!isFinite(n)) return "";
+    return n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+  }
+  function calcFinal(row){
+    const full = parsePriceBR(row.price);
+    const pct = getDiscountPct(row);
+    if(!isFinite(full) || full<=0) return NaN;
+    return Math.max(0, full * (1 - pct/100));
+  }
+
+  function parseCSV(text){
+    const lines = text.replace(/\r/g,"").split("\n").filter(Boolean);
+    const headers = lines.shift().split(",").map(h=>h.trim());
+    return lines.map(line=>{
+      const cols = line.split(",");
+      const obj = {};
+      headers.forEach((h,i)=> obj[h]= (cols[i] ?? "").trim());
+      obj.fullPrice = parsePriceBR(obj.price);
+      obj.discountPct = getDiscountPct(obj);
+      obj.finalPrice = calcFinal(obj);
+      obj.soldNum = parseSold(obj.sold);
+      return obj;
+    }).filter(r=>r.link && r.image && r.title);
+  }
+
+  function getItemsForBlock(all, blockKey){
+    let items = all.slice();
+
+    if(blockKey === "flash"){
+      items.sort((a,b)=> (b.discountPct - a.discountPct) || (b.soldNum - a.soldNum));
+    } else if(blockKey === "mais"){
+      items.sort((a,b)=> (b.soldNum - a.soldNum) || (b.discountPct - a.discountPct));
+    } else if(blockKey === "ate99"){
+      items = items.filter(r=> isFinite(r.finalPrice) && r.finalPrice <= 99)
+                   .sort((a,b)=> a.finalPrice - b.finalPrice);
+    } else if(blockKey === "dia"){
+      items.sort((a,b)=> ((b.discountPct*2 + Math.log10(b.soldNum+1)) - (a.discountPct*2 + Math.log10(a.soldNum+1))));
+    } else if(blockKey === "tudo"){
+      // mantém
+    }
+
+    const q = $("q").value.trim().toLowerCase();
+    if(q){
+      items = items.filter(r => String(r.title).toLowerCase().includes(q));
+    }
+
+    const limit = LIMIT[blockKey] ?? 24;
+    return items.slice(0, limit);
+  }
+
+  function render(items){
+    const grid = $("grid");
+    grid.innerHTML = "";
+    if(!items.length){
+      grid.innerHTML = `<div class="err">Nenhum produto encontrado nesse bloco.</div>`;
+      return;
+    }
+
+    const frag = document.createDocumentFragment();
+
+    items.forEach(r=>{
+      const off = r.discountPct ? `${Math.round(r.discountPct)}% OFF` : "OFERTA";
+      const soldTxt = r.soldNum ? `${r.soldNum.toLocaleString("pt-BR")} vendidos` : "";
+      const ratingTxt = r.rating ? String(r.rating).replace(".",",") : "—";
+
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="imgWrap">
+          <div class="chipRow">
+            <div class="chip">${off}</div>
+            ${soldTxt ? `<div class="chip blue">${soldTxt}</div>` : ``}
+          </div>
+          <img loading="lazy" src="${r.image}" alt="${(r.title||"").replace(/"/g,"")}" />
+        </div>
+        <div class="body">
+          <div class="t">${r.title}</div>
+          <div class="meta"><span class="star">⭐</span><span>${ratingTxt}</span></div>
+          <div class="prices">
+            <div>
+              <div class="full">${isFinite(r.fullPrice) ? moneyBR(r.fullPrice) : ""}</div>
+              <div class="final">${isFinite(r.finalPrice) ? moneyBR(r.finalPrice) : ""}</div>
+            </div>
+            <div class="badgeOff">-${Math.round(r.discountPct)}%</div>
+          </div>
+          <a class="cta" href="${r.link}" target="_blank" rel="noopener">⚡ Ver oferta</a>
+        </div>
+      `;
+      frag.appendChild(card);
+    });
+
+    grid.appendChild(frag);
+  }
+
+  function stopFlashTimer(){
+    if(timerInt){ clearInterval(timerInt); timerInt = null; }
+  }
+  function startFlashTimer(){
+    stopFlashTimer();
+    function tick(){
+      const now = new Date();
+      const minutes = now.getMinutes();
+      const blockStart = Math.floor(minutes / FLASH_WINDOW_MIN) * FLASH_WINDOW_MIN;
+      const end = new Date(now);
+      end.setMinutes(blockStart + FLASH_WINDOW_MIN);
+      end.setSeconds(0); end.setMilliseconds(0);
+
+      let diff = end - now;
+      if(diff <= 0){
+        applyBlock("flash"); // reinicia + reordena
+        return;
+      }
+      const h = String(Math.floor(diff/3600000)).padStart(2,"0");
+      diff %= 3600000;
+      const m = String(Math.floor(diff/60000)).padStart(2,"0");
+      diff %= 60000;
+      const s = String(Math.floor(diff/1000)).padStart(2,"0");
+      $("timerTxt").textContent = `${h}:${m}:${s}`;
+    }
+    tick();
+    timerInt = setInterval(tick, 1000);
+  }
+
+  function applyBlock(blockKey){
+    CURRENT = blockKey;
+    $("preset").value = blockKey;
+
+    $("hdrTitle").textContent = TITLES[blockKey] || "Ofertas";
+    $("hdrSub").textContent = "Toque no produto para abrir no Mercado Livre";
+
+    if(blockKey === "flash"){
+      $("timerBar").classList.add("show");
+      startFlashTimer();
+    } else {
+      $("timerBar").classList.remove("show");
+      stopFlashTimer();
+    }
+
+    const items = getItemsForBlock(ALL, blockKey);
+    $("state").textContent = `Itens exibidos: ${items.length}`;
+    render(items);
+  }
+
+  function showHome(){
+    location.hash = "#home";
+    $("home").style.display = "";
+    $("offers").style.display = "none";
+    $("controls").style.display = "none";
+    $("timerBar").classList.remove("show");
+    stopFlashTimer();
+
+    $("hdrTitle").textContent = "🔥 Achadinhos do Dia";
+    $("hdrSub").textContent = "Ofertas do Mercado Livre que realmente valem a pena";
+  }
+
+  function showOffers(blockKey){
+    location.hash = "#ofertas";
+    $("home").style.display = "none";
+    $("offers").style.display = "block";
+    $("controls").style.display = "grid";
+    $("q").value = "";
+    $("errBox").innerHTML = "";
+    $("state").textContent = "Carregando ofertas…";
+    applyBlock(blockKey || "dia");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  async function load(){
+    try{
+      const res = await fetch(CSV_URL, { cache:"no-store" });
+      if(!res.ok) throw new Error("Falha ao buscar planilha");
+      const text = await res.text();
+      ALL = parseCSV(text);
+      if(!ALL.length) throw new Error("Planilha vazia ou colunas incompatíveis");
+    } catch(e){
+      $("errBox").innerHTML = `<div class="err">Não carregou as ofertas: ${String(e.message||e)}</div>`;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", async ()=>{
+    // carregar dados 1x
+    await load();
+
+    // clique nos blocos
+    document.querySelectorAll(".block").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        const b = el.getAttribute("data-b") || "dia";
+        showOffers(b);
+      });
+    });
+
+    // controles
+    $("preset").addEventListener("change", ()=> applyBlock($("preset").value));
+    $("btnHome").addEventListener("click", showHome);
+
+    let t=null;
+    $("q").addEventListener("input", ()=>{
+      clearTimeout(t);
+      t=setTimeout(()=> applyBlock(CURRENT), 180);
+    });
+
+    // rota inicial (se abrir com hash)
+    if(location.hash === "#ofertas"){
+      showOffers("dia");
+    } else {
+      showHome();
+    }
+  });
+</script>
+</body>
+</html>
