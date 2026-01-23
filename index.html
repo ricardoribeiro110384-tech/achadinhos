@@ -4,177 +4,98 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Achadinhos do Dia</title>
-  <link rel="icon" href="logo.png" />
+  <meta name="theme-color" content="#f2c100" />
   <style>
     :root{
-      --yellow:#f5c400;
-      --yellow2:#ffdb3a;
-      --bg:#f4f4f4;
+      --yellow:#f2c100;
+      --yellow2:#f6d44a;
+      --bg:#f6f6f6;
       --card:#ffffff;
       --text:#111;
-      --muted:#666;
-      --shadow: 0 12px 30px rgba(0,0,0,.10);
-      --radius: 18px;
-      --cta:#ff7a00;
-      --danger:#c40000;
-      --chip:#0a0a0a;
-      --blue:#1b75ff;
-      --ring: 0 0 0 4px rgba(0,0,0,.08);
+      --muted:#6b6b6b;
+      --shadow:0 10px 30px rgba(0,0,0,.10);
+      --radius:20px;
+      --orange:#ff6a00;
+      --black:#111;
+      --danger:#b00020;
+      --blue:#1877f2;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
     a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 14px 40px}
 
     header{
-      background:linear-gradient(180deg,var(--yellow2),var(--yellow));
-      padding:16px;
-      position:sticky;top:0;z-index:10;
-      box-shadow: 0 6px 18px rgba(0,0,0,.10);
+      background:linear-gradient(180deg,var(--yellow),var(--yellow2));
+      padding:16px 0 14px;
+      position:sticky;top:0;z-index:50;
+      box-shadow:0 6px 18px rgba(0,0,0,.12);
     }
-    .wrap{max-width:1040px;margin:0 auto}
-    .brandRow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .top{
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+      padding:0 14px;
+      max-width:1100px;margin:0 auto;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;min-width:260px;
+    }
     .logo{
-      width:42px;height:42px;border-radius:14px;background:#fff;
-      display:grid;place-items:center;overflow:hidden;flex:0 0 auto;
-      box-shadow: 0 10px 24px rgba(0,0,0,.12);
-    }
-    .logo img{width:100%;height:100%;object-fit:contain;padding:6px}
-    .titleBox{flex:1 1 auto;min-width:220px}
-    h1{margin:0;font-size:24px;line-height:1.1}
-    .sub{margin:6px 0 0;color:rgba(0,0,0,.72);font-weight:800;font-size:13px}
-
-    /* HOME */
-    .home{padding:18px 16px 28px}
-    .gridHome{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:14px;
-    }
-    @media (min-width:720px){
-      .gridHome{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    }
-    .block{
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px;
-      text-decoration:none;
-      color:inherit;
-      position:relative;
-      overflow:hidden;
-      min-height:118px;
-      cursor:pointer;
-      transition:transform .15s ease, box-shadow .15s ease;
-    }
-    .block:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(0,0,0,.14)}
-    .emoji{font-size:22px}
-    .bt{margin:10px 0 0;font-size:17px;font-weight:1000}
-    .bd{margin:6px 0 0;color:var(--muted);font-weight:650;font-size:13px;line-height:1.25}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      background:rgba(0,0,0,.06);font-weight:1000;font-size:12px;
-      margin-top:12px;
-    }
-    .arrow{
-      position:absolute;right:14px;bottom:12px;
-      width:40px;height:40px;border-radius:999px;
-      background:#111;color:#fff;display:grid;place-items:center;
-      font-size:18px;
-      box-shadow: 0 12px 26px rgba(0,0,0,.18);
-    }
-
-    /* OFERTAS */
-    .offers{padding:14px 16px 28px; display:none;}
-    .controls{display:grid;gap:10px;margin-top:12px}
-    @media(min-width:860px){
-      .controls{grid-template-columns: 1fr 280px 140px;align-items:center}
-    }
-    .search{
-      background:#fff;border-radius:999px;padding:12px 14px;
-      display:flex;gap:10px;align-items:center;
-      box-shadow: 0 10px 22px rgba(0,0,0,.10);
-    }
-    .search input{border:0;outline:0;width:100%;font-size:15px}
-    .select{
-      background:#fff;border-radius:999px;padding:10px 12px;
-      box-shadow: 0 10px 22px rgba(0,0,0,.10);
-    }
-    .select select{
-      width:100%;border:0;outline:0;background:transparent;font-weight:1000;font-size:14px;
-    }
-    .btn{
-      background:#111;color:#fff;border:0;border-radius:999px;
-      padding:12px 14px;font-weight:1000;cursor:pointer;
-      box-shadow: 0 10px 22px rgba(0,0,0,.18);
-      white-space:nowrap;
-    }
-
-    /* Atalhos dentro da tela de ofertas */
-    .quickBar{
-      margin-top:10px;
-      display:flex;
-      gap:10px;
-      overflow:auto;
-      padding-bottom:6px;
-      -webkit-overflow-scrolling:touch;
-    }
-    .quickBar::-webkit-scrollbar{height:8px}
-    .quickBar::-webkit-scrollbar-thumb{background:rgba(0,0,0,.18);border-radius:999px}
-    .qbtn{
+      width:44px;height:44px;border-radius:12px;object-fit:contain;background:#fff;
+      box-shadow:0 8px 20px rgba(0,0,0,.15);
+      padding:6px;
       flex:0 0 auto;
-      border:0;
-      cursor:pointer;
-      background:#fff;
-      border-radius:999px;
-      padding:10px 12px;
-      font-weight:1000;
-      box-shadow: 0 10px 22px rgba(0,0,0,.10);
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      white-space:nowrap;
-      transition:transform .12s ease, box-shadow .12s ease;
     }
-    .qbtn:hover{transform:translateY(-1px)}
-    .qbtn.active{box-shadow: var(--shadow), var(--ring)}
-    .qdot{
-      width:10px;height:10px;border-radius:999px;background:#111;opacity:.9;
-    }
-    .qbtn[data-k="ate99"] .qdot{background:#0b7}
-    .qbtn[data-k="mais"] .qdot{background:#1b75ff}
-    .qbtn[data-k="flash"] .qdot{background:#ff7a00}
-    .qbtn[data-k="tudo"] .qdot{background:#444}
+    .brandText h1{margin:0;font-size:22px;line-height:1}
+    .brandText p{margin:5px 0 0;font-size:13px;color:#2a2a2a;font-weight:600;opacity:.85}
 
-    .state{padding:12px 0;color:#111;font-weight:1000}
-    .err{
-      background:#ffe6e6;border:1px solid #ffb0b0;border-radius:14px;
-      padding:12px 14px;color:#7a0000;font-weight:1000;
-      margin:10px 0 0;
+    .controls{
+      display:flex;gap:10px;flex:1;align-items:center;justify-content:flex-end;flex-wrap:wrap;
+      min-width:260px;
     }
+    .pill{
+      background:#fff;border:0;border-radius:999px;
+      padding:12px 14px;display:flex;align-items:center;gap:10px;
+      box-shadow:0 10px 22px rgba(0,0,0,.10);
+      min-height:44px;
+    }
+    .pill input{
+      border:0;outline:0;background:transparent;
+      font-size:15px;min-width:180px;width:min(320px,60vw);
+    }
+    select.pillSelect{
+      appearance:none;border:0;outline:0;background:#fff;
+      border-radius:999px;padding:12px 14px;min-height:44px;
+      box-shadow:0 10px 22px rgba(0,0,0,.10);
+      font-size:15px;font-weight:800;
+      min-width:210px;
+    }
+    .cta{
+      border:0;border-radius:999px;
+      padding:12px 18px;
+      background:var(--black);color:#fff;font-weight:900;
+      cursor:pointer;min-height:44px;
+      box-shadow:0 12px 26px rgba(0,0,0,.18);
+      display:flex;align-items:center;gap:10px;
+    }
+    .cta:active{transform:translateY(1px)}
+    .hint{max-width:1100px;margin:8px auto 0;padding:0 14px;color:#222;font-weight:700;font-size:12px;opacity:.75}
 
-    .timerBar{
-      display:none;
-      margin-top:10px;
-      background:rgba(0,0,0,.06);
-      border-radius:14px;
-      padding:10px 12px;
-      font-weight:1000;
-      color:#111;
+    main{padding-top:16px}
+    .titleRow{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      margin:12px 0 10px;
     }
-    .timerBar.show{display:block}
-    .timer{display:flex;justify-content:space-between;gap:10px;align-items:center}
-    .timer strong{font-size:14px}
-    .timer span{font-variant-numeric:tabular-nums;font-size:14px}
+    .titleRow h2{margin:0;font-size:26px}
+    .titleRow .sub{color:var(--muted);font-weight:700}
 
     .grid{
-      margin-top:14px;
       display:grid;
-      grid-template-columns:repeat(1,minmax(0,1fr));
+      grid-template-columns:repeat(4,minmax(0,1fr));
       gap:14px;
     }
-    @media(min-width:640px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
-    @media(min-width:980px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+    @media (max-width:980px){ .grid{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:720px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:420px){ .grid{grid-template-columns:1fr} }
 
     .card{
       background:var(--card);
@@ -182,469 +103,554 @@
       box-shadow:var(--shadow);
       overflow:hidden;
       display:flex;flex-direction:column;
-      min-height: 420px;
+      transform:translateY(0);
+      transition:transform .15s ease, box-shadow .15s ease;
     }
+    .card:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.14)}
     .imgWrap{
-      background:#fff;
-      height: 250px;
-      display:grid;place-items:center;
       position:relative;
-      border-bottom:1px solid rgba(0,0,0,.06);
+      background:#fff;
+      padding:12px;
+      border-bottom:1px solid #f0f0f0;
     }
-    .imgWrap img{
+    .img{
       width:100%;
-      height:100%;
-      object-fit:contain;
-      padding:10px;
+      height:200px;
+      object-fit:contain; /* NÃO ESTOURA */
+      display:block;
     }
-    .chipRow{
-      position:absolute;left:10px;top:10px;display:flex;gap:8px;flex-wrap:wrap;
+
+    .badgeTop{
+      position:absolute;left:10px;top:10px;
+      display:flex;gap:8px;flex-wrap:wrap;
     }
     .chip{
-      background:var(--chip);color:#fff;font-weight:1000;font-size:12px;
+      background:#111;color:#fff;
+      font-weight:900;font-size:12px;
       padding:6px 10px;border-radius:999px;
-      box-shadow: 0 10px 22px rgba(0,0,0,.16);
+      box-shadow:0 10px 20px rgba(0,0,0,.18);
+      white-space:nowrap;
     }
     .chip.blue{background:var(--blue)}
-    .body{padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px;flex:1}
-    .t{font-weight:1000;font-size:16px;line-height:1.2}
-    .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-weight:1000}
-    .star{color:#f0b400}
-    .prices{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-    .full{color:#777;text-decoration:line-through;font-weight:900}
-    .final{color:var(--danger);font-weight:1000;font-size:30px;letter-spacing:-.5px}
-    .badgeOff{
-      background:#111;color:#fff;border-radius:999px;
-      padding:8px 12px;font-weight:1000;
+    .chip.off{background:#111}
+    .chip.sold{background:var(--blue)}
+
+    .body{
+      padding:12px 12px 14px;
+      display:flex;flex-direction:column;gap:10px;
+      flex:1;
     }
-    .cta{
-      margin-top:auto;
-      display:block;
-      text-align:center;
-      background:linear-gradient(180deg,#ff9a3a,var(--cta));
-      color:#fff;
-      text-decoration:none;
+    .name{
+      font-weight:900;font-size:15px;line-height:1.25;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+      min-height:56px;
+    }
+    .meta{
+      display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:800;font-size:13px;
+    }
+    .star{color:#c58a00}
+    .priceRow{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+    }
+    .old{
+      color:#8a8a8a;
+      font-weight:900;
+      text-decoration:line-through;
+      font-size:14px;
+    }
+    .new{
+      color:#d10000;
       font-weight:1000;
-      padding:14px 12px;
-      border-radius: 14px;
-      box-shadow: 0 12px 28px rgba(255,122,0,.28);
+      font-size:26px;
+      letter-spacing:-.5px;
+    }
+    .badgeOff{
+      background:#111;color:#fff;
+      font-weight:1000;
+      padding:8px 12px;border-radius:999px;
+      font-size:14px;
+      min-width:68px;text-align:center;
     }
 
-    /* Botão flutuante: voltar ao topo */
-    .toTop{
-      position:fixed;
-      right:14px;
-      bottom:14px;
-      width:54px;height:54px;
-      border-radius:999px;
-      border:0;
-      background:#111;
-      color:#fff;
-      font-size:18px;
+    .flashTimer{
+      margin-top:6px;
       font-weight:1000;
-      cursor:pointer;
-      box-shadow: 0 16px 34px rgba(0,0,0,.22);
-      display:none;
-      z-index:20;
+      font-size:13px;
+      color:var(--danger);
+      background:#fff1f1;
+      border:1px dashed #f3b3b3;
+      padding:6px 10px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:fit-content;
     }
-    .toTop.show{display:block}
+    .progressWrap{
+      height:8px;width:92px;background:#ffd5d5;border-radius:999px;overflow:hidden;
+    }
+    .progressBar{
+      height:100%;background:var(--danger);width:0%;
+    }
+
+    .btn{
+      margin-top:auto;
+      border:0;border-radius:14px;
+      padding:12px 12px;
+      background:var(--orange);
+      color:#fff;font-weight:1000;
+      cursor:pointer;
+      display:flex;justify-content:center;align-items:center;gap:10px;
+    }
+    .btn:active{transform:translateY(1px)}
+
+    .skeleton{
+      background:linear-gradient(90deg,#f1f1f1,#e9e9e9,#f1f1f1);
+      background-size:200% 100%;
+      animation:sh 1.1s infinite linear;
+      border-radius:var(--radius);
+      height:330px;
+    }
+    @keyframes sh{0%{background-position:0% 0}100%{background-position:-200% 0}}
+
+    .error{
+      background:#ffe9e9;border:1px solid #ffc4c4;
+      color:#7a0b12;
+      padding:12px 14px;border-radius:14px;
+      font-weight:900;
+    }
 
     footer{
-      margin-top:18px;
-      padding:14px 16px 22px;
-      color:#fff;background:#111;text-align:center;font-weight:900;
+      margin-top:28px;
+      background:#111;color:#fff;
+      border-radius:18px;
+      padding:16px 14px;
+      text-align:center;
+      font-weight:800;
+      opacity:.95;
     }
-    footer small{display:block;color:rgba(255,255,255,.72);font-weight:700;margin-top:6px}
+    footer small{display:block;opacity:.8;margin-top:6px;font-weight:700}
+    #go{
+  display:none !important;
+}
   </style>
 </head>
+
 <body>
   <header>
-    <div class="wrap">
-      <div class="brandRow">
-        <div class="logo"><img src="logo.png" alt="Achadinhos" /></div>
-        <div class="titleBox">
-          <h1 id="hdrTitle">🔥 Achadinhos do Dia</h1>
-          <div class="sub" id="hdrSub">Ofertas do Mercado Livre que realmente valem a pena</div>
+    <div class="top">
+      <div class="brand">
+        <img src="logo.png" alt="Logo" class="logo" />
+        <div class="brandText">
+          <h1>Achadinhos do Dia</h1>
+          <p>Ofertas do Mercado Livre que realmente valem a pena</p>
         </div>
       </div>
 
-      <!-- Controles só aparecem na tela de ofertas -->
-      <div class="controls wrap" id="controls" style="display:none;">
-        <div class="search">
+      <div class="controls">
+        <div class="pill" title="Pesquisar">
           <span>🔎</span>
           <input id="q" type="search" placeholder="Buscar produto..." autocomplete="off" />
         </div>
 
-        <div class="select">
-          <select id="preset">
-            <option value="dia">⚡ Achadinhos do Dia</option>
-            <option value="ate99">💸 Até R$ 99,00</option>
-            <option value="mais">🛒 Mais pedidos</option>
-            <option value="flash">⏱️ Oferta relâmpago</option>
-            <option value="tudo">📋 Ver tudo (lista)</option>
-          </select>
-        </div>
+        <select id="mode" class="pillSelect" title="Selecionar bloco">
+          <option value="dia">⚡ Achadinhos do Dia</option>
+          <option value="99">💸 Até R$ 99,00</option>
+          <option value="pedidos">🛒 Mais pedidos</option>
+          <option value="flash">⏰ Oferta relâmpago</option>
+        </select>
 
-        <button class="btn" id="btnHome">← Home</button>
-      </div>
-
-      <!-- Barra de atalhos (aparece só em ofertas) -->
-      <div class="quickBar wrap" id="quickBar" style="display:none;">
-        <button class="qbtn" data-k="dia"><span class="qdot"></span>⚡ Dia</button>
-        <button class="qbtn" data-k="ate99"><span class="qdot"></span>💸 Até 99</button>
-        <button class="qbtn" data-k="mais"><span class="qdot"></span>🛒 Mais pedidos</button>
-        <button class="qbtn" data-k="flash"><span class="qdot"></span>⏱️ Relâmpago</button>
-        <button class="qbtn" data-k="tudo"><span class="qdot"></span>📋 Tudo</button>
-      </div>
-
-      <div class="timerBar wrap" id="timerBar">
-        <div class="timer">
-          <strong>⏱️ Oferta relâmpago termina em:</strong>
-          <span id="timerTxt">--:--:--</span>
-        </div>
+        <button id="go" class="cta" type="button">⚡ Ver ofertas</button>
       </div>
     </div>
+    <div class="hint"></div>
   </header>
 
-  <!-- HOME -->
-  <section class="home wrap" id="home">
-    <div class="gridHome">
-      <div class="block" data-b="dia">
-        <div class="emoji">⚡</div>
-        <div class="bt">Achadinhos do Dia</div>
-        <div class="bd">Seleção equilibrada: desconto + vendidos</div>
-        <div class="pill">Ver agora</div>
-        <div class="arrow">›</div>
-      </div>
-
-      <div class="block" data-b="ate99">
-        <div class="emoji">💸</div>
-        <div class="bt">Até R$ 99,00</div>
-        <div class="bd">Preço baixo converte mais</div>
-        <div class="pill">Filtrar por preço</div>
-        <div class="arrow">›</div>
-      </div>
-
-      <div class="block" data-b="mais">
-        <div class="emoji">🛒</div>
-        <div class="bt">Mais pedidos</div>
-        <div class="bd">Ordena pelos mais vendidos</div>
-        <div class="pill">Top vendidos</div>
-        <div class="arrow">›</div>
-      </div>
-
-      <div class="block" data-b="flash">
-        <div class="emoji">⏱️</div>
-        <div class="bt">Oferta relâmpago</div>
-        <div class="bd">Maior desconto primeiro + timer</div>
-        <div class="pill">Corre que acaba</div>
-        <div class="arrow">›</div>
-      </div>
-
-      <div class="block" data-b="tudo">
-        <div class="emoji">📋</div>
-        <div class="bt">Ver tudo</divdiv>
-        <div class="bd">Lista completa de ofertas da planilha</div>
-        <div class="pill">Abrir lista</div>
-        <div class="arrow">›</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- OFERTAS -->
-  <section class="offers wrap" id="offers">
-    <div class="state" id="state">Carregando ofertas…</div>
-    <div id="errBox"></div>
-    <div class="grid" id="grid"></div>
-  </section>
-
-  <button class="toTop" id="toTop" title="Voltar ao topo">↑</button>
-
-  <footer>
-    Não somos loja oficial. Apenas divulgamos ofertas do Mercado Livre.
-    <small>Os preços podem mudar a qualquer momento no site do Mercado Livre.</small>
-  </footer>
-
-<script defer>
-  /* ✅ SUA PLANILHA CSV */
-  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-
-  const LIMIT = { dia:24, ate99:24, mais:24, flash:24, tudo:2000 };
-  const TITLES = {
-    dia:"⚡ Achadinhos do Dia",
-    ate99:"💸 Até R$ 99,00",
-    mais:"🛒 Mais pedidos",
-    flash:"⏱️ Oferta relâmpago",
-    tudo:"📋 Ver tudo"
-  };
-
-  const $ = (id)=>document.getElementById(id);
-  let ALL = [];
-  let CURRENT = "dia";
-
-  /* timer relâmpago: reinicia a cada 30 min */
-  const FLASH_WINDOW_MIN = 30;
-  let timerInt = null;
-
-  function parsePriceBR(v){
-    const s = String(v ?? "").trim();
-    if(!s) return NaN;
-    const clean = s.replace(/\./g,"").replace(",",".");
-    const n = Number(clean);
-    return isFinite(n) ? n : NaN;
-  }
-  function getDiscountPct(row){
-    const s = String(row.discount ?? "").toUpperCase();
-    const m = s.match(/(\d+(\.\d+)?)/);
-    return m ? Number(m[1]) : 0;
-  }
-  function parseSold(v){
-    const s = String(v ?? "").trim().toLowerCase().replace(/\./g,"").replace(",",".");
-    if(!s) return 0;
-    if (s.includes("mil")) {
-      const n = parseFloat(s.replace("mil","").trim());
-      return isNaN(n) ? 0 : Math.round(n*1000);
-    }
-    const n = parseFloat(s);
-    return isNaN(n) ? 0 : Math.round(n);
-  }
-  function moneyBR(n){
-    if(!isFinite(n)) return "";
-    return n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-  }
-  function calcFinal(row){
-    const full = parsePriceBR(row.price);
-    const pct = getDiscountPct(row);
-    if(!isFinite(full) || full<=0) return NaN;
-    return Math.max(0, full * (1 - pct/100));
-  }
-
-  function parseCSV(text){
-    const lines = text.replace(/\r/g,"").split("\n").filter(Boolean);
-    const headers = lines.shift().split(",").map(h=>h.trim());
-    return lines.map(line=>{
-      const cols = line.split(",");
-      const obj = {};
-      headers.forEach((h,i)=> obj[h]= (cols[i] ?? "").trim());
-      obj.fullPrice = parsePriceBR(obj.price);
-      obj.discountPct = getDiscountPct(obj);
-      obj.finalPrice = calcFinal(obj);
-      obj.soldNum = parseSold(obj.sold);
-      return obj;
-    }).filter(r=>r.link && r.image && r.title);
-  }
-
-  function getItemsForBlock(all, blockKey){
-    let items = all.slice();
-
-    if(blockKey === "flash"){
-      items.sort((a,b)=> (b.discountPct - a.discountPct) || (b.soldNum - a.soldNum));
-    } else if(blockKey === "mais"){
-      items.sort((a,b)=> (b.soldNum - a.soldNum) || (b.discountPct - a.discountPct));
-    } else if(blockKey === "ate99"){
-      items = items.filter(r=> isFinite(r.finalPrice) && r.finalPrice <= 99)
-                   .sort((a,b)=> a.finalPrice - b.finalPrice);
-    } else if(blockKey === "dia"){
-      items.sort((a,b)=> ((b.discountPct*2 + Math.log10(b.soldNum+1)) - (a.discountPct*2 + Math.log10(a.soldNum+1))));
-    } else if(blockKey === "tudo"){
-      // mantém
-    }
-
-    const q = $("q").value.trim().toLowerCase();
-    if(q){
-      items = items.filter(r => String(r.title).toLowerCase().includes(q));
-    }
-
-    const limit = LIMIT[blockKey] ?? 24;
-    return items.slice(0, limit);
-  }
-
-  function render(items){
-    const grid = $("grid");
-    grid.innerHTML = "";
-    if(!items.length){
-      grid.innerHTML = `<div class="err">Nenhum produto encontrado nesse bloco.</div>`;
-      return;
-    }
-
-    const frag = document.createDocumentFragment();
-
-    items.forEach(r=>{
-      const off = r.discountPct ? `${Math.round(r.discountPct)}% OFF` : "OFERTA";
-      const soldTxt = r.soldNum ? `${r.soldNum.toLocaleString("pt-BR")} vendidos` : "";
-      const ratingTxt = r.rating ? String(r.rating).replace(".",",") : "—";
-
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <div class="imgWrap">
-          <div class="chipRow">
-            <div class="chip">${off}</div>
-            ${soldTxt ? `<div class="chip blue">${soldTxt}</div>` : ``}
-          </div>
-          <img loading="lazy" src="${r.image}" alt="${(r.title||"").replace(/"/g,"")}" />
+  <div class="wrap">
+    <main>
+      <div class="titleRow">
+        <div>
+          <h2 id="h2">Achadinhos do Dia</h2>
+          <div class="sub" id="sub">Carregando ofertas…</div>
         </div>
-        <div class="body">
-          <div class="t">${r.title}</div>
-          <div class="meta"><span class="star">⭐</span><span>${ratingTxt}</span></div>
-          <div class="prices">
-            <div>
-              <div class="full">${isFinite(r.fullPrice) ? moneyBR(r.fullPrice) : ""}</div>
-              <div class="final">${isFinite(r.finalPrice) ? moneyBR(r.finalPrice) : ""}</div>
-            </div>
-            <div class="badgeOff">-${Math.round(r.discountPct)}%</div>
-          </div>
-          <a class="cta" href="${r.link}" target="_blank" rel="noopener">⚡ Ver oferta</a>
+      </div>
+
+      <div id="msg"></div>
+      <div id="grid" class="grid"></div>
+    </main>
+
+    <footer>
+      Não somos uma loja oficial. Apenas divulgamos ofertas do Mercado Livre.
+      <small>Preços e disponibilidade podem mudar a qualquer momento.</small>
+    </footer>
+  </div>
+
+  <script defer>
+    // ====== CONFIG ======
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
+    const CACHE_KEY = "achadinhos_csv_cache_v1";
+    const CACHE_TTL_MS = 10 * 60 * 1000; // 10 min
+    const FLASH_DURATION_MS = 60 * 60 * 1000; // 1h
+
+    // ====== STATE ======
+    let all = [];
+    let view = [];
+    let lastMode = "dia";
+
+    const el = (id)=>document.getElementById(id);
+    const grid = el("grid");
+    const msg = el("msg");
+    const h2 = el("h2");
+    const sub = el("sub");
+    const q = el("q");
+    const mode = el("mode");
+    const go = el("go");
+
+    // ====== UTIL ======
+    function moneyBR(v){
+      if (!isFinite(v)) return "";
+      return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+    }
+
+    function parseNumberBR(x){
+      if (x == null) return NaN;
+      const s = String(x).trim();
+      if (!s) return NaN;
+      // aceita "287,12" "287.12" "R$ 287,12"
+      const cleaned = s.replace(/[R$\s]/g,"").replace(/\./g,"").replace(",",".");
+      const n = Number(cleaned);
+      return isFinite(n) ? n : NaN;
+    }
+
+    function parseDiscount(x){
+      // aceita "50% OFF" "53%OFF" "53%" "OFF 53%" etc
+      if (x == null) return 0;
+      const s = String(x).toUpperCase();
+      const m = s.match(/(\d{1,2}|\d{3})\s*%/);
+      if (!m) return 0;
+      const p = Number(m[1]);
+      if (!isFinite(p)) return 0;
+      return Math.max(0, Math.min(95, p));
+    }
+
+    function parseSold(x){
+      // aceita "1000", "1.000", "10 mil", "10 MIL", "100 mil"
+      if (x == null) return 0;
+      const s = String(x).toLowerCase().trim();
+      if (!s) return 0;
+
+      const isMil = s.includes("mil");
+      const cleaned = s.replace(/[^\d,\.]/g,"");
+      if (!cleaned) return 0;
+
+      // "1.000" -> 1000 ; "10" + mil -> 10000
+      const num = Number(cleaned.replace(/\./g,"").replace(",","."));
+      if (!isFinite(num)) return 0;
+      return isMil ? Math.round(num * 1000) : Math.round(num);
+    }
+
+    function parseCSV(text){
+      // CSV simples do Google: sem quebra de linha em campos.
+      const lines = text.replace(/\r/g,"").split("\n").filter(Boolean);
+      if (!lines.length) return [];
+      const headers = splitCSVLine(lines[0]).map(h=>h.trim());
+      const rows = [];
+      for (let i=1;i<lines.length;i++){
+        const cols = splitCSVLine(lines[i]);
+        const obj = {};
+        headers.forEach((h,idx)=>obj[h]=cols[idx] ?? "");
+        rows.push(obj);
+      }
+      return rows;
+    }
+
+    function splitCSVLine(line){
+      const out = [];
+      let cur = "", inQ = false;
+      for (let i=0;i<line.length;i++){
+        const ch = line[i];
+        if (ch === '"'){
+          if (inQ && line[i+1] === '"'){ cur += '"'; i++; }
+          else inQ = !inQ;
+        } else if (ch === "," && !inQ){
+          out.push(cur); cur = "";
+        } else {
+          cur += ch;
+        }
+      }
+      out.push(cur);
+      return out;
+    }
+
+    function dedupeByLink(items){
+      const seen = new Set();
+      const out = [];
+      for (const it of items){
+        const k = (it.link||"").trim();
+        if (!k || seen.has(k)) continue;
+        seen.add(k);
+        out.push(it);
+      }
+      return out;
+    }
+
+    function showSkeleton(n=8){
+      grid.innerHTML = "";
+      for (let i=0;i<n;i++){
+        const d = document.createElement("div");
+        d.className = "skeleton";
+        grid.appendChild(d);
+      }
+    }
+
+    function setError(text){
+      msg.innerHTML = `<div class="error">${text}</div>`;
+    }
+    function clearError(){ msg.innerHTML = ""; }
+
+    // ====== FETCH + CACHE ======
+    async function loadData(){
+      showSkeleton(8);
+      clearError();
+
+      // cache
+      try{
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+        if (cached && cached.ts && (Date.now() - cached.ts) < CACHE_TTL_MS && cached.csv){
+          return buildItemsFromCSV(cached.csv, true);
+        }
+      }catch{}
+
+      // fetch
+      const r = await fetch(CSV_URL, {cache:"no-store"});
+      if (!r.ok) throw new Error("Falha ao carregar a planilha (HTTP "+r.status+")");
+      const csv = await r.text();
+
+      try{
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ts:Date.now(), csv}));
+      }catch{}
+
+      return buildItemsFromCSV(csv, false);
+    }
+
+    function buildItemsFromCSV(csv, fromCache){
+      const rows = parseCSV(csv);
+
+      const items = rows.map(r=>{
+        const priceFull = parseNumberBR(r.price);
+        const disc = parseDiscount(r.discount);
+        const final = (isFinite(priceFull) ? priceFull * (1 - disc/100) : NaN);
+
+        return {
+          image: (r.image||"").trim(),
+          title: (r.title||"").trim(),
+          price: priceFull,
+          discount: disc,
+          finalPrice: final,
+          coupon: (r.coupon||"").trim(),
+          sold: parseSold(r.sold),
+          rating: Number(String(r.rating||"").replace(",", ".")) || 0,
+          link: (r.link||"").trim(),
+        };
+      });
+
+      // limpa inválidos + dedupe
+      const cleaned = dedupeByLink(items).filter(p => p.link && p.title && p.image);
+
+      all = cleaned;
+      sub.textContent = fromCache
+        ? `Carregado do cache • Itens: ${all.length}`
+        : `Carregado da planilha • Itens: ${all.length}`;
+
+      return all;
+    }
+
+    // ====== RENDER ======
+    function cardHTML(p, isFlash){
+      const soldLabel = p.sold ? `${p.sold.toLocaleString("pt-BR")} vendidos` : "";
+      const offLabel = p.discount ? `${p.discount}% OFF` : "";
+      const old = moneyBR(p.price);
+      const now = moneyBR(p.finalPrice);
+
+      const chips = `
+        <div class="badgeTop">
+          ${offLabel ? `<div class="chip off">${offLabel}</div>` : ``}
+          ${soldLabel ? `<div class="chip sold">${soldLabel}</div>` : ``}
         </div>
       `;
-      frag.appendChild(card);
-    });
 
-    grid.appendChild(frag);
-  }
+      const timer = isFlash ? `
+        <div class="flashTimer" data-id="${encodeURIComponent(p.link)}">
+          ⏰ <span class="t">--:--:--</span>
+          <span class="progressWrap"><span class="progressBar"></span></span>
+        </div>
+      ` : ``;
 
-  function setActiveQuick(blockKey){
-    document.querySelectorAll("#quickBar .qbtn").forEach(b=>{
-      b.classList.toggle("active", b.getAttribute("data-k") === blockKey);
-    });
-  }
+      return `
+        <article class="card">
+          <div class="imgWrap">
+            ${chips}
+            <img class="img" loading="lazy" src="${p.image}" alt="${escapeHTML(p.title)}">
+          </div>
+          <div class="body">
+            <div class="name">${escapeHTML(p.title)}</div>
+            <div class="meta">
+              ${p.rating ? `<span class="star">⭐</span><span>${String(p.rating).replace(".", ",")}</span>` : `<span></span>`}
+            </div>
 
-  function stopFlashTimer(){
-    if(timerInt){ clearInterval(timerInt); timerInt = null; }
-  }
-  function startFlashTimer(){
-    stopFlashTimer();
-    function tick(){
-      const now = new Date();
-      const minutes = now.getMinutes();
-      const blockStart = Math.floor(minutes / FLASH_WINDOW_MIN) * FLASH_WINDOW_MIN;
-      const end = new Date(now);
-      end.setMinutes(blockStart + FLASH_WINDOW_MIN);
-      end.setSeconds(0); end.setMilliseconds(0);
+            <div class="priceRow">
+              <div>
+                <div class="old">${old}</div>
+                <div class="new">${now}</div>
+              </div>
+              <div class="badgeOff">-${p.discount}%</div>
+            </div>
 
-      let diff = end - now;
-      if(diff <= 0){
-        applyBlock("flash"); // reinicia + reordena
+            ${timer}
+
+            <button class="btn" onclick="window.open('${p.link}','_blank')">⚡ Ver oferta</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function escapeHTML(s){
+      return String(s||"").replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[c]));
+    }
+
+    function applyMode(m){
+      lastMode = m;
+      clearError();
+
+      const query = q.value.trim().toLowerCase();
+
+      const base = all.filter(p=>{
+        if (!query) return true;
+        return (p.title||"").toLowerCase().includes(query);
+      });
+
+      if (!base.length){
+        grid.innerHTML = "";
+        setError("Nenhum produto encontrado para essa busca.");
+        sub.textContent = `Itens: 0`;
         return;
       }
-      const h = String(Math.floor(diff/3600000)).padStart(2,"0");
-      diff %= 3600000;
-      const m = String(Math.floor(diff/60000)).padStart(2,"0");
-      diff %= 60000;
-      const s = String(Math.floor(diff/1000)).padStart(2,"0");
-      $("timerTxt").textContent = `${h}:${m}:${s}`;
+
+      if (m === "dia"){
+        h2.textContent = "Achadinhos do Dia";
+        // mistura boa: prioridade por desconto e vendidos, sem extremos
+        view = [...base].sort((a,b)=>{
+          const sa = (a.sold*0.6) + (a.discount*25);
+          const sb = (b.sold*0.6) + (b.discount*25);
+          return sb - sa;
+        }).slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "99"){
+        h2.textContent = "Até R$ 99,00";
+        view = [...base].filter(p=>isFinite(p.finalPrice) && p.finalPrice <= 99)
+          .sort((a,b)=>a.finalPrice - b.finalPrice)
+          .slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "pedidos"){
+        h2.textContent = "Mais pedidos";
+        view = [...base].sort((a,b)=>b.sold - a.sold).slice(0, 24);
+        renderGrid(false);
+      }
+
+      if (m === "flash"){
+        h2.textContent = "Oferta relâmpago";
+        view = [...base].sort((a,b)=>b.discount - a.discount).slice(0, 24);
+        renderGrid(true);
+        startFlashTimers(); // <<<<<< timer volta aqui
+      }
+
+      sub.textContent = `Itens exibidos: ${view.length}`;
     }
-    tick();
-    timerInt = setInterval(tick, 1000);
-  }
 
-  function applyBlock(blockKey){
-    CURRENT = blockKey;
-    $("preset").value = blockKey;
-    setActiveQuick(blockKey);
-
-    $("hdrTitle").textContent = TITLES[blockKey] || "Ofertas";
-    $("hdrSub").textContent = "Toque no produto para abrir no Mercado Livre";
-
-    if(blockKey === "flash"){
-      $("timerBar").classList.add("show");
-      startFlashTimer();
-    } else {
-      $("timerBar").classList.remove("show");
-      stopFlashTimer();
+    function renderGrid(isFlash){
+      grid.innerHTML = view.map(p => cardHTML(p, isFlash)).join("");
     }
 
-    const items = getItemsForBlock(ALL, blockKey);
-    $("state").textContent = `Itens exibidos: ${items.length}`;
-    render(items);
-  }
+    // ====== TIMER (reinicia e persiste) ======
+    function getFlashKey(id){ return "flash_end_" + id; }
 
-  function showHome(){
-    location.hash = "#home";
-    $("home").style.display = "";
-    $("offers").style.display = "none";
-    $("controls").style.display = "none";
-    $("quickBar").style.display = "none";
-    $("timerBar").classList.remove("show");
-    stopFlashTimer();
+    function ensureEndTime(id){
+      const key = getFlashKey(id);
+      const now = Date.now();
+      let end = Number(localStorage.getItem(key) || 0);
 
-    $("hdrTitle").textContent = "🔥 Achadinhos do Dia";
-    $("hdrSub").textContent = "Ofertas do Mercado Livre que realmente valem a pena";
-  }
-
-  function showOffers(blockKey){
-    location.hash = "#ofertas";
-    $("home").style.display = "none";
-    $("offers").style.display = "block";
-    $("controls").style.display = "grid";
-    $("quickBar").style.display = "flex";
-    $("q").value = "";
-    $("errBox").innerHTML = "";
-    $("state").textContent = "Carregando ofertas…";
-    applyBlock(blockKey || "dia");
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
-
-  async function load(){
-    try{
-      const res = await fetch(CSV_URL, { cache:"no-store" });
-      if(!res.ok) throw new Error("Falha ao buscar planilha");
-      const text = await res.text();
-      ALL = parseCSV(text);
-      if(!ALL.length) throw new Error("Planilha vazia ou colunas incompatíveis");
-    } catch(e){
-      $("errBox").innerHTML = `<div class="err">Não carregou as ofertas: ${String(e.message||e)}</div>`;
+      if (!end || end < now){
+        end = now + FLASH_DURATION_MS;
+        localStorage.setItem(key, String(end));
+      }
+      return end;
     }
-  }
 
-  function setupToTop(){
-    const btn = $("toTop");
-    btn.addEventListener("click", ()=> window.scrollTo({top:0,behavior:"smooth"}));
-    window.addEventListener("scroll", ()=>{
-      const show = window.scrollY > 450 && $("offers").style.display === "block";
-      btn.classList.toggle("show", show);
-    }, {passive:true});
-  }
+    function fmt(ms){
+      const s = Math.max(0, Math.floor(ms/1000));
+      const hh = String(Math.floor(s/3600)).padStart(2,"0");
+      const mm = String(Math.floor((s%3600)/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${hh}:${mm}:${ss}`;
+    }
 
-  document.addEventListener("DOMContentLoaded", async ()=>{
-    await load();
+    let flashInterval = null;
+    function startFlashTimers(){
+      if (flashInterval) clearInterval(flashInterval);
 
-    // clique nos blocos (HOME)
-    document.querySelectorAll(".block").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        const b = el.getAttribute("data-b") || "dia";
-        showOffers(b);
+      const nodes = Array.from(document.querySelectorAll(".flashTimer"));
+      if (!nodes.length) return;
+
+      const state = nodes.map(n=>{
+        const id = n.getAttribute("data-id");
+        const end = ensureEndTime(id);
+        return { n, id, end };
       });
-    });
 
-    // atalhos (OFERTAS)
-    document.querySelectorAll("#quickBar .qbtn").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        const k = el.getAttribute("data-k") || "dia";
-        applyBlock(k);
-        window.scrollTo({top:0,behavior:"smooth"});
-      });
-    });
+      function tick(){
+        const now = Date.now();
+        for (const it of state){
+          // se passou, reinicia
+          if (it.end <= now){
+            it.end = now + FLASH_DURATION_MS;
+            localStorage.setItem(getFlashKey(it.id), String(it.end));
+          }
+          const left = it.end - now;
+          const tEl = it.n.querySelector(".t");
+          const bar = it.n.querySelector(".progressBar");
+          if (tEl) tEl.textContent = fmt(left);
 
-    // controles
-    $("preset").addEventListener("change", ()=> applyBlock($("preset").value));
-    $("btnHome").addEventListener("click", showHome);
+          const pct = 100 - Math.min(100, Math.max(0, (left / FLASH_DURATION_MS) * 100));
+          if (bar) bar.style.width = pct.toFixed(0) + "%";
+        }
+      }
 
-    let t=null;
-    $("q").addEventListener("input", ()=>{
-      clearTimeout(t);
-      t=setTimeout(()=> applyBlock(CURRENT), 180);
-    });
-
-    setupToTop();
-
-    // rota inicial
-    if(location.hash === "#ofertas"){
-      showOffers("dia");
-    } else {
-      showHome();
+      tick();
+      flashInterval = setInterval(tick, 250);
     }
-  });
-</script>
+
+    // ====== EVENTS ======
+    go.addEventListener("click", ()=>applyMode(mode.value));
+    mode.addEventListener("change", ()=>applyMode(mode.value));
+    q.addEventListener("input", ()=>applyMode(lastMode));
+
+    // ====== INIT ======
+    (async function init(){
+      try{
+        await loadData();
+        applyMode("dia");
+      }catch(err){
+        grid.innerHTML = "";
+        setError("Não carregou as ofertas: " + (err?.message || "Failed to fetch"));
+        sub.textContent = "Erro ao carregar.";
+      }
+    })();
+  </script>
 </body>
 </html>
