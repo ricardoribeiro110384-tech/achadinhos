@@ -1,3136 +1,531 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H5DTVXXB59"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-H5DTVXXB59');
-  </script>
-
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Achadinhos Oficial</title>
-  <meta name="theme-color" content="#0f172a" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#111111"/>
+  <title>Achadinhos do Dia — Achadinhos Oficial</title>
 
   <style>
-:root{
-  /* Tema claro (profissional) */
-  --bg:#f6f7fb;
-  --card:#ffffff;
-  --soft:#f1f5f9;
-
-  --text:#0f172a;
-  --muted:#64748b;
-
-  --brand:#16a34a;
-  --accent:#f59e0b;
-  --danger:#dc2626;
-
-  --border:rgba(15,23,42,.10);
-  --shadow: 0 12px 28px rgba(2,6,23,.10);
-  --radius:16px;
-
-  --yellow:#ffd000;
-  --yellow2:#ffb800;
-  --yellowText:#1a1400;
-}
+    :root{
+      --bg:#f4f4f4; --card:#fff; --text:#111; --muted:#6b6b6b;
+      --brand:#ffcc00; --dark:#111; --danger:#e60000; --ok:#0a8f3c;
+      --shadow:0 2px 14px rgba(0,0,0,.10); --radius:14px; --stroke:rgba(0,0,0,.08);
+    }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1000px 600px at 20% 0%, rgba(34,197,94,.12), transparent 60%),
-                  radial-gradient(800px 500px at 80% 10%, rgba(245,158,11,.10), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
-    }
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
 
-    /* BARRA AMARELA */
-    .topbar{
-      background: linear-gradient(90deg, var(--yellow), var(--yellow2));
-      color:var(--yellowText);
-      border-bottom:1px solid rgba(0,0,0,.12);
-      position:sticky;
-      top:0;
-      z-index:80;
-    }
-    .topbar .wrap{
-      padding:13px 13px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .topbrand{
-      display:flex;align-items:center;gap:12px;
-      font-weight:1000;
-      letter-spacing:.2px;
-      min-width:0;
-    }
-    .toplogo{
-      width:64px;height:64px;
-      border-radius:18px;
-      background:#111;
-      display:flex;align-items:center;justify-content:center;
-      overflow:hidden;
-      flex:0 0 auto;
-      box-shadow: 0 12px 26px rgba(0,0,0,.20);
-    }
-    .toplogo img{width:100%;height:100%;object-fit:contain}
-    .toptext{min-width:0}
-    .topname{
-      font-size:24px;
-      line-height:1.1;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .toptag{
-      font-size:15px;
-      opacity:.9;
-      font-weight:900;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:60vw;
-    }
-    .topright{
-      display:flex;gap:10px;align-items:center;flex:0 0 auto;
-      font-weight:1000;
-      font-size:13px;
-      background: rgba(0,0,0,.10);
-      border:1px solid rgba(0,0,0,.12);
-      border-radius:999px;
-      padding:10px 12px;
-      white-space:nowrap;
-      cursor:pointer;
-      user-select:none;
-    }
-    .topright:active{transform: translateY(1px)}
-    @media (max-width: 520px){
-      .toptag{display:none}
-      .topbar .wrap{padding:12px 14px}
-      .toplogo{width:44px;height:44px}
-      .topname{font-size:16px}
-    }
+    header{background:var(--brand);padding:18px 0;border-bottom:1px solid rgba(0,0,0,.08)}
+    .top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .brand h1{margin:0;font-size:22px;font-weight:900}
+    .brand p{margin:4px 0 0;font-size:13px}
+    .top-actions{display:flex;gap:10px;flex-wrap:wrap;width:100%}
 
-    /* Header escuro */
-    header{
-      position:sticky;
-      top:74px;
-      z-index:60;
-      background: rgba(11,18,32,.86);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--border);
-    }
-    @media (max-width: 520px){
-      header{top:68px}
-    }
-
-    .headbar{
-      display:flex;gap:12px;align-items:center;justify-content:space-between;
-      padding:12px 0;
-      flex-wrap:wrap;
-    }
-    .brand{
-      display:flex;align-items:center;gap:10px;
-      font-weight:800; letter-spacing:.3px;
-      min-width: 220px;
-    }
-    .logo{
-      width:38px;height:38px;border-radius:12px;
-      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(245,158,11,.85));
-      box-shadow: var(--shadow);
-      flex: 0 0 auto;
-    }
-    .sub{
-      font-size:12px;color:var(--muted);margin-top:2px;font-weight:600;
-    }
-    .status{
-      display:flex;align-items:center;gap:10px;
-      padding:10px 12px;border:1px solid var(--border);
-      border-radius:999px;background: rgba(255,255,255,.03);
-      font-size:12px;color:var(--muted);
-      white-space:nowrap;
-      max-width: 100%;
-      overflow:hidden;
-      text-overflow: ellipsis;
-    }
-    .dot{width:9px;height:9px;border-radius:999px;background:var(--accent);box-shadow: 0 0 0 4px rgba(245,158,11,.12)}
-    .status b{color:var(--text)}
     .pill{
-      padding:8px 10px;border-radius:999px;
-      background: rgba(34,197,94,.12);
-      border:1px solid rgba(34,197,94,.25);
-      font-size:12px;font-weight:800;color:#bbf7d0;
-      white-space:nowrap;
+      background:#fff;border:1px solid var(--stroke);border-radius:999px;
+      padding:10px 12px;display:flex;gap:8px;align-items:center;
+      box-shadow:var(--shadow);flex:1;min-width:140px
+    }
+    .pill input,.pill select{border:none;outline:none;background:transparent;font-size:13px;width:100%}
+    .cta{
+      background:var(--dark);color:#fff;padding:12px 14px;border-radius:12px;
+      font-weight:900;font-size:13px;white-space:nowrap
     }
 
-    /* Hero */
-    .hero{
-      margin-top:16px;
-      background: linear-gradient(180deg, rgba(19,32,71,.9), rgba(15,26,51,.7));
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .hero:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(500px 200px at 20% 10%, rgba(34,197,94,.25), transparent 60%),
-                  radial-gradient(450px 220px at 75% 0%, rgba(245,158,11,.22), transparent 55%);
-      pointer-events:none;
-    }
-    .hero-inner{
-      position:relative;
-      padding:18px;
-      display:grid;
-      grid-template-columns: 1.3fr .7fr;
-      gap:14px;
-      align-items:start;
-    }
-    @media (max-width: 860px){
-      .hero-inner{grid-template-columns:1fr}
-    }
-    .hero h1{margin:0;font-size:22px;line-height:1.2}
-    .hero p{margin:8px 0 0;color:var(--muted);font-weight:600}
-    .hero .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .btn{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:12px 14px;border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      font-weight:900;
-      cursor:pointer;
-      transition: transform .08s ease;
-      user-select:none;
-      color:var(--text);
-    }
-    .btn:active{transform: translateY(1px)}
-    .btnPrimary{
-      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(34,197,94,.75));
-      color:#052014;border:none;
-    }
+    h2{font-size:18px;margin:0}
+    .sub{font-size:13px;color:var(--muted);margin-top:4px}
 
-    .kpi{display:grid;gap:10px;}
-    .kpiCard{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      border-radius:14px;
-      padding:12px;
-    }
-    .kpiCard b{font-size:16px}
-    .kpiCard span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-top:2px}
-
-    /* VÍDEO */
-    .videoWrap{
-      margin:12px auto 0;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      border-radius:14px;
-      overflow:hidden;
-      max-width: 520px;
-    }
-    @media (max-width: 860px){
-      .videoWrap{max-width:100%}
-    }
-    .videoTop{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:10px 12px;
-      border-bottom:1px solid var(--border);
-      flex-wrap:wrap;
-    }
-    .videoTop b{font-size:13px}
-    .videoTop .mini{font-size:12px;color:var(--muted);font-weight:900}
-    .btnTiny{
-      padding:10px 12px;border-radius:12px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      font-weight:1000;
-      cursor:pointer;
-      color:var(--text);
-    }
-    .videoFrame{
-      aspect-ratio: 16 / 9;
-      background:#000;
-    }
-    video{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      background:#000;
-    }
-
-    /* OFERTA DO MINUTO */
-    .spot{
-      margin-top:14px;
-      border:1px solid rgba(245,158,11,.22);
-      background: linear-gradient(180deg, rgba(245,158,11,.10), rgba(255,255,255,.02));
-      border-radius: var(--radius);
-      box-shadow: 0 12px 24px rgba(0,0,0,.20);
-      overflow:hidden;
-      display:grid;
-      grid-template-columns: 1fr 1.25fr;
-      gap:0;
-    }
-    @media (max-width: 860px){
-      .spot{grid-template-columns:1fr}
-    }
-    .spotImg{
-      background: rgba(0,0,0,.18);
-      border-right:1px solid rgba(255,255,255,.08);
-      min-height: 220px;
-      display:flex;align-items:center;justify-content:center;
-      padding:10px;
-    }
-    @media (max-width: 860px){
-      .spotImg{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
-    }
-    .spotImg img{
-      width:100%;
-      height:100%;
-      max-height: 260px;
-      object-fit:contain;
-      border-radius: 14px;
-      background: rgba(0,0,0,.14);
-    }
-    .spotBody{
-      padding:14px;
-      display:grid;
-      gap:10px;
-    }
-    .spotTop{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
-    }
-    .spotBadge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      background: rgba(239,68,68,.14);
-      border:1px solid rgba(239,68,68,.28);
-      color:#fecaca;
-      font-weight:1000;
-      letter-spacing:.2px;
-    }
-    .spotTitle{
-      margin:0;
-      font-size:16px;
-      font-weight:1000;
-      line-height:1.2;
-    }
-    .spotPrices{
-      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap;
-    }
-    .priceNow{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background: rgba(34,197,94,.18);
-      border:1px solid rgba(34,197,94,.35);
-      font-weight:1000;
-      font-size:18px;
-      color:#bbf7d0;
-      white-space:nowrap;
-    }
-    .priceOld{
-      color: rgba(229,231,235,.75);
-      font-weight:900;
-      font-size:14px;
-      text-decoration: line-through;
-      white-space:nowrap;
-    }
-    .spotCopy{
-      font-weight:1000;
-      color: rgba(229,231,235,.92);
-      line-height:1.35;
-    }
-    .spotBtns{
-      display:flex;gap:10px;flex-wrap:wrap;
-    }
-
-    /* Controls */
-    .controls{
-      margin-top:14px;
-      display:flex;gap:10px;flex-wrap:wrap;
-      align-items:center;justify-content:space-between;
-    }
-    .search{
-      flex:1; min-width:240px;
-      display:flex;align-items:center;gap:10px;
-      padding:12px 12px;
-      border:1px solid var(--border);
-      border-radius:14px;
-      background: rgba(255,255,255,.03);
-    }
-    .search input{
-      width:100%;
-      background:transparent;border:none;outline:none;color:var(--text);
-      font-size:14px;font-weight:700;
-    }
-    .select{
-      min-width:180px;
-      padding:12px 12px;
-      border:1px solid var(--border);
-      border-radius:14px;
-      background: rgba(255,255,255,.03);
-      color:var(--text);
-      font-weight:800;
-      outline:none;
-    }
-
-    /* Chips */
-    .chips{
-      margin-top:10px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      font-weight:1000;
-      cursor:pointer;
-      user-select:none;
-    }
-    .chipOn{
-      border:1px solid rgba(34,197,94,.35);
-      background: rgba(34,197,94,.14);
-      color:#bbf7d0;
-    }
-
-    /* Social */
-    .bar{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width: 860px){
-      .bar{grid-template-columns:1fr}
-    }
-    .notice{
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      border-radius:14px;
-      padding:14px;
-      display:flex;gap:10px;align-items:flex-start;
-    }
-    .badge{
-      width:42px;height:42px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      background: rgba(245,158,11,.18);
-      border:1px solid rgba(245,158,11,.30);
-      flex:0 0 auto;
-      font-size:18px;
-    }
-    .notice h3{
-      margin:0;
-      font-size:16px;
-      font-weight:1000;
-      letter-spacing:.2px;
-    }
-    .notice p{
-      margin:6px 0 0;
-      color: rgba(229,231,235,.92);
-      font-weight:1000;
-      font-size:14px;
-      line-height:1.35;
-    }
-
-    /* Grid / cards */
     .grid{
-      margin-top:16px;
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:12px;margin-top:12px
     }
-    @media (max-width: 980px){.grid{grid-template-columns: repeat(2,1fr)}}
-    @media (max-width: 620px){.grid{grid-template-columns: repeat(2, 1fr)}}
-    @media (max-width: 380px){.grid{grid-template-columns: 1fr}}
-
     .card{
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border-radius: var(--radius);
-      overflow:hidden;
-      box-shadow: 0 12px 24px rgba(0,0,0,.25);
-      display:flex;flex-direction:column;
-      min-height: 420px;
+      background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+      border:1px solid var(--stroke);overflow:hidden;
+      display:flex;flex-direction:column;min-height:342px
     }
-    .imgbox{
-      background: rgba(255,255,255,.03);
-      border-bottom:1px solid var(--border);
-      aspect-ratio: 16 / 11;
+
+    /* ✅ imagem inteira (sem cortar) + quadrada */
+    .imgwrap{
+      position:relative;background:#fff;padding:10px;aspect-ratio:1/1;
       display:flex;align-items:center;justify-content:center;
-      overflow:hidden;
-      padding:8px;
+      border-bottom:1px solid var(--stroke);
     }
-    .imgbox img{
-      width:100%;height:100%;
-      object-fit:contain;
-      display:block;
-      filter:saturate(1.05) contrast(1.03);
-      background: rgba(0,0,0,.12);
-      border-radius: 12px;
-    }
+    .imgwrap img{width:100%;height:100%;object-fit:contain;display:block}
 
-    .cardBody{padding:12px;display:grid;gap:10px}
-    .title{
-      margin:0;
-      font-size:14px;
-      line-height:1.25;
-      font-weight:900;
-      min-height: 36px;
-    }
-/* ✅ CTA por produto (Estoque limitado / Sucesso de vendas) — AMARELO */
-.ctaTag{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 10px;
-  border-radius:12px;
-
-  background: linear-gradient(180deg, #ffd000, #ffb800) !important;
-  border:1px solid #e6a700 !important;
-
-  color:#1a1400 !important;
-  font-weight:1000 !important;
-  font-size:13px;
-  line-height:1.25;
-
-  box-shadow: 0 6px 16px rgba(0,0,0,.15);
-}
-
-    .prices{
-      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
-      flex-wrap:wrap;
-    }
-    .row{
-      display:flex;justify-content:space-between;gap:10px;align-items:center;
-      flex-wrap:wrap;
-    }
-    .muted{color:var(--muted);font-weight:900;font-size:12px}
-    .tag{
-      display:inline-flex;align-items:center;gap:6px;
+    .chip{
+      position:absolute;top:10px;left:10px;
+      background:rgba(17,17,17,.92);color:#fff;
+      font-size:12px;font-weight:900;
       padding:6px 10px;border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      font-size:12px;font-weight:900;color:var(--text);
+      max-width:88%;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap
     }
+
+    .content{padding:10px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .title{
+      font-size:13px;font-weight:900;line-height:1.2;min-height:34px;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .metaRow{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+    .pillMini{background:#f2f2f2;border:1px solid var(--stroke);padding:4px 8px;border-radius:999px}
+
+    /* ✅ preço e-commerce (conversão) */
+    .priceRow{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+    .priceCol{display:flex;flex-direction:column;gap:2px}
+    .oldPrice{font-size:13px;color:#777;text-decoration:line-through}
+    .price{font-size:20px;font-weight:900;color:var(--danger)}
     .off{
-      border:1px solid rgba(239,68,68,.32);
-      background: rgba(239,68,68,.12);
-      color:#fecaca;
+      font-size:12px;font-weight:900;color:var(--ok);
+      background:#eaffea;padding:6px 10px;border-radius:999px
     }
-    .coupon{
-      border:1px solid rgba(34,197,94,.28);
-      background: rgba(34,197,94,.12);
-      color:#bbf7d0;
+
+    .btn{
+      margin-top:auto;background:var(--brand);
+      padding:12px;border-radius:12px;
+      text-align:center;font-weight:900;font-size:13px;
+      border:1px solid var(--stroke);
     }
-    .buy{
-      margin-top:2px;
-      display:flex;gap:10px;
-      flex-wrap:wrap;
+
+    .section{margin-top:24px}
+    .state{
+      background:#fff;border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      padding:12px 14px;box-shadow:var(--shadow);
+      font-size:13px;color:var(--muted);line-height:1.35
     }
-    .btnSmall{
-      flex:1;
-      min-width: 140px;
-      display:flex;align-items:center;justify-content:center;
-      padding:11px 12px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      font-weight:1000;
-      cursor:pointer;
-      color:var(--text);
-    }
-    .btnBuy{
-      background: linear-gradient(135deg, rgba(245,158,11,.98), rgba(245,158,11,.78));
-      color:#1b1201;border:none;
-    }
-    .btnGroup{
-      background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
-      color:#052014;border:none;
-    }
-    .btnShare{
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.18);
-      color:var(--text);
-    }
+    .state.error{background:#fff3f3;border-color:#ffd3d3;color:#9d0000}
+    .hidden{display:none !important}
 
     footer{
-      margin:18px 0 110px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      border-radius: var(--radius);
-      padding:14px;
+      margin-top:26px;background:var(--dark);
+      color:#aaa;font-size:12px;text-align:center;
+      padding:16px
     }
-    footer b{display:block;margin-bottom:6px}
-    footer ul{margin:0;padding-left:18px;color:var(--muted);font-weight:800;font-size:13px;line-height:1.55}
-
-    .wa{
-      position:fixed;right:16px;bottom:16px;z-index:999;
-      display:flex;align-items:center;gap:10px;
-      padding:14px 14px;
-      border-radius:999px;
-      background: linear-gradient(135deg, rgba(34,197,94,.98), rgba(34,197,94,.78));
-      color:#052014;
-      font-weight:1000;
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
-      border:none;
-      cursor:pointer;
-      max-width: calc(100vw - 32px);
-    }
-    .wa small{display:block;font-weight:900;opacity:.9;line-height:1}
-    .wa span{display:block;line-height:1}
-    .waIcon{
-      width:38px;height:38px;border-radius:999px;
-      background: rgba(0,0,0,.12);
-      display:flex;align-items:center;justify-content:center;
-      font-size:18px;
-    }
-
-    .loading{
-      margin-top:16px;
-      border:1px dashed rgba(255,255,255,.18);
-      border-radius: var(--radius);
-      padding:14px;
-      color:var(--muted);
-      font-weight:900;
-    }
-    /* =========================
-   FIX CONTRASTE (TEMA CLARO)
-   Cole no FINAL do <style>
-   ========================= */
-
-/* Texto base e cards */
-body{ color: var(--text); }
-.hero, .notice, .kpiCard, footer, .card{
-  background: rgba(255,255,255,.92);
-  border: 1px solid var(--border);
-}
-.status{
-  background: rgba(255,255,255,.75);
-  border: 1px solid var(--border);
-  color: var(--muted);
-}
-.status b{ color: var(--text); }
-.sub, .muted{ color: var(--muted) !important; }
-
-/* Barra amarela já ok, mas garante contraste */
-.topbar{ color: var(--yellowText); }
-.topright{
-  background: rgba(255,255,255,.55);
-  border: 1px solid rgba(15,23,42,.18);
-  color: #0f172a;
-}
-
-/* Botões gerais */
-.btn{
-  background: rgba(255,255,255,.85);
-  border: 1px solid rgba(15,23,42,.14);
-  color: var(--text);
-}
-.btnPrimary{
-  background: linear-gradient(135deg, rgba(22,163,74,.98), rgba(22,163,74,.78));
-  color: #052014;
-  border: none;
-}
-
-/* Botão pequeno / ações no card */
-.btnSmall{
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(15,23,42,.14);
-  color: var(--text);
-}
-.btnBuy{
-  background: linear-gradient(135deg, rgba(245,158,11,.98), rgba(245,158,11,.78));
-  color: #1b1201;
-  border: none;
-}
-.btnGroup{
-  background: linear-gradient(135deg, rgba(22,163,74,.98), rgba(22,163,74,.78));
-  color: #052014;
-  border: none;
-}
-.btnShare{
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(15,23,42,.16);
-  color: var(--text);
-}
-
-/* Chips */
-.chip{
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(15,23,42,.14);
-  color: var(--text);
-}
-.chipOn{
-  background: rgba(22,163,74,.12);
-  border: 1px solid rgba(22,163,74,.28);
-  color: #14532d;
-}
-
-/* Busca e select */
-.search, .select{
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(15,23,42,.14);
-  color: var(--text);
-}
-.search input{ color: var(--text); }
-.search input::placeholder{ color: rgba(100,116,139,.95); }
-
-/* Tags */
-.tag{
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(15,23,42,.14);
-  color: var(--text);
-}
-.off{
-  background: rgba(220,38,38,.10);
-  border: 1px solid rgba(220,38,38,.22);
-  color: #991b1b;
-}
-.coupon{
-  background: rgba(22,163,74,.10);
-  border: 1px solid rgba(22,163,74,.22);
-  color: #14532d;
-}
-
-/* CTA do produto */
-.ctaTag{
-  background: rgba(245,158,11,.12);
-  border: 1px solid rgba(245,158,11,.28);
-  color: #7c2d12;
-}
-
-/* Preços */
-.priceNow{
-  background: rgba(22,163,74,.12);
-  border: 1px solid rgba(22,163,74,.22);
-  color: #14532d;
-}
-.priceOld{
-  color: rgba(15,23,42,.55);
-}
-
-/* Oferta do minuto (spotlight) */
-.spot{
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(245,158,11,.25);
-}
-.spotImg{
-  background: rgba(15,23,42,.04);
-}
-.spotBadge{
-  background: rgba(220,38,38,.10);
-  border: 1px solid rgba(220,38,38,.22);
-  color: #991b1b;
-}
-.spotCopy{ color: rgba(15,23,42,.85); }
-
-/* Floating WhatsApp */
-.wa{
-  background: linear-gradient(135deg, rgba(22,163,74,.98), rgba(22,163,74,.78));
-  color:#052014;
-}
-
-/* Loading */
-.loading{
-  background: rgba(255,255,255,.92);
-  border: 1px dashed rgba(15,23,42,.18);
-  color: rgba(100,116,139,.95);
-}
-    /* =========================
-   PATCH: textos apagados (tema claro)
-   Cole no FINAL do <style>
-   ========================= */
-
-/* 1) Texto geral em fundo claro */
-:root{
-  --text:#0f172a;       /* texto principal escuro */
-  --muted:#475569;      /* texto secundário mais forte */
-  --border:rgba(15,23,42,.12);
-}
-
-/* 2) Hero: título + destaque verde que ficou apagado */
-.hero h1{ color: var(--text) !important; }
-.hero p{ color: var(--muted) !important; }
-
-/* Corrige esse trecho: "Clique e garanta." (span inline) */
-.hero h1 span{
-  color:#166534 !important;        /* verde escuro */
-  font-weight:1000;
-}
-
-/* 3) Textos pequenos (sub/muted/mini) que estavam claros demais */
-.sub, .muted, .mini, .kpiCard span, .notice p{
-  color: var(--muted) !important;
-}
-
-/* 4) Header sticky (a faixa escura do topo) -> deixa claro e legível */
-header{
-  background: rgba(255,255,255,.92) !important;
-  border-bottom: 1px solid var(--border) !important;
-}
-.status{
-  background: rgba(255,255,255,.92) !important;
-  border: 1px solid var(--border) !important;
-}
-.status b{ color: var(--text) !important; }
-#updatedTime{ color: var(--muted) !important; }
-
-/* 5) KPI cards e notices: reforça contraste do texto */
-.kpiCard b, .notice h3{
-  color: var(--text) !important;
-}
-.kpiCard{
-  background: rgba(255,255,255,.95) !important;
-  border: 1px solid var(--border) !important;
-}
-.notice{
-  background: rgba(255,255,255,.95) !important;
-  border: 1px solid var(--border) !important;
-}
-
-/* 6) Busca / select (placeholder e texto) */
-.search input{ color: var(--text) !important; }
-.search input::placeholder{ color: rgba(71,85,105,.95) !important; }
-.select{ color: var(--text) !important; }
-
-/* 7) Só para garantir: textos em cards */
-.card .title{ color: var(--text) !important; }
-    /* REMOVE o segundo "Achadinhos Oficial" abaixo da faixa amarela */
-header .brand{
-  display:none !important;
-}
-    /* Aumenta a altura (espessura) da faixa amarela */
-.topbar .wrap{
-  padding-top:28px !important;
-  padding-bottom:28px !important;
-}
-    /* Corrige cor do contador de ofertas */
-#countPill{
-  color:#065f46 !important;                 /* verde escuro */
-  background: rgba(34,197,94,.18) !important;
-  border: 1px solid rgba(34,197,94,.35) !important;
-  font-weight:1000;
-}
-    /* FUNDO CONTRASTANTE NA ÁREA DO VÍDEO */
-.videoWrap{
-  background: linear-gradient(
-    135deg,
-    #fff7cc 0%,
-    #fff 55%,
-    #fffaf0 100%
-  ) !important;
-
-  border: 1px solid rgba(0,0,0,.08);
-  box-shadow: 0 10px 24px rgba(0,0,0,.12);
-}
-
-/* Barra superior do vídeo (texto + botão) */
-.videoTop{
-  background: linear-gradient(
-    90deg,
-    #ffd000,
-    #ffedb3
-  ) !important;
-
-  color:#1a1400;
-  border-bottom:1px solid rgba(0,0,0,.12);
-}
-
-/* Texto da área do vídeo */
-.videoTop b,
-.videoTop .mini{
-  color:#1a1400 !important;
-  font-weight:900;
-}
-
-/* Botão "Ativar áudio" */
-.videoTop .btnTiny{
-  background:#111 !important;
-  color:#fff !important;
-  border:none;
-}
-    /* ===============================
-   BOX DO VÍDEO (FUNDO + CONTRASTE)
-   =============================== */
-.videoWrap{
-  background: linear-gradient(
-    180deg,
-    #ffd000 0%,
-    #ffedb3 35%,
-    #ffffff 100%
-  ) !important;
-
-  border: 2px solid #ffd000;
-  box-shadow:
-    0 12px 28px rgba(0,0,0,.18),
-    inset 0 0 0 1px rgba(255,255,255,.6);
-
-  padding: 10px;
-}
-
-/* ===============================
-   FAIXA SUPERIOR DO VÍDEO
-   =============================== */
-.videoTop{
-  background: linear-gradient(
-    90deg,
-    #ffb800,
-    #ffd000
-  ) !important;
-
-  color:#1a1400 !important;
-  border-radius: 10px 10px 0 0;
-  border-bottom: 1px solid rgba(0,0,0,.15);
-}
-
-/* Texto da faixa */
-.videoTop b,
-.videoTop .mini{
-  color:#1a1400 !important;
-  font-weight:900;
-}
-
-/* Botão "Ativar áudio" */
-.videoTop .btnTiny{
-  background:#111 !important;
-  color:#fff !important;
-  border:none;
-  box-shadow: 0 4px 10px rgba(0,0,0,.25);
-}
-
-/* ===============================
-   ÁREA DO VÍDEO (FRAME)
-   =============================== */
-.videoFrame{
-  background:#000;
-  border-radius: 0 0 10px 10px;
-  overflow:hidden;
-  box-shadow: inset 0 0 0 2px rgba(0,0,0,.4);
-}
-    /* ===============================
-   TAGS DE STATUS (ESTOQUE / SUCESSO)
-   =============================== */
-
-/* Estoque limitado / Sucesso de vendas */
-.tag{
-  background: linear-gradient(
-    180deg,
-    #ffd000,
-    #ffb800
-  ) !important;
-
-  border: 1px solid #e6a700 !important;
-  color: #1a1400 !important;
-
-  font-weight: 1000;
-  box-shadow: 0 4px 10px rgba(0,0,0,.15);
-}
-
-/* Ícones dentro da tag */
-.tag span,
-.tag i{
-  color: #1a1400 !important;
-}
-    /* ===============================
-   FORÇA TAGS DE STATUS EM AMARELO
-   (Estoque limitado / Sucesso)
-   =============================== */
-
-/* pega QUALQUER tag que tenha ícone 🔥 ou 🚀 */
-.card .tag{
-  background: linear-gradient(180deg, #ffd000, #ffb800) !important;
-  border: 1px solid #e6a700 !important;
-  color: #1a1400 !important;
-  font-weight: 1000 !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,.18);
-}
-
-/* garante que o texto dentro fique escuro */
-.card .tag,
-.card .tag *{
-  color: #1a1400 !important;
-}
-    /* =========================
-   BOOST CONVERSAO (SEM MEXER NO HTML)
-   Cole NO FINAL do <style>
-   ========================= */
-
-/* Fundo mais "comercial" e menos vazio */
-body{
-  background:
-    radial-gradient(1100px 520px at 15% 0%, rgba(255,208,0,.28), transparent 55%),
-    radial-gradient(900px 520px at 85% 10%, rgba(34,197,94,.18), transparent 55%),
-    linear-gradient(180deg, #f7f8fb, #eef2f7);
-  color:#0b1220;
-}
-
-/* Texto padrão mais escuro (tirar "apagado") */
-:root{
-  --text:#0b1220;
-  --muted:#334155;
-  --border: rgba(15,23,42,.14);
-  --shadow: 0 12px 30px rgba(2,6,23,.10);
-}
-
-/* Header “mais premium” */
-header{
-  background: rgba(255,255,255,.92);
-  border-bottom: 1px solid rgba(15,23,42,.10);
-  box-shadow: 0 8px 20px rgba(2,6,23,.06);
-}
-.brand .sub{ color:#475569; font-weight:800; }
-.status{
-  background: rgba(255,255,255,.88);
-  border:1px solid rgba(15,23,42,.12);
-  color:#334155;
-}
-.status b{ color:#0b1220; }
-.pill{
-  background: rgba(255,208,0,.20);
-  border:1px solid rgba(255,184,0,.35);
-  color:#1a1400;
-}
-
-/* Hero mais memorável + menos “clean demais” */
-.hero{
-  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.70));
-  border:1px solid rgba(15,23,42,.10);
-  box-shadow: 0 16px 40px rgba(2,6,23,.10);
-}
-.hero:before{
-  background:
-    radial-gradient(620px 240px at 18% 0%, rgba(255,208,0,.38), transparent 60%),
-    radial-gradient(520px 260px at 78% 0%, rgba(34,197,94,.22), transparent 55%);
-}
-.hero h1{
-  font-size:26px;
-  letter-spacing:-.4px;
-  color:#0b1220;
-}
-.hero p{ color:#334155; }
-
-/* Botões com mais hierarquia */
-.btn{
-  background: rgba(255,255,255,.92);
-  border:1px solid rgba(15,23,42,.12);
-  box-shadow: 0 10px 20px rgba(2,6,23,.08);
-  color:#0b1220;
-}
-.btnPrimary{
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  color:#052014;
-  box-shadow: 0 14px 28px rgba(34,197,94,.22);
-}
-
-/* Chips mais “promo” */
-.chip{
-  background: rgba(255,255,255,.92);
-  border:1px solid rgba(15,23,42,.12);
-  color:#0b1220;
-  box-shadow: 0 10px 20px rgba(2,6,23,.06);
-}
-.chipOn{
-  background: linear-gradient(135deg, rgba(34,197,94,.22), rgba(255,208,0,.22));
-  border:1px solid rgba(34,197,94,.30);
-}
-    /* Cards com cara de vitrine */
-.card{
-  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.86));
-  border:1px solid rgba(15,23,42,.12);
-  box-shadow: 0 16px 36px rgba(2,6,23,.10);
-  min-height: 440px;
-  transform: translateZ(0);
-}
-.card:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 20px 46px rgba(2,6,23,.14);
-}
-
-/* Imagem com “moldura” e destaque */
-.imgbox{
-  background:
-    radial-gradient(240px 120px at 50% 20%, rgba(255,208,0,.26), transparent 60%),
-    rgba(2,6,23,.03);
-  border-bottom:1px solid rgba(15,23,42,.10);
-  padding:10px;
-}
-.imgbox img{
-  background: #fff;
-  border: 1px solid rgba(15,23,42,.10);
-  box-shadow: 0 10px 22px rgba(2,6,23,.10);
-}
-
-/* Título com mais peso */
-.title{
-  font-size:15px;
-  line-height:1.22;
-  font-weight:1000;
-  color:#0b1220;
-}
-
-/* Preço MUITO mais dominante */
-.priceNow{
-  background: linear-gradient(135deg, rgba(34,197,94,.18), rgba(34,197,94,.10));
-  border:1px solid rgba(34,197,94,.32);
-  color:#0b1220;
-  font-size:20px;
-}
-.priceOld{ color:#64748b; }
-
-/* tags mais legíveis */
-.muted{ color:#475569; }
-
-/* desconto “grita oferta” */
-.tag.off{
-  background: linear-gradient(135deg, rgba(239,68,68,.18), rgba(239,68,68,.10));
-  border:1px solid rgba(239,68,68,.30);
-  color:#7f1d1d;
-}
-
-/* cupom premium */
-.tag.coupon{
-  background: linear-gradient(135deg, rgba(34,197,94,.18), rgba(34,197,94,.10));
-  border:1px solid rgba(34,197,94,.30);
-  color:#052014;
-}
-
-/* CTA (Estoque limitado / Sucesso de vendas) mais “banner de oferta” */
-.ctaTag{
-  background: linear-gradient(180deg, #ffd000, #ffb800) !important;
-  border:1px solid #e6a700 !important;
-  color:#1a1400 !important;
-  box-shadow: 0 10px 20px rgba(255,184,0,.18);
-}
-    /* Urgência: desconto e CTA chamam MUITO mais atenção */
-@keyframes pulsePromo{
-  0%{ transform: scale(1); filter: brightness(1); }
-  50%{ transform: scale(1.02); filter: brightness(1.06); }
-  100%{ transform: scale(1); filter: brightness(1); }
-}
-
-/* Desconto pulsando leve */
-.tag.off{
-  animation: pulsePromo 1.2s ease-in-out infinite;
-}
-
-/* CTA por produto pulsando (bem comercial) */
-.ctaTag{
-  animation: pulsePromo 1.4s ease-in-out infinite;
-}
-    /* Menos “vazio” entre seções */
-.hero-inner{ padding:16px; }
-.controls{ margin-top:10px; }
-.grid{ margin-top:12px; gap:10px; }
-.cardBody{ padding:12px; gap:9px; }
-
-/* Barra social mais com cara de anúncio */
-.notice{
-  background: rgba(255,255,255,.92);
-  border:1px solid rgba(15,23,42,.12);
-  box-shadow: 0 12px 26px rgba(2,6,23,.08);
-}
-.notice p{ color:#0b1220; }
-    /* ===== FIX MOBILE: mostrar copy abaixo do logo ===== */
-@media (max-width: 520px){
-  .toptag{
-    display:block !important;
-    font-size:13px !important;
-    font-weight:900 !important;
-    opacity:1 !important;
-    white-space:normal !important;
-    overflow:visible !important;
-    text-overflow:unset !important;
-    line-height:1.2 !important;
-    max-width:75vw !important;
-    color:#1a1a1a !important;
-  }
-
-  .topbar{
-    padding:16px 14px !important;
-  }
-
-  .toptext{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-  }
-}
-    /* ===============================
-   ECONOMIA / DESCONTO (VITRINE)
-================================ */
-.saveBar{
-  margin: 10px 0 2px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 10px;
-  background: linear-gradient(90deg, rgba(255, 196, 0, .35), rgba(34,197,94,.18));
-  border: 1px solid rgba(255, 196, 0, .45);
-}
-
-.savePct{
-  flex: 0 0 auto;
-  font-weight: 900;
-  font-size: 14px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #ff2d2d;
-  color: #fff;
-  letter-spacing: .5px;
-  box-shadow: 0 10px 20px rgba(255,45,45,.25);
-}
-
-.saveMoney{
-  font-weight: 800;
-  font-size: 13px;
-  color: #0f172a;
-}
-
-.saveMoney b{
-  font-size: 14px;
-}
-    .imgBadge{
-  position:absolute;
-  top:10px;
-  left:10px;
-  z-index:5;
-  background:rgba(0,0,0,.75);
-  padding:8px;
-  border-radius:12px;
-  color:#fff;
-  box-shadow:0 10px 25px rgba(0,0,0,.3);
-}
-
-.imgBadgeOff{
-  font-weight:900;
-  font-size:14px;
-  padding:5px 10px;
-  border-radius:999px;
-  background:linear-gradient(90deg,#ff2d55,#ff9500);
-  margin-bottom:6px;
-  display:inline-block;
-}
-
-.imgBadgeSave{
-  font-size:13px;
-  font-weight:800;
-  color:#fde68a;
-}
-    /* ===== HOTFIX: badge menor e menos invasivo ===== */
-.imgBadge{
-  top:auto !important;
-  left:auto !important;
-  right:10px !important;
-  bottom:10px !important;
-
-  padding:6px 8px !important;
-  border-radius:10px !important;
-  background:rgba(0,0,0,.55) !important;
-  backdrop-filter: blur(4px);
-  max-width: 72% !important;
-}
-
-.imgBadgeOff{
-  font-size:12px !important;
-  padding:3px 7px !important;
-  margin-bottom:4px !important;
-}
-
-.imgBadgeSave{
-  font-size:12px !important;
-  line-height:1.15 !important;
-  white-space:nowrap;
-}
-    /* REMOVER a faixa (linha) que mostra % OFF + "Você economiza..." */
-.saveRow,
-.savingsRow,
-.dealRow,
-.discountRow{
-  display: none !important;
-}
-   /* =========================
-   MOBILE FIX (fica bonito e converte)
-   Cole NO FINAL do <style>
-   ========================= */
-@media (max-width: 620px){
-
-  /* 1) Layout: 1 coluna no mobile (mais limpo e premium) */
-  .grid{
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-
-  /* 2) Topbar: menos alta (muito alta no print) */
-  .topbar .wrap{
-    padding: 14px 14px !important;
-    gap: 10px !important;
-  }
-  .toplogo{ width:50px !important; height:50px !important; border-radius:16px !important; }
-  .topname{ font-size:18px !important; }
-  .toptag{ font-size:13px !important; max-width: 68vw !important; }
-
-  /* 3) “45 ofertas” mais compacto */
-  #countPill{
-    padding: 7px 10px !important;
-    font-size: 12px !important;
-    border-radius: 999px !important;
-  }
-
-  /* 4) Card: menos alto e com respiro certo */
-  .card{
-    min-height: unset !important;
-    border-radius: 18px !important;
-  }
-  .cardBody{
-    padding: 12px !important;
-    gap: 8px !important;
-  }
-
-  /* 5) Imagem: segura e sem ficar “gigante” */
-  .imgbox{
-    aspect-ratio: 16 / 10 !important;
-    padding: 10px !important;
-  }
-  .imgbox img{
-    border-radius: 14px !important;
-  }
-
-  /* 6) Título: 2 linhas e acabou */
-  .title{
-    font-size: 14px !important;
-    line-height: 1.22 !important;
-    min-height: unset !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-
-  /* 7) Preços: mais compactos */
-  .priceNow{
-    font-size: 18px !important;
-    padding: 8px 12px !important;
-  }
-  .priceOld{
-    font-size: 13px !important;
-  }
-
-  /* 8) CTA amarelo (estoque/sucesso) menor */
-  .ctaTag{
-    padding: 7px 10px !important;
-    border-radius: 12px !important;
-    font-size: 12.5px !important;
-    animation: none !important; /* tira pulsar no mobile */
-  }
-
-  /* 9) ECONOMIA: compacta, sem quebrar e sem ficar gigante */
-  .saveBar{
-    padding: 9px 10px !important;
-    border-radius: 14px !important;
-    gap: 8px !important;
-    align-items: center !important;
-  }
-  .savePct{
-    font-size: 12px !important;
-    padding: 4px 8px !important;
-    margin: 0 !important;
-  }
-  .saveMoney{
-    font-size: 12.5px !important;
-    line-height: 1.15 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-  .saveMoney b{
-    font-size: 12.5px !important;
-  }
-
-  /* 10) Tags (frete/cupom/urgência): menores e sem poluir */
-  .tag{
-    font-size: 11.5px !important;
-    padding: 5px 9px !important;
-  }
-
-  /* 11) Botões: 2 por linha (muito melhor no dedo) */
-  .buy{
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
-  }
-  .btnSmall{
-    min-width: 0 !important;
-    width: 100% !important;
-    padding: 12px 12px !important;
-    border-radius: 14px !important;
-    font-size: 13px !important;
-  }
-
-  /* 12) Floating WhatsApp: menor e não tampa tudo */
-  .wa{
-    right: 12px !important;
-    left: 12px !important;
-    bottom: 12px !important;
-    width: calc(100% - 24px) !important;
-    justify-content: center !important;
-    padding: 12px 12px !important;
-    border-radius: 18px !important;
-    gap: 10px !important;
-  }
-  .waIcon{ width:34px !important; height:34px !important; }
-}
-    /* REMOVER descrição de vídeo (título + texto + botão de áudio) */
-.videoTop{
-  display: none !important;
-}
-    /* IMAGEM DESTAQUE – largura total (edge to edge) */
-.videoWrap{
-  max-width: 100% !important;
-  width: 100% !important;
-  padding: 0 !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  margin-left: calc(-50vw + 50%) !important;
-  margin-right: calc(-50vw + 50%) !important;
-}
-
-/* ===== BANNER NO LUGAR DO VÍDEO (SEM QUEBRAR LAYOUT) ===== */
-
-/* mantém tudo normal e só abre a seção do banner */
-.videoWrap{
-  width: 100% !important;
-  max-width: 1100px !important;   /* igual ao seu .wrap */
-  margin: 12px auto 0 !important; /* centraliza */
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 16px !important; /* opcional: deixa bonito */
-  box-shadow: 0 12px 28px rgba(2,6,23,.10) !important; /* opcional */
-  overflow: hidden !important;
-  background: transparent !important;
-}
-
-/* some com "Vídeo" e botão caso ainda exista */
-.videoTop{ display:none !important; }
-
-/* imagem vira banner e ocupa tudo */
-.videoWrap img{
-  width: 100% !important;
-  height: auto !important;
-  display: block !important;
-  object-fit: cover !important;
-}
-    /* ===== GRID MOBILE EM 2 COLUNAS ===== */
-@media (max-width: 640px) {
-  .grid{
-    display:grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap:10px !important;
-  }
-
-  /* Ajustes para caber melhor no mobile */
-  .card{
-    min-height:auto !important;
-  }
-
-  .title{
-    font-size:13px !important;
-    line-height:1.2 !important;
-  }
-
-  .priceNow{
-    font-size:16px !important;
-  }
-
-  .btnSmall{
-    min-width:100% !important;
-    padding:10px !important;
-    font-size:13px !important;
-  }
-}
-    /* ===============================
-   PADRONIZAR ALTURA + BOTÕES
-   =============================== */
-
-/* Grid já em 2 colunas no mobile (reforço seguro) */
-@media (max-width: 640px) {
-  .grid{
-    display:grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap:10px !important;
-  }
-}
-
-/* Card vira coluna flexível */
-.card{
-  display:flex !important;
-  flex-direction:column !important;
-  height:100% !important;
-}
-
-/* Corpo do card cresce igual */
-.cardBody{
-  display:flex !important;
-  flex-direction:column !important;
-  flex:1 !important;
-}
-
-/* TÍTULO com altura fixa (padroniza visual) */
-.card .title{
-  min-height: 40px !important;
-  max-height: 40px !important;
-  overflow:hidden;
-}
-
-/* Área de preços */
-.prices{
-  margin-top:6px;
-}
-
-/* Empurra botões sempre para o final */
-.buy{
-  margin-top:auto !important;
-  display:flex !important;
-  flex-direction:column !important;
-  gap:8px !important;
-}
-
-/* Botões iguais */
-.btnSmall{
-  width:100% !important;
-  min-width:100% !important;
-  padding:11px 10px !important;
-  font-size:13px !important;
-}
-
-/* Ajustes finos no mobile */
-@media (max-width: 640px){
-  .priceNow{
-    font-size:15px !important;
-  }
-
-  .priceOld{
-    font-size:12px !important;
-  }
-
-  .muted{
-    font-size:11px !important;
-  }
-}
-    /* ===== TÍTULO SEM CORTAR FEIO (2 linhas no mobile / 3 no desktop) ===== */
-.card .title{
-  min-height: unset !important;
-  max-height: unset !important;
-
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-
-  /* desktop */
-  -webkit-line-clamp: 3;
-  line-height: 1.25 !important;
-}
-
-/* mobile: só 2 linhas pra não “estourar” o card */
-@media (max-width: 640px){
-  .card .title{
-    -webkit-line-clamp: 2;
-  }
-}
-    /* ===== NÃO CORTAR "Você economiza..." na faixa ===== */
-.saveBar{
-  flex-wrap: wrap !important;     /* permite quebrar */
-  align-items: center !important;
-}
-
-.saveMoney{
-  overflow: visible !important;
-  text-overflow: initial !important;
-  white-space: normal !important; /* permite 2 linhas */
-  line-height: 1.2 !important;
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-}
-
-/* Se o texto estiver MUITO grande, no mobile quebra melhor */
-@media (max-width: 640px){
-  .savePct{ 
-    font-size: 12px !important;
-    padding: 4px 8px !important;
-  }
-  .saveMoney{
-    font-size: 12px !important;
-  }
-}
-    /* 1) some com a faixa de economia (remove a barra inteira) */
-.saveBar{ display:none !important; }
-
-/* 2) garante posição relativa na imagem pra receber o selo */
-.imgbox{ position:relative !important; }
-
-/* 3) selo estilo Shopee (canto da imagem) */
-.mlBadge{
-  position:absolute;
-  right:10px;
-  bottom:10px;
-  z-index:6;
-
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-
-  padding:6px 8px;
-  border-radius:10px;
-
-  background:rgba(0,0,0,.55);
-  backdrop-filter: blur(4px);
-  color:#fff;
-
-  max-width:75%;
-}
-
-.mlBadge .mlOff{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-
-  font-weight:1000;
-  font-size:12px;
-  letter-spacing:.2px;
-
-  padding:3px 8px;
-  border-radius:999px;
-
-  background:linear-gradient(90deg,#ff2d2d,#ff9500);
-  color:#fff;
-}
-
-.mlBadge .mlSave{
-  font-weight:900;
-  font-size:12px;
-  line-height:1.15;
-  color:#fde68a;
-  white-space:nowrap;
-}
-
-/* mobile: ainda mais compacto */
-@media (max-width: 520px){
-  .mlBadge{
-    right:8px;
-    bottom:8px;
-    padding:5px 7px;
-    border-radius:9px;
-    max-width:82%;
-  }
-  .mlBadge .mlOff{ font-size:11px; padding:3px 7px; }
-  .mlBadge .mlSave{ font-size:11px; }
-}
-    /* PATCH: selo menor e menos invasivo (sobrepõe o CSS anterior) */
-.mlBadge{
-  right:8px !important;
-  bottom:8px !important;
-
-  padding:4px 6px !important;
-  border-radius:8px !important;
-
-  background:rgba(0,0,0,.40) !important;
-  max-width:60% !important;
-}
-
-.mlBadge .mlOff{
-  font-size:10px !important;
-  padding:2px 6px !important;
-  border-radius:999px !important;
-}
-
-.mlBadge .mlSave{
-  font-size:10px !important;
-  line-height:1.1 !important;
-  white-space:nowrap !important;
-  color:#ffe9a6 !important;
-}
-
-/* mobile: menor ainda */
-@media (max-width: 520px){
-  .mlBadge{
-    right:6px !important;
-    bottom:6px !important;
-    padding:3px 5px !important;
-    max-width:58% !important;
-  }
-  .mlBadge .mlOff{ font-size:9px !important; padding:2px 5px !important; }
-  .mlBadge .mlSave{ font-size:9px !important; }
-}
-    /* =========================================
-   SELO %OFF – CANTO SUPERIOR ESQUERDO (MINI)
-   ========================================= */
-
-/* garante que a imagem seja referência */
-.imgbox{
-  position:relative;
-}
-
-/* selo */
-.mlBadge{
-  position:absolute;
-  top:6px !important;
-  left:6px !important;
-  right:auto !important;
-  bottom:auto !important;
-
-  padding:0 !important;
-  background:transparent !important;
-  box-shadow:none !important;
-  max-width:none !important;
-}
-
-/* apenas o %OFF */
-.mlBadge .mlOff{
-  display:inline-block;
-  font-size:11px !important;
-  font-weight:900;
-  padding:3px 7px !important;
-  border-radius:6px !important;
-
-  background:linear-gradient(135deg,#ff3b3b,#ff7a18);
-  color:#fff !important;
-
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
-}
-
-/* remove texto de economia da imagem */
-.mlBadge .mlSave{
-  display:none !important;
-}
-
-/* MOBILE – ainda menor */
-@media (max-width:520px){
-  .mlBadge{
-    top:5px !important;
-    left:5px !important;
-  }
-  .mlBadge .mlOff{
-    font-size:10px !important;
-    padding:2px 6px !important;
-  }
-}
-    /* REMOVE botão "Copiar cupom" */
-.btnSmall:last-child{
-  display:none !important;
-}
-    /* REMOVE botão "Entrar no grupo" dos cards */
-.btnGroup{
-  display: none !important;
-}
-    /* ===============================
-   MOSTRAR TEXTO COMPLETO (SEM CORTAR)
-   Cole no FINAL do <style>
-   =============================== */
-
-/* 1) TÍTULO do produto (h2.title) */
-.card .title{
-  min-height: unset !important;
-  height: auto !important;
-  max-height: none !important;
-
-  overflow: visible !important;
-  text-overflow: unset !important;
-  white-space: normal !important;
-
-  display: block !important;
-
-  /* remove truncamento por line-clamp (se existir) */
-  -webkit-line-clamp: unset !important;
-  -webkit-box-orient: unset !important;
-}
-
-/* 2) Se o seu título estiver sendo “clampado” via display:-webkit-box */
-.card .title{
-  display: block !important;
-}
-
-/* 3) CTA (faixa amarela tipo “Estoque limitado”) */
-.card .ctaTag{
-  max-height: none !important;
-  overflow: visible !important;
-  white-space: normal !important;
-}
-
-/* 4) Economia/Desconto (se existir algum texto junto) */
-.card .saveBar,
-.card .saveMoney{
-  max-height: none !important;
-  overflow: visible !important;
-  white-space: normal !important;
-}
-
-/* 5) Garante que nada “corte” o conteúdo por overflow */
-.card,
-.cardBody{
-  overflow: visible !important;
-}
-
-/* 6) Ajuste mobile para caber melhor */
-@media (max-width: 520px){
-  .card .title{
-    font-size: 14px !important;
-    line-height: 1.25 !important;
-  }
-}
-   /* ===============================
-   LIMPEZA GERAL – SOBREPOSIÇÃO
-   =============================== */
-
-/* 1️⃣ Remove botão "Entrar no grupo" do topo */
-.topBar button,
-.topBar .btn,
-.topBar .enterGroup,
-.topBar button[onclick*="openGroup"]{
-  display: none !important;
-}
-
-/* 2️⃣ Remove cards de métricas (ofertas / vendidos hoje) */
-.kpi,
-.kpiCard{
-  display: none !important;
-}
-
-/* 3️⃣ Remove botões da seção
-   "As melhores ofertas do dia" */
-.hero .ctaRow,
-.hero .btn,
-.hero button{
-  display: none !important;
-}
-
-/* 4️⃣ Remove textos dessa seção,
-   mantendo apenas o banner/imagem */
-.hero h1,
-.hero p,
-.hero .heroText{
-  display: none !important;
-}
-
-/* 5️⃣ Garante que o banner continue visível */
-.hero img,
-.hero .banner,
-.hero .heroImage{
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  height: auto !important;
-}
-
-/* 6️⃣ Ajuste para não sobrar espaços vazios */
-.hero{
-  padding: 0 !important;
-  margin: 0 !important;
-}
-/* ============================
-   REMOVER "ENTRAR NO GRUPO" DO TOPO (APENAS)
-   ============================ */
-
-/* botão que fica dentro da barra superior */
-.topbar .btn,
-.topbar button,
-.topbar a{
-  display: none !important;
-}
-
-/* segurança extra: remove só o bloco do topo */
-.topbar{
-  padding-bottom: 0 !important;
-}
-   /* ============================
-   REMOVER ESPAÇO ENTRE TOPO E BANNER
-   ============================ */
-
-/* Remove margem do primeiro bloco após a topbar */
-.topbar + *{
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-/* Caso o banner esteja dentro de .hero */
-.hero{
-  margin-top: 6px !important;
-}
-
-/* Se houver container geral */
-.wrap{
-  padding-top: 8px !important;
-}
-
-/* Mobile: ainda mais justo */
-@media (max-width: 520px){
-  .hero{
-    margin-top: 4px !important;
-  }
-
-  .wrap{
-    padding-top: 6px !important;
-  }
-}
-    /* ===============================
-   COLAR BANNER NA FAIXA AMARELA
-   =============================== */
-
-/* 1. Zera qualquer espaçamento geral após a topbar */
-.topbar{
-  margin-bottom: 0 !important;
-  padding-bottom: 8px !important; /* mantém respiração mínima */
-}
-
-/* 2. QUALQUER elemento logo após a topbar */
-.topbar + *{
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-/* 3. Hero / banner principal */
-.hero,
-.banner,
-.videoWrap{
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-/* 4. Container geral */
-.wrap{
-  padding-top: 4px !important;
-}
-
-/* 5. Caso o banner esteja dentro de grid */
-.grid,
-.controls,
-.kpi{
-  margin-top: 0 !important;
-}
-
-/* ===============================
-   MOBILE – COLAR DE VEZ
-   =============================== */
-@media (max-width: 520px){
-
-  .topbar{
-    padding-bottom: 6px !important;
-  }
-
-  .wrap{
-    padding-top: 2px !important;
-  }
-
-  .hero,
-  .banner,
-  .videoWrap{
-    margin-top: -6px !important; /* 🔥 cola de verdade */
-  }
-}
-    /* =========================================
-   ZERAR ESPAÇO ENTRE FAIXA AMARELA E BANNER
-   (VERSÃO AGRESSIVA)
-   Cole NO FINAL do <style>
-   ========================================= */
-
-/* 1) Encolhe a faixa amarela (altura) */
-.topbar .wrap{
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
-}
-
-/* 2) Remove qualquer margem/padding logo após a topbar */
-.topbar{ margin-bottom:0 !important; padding-bottom:0 !important; }
-.topbar + *{ margin-top:0 !important; padding-top:0 !important; }
-
-/* 3) Se existir header sticky abaixo, mata o espaço dele */
-header{
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-}
-
-/* 4) Remove “respiro” padrão do container */
-.wrap{
-  padding-top: 0 !important;
-}
-
-/* 5) Cola o banner/hero no topo */
-.hero, .banner, .videoWrap{
-  margin-top: 0 !important;
-}
-
-/* 6) Se tiver um “spacer” fantasma com height/min-height */
-.spacer, .gap, .sep, .divider{
-  display:none !important;
-  height:0 !important;
-  margin:0 !important;
-  padding:0 !important;
-}
-
-/* 7) MOBILE: cola de verdade (sem sobrar branco) */
-@media (max-width: 520px){
-  .topbar .wrap{
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-  }
-
-  /* puxa o conteúdo pra cima (compensa qualquer bloco invisível) */
-  .topbar + *{
-    margin-top: -16px !important;
-  }
-
-  .hero, .banner, .videoWrap{
-    margin-top: -12px !important;
-  }
-}
   </style>
 </head>
 
 <body>
-
-<div class="topbar">
-  <div class="wrap">
-    <div class="topbrand">
-      <div class="toplogo" aria-hidden="true">
-        <img src="logo.png" alt="Logo Achadinhos" onerror="this.style.display='none'">
-      </div>
-    <div class="toptext">
-  <div class="topname">Achadinhos Oficial</div>
-  <div class="toptag">🚚 Tudo com frete grátis • até <b>70% OFF</b> — aproveite antes que acabe</div>
-</div>
-</div>
-      </div>
-    </div>
-
-    <div class="topright" onclick="openGroup()" title="Abrir grupo do WhatsApp">
-      🟢 Entrar no grupo
-    </div>
-  </div>
-</div>
-
 <header>
-  <div class="wrap">
-    <div class="headbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <div>Achadinhos <span style="color:#bbf7d0">Oficial</span></div>
-          <div class="sub">Ofertas atualizadas direto da planilha</div>
-        </div>
+  <div class="wrap top">
+    <div class="brand">
+      <h1>🔥 Achadinhos do Dia</h1>
+      <p>Ofertas do Mercado Livre que realmente valem a pena</p>
+    </div>
+
+    <div class="top-actions">
+      <div class="pill">🔎 <input id="q" placeholder="Buscar produto..."></div>
+
+      <div class="pill">🧩
+        <select id="filtro">
+          <option value="all">Todas (página completa)</option>
+          <option value="achadinhos">⚡ Achadinhos do Dia</option>
+          <option value="ate99">💸 Até R$ 99,00</option>
+          <option value="mais_pedidos">🛒 Mais pedidos</option>
+          <option value="relampago">⚡ Oferta relâmpago</option>
+        </select>
       </div>
 
-      <div class="status" title="Atualização automática">
-        <span class="dot" id="statusDot"></span>
-        <span id="updatedLabel"><b>Carregando</b></span>
-        <span id="updatedTime" class="mini" data-mode="checking">Verificando…</span>
-      </div>
-
-      <div class="pill" id="countPill">0 ofertas</div>
+      <a href="#ofertas" class="cta">⚡ Ver ofertas</a>
     </div>
   </div>
 </header>
 
 <main class="wrap">
-
-  <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <h1>As melhores ofertas do dia — sem enrolação. <span style="color:#bbf7d0">Clique e garanta.</span></h1>
-
-        <div class="ctaRow">
-          <button class="btn btnPrimary" onclick="scrollToOffers()">🎁 Ver ofertas agora</button>
-          <button class="btn" onclick="forceReload()">🔄 Atualizar agora</button>
-          <button class="btn" onclick="openGroup()">🟢 Entrar no grupo</button>
-        </div>
-
-        <div class="videoWrap" id="videoWrap">
-          <div class="videoTop">
-            <div>
-              <b>🎥 Vídeo</b>
-              <div class="mini">No celular, autoplay com áudio é bloqueado. Use “Ativar áudio”.</div>
-            </div>
-            <button class="btnTiny" onclick="enableVideoAudio()">🔊 Ativar áudio</button>
-          </div>
-          <div class="videoFrame">
-  <img
-    src="banner.jpeg"
-    alt="Ofertas em destaque"
-    style="width:100%;height:auto;display:block;border-radius:10px;"
-    loading="eager"
-  />
-</div>
-        </div>
-      </div>
-
-      <div class="kpi">
-        <div class="kpiCard">
-          <b id="kpi1">0</b>
-          <span>ofertas disponíveis</span>
-        </div>
-        <div class="kpiCard">
-          <b id="kpi2">0</b>
-          <span>vendidos hoje (estimativa)</span>
-        </div>
-      </div>
-    </div>
+  <section id="ofertas" class="section" data-sec="achadinhos">
+    <h2>⚡ Achadinhos do Dia</h2>
+    <div class="sub">Ordenado por “sold” (mais pedidos primeiro)</div>
+    <div id="status" class="state">Carregando ofertas da planilha…</div>
+    <div id="sec-achadinhos" class="grid"></div>
   </section>
 
-  <!-- OFERTA DO MINUTO -->
-  <section id="spotlight" class="spot" style="display:none" aria-live="polite">
-    <div class="spotImg">
-      <img id="spotImg" src="" alt="Oferta do minuto" referrerpolicy="no-referrer">
-    </div>
-    <div class="spotBody">
-      <div class="spotTop">
-        <div class="spotBadge">🚨 OFERTA DO MINUTO</div>
-        <div class="muted" id="spotMeta">pode acabar a qualquer momento</div>
-      </div>
-
-      <h2 class="spotTitle" id="spotTitle">—</h2>
-
-      <div class="spotPrices">
-        <div class="priceNow" id="spotNow">—</div>
-        <div class="priceOld" id="spotOld" style="display:none">—</div>
-      </div>
-
-      <div class="spotCopy" id="spotCopy">
-        🔥 Oferta rotativa: Se gostou, aproveite agora — pode acabar a qualquer momento.
-      </div>
-
-      <div class="spotBtns">
-        <button class="btnSmall btnBuy" onclick="spotOpen()">Ver oferta</button>
-        <button class="btnSmall btnGroup" onclick="openGroup()">Entrar no grupo</button>
-        <button class="btnSmall btnShare" onclick="spotShare()">Compartilhar</button>
-      </div>
-    </div>
+  <section class="section" data-sec="ate99">
+    <h2>💸 Até R$ 99,00</h2>
+    <div class="sub">Preço baixo converte mais</div>
+    <div id="sec-ate99" class="grid"></div>
   </section>
 
-  <section class="controls">
-    <div class="search">
-      🔎 <input id="q" type="text" placeholder="Buscar produto (ex: tênis, perfume, mesa...)" />
-    </div>
-
-    <select class="select" id="sort">
-      <option value="best">Ordenar: destaque</option>
-      <option value="priceAsc">Menor preço</option>
-      <option value="priceDesc">Maior preço</option>
-      <option value="discountDesc">Maior desconto</option>
-      <option value="soldDesc">Mais vendidos</option>
-      <option value="ratingDesc">Melhor avaliação</option>
-    </select>
+  <section class="section" data-sec="mais_pedidos">
+    <h2>🛒 Mais pedidos</h2>
+    <div class="sub">Selecionados por “sold” alto</div>
+    <div id="sec-mais_pedidos" class="grid"></div>
   </section>
 
-  <section class="chips">
-    <div class="chip" id="chipCoupon" onclick="toggleChip('coupon')">🧾 Com cupom</div>
-    <div class="chip" id="chipDiscount" onclick="toggleChip('discount')">🔥 Maior desconto</div>
+  <section class="section" data-sec="relampago">
+    <h2>⚡ Oferta relâmpago</h2>
+    <div class="sub">Maior desconto primeiro</div>
+    <div id="sec-relampago" class="grid"></div>
   </section>
-
-  <section class="bar">
-    <div class="notice">
-      <div class="badge">✅</div>
-      <div>
-        <p id="socialProof">✅ +1.200 pessoas já entraram no grupo • 🔥 27 ofertas postadas hoje</p>
-      </div>
-    </div>
-
-    <div class="notice">
-      <div class="badge">🔥</div>
-      <div>
-        <p id="urgencyText">🔥 As melhores ofertas somem primeiro. Se gostou, clique e garanta AGORA — pode acabar a qualquer momento.</p>
-      </div>
-    </div>
-  </section>
-
-  <div id="loading" class="loading">Carregando ofertas da planilha…</div>
-
-  <section id="offers" class="grid" aria-live="polite"></section>
-
-  <footer>
-    <b>🔒 Compra com mais segurança</b>
-    <ul>
-      <li>Este site divulga ofertas encontradas em marketplaces e grupos parceiros.</li>
-      <li><b>Não somos uma loja oficial do Mercado Livre</b> e não representamos a marca.</li>
-      <li>Preços e disponibilidade podem mudar a qualquer momento no site do vendedor.</li>
-      <li>Se algum item não abrir, atualize a página e tente novamente.</li>
-    </ul>
-  </footer>
-
 </main>
 
-<button class="wa" onclick="openGroup()" aria-label="Entrar no grupo do WhatsApp">
-  <div class="waIcon">🟢</div>
-  <div>
-    <span>Entrar no grupo</span>
-    <small>Receber links e cupons</small>
-  </div>
-</button>
-<script defer>
-  // =========================
-  // CONFIG
-  // =========================
-  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
-  const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/GdvrM4Ct4Q6CA6Tf0DRyov";
-  const VIDEO_URL = "video.mp4";
+<footer>
+  Não somos loja oficial. Apenas indicamos ofertas do Mercado Livre.
+</footer>
 
-  const REFRESH_MS = 20 * 1000;   // 20s
-  const SPOT_ROTATE_MS = 25 * 1000; // 25s
+<script>
+/* ✅ LINK DA SUA PLANILHA (CSV publicado) */
+const SHEET_CSV_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQYh-FJUhtB7MT80tKHccZi-z1hTKUOwDqg-tQSR_YPiDOQv-mKmSjTyAtZzmhq8YEchYOjqcVZhJv3/pub?output=csv";
 
-  const DEFAULT_GROUP_COUNT = 1200;
-  const DEFAULT_POSTS_TODAY = 27;
+const $ = id => document.getElementById(id);
+let ALL = [];
 
-  // Escassez por expiração
-  const URGENCY_SOON_HOURS = 6;
-  const URGENCY_TODAY_HOURS = 24;
+/* =========================
+   Utils
+========================= */
+function setStatus(msg, isError=false){
+  const el = $("status");
+  if(!el) return;
+  el.className = "state" + (isError ? " error" : "");
+  el.textContent = msg;
+}
 
-  // =========================
-  // STATE
-  // =========================
-  let ALL_ITEMS = [];
-  let FILTER_COUPON_ONLY = false;
-  let FILTER_TOP_DISCOUNT = false;
+function safeText(s){
+  return String(s||"").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
 
-  let SPOT_ITEM = null;
-  let SPOT_TOP_LIST = [];
-  let SPOT_INDEX = 0;
+function formatBRL(n){
+  try { return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+  catch { return "R$ " + n; }
+}
 
-  let SPOT_TIMER = null;       // timer do spotlight
-  let SHEET_TIMER = null;      // timer do refresh da planilha
-  let LAST_SPOT_TICK = 0;
+function parseBRL(v){
+  if(!v) return NaN;
+  const s = String(v).trim()
+    .replace(/\./g,'')
+    .replace(',', '.')
+    .replace(/[^\d.]/g,'');
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
 
-  // =========================
-  // HELPERS
-  // =========================
-  function nowHHMMSS(){
-    const d = new Date();
-    const hh = String(d.getHours()).padStart(2,'0');
-    const mm = String(d.getMinutes()).padStart(2,'0');
-    const ss = String(d.getSeconds()).padStart(2,'0');
-    return `${hh}:${mm}:${ss}`;
-  }
+function parseDiscountPercent(v){
+  if(!v) return 0;
+  const s = String(v).toUpperCase();
+  const m = s.match(/(\d{1,3})\s*%/);
+  if(!m) return 0;
+  const n = Number(m[1]);
+  if(!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(95, n)); // trava
+}
 
-  function moneyBRLFromNumber(n){
-    if (!isFinite(n)) return "";
-    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
-  }
+function calcFinalPrice(fullPrice, discountPct){
+  if(!Number.isFinite(fullPrice)) return NaN;
+  if(!(discountPct > 0 && discountPct < 95)) return fullPrice; // sem desconto válido, final = cheio
+  const final = fullPrice * (1 - (discountPct/100));
+  return Math.round(final * 100) / 100;
+}
 
-  function toNumber(str){
-    if (str == null) return NaN;
-    const s = String(str).trim()
-      .replace(/\s/g,'')
-      .replace(/\./g,'')
-      .replace(',', '.')
-      .replace(/[^\d.-]/g,'');
-    const n = Number(s);
-    return isFinite(n) ? n : NaN;
-  }
+function soldToNumber(v){
+  if(!v) return 0;
+  const s = String(v).trim().toUpperCase();
+  const base = s.replace(/\./g,'').replace(',','.');
+  const num = parseFloat(base.replace(/[^\d.]/g,''));
+  if(!Number.isFinite(num)) return 0;
+  if(s.includes("MIL")) return Math.round(num * 1000);
+  return Math.round(num);
+}
 
-  function safeText(x){
-    return (x ?? "").toString().replace(/\s+/g,' ').trim();
-  }
+/* =========================
+   CSV parsing
+========================= */
+function parseCSV(text){
+  const rows = [];
+  let cur = [], val = "", inQuotes = false;
 
-  function escapeHtml(s){
-    return (s ?? "").toString()
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;");
-  }
+  for (let i = 0; i < text.length; i++){
+    const c = text[i];
+    const next = text[i+1];
 
-  function scrollToOffers(){
-    document.getElementById("offers")?.scrollIntoView({behavior:"smooth", block:"start"});
-  }
+    if (c === '"' && inQuotes && next === '"'){ val += '"'; i++; continue; }
+    if (c === '"'){ inQuotes = !inQuotes; continue; }
 
-  function openGroup(){
-    window.open(WHATSAPP_GROUP_LINK, "_blank");
-  }
+    if (c === ',' && !inQuotes){ cur.push(val); val = ""; continue; }
 
-  // =========================
-  // DATA / EXPIRES / CREATED_AT
-  // =========================
-  function parseDateFlex(s, defaultHour, defaultMinute){
-    const raw = safeText(s);
-    if(!raw) return null;
-
-    let m = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
-    if(m){
-      const Y = Number(m[1]);
-      const Mo = Number(m[2]) - 1;
-      const D = Number(m[3]);
-      const hh = m[4] != null ? Number(m[4]) : defaultHour;
-      const mm = m[5] != null ? Number(m[5]) : defaultMinute;
-      const ss = m[6] != null ? Number(m[6]) : 0;
-      const dt = new Date(Y, Mo, D, hh, mm, ss);
-      return isNaN(dt.getTime()) ? null : dt;
+    if ((c === '\n' || c === '\r') && !inQuotes){
+      if (val.length || cur.length){ cur.push(val); rows.push(cur); }
+      cur = []; val = "";
+      continue;
     }
+    val += c;
+  }
+  if (val.length || cur.length){ cur.push(val); rows.push(cur); }
+  return rows;
+}
 
-    m = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
-    if(m){
-      const D = Number(m[1]);
-      const Mo = Number(m[2]) - 1;
-      const Y = Number(m[3]);
-      const hh = m[4] != null ? Number(m[4]) : defaultHour;
-      const mm = m[5] != null ? Number(m[5]) : defaultMinute;
-      const ss = m[6] != null ? Number(m[6]) : 0;
-      const dt = new Date(Y, Mo, D, hh, mm, ss);
-      return isNaN(dt.getTime()) ? null : dt;
+function normKey(k){
+  return String(k||"").trim().toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "_");
+}
+
+function mapHeaders(headers){
+  const idx = {};
+  headers.forEach((h,i)=> idx[normKey(h)] = i);
+
+  const pick = (...names) => {
+    for (const n of names){
+      const key = normKey(n);
+      if (key in idx) return idx[key];
     }
+    return -1;
+  };
 
-    return null;
+  // ✅ seu padrão: image | title | price | discount | coupon | sold | rating | link
+  return {
+    image: pick("image","imagem","img","foto"),
+    title: pick("title","titulo","título","nome","produto"),
+    price: pick("price","preco","preço","valor"),          // ✅ preço cheio
+    discount: pick("discount","desconto","off"),           // ✅ % desconto
+    coupon: pick("coupon","cupom"),
+    sold: pick("sold","vendidos","vendas"),
+    rating: pick("rating","avaliacao","avaliação","nota"),
+    link: pick("link","url","link_afiliado","url_afiliado")
+  };
+}
+
+/* =========================
+   Rendering helpers
+========================= */
+function dedupeByLink(list){
+  const seen = new Set();
+  const out = [];
+  for(const p of list){
+    const k = (p.link||"").trim();
+    if(!k) continue;
+    if(seen.has(k)) continue;
+    seen.add(k);
+    out.push(p);
   }
+  return out;
+}
 
-  function parseExpires(s){ return parseDateFlex(s, 23, 59); }
-  function parseCreatedAt(s){ return parseDateFlex(s, 0, 0); }
-
-  function isExpired(expiresText){
-    const dt = parseExpires(expiresText);
-    if(!dt) return false;
-    return dt.getTime() < Date.now();
+function takeUnique(arr, n, used){
+  const out = [];
+  for(const p of arr){
+    const k = (p.link||"").trim();
+    if(!k || used.has(k)) continue;
+    used.add(k);
+    out.push(p);
+    if(out.length >= n) break;
   }
-
-  function diffToHuman(expiresText){
-    const dt = parseExpires(expiresText);
-    if(!dt) return "";
-
-    const ms = dt.getTime() - Date.now();
-    if(ms <= 0) return "⚠️ expirada";
-
-    const minutes = Math.floor(ms / 60000);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if(hours < 1) return `⏰ expira em ${Math.max(1, minutes)} min`;
-    if(hours < URGENCY_SOON_HOURS) return `⏰ expira em ${hours}h`;
-    if(hours < URGENCY_TODAY_HOURS) return `⚠️ expira hoje`;
-    if(days === 1) return `📅 expira amanhã`;
-    return `📅 expira em ${days} dias`;
-  }
-
-  // =========================
-  // BADGE AUTO
-  // =========================
-  function pickAutoBadge(title, link){
-    const hay = (`${safeText(title)} ${safeText(link)}`).toLowerCase();
-    if(hay.includes("full")) return "FULL";
-    if(hay.includes("prime")) return "Prime";
-    if(hay.includes("frete grátis") || hay.includes("frete gratis") || hay.includes("fretegratis") || hay.includes("free shipping")) return "Frete Grátis";
-    if(hay.includes("relâmpago") || hay.includes("relampago") || hay.includes("lightning") || hay.includes("flash")) return "Relâmpago";
-    if(hay.includes("cupom") || hay.includes("coupon")) return "Cupom";
-    if(hay.includes("promo") || hay.includes("oferta") || hay.includes("desconto")) return "Promo";
-    return "";
-  }
-
-  // =========================
-  // STATUS
-  // =========================
-  function setStatus(mode, text){
-    const dot = document.getElementById("statusDot");
-    const label = document.getElementById("updatedLabel");
-    const time = document.getElementById("updatedTime");
-    if(!dot || !label || !time) return;
-
-    if (mode === "ok"){
-      dot.style.background = "var(--brand)";
-      dot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.12)";
-      label.innerHTML = "<b>Atualizado</b>";
-      time.dataset.mode = "updated";
-      time.textContent = text;
-    } else if (mode === "loading"){
-      dot.style.background = "var(--accent)";
-      dot.style.boxShadow = "0 0 0 4px rgba(245,158,11,.12)";
-      label.innerHTML = "<b>Carregando</b>";
-      time.dataset.mode = "checking";
-      time.textContent = text;
-    } else {
-      dot.style.background = "var(--danger)";
-      dot.style.boxShadow = "0 0 0 4px rgba(239,68,68,.12)";
-      label.innerHTML = "<b>Falha</b>";
-      time.dataset.mode = "checking";
-      time.textContent = text;
-    }
-  }
-
-  function startLiveClock(){
-    const timeEl = document.getElementById("updatedTime");
-    if(!timeEl) return;
-    setInterval(() => {
-      if(timeEl.dataset.mode !== "updated"){
-        timeEl.textContent = `Verificando: ${nowHHMMSS()}`;
-      }
-    }, 1000);
-  }
-
-  function parseCSV(text){
-    const rows = [];
-    let row = [];
-    let cur = "";
-    let inQuotes = false;
-
-    for(let i=0;i<text.length;i++){
-      const ch = text[i];
-      const next = text[i+1];
-      if(ch === '"' && inQuotes && next === '"'){ cur += '"'; i++; continue; }
-      if(ch === '"'){ inQuotes = !inQuotes; continue; }
-      if(ch === ',' && !inQuotes){ row.push(cur); cur = ""; continue; }
-      if((ch === '\n' || ch === '\r') && !inQuotes){
-        if(ch === '\r' && next === '\n'){ i++; }
-        row.push(cur); cur = "";
-        if(row.length > 1 || row[0].trim() !== "") rows.push(row);
-        row = [];
-        continue;
-      }
-      cur += ch;
-    }
-    row.push(cur);
-    if(row.length > 1 || row[0].trim() !== "") rows.push(row);
-    return rows;
-  }
-
-  // =========================
-  // VIDEO
-  // =========================
-  function setupVideo(){
-    const vid = document.getElementById("promoVideo");
-    if(!vid) return;
-    vid.src = VIDEO_URL;
-    vid.muted = true;
-    vid.playsInline = true;
-    vid.autoplay = true;
-    vid.play().catch(()=>{});
-  }
-
-  function enableVideoAudio(){
-    const vid = document.getElementById("promoVideo");
-    if(!vid) return;
-    vid.muted = false;
-    vid.volume = 1;
-    vid.play().catch(()=>{});
-  }
-
-  // =========================
-  // CHIPS
-  // =========================
-  function toggleChip(which){
-    if(which === "coupon"){
-      FILTER_COUPON_ONLY = !FILTER_COUPON_ONLY;
-      document.getElementById("chipCoupon")?.classList.toggle("chipOn", FILTER_COUPON_ONLY);
-    }
-    if(which === "discount"){
-      FILTER_TOP_DISCOUNT = !FILTER_TOP_DISCOUNT;
-      document.getElementById("chipDiscount")?.classList.toggle("chipOn", FILTER_TOP_DISCOUNT);
-    }
-    render();
-  }
-
-  // =========================
-  // SORT / FILTER
-  // =========================
-  function forceReload(){ loadSheet(true); }
-
-  function getQuery(){
-    return safeText(document.getElementById("q")?.value).toLowerCase();
-  }
-
-  function getSort(){
-    return document.getElementById("sort")?.value || "best";
-  }
-
-  function filterItems(items){
-    const q = getQuery();
-    let out = items;
-
-    if(q){
-      out = out.filter(it => (`${it.title} ${it.coupon||""} ${it.badge||""} ${it.cta||""}`.toLowerCase()).includes(q));
-    }
-    if(FILTER_COUPON_ONLY){
-      out = out.filter(it => !!safeText(it.coupon));
-    }
-    if(FILTER_TOP_DISCOUNT){
-      const sorted = [...out].sort((a,b)=>(b.discountNum||0)-(a.discountNum||0));
-      const keep = Math.max(10, Math.ceil(sorted.length * 0.20));
-      out = sorted.slice(0, keep);
-    }
-    return out;
-  }
-
-  function compareNewest(a, b){
-    const ca = (a.createdAtMs && a.createdAtMs > 0) ? a.createdAtMs : 0;
-    const cb = (b.createdAtMs && b.createdAtMs > 0) ? b.createdAtMs : 0;
-    if(cb !== ca) return cb - ca;
-    const ra = (a.rowIndex ?? 0);
-    const rb = (b.rowIndex ?? 0);
-    return rb - ra;
-  }
-
-  function sortItems(items, mode){
-    const a = [...items];
-
-    if(mode === "priceAsc"){
-      a.sort((x,y)=>{
-        const r = (x.finalPriceNum||Infinity) - (y.finalPriceNum||Infinity);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else if(mode === "priceDesc"){
-      a.sort((x,y)=>{
-        const r = (y.finalPriceNum||-Infinity) - (x.finalPriceNum||-Infinity);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else if(mode === "discountDesc"){
-      a.sort((x,y)=>{
-        const r = (y.discountNum||0) - (x.discountNum||0);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else if(mode === "soldDesc"){
-      a.sort((x,y)=>{
-        const r = (y.soldNum||0) - (x.soldNum||0);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else if(mode === "ratingDesc"){
-      a.sort((x,y)=>{
-        const r = (y.ratingNum||0) - (x.ratingNum||0);
-        return r !== 0 ? r : compareNewest(x,y);
-      });
-    } else {
-      // "destaque": últimas em cima
-      a.sort((x,y)=>{
-        const newest = compareNewest(x,y);
-        if(newest !== 0) return newest;
-
-        const sx = (x.soldNum||0)*2 + (x.discountNum||0)*1.2 + (x.ratingNum||0)*10;
-        const sy = (y.soldNum||0)*2 + (y.discountNum||0)*1.2 + (y.ratingNum||0)*10;
-        const r = sy - sx;
-        return r !== 0 ? r : 0;
-      });
-    }
-    return a;
-  }
-
-  function openOffer(it){
-    const u = safeText(it.link);
-    window.open(u || WHATSAPP_GROUP_LINK, "_blank");
-  }
-
-  async function shareOffer(it){
-    const title = safeText(it.title) || "Oferta";
-    const url = safeText(it.link) || WHATSAPP_GROUP_LINK;
-    const text = `🔥 OFERTA: ${title}\n👉 Link: ${url}\n\nEntre no grupo: ${WHATSAPP_GROUP_LINK}`;
-    try{
-      if(navigator.share){
-        await navigator.share({ title: "Achadinhos Oficial", text, url });
-        return;
-      }
-    }catch(_){}
-    try{
-      await navigator.clipboard.writeText(text);
-      alert("Copiado! Agora é só colar no WhatsApp/Instagram.");
-    }catch{
-      prompt("Copie e compartilhe:", text);
-    }
-  }
-
-  async function copyCouponAndOpenWhatsApp(it){
-    const c = safeText(it.coupon);
-    const title = safeText(it.title) || "Oferta";
-    if(!c){ alert("Este item não tem cupom."); return; }
-
-    const msg =
-`🔥 CUPOM + OFERTA
-Produto: ${title}
-Cupom: ${c}
-
-👉 Quero o link dessa oferta (se tiver) e instruções pra usar o cupom.
-Grupo: ${WHATSAPP_GROUP_LINK}`;
-
-    try{ await navigator.clipboard.writeText(c); }catch(_){}
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
-  }
-
-  // =========================
-  // ✅ OFERTA DO MINUTO (ROTACAO CORRIGIDA)
-  // =========================
-  function buildSpotTopList(items){
-    if(!items.length) return [];
-    const scored = [...items].sort((a,b)=>{
-      const sa = (a.discountNum||0)*1.3 + (a.ratingNum||0)*10 + (a.soldNum||0)*0.02;
-      const sb = (b.discountNum||0)*1.3 + (b.ratingNum||0)*10 + (b.soldNum||0)*0.02;
-      return sb - sa;
-    });
-    return scored.slice(0, Math.min(12, scored.length));
-  }
-
-  function setSpotItem(it){
-    SPOT_ITEM = it || null;
-    renderSpotlight();
-  }
-
-  function renderSpotlight(){
-    const box = document.getElementById("spotlight");
-    if(!box) return;
-
-    if(!SPOT_ITEM){
-      box.style.display = "none";
-      return;
-    }
-
-    document.getElementById("spotImg").src = SPOT_ITEM.image || "";
-    document.getElementById("spotTitle").textContent = SPOT_ITEM.title || "Oferta";
-    document.getElementById("spotNow").textContent = SPOT_ITEM.finalPriceText || "—";
-
-    const old = document.getElementById("spotOld");
-    if(old){
-      if(SPOT_ITEM.originalPriceText && SPOT_ITEM.originalPriceText !== SPOT_ITEM.finalPriceText){
-        old.style.display = "block";
-        old.textContent = SPOT_ITEM.originalPriceText;
-      } else {
-        old.style.display = "none";
-      }
-    }
-
-    const metaBits = [];
-    if(SPOT_ITEM.badge) metaBits.push(`🏷️ ${SPOT_ITEM.badge}`);
-    if(SPOT_ITEM.urgency) metaBits.push(`${SPOT_ITEM.urgency}`);
-    if(SPOT_ITEM.discount) metaBits.push(`🔥 ${SPOT_ITEM.discount}`);
-    if(SPOT_ITEM.rating) metaBits.push(`⭐ ${SPOT_ITEM.rating}`);
-    if(SPOT_ITEM.sold) metaBits.push(`✅ ${SPOT_ITEM.sold} vendidos`);
-
-    // ✅ mostra economia também no spotlight (se existir)
-    if(SPOT_ITEM.saveText) metaBits.push(`💰 economize ${SPOT_ITEM.saveText}`);
-
-    document.getElementById("spotMeta").textContent = metaBits.length ? metaBits.join(" • ") : "pode acabar a qualquer momento";
-
-    box.style.display = "grid";
-  }
-
-  function spotNext(){
-    if(!SPOT_TOP_LIST.length){
-      setSpotItem(null);
-      return;
-    }
-    SPOT_INDEX = (SPOT_INDEX + 1) % SPOT_TOP_LIST.length;
-    setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
-    LAST_SPOT_TICK = Date.now();
-  }
-
-  function startSpotRotation(){
-    if(SPOT_TIMER) return;
-
-    if(!SPOT_TOP_LIST.length){
-      setSpotItem(null);
-      return;
-    }
-
-    if(!SPOT_ITEM){
-      SPOT_INDEX = 0;
-      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
-      LAST_SPOT_TICK = Date.now();
-    }
-
-    SPOT_TIMER = setInterval(() => {
-      spotNext();
-    }, SPOT_ROTATE_MS);
-  }
-
-  function updateSpotListFromSheet(){
-    const newList = buildSpotTopList(ALL_ITEMS);
-
-    if(!newList.length){
-      SPOT_TOP_LIST = [];
-      SPOT_INDEX = 0;
-      setSpotItem(null);
-      return;
-    }
-
-    const currentKey = SPOT_ITEM ? `${SPOT_ITEM.title}||${SPOT_ITEM.image}||${SPOT_ITEM.finalPriceText}` : "";
-    SPOT_TOP_LIST = newList;
-
-    let keepIndex = -1;
-    if(currentKey){
-      keepIndex = SPOT_TOP_LIST.findIndex(x => `${x.title}||${x.image}||${x.finalPriceText}` === currentKey);
-    }
-
-    if(keepIndex >= 0){
-      SPOT_INDEX = keepIndex;
-      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
-    } else {
-      SPOT_INDEX = 0;
-      setSpotItem(SPOT_TOP_LIST[SPOT_INDEX]);
-      LAST_SPOT_TICK = Date.now();
-    }
-  }
-
-  function spotOpen(){
-    if(!SPOT_ITEM) return;
-    openOffer(SPOT_ITEM);
-  }
-
-  function spotShare(){
-    if(!SPOT_ITEM) return;
-    shareOffer(SPOT_ITEM);
-  }
-
-  // =========================
-  // MAIN RENDER
-  // =========================
-  function render(){
-    const grid = document.getElementById("offers");
-    const loading = document.getElementById("loading");
-    if(!grid || !loading) return;
-
-    const filtered = filterItems(ALL_ITEMS);
-    const sorted = sortItems(filtered, getSort());
-
-    grid.innerHTML = "";
-    loading.style.display = sorted.length ? "none" : "block";
-    loading.textContent = sorted.length ? "" : "Nenhuma oferta encontrada. Tente outra busca.";
-
-    document.getElementById("countPill").textContent = `${ALL_ITEMS.length} ofertas`;
-
-    for(const it of sorted){
-      const card = document.createElement("article");
-      card.className = "card";
-
-      const img = document.createElement("div");
-      img.className = "imgbox";
-      img.innerHTML = `<img src="${it.image || ""}" alt="${escapeHtml(it.title)}" loading="lazy" referrerpolicy="no-referrer" />`;
-      card.appendChild(img);
-
-      const body = document.createElement("div");
-      body.className = "cardBody";
-
-      const title = document.createElement("h2");
-      title.className = "title";
-      title.textContent = it.title || "Oferta";
-      body.appendChild(title);
-
-      // CTA (texto)
-      if(it.cta){
-        const cta = document.createElement("div");
-        cta.className = "ctaTag";
-        cta.textContent = it.cta;
-        body.appendChild(cta);
-      }
-
-      const prices = document.createElement("div");
-      prices.className = "prices";
-
-      const nowP = document.createElement("div");
-      nowP.className = "priceNow";
-      nowP.textContent = it.finalPriceText || "—";
-      prices.appendChild(nowP);
-
-      if(it.originalPriceText && it.originalPriceText !== it.finalPriceText){
-        const oldP = document.createElement("div");
-        oldP.className = "priceOld";
-        oldP.textContent = it.originalPriceText;
-        prices.appendChild(oldP);
-      }
-
-      body.appendChild(prices);
-
-      // ✅ ECONOMIA + % OFF (bem chamativo)
-      if(it.saveNum && it.saveNum > 0){
-        const saveBar = document.createElement("div");
-        saveBar.className = "saveBar";
-        saveBar.innerHTML = `
-          <span class="savePct">${escapeHtml(it.pctText || "")}</span>
-          <span class="saveMoney">Você economiza <b>${escapeHtml(it.saveText || "")}</b></span>
-        `;
-        body.appendChild(saveBar);
-      }
-
-      const row1 = document.createElement("div");
-      row1.className = "row";
-
-      const left = document.createElement("div");
-      left.className = "muted";
-      left.textContent = `${it.rating ? `⭐ ${it.rating}` : "⭐ —"} • ${it.sold ? `${it.sold} vendidos` : "— vendidos"}`;
-      row1.appendChild(left);
-
-      const right = document.createElement("div");
-      right.style.display="flex";
-      right.style.gap="8px";
-      right.style.flexWrap="wrap";
-      right.style.justifyContent="flex-end";
-
-      if(it.badge){
-        const t = document.createElement("span");
-        t.className = "tag";
-        t.style.border = "1px solid rgba(59,130,246,.32)";
-        t.style.background = "rgba(59,130,246,.12)";
-        t.style.color = "#bfdbfe";
-        t.textContent = it.badge;
-        right.appendChild(t);
-      }
-
-      if(it.urgency){
-        const t = document.createElement("span");
-        t.className = "tag";
-        t.style.border = "1px solid rgba(245,158,11,.30)";
-        t.style.background = "rgba(245,158,11,.14)";
-        t.style.color = "#fde68a";
-        t.textContent = it.urgency;
-        right.appendChild(t);
-      }
-
-      // (mantive seus tags)
-     // if(it.discount){
-     //   const t = document.createElement("span");
-      //  t.className = "tag off";
-      //  t.textContent = it.discount;
-      //  right.appendChild(t);
-     // }
-
-      if(it.coupon){
-        const t = document.createElement("span");
-        t.className = "tag coupon";
-        t.textContent = `CUPOM: ${it.coupon}`;
-        right.appendChild(t);
-      }
-
-      row1.appendChild(right);
-      body.appendChild(row1);
-
-      const buy = document.createElement("div");
-      buy.className = "buy";
-
-      const btn1 = document.createElement("button");
-      btn1.className = "btnSmall btnBuy";
-      btn1.textContent = "Ver oferta";
-      btn1.onclick = () => openOffer(it);
-      buy.appendChild(btn1);
-
-      const btn2 = document.createElement("button");
-      btn2.className = "btnSmall btnGroup";
-      btn2.textContent = "Entrar no grupo";
-      btn2.onclick = () => openGroup();
-      buy.appendChild(btn2);
-
-      const btn3 = document.createElement("button");
-      btn3.className = "btnSmall btnShare";
-      btn3.textContent = "Compartilhar";
-      btn3.onclick = () => shareOffer(it);
-      buy.appendChild(btn3);
-
-      const btn4 = document.createElement("button");
-      btn4.className = "btnSmall";
-      btn4.textContent = "Copiar cupom";
-      btn4.onclick = () => copyCouponAndOpenWhatsApp(it);
-      buy.appendChild(btn4);
-
-      body.appendChild(buy);
-      card.appendChild(body);
-      grid.appendChild(card);
-    }
-  }
-
-  // =========================
-  // LOAD SHEET
-  // =========================
-  async function loadSheet(isManual=false){
-    try{
-      setStatus("loading", (isManual ? "Atualizando agora… " : "Atualizando… ") + nowHHMMSS());
-      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now();
-      const res = await fetch(url, { cache:"no-store" });
-      if(!res.ok) throw new Error("HTTP " + res.status);
-
-      const text = await res.text();
-      const rows = parseCSV(text);
-      if(!rows.length) throw new Error("CSV vazio");
-
-      const header = rows[0].map(h => safeText(h).toLowerCase());
-      const idx = (name) => header.indexOf(name);
-
-      const iImage = idx("image");
-      const iTitle = idx("title");
-      const iPrice = idx("price");
-      const iDiscount = idx("discount");
-      const iCoupon = idx("coupon");
-      const iSold = idx("sold");
-      const iRating = idx("rating");
-      const iLink =
-        idx("affiliate") >= 0 ? idx("affiliate") :
-        (idx("link") >= 0 ? idx("link") :
-        (idx("url") >= 0 ? idx("url") : -1));
-
-      const iActive = idx("active");
-      const iExpires = idx("expires");
-      const iBadge = idx("badge");
-      const iCreated = idx("created_at");
-      const iCta = idx("cta");
-
-      const iGroup = idx("group_count");
-      const iPosts = idx("posts_today");
-
-      let groupCount = null;
-      let postsToday = null;
-
-      const items = [];
-      for(let r=1; r<rows.length; r++){
-        const row = rows[r] || [];
-
-        if(groupCount == null && iGroup >= 0){
-          const g = toNumber(row[iGroup]);
-          if(isFinite(g) && g > 0) groupCount = Math.round(g);
-        }
-        if(postsToday == null && iPosts >= 0){
-          const p = toNumber(row[iPosts]);
-          if(isFinite(p) && p > 0) postsToday = Math.round(p);
-        }
-
-        const title = safeText(row[iTitle]);
-        const image = safeText(row[iImage]);
-        const originalRaw = safeText(row[iPrice]);
-        const discountRaw = safeText(row[iDiscount]);
-        const coupon = safeText(row[iCoupon]);
-        const sold = safeText(row[iSold]);
-        const rating = safeText(row[iRating]);
-        const link = iLink >= 0 ? safeText(row[iLink]) : "";
-        const cta = iCta >= 0 ? safeText(row[iCta]) : "";
-
-        const activeRaw = iActive >= 0 ? safeText(row[iActive]).toLowerCase() : "";
-        const isActive = !(activeRaw === "0" || activeRaw === "false" || activeRaw === "nao" || activeRaw === "não");
-        if(!isActive) continue;
-
-        const expiresRaw = iExpires >= 0 ? safeText(row[iExpires]) : "";
-        if(expiresRaw && isExpired(expiresRaw)) continue;
-
-        const badgeManual = iBadge >= 0 ? safeText(row[iBadge]) : "";
-        const badgeAuto = badgeManual ? "" : pickAutoBadge(title, link);
-        const badge = badgeManual || badgeAuto;
-
-        const urgency = expiresRaw ? diffToHuman(expiresRaw) : "";
-
-        const createdRaw = iCreated >= 0 ? safeText(row[iCreated]) : "";
-        const createdDt = createdRaw ? parseCreatedAt(createdRaw) : null;
-        const createdAtMs = createdDt ? createdDt.getTime() : 0;
-
-        if(!title && !image && !originalRaw && !link) continue;
-
-        const originalNum = toNumber(originalRaw);
-
-        let discountNum = toNumber(discountRaw);
-        if(!isFinite(discountNum)){
-          const m = (discountRaw || "").match(/(\d+(?:[.,]\d+)?)/);
-          discountNum = m ? toNumber(m[1]) : 0;
-        }
-        if(!isFinite(discountNum)) discountNum = 0;
-
-        let finalNum = originalNum;
-        if(isFinite(originalNum) && discountNum > 0 && discountNum < 100){
-          finalNum = +(originalNum * (1 - discountNum/100)).toFixed(2);
-        }
-
-        // ✅ ECONOMIA + % OFF (calculado)
-        let saveNum = (isFinite(originalNum) && isFinite(finalNum)) ? +(originalNum - finalNum).toFixed(2) : NaN;
-
-        let pctNum = discountNum;
-        if((!isFinite(pctNum) || pctNum <= 0) && isFinite(originalNum) && isFinite(finalNum) && originalNum > 0){
-          pctNum = Math.round(((originalNum - finalNum) / originalNum) * 100);
-        }
-        if(!isFinite(pctNum) || pctNum < 0) pctNum = 0;
-
-        const soldNum = toNumber(sold);
-        const ratingNum = toNumber(rating);
-
-        items.push({
-          title: title || "Oferta",
-          image,
-          originalPriceText: isFinite(originalNum) ? moneyBRLFromNumber(originalNum) : (originalRaw || ""),
-          originalPriceNum: isFinite(originalNum) ? originalNum : NaN,
-          finalPriceText: isFinite(finalNum) ? moneyBRLFromNumber(finalNum) : (originalRaw || ""),
-          finalPriceNum: isFinite(finalNum) ? finalNum : NaN,
-
-          // ✅ novos campos
-          saveNum,
-          saveText: isFinite(saveNum) ? moneyBRLFromNumber(saveNum) : "",
-          pctNum,
-          pctText: pctNum ? `${pctNum}% OFF` : "",
-
-          discount: discountRaw,
-          discountNum: isFinite(discountNum) ? discountNum : 0,
-          coupon,
-          sold,
-          soldNum: isFinite(soldNum) ? soldNum : 0,
-          rating,
-          ratingNum: isFinite(ratingNum) ? ratingNum : 0,
-          link,
-          badge,
-          urgency,
-          expires: expiresRaw,
-          cta,
-          created_at: createdRaw,
-          createdAtMs,
-          rowIndex: r
-        });
-      }
-
-      ALL_ITEMS = items;
-
-      // KPIs
-      document.getElementById("kpi1").textContent = items.length.toString();
-      const soldTodaySum = items.reduce((acc,it)=> acc + (it.soldNum||0), 0);
-      document.getElementById("kpi2").textContent = soldTodaySum ? soldTodaySum.toString() : "—";
-
-      // Prova social
-      const gc = groupCount ?? DEFAULT_GROUP_COUNT;
-      const pt = postsToday ?? DEFAULT_POSTS_TODAY;
-      const sp = document.getElementById("socialProof");
-      if(sp){
-        sp.textContent = `✅ +${gc.toLocaleString("pt-BR")} pessoas já entraram no grupo • 🔥 ${pt} ofertas postadas hoje`;
-      }
-
-      updateSpotListFromSheet();
-      startSpotRotation();
-
-      setStatus("ok", `Última atualização: ${nowHHMMSS()} • ${items.length} ofertas`);
-      render();
-
-    }catch(err){
-      console.error(err);
-      setStatus("error", `Tentando novamente… ${nowHHMMSS()}`);
-      const loading = document.getElementById("loading");
-      if(loading){
-        loading.style.display = "block";
-        loading.textContent = "Não consegui carregar a planilha agora. Verifique se ela está publicada e tente atualizar.";
-      }
-    }
-  }
-
-  // =========================
-  // ✅ TIMERS (SEM BUG)
-  // =========================
-  function startSheetRefresh(){
-    if(SHEET_TIMER) clearInterval(SHEET_TIMER);
-    SHEET_TIMER = setInterval(() => loadSheet(false), REFRESH_MS);
-  }
-
-  document.addEventListener("visibilitychange", () => {
-    if(!document.hidden){
-      if(!SPOT_TIMER) startSpotRotation();
-      if(Date.now() - LAST_SPOT_TICK > (SPOT_ROTATE_MS + 2000)){
-        spotNext();
-      }
-      loadSheet(false);
-    }
-  });
-
-  // =========================
-  // START
-  // =========================
-  document.getElementById("q")?.addEventListener("input", () => render());
-  document.getElementById("sort")?.addEventListener("change", () => render());
-
-  startLiveClock();
-  setupVideo();
-  loadSheet(true);
-  startSheetRefresh();	
-  function applyShopeeBadge(){
-  document.querySelectorAll(".card").forEach(card => {
-    const imgBox = card.querySelector(".imgbox");
-    if(!imgBox) return;
-
-    // evita duplicar
-    if(imgBox.querySelector(".mlBadge")) return;
-
-    // pega preço atual e antigo do card
-    const priceNowEl = card.querySelector(".priceNow");
-    const priceOldEl = card.querySelector(".priceOld");
-    if(!priceNowEl || !priceOldEl) return;
-
-    const now = Number(priceNowEl.textContent.replace(/[^\d,]/g,'').replace(',','.'));
-    const old = Number(priceOldEl.textContent.replace(/[^\d,]/g,'').replace(',','.'));
-    if(!isFinite(now) || !isFinite(old) || old <= now) return;
-
-    const save = +(old - now).toFixed(2);
-    const pct  = Math.round((save / old) * 100);
-    if(pct <= 0) return;
-
-    const badge = document.createElement("div");
-    badge.className = "mlBadge";
-    badge.innerHTML = `
-      <div class="mlOff">${pct}% OFF</div>
-      <div class="mlSave">Economize R$ ${save.toFixed(2).replace('.',',')}</div>
-    `;
-
-    imgBox.appendChild(badge);
+  return out;
+}
+
+function buildCard(p){
+  const d = document.createElement("div");
+  d.className = "card";
+
+  const imgSrc = p.image || "https://via.placeholder.com/600x600?text=Produto";
+  const chip = p.discount_txt ? p.discount_txt : (p.coupon ? ("CUPOM " + p.coupon) : "");
+
+  // ✅ preço cheio = price; preço final = price_final calculado com discount_pct
+  const full = p.price_full;
+  const final = p.price_final;
+  const hasFull = Number.isFinite(full);
+  const hasFinal = Number.isFinite(final);
+  const showRiscado = hasFull && hasFinal && final < full;
+
+  const fullTxt = hasFull ? formatBRL(full) : (p.price_raw || "Ver preço");
+  const finalTxt = hasFinal ? formatBRL(final) : (p.price_raw || "Ver preço");
+
+  d.innerHTML = `
+    <div class="imgwrap">
+      <img src="${imgSrc}" alt="${safeText(p.title||"Produto")}" loading="lazy">
+      ${chip ? `<div class="chip">${safeText(chip)}</div>` : ""}
+    </div>
+
+    <div class="content">
+      <div class="title">${safeText(p.title || "Sem título")}</div>
+
+      <div class="priceRow">
+        <div class="priceCol">
+          ${showRiscado ? `<div class="oldPrice">${safeText(fullTxt)}</div>` : ``}
+          <div class="price">${safeText(showRiscado ? finalTxt : fullTxt)}</div>
+        </div>
+
+        ${p.discount_txt ? `<div class="off">${safeText(p.discount_txt)}</div>` : ""}
+      </div>
+
+      <div class="metaRow">
+        ${p.sold_txt ? `<span class="pillMini">🛒 ${safeText(p.sold_txt)}</span>` : ""}
+        ${p.rating_txt ? `<span class="pillMini">⭐ ${safeText(p.rating_txt)}</span>` : ""}
+        ${p.coupon ? `<span class="pillMini">🏷️ ${safeText(p.coupon)}</span>` : ""}
+      </div>
+
+      <a class="btn" href="${p.link || "#"}" target="_blank" rel="noopener">Ver oferta</a>
+    </div>
+  `;
+  return d;
+}
+
+function mount(id, list){
+  const el = $(id);
+  el.innerHTML = "";
+  list.forEach(p => el.appendChild(buildCard(p)));
+}
+
+function showOnlySection(key){
+  const secs = document.querySelectorAll("section[data-sec]");
+  secs.forEach(s=>{
+    const match = (s.getAttribute("data-sec") === key);
+    s.classList.toggle("hidden", !match);
   });
 }
 
-/* reaplica sempre depois que a lista renderizar */
-const _renderKeep = render;
-render = function(){
-  _renderKeep();
-  requestAnimationFrame(applyShopeeBadge);
-};
-  document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("button").forEach(btn => {
-    if (btn.textContent.trim().toLowerCase() === "ver oferta") {
-      btn.textContent = "Ver oferta no Mercado Livre";
-    }
+function showAllSections(){
+  const secs = document.querySelectorAll("section[data-sec]");
+  secs.forEach(s=> s.classList.remove("hidden"));
+}
+
+/* =========================
+   Main render
+========================= */
+function render(){
+  const q = ($("q").value||"").toLowerCase().trim();
+  const filtro = $("filtro").value;
+
+  let f = ALL.slice();
+
+  if(q){
+    f = f.filter(p =>
+      (p.title||"").toLowerCase().includes(q) ||
+      (p.discount_txt||"").toLowerCase().includes(q) ||
+      (p.coupon||"").toLowerCase().includes(q)
+    );
+  }
+
+  f = dedupeByLink(f);
+
+  const bySold = f.slice().sort((a,b)=> (b.sold||0) - (a.sold||0));
+  const byDiscount = f.slice().sort((a,b)=> (b.discount_pct||0) - (a.discount_pct||0));
+
+  // ✅ Base de preço final (para filtros)
+  const byFinalPriceAsc = f.slice().sort((a,b)=>{
+    const ap = Number.isFinite(a.price_final) ? a.price_final : (Number.isFinite(a.price_full) ? a.price_full : 1e15);
+    const bp = Number.isFinite(b.price_final) ? b.price_final : (Number.isFinite(b.price_full) ? b.price_full : 1e15);
+    return ap - bp;
   });
-});
-  // =========================
-// FIX: renomear "Ver oferta" em TODOS os cards (inclui render dinâmico)
-// Cole no FINAL do <script>
-// =========================
-(function(){
-  function renameButtons(root=document){
-    // pega botões e links que tenham exatamente "Ver oferta"
-    root.querySelectorAll("button, a").forEach(el => {
-      const t = (el.textContent || "").trim();
-      if (t === "Ver oferta") {
-        el.textContent = "Ver oferta no Mercado Livre";
-      }
+
+  if(filtro === "all"){
+    showAllSections();
+    const used = new Set();
+
+    const achadinhos = takeUnique(bySold, 12, used);
+
+    const ate99Base = byFinalPriceAsc.filter(p => {
+      const v = Number.isFinite(p.price_final) ? p.price_final : p.price_full;
+      return Number.isFinite(v) && v <= 99;
     });
+    const ate99 = takeUnique(ate99Base, 18, used);
+
+    const maisPedidosBase = bySold.filter(p => (p.sold||0) >= 1000);
+    const maisPedidos = takeUnique(maisPedidosBase, 18, used);
+
+    const relampagoBase = byDiscount.filter(p => (p.discount_pct||0) >= 45);
+    const relampago = takeUnique(relampagoBase, 18, used);
+
+    mount("sec-achadinhos", achadinhos);
+    mount("sec-ate99", ate99);
+    mount("sec-mais_pedidos", maisPedidos);
+    mount("sec-relampago", relampago);
+    return;
   }
 
-  function startObserver(){
-    const target = document.getElementById("offers") || document.body;
+  showOnlySection(filtro);
 
-    // aplica já
-    renameButtons(document);
-
-    // observa mudanças (quando o render recria os cards)
-    const obs = new MutationObserver((mutations) => {
-      for (const m of mutations){
-        for (const node of m.addedNodes){
-          if (node.nodeType === 1) renameButtons(node);
-        }
-      }
-      // fallback pra garantir
-      renameButtons(document);
+  if(filtro === "achadinhos"){
+    mount("sec-achadinhos", bySold.slice(0, 60));
+  }
+  if(filtro === "ate99"){
+    const ate99Base = byFinalPriceAsc.filter(p => {
+      const v = Number.isFinite(p.price_final) ? p.price_final : p.price_full;
+      return Number.isFinite(v) && v <= 99;
     });
-
-    obs.observe(target, { childList: true, subtree: true });
+    mount("sec-ate99", ate99Base.slice(0, 80));
   }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", startObserver);
-  } else {
-    startObserver();
+  if(filtro === "mais_pedidos"){
+    const maisPedidosBase = bySold.filter(p => (p.sold||0) >= 1000);
+    mount("sec-mais_pedidos", maisPedidosBase.slice(0, 80));
   }
-})();
+  if(filtro === "relampago"){
+    const relampagoBase = byDiscount.filter(p => (p.discount_pct||0) >= 45);
+    mount("sec-relampago", relampagoBase.slice(0, 80));
+  }
+}
+
+/* =========================
+   Load CSV
+========================= */
+async function load(){
+  try{
+    setStatus("Carregando ofertas da planilha…");
+    const res = await fetch(SHEET_CSV_URL, { cache:"no-store" });
+    if(!res.ok) throw new Error("HTTP " + res.status);
+
+    const text = await res.text();
+    const rows = parseCSV(text);
+    if(!rows.length) throw new Error("CSV vazio");
+
+    const headers = rows[0];
+    const m = mapHeaders(headers);
+
+    const missing = [];
+    if(m.image === -1) missing.push("image");
+    if(m.title === -1) missing.push("title");
+    if(m.price === -1) missing.push("price");
+    if(m.discount === -1) missing.push("discount");
+    if(m.link === -1) missing.push("link");
+    if(missing.length){
+      throw new Error("Faltam colunas: " + missing.join(", "));
+    }
+
+    const data = rows.slice(1).map(r=>{
+      const get = (key) => (m[key] >= 0 ? (r[m[key]] ?? "").trim() : "");
+
+      const priceRaw = get("price");
+      const discountRaw = get("discount");
+
+      const priceFull = parseBRL(priceRaw);
+      const discountPct = parseDiscountPercent(discountRaw);
+      const priceFinal = calcFinalPrice(priceFull, discountPct);
+
+      return {
+        image: get("image"),
+        title: get("title"),
+        price_raw: priceRaw,
+        price_full: priceFull,              // ✅ cheio
+        discount_txt: discountRaw,          // ex: "44% OFF"
+        discount_pct: discountPct,          // número
+        price_final: priceFinal,            // ✅ calculado
+        coupon: get("coupon"),
+        sold_txt: get("sold"),
+        sold: soldToNumber(get("sold")),
+        rating_txt: get("rating"),
+        rating: Number(String(get("rating")||"").replace(",", ".").replace(/[^\d.]/g,"")) || 0,
+        link: get("link")
+      };
+    }).filter(p => p.title && p.link);
+
+    ALL = dedupeByLink(data);
+    if(!ALL.length) throw new Error("Nenhuma linha válida (precisa title + link).");
+
+    const st = $("status");
+    if(st) st.remove();
+
+    $("q").addEventListener("input", render);
+    $("filtro").addEventListener("change", render);
+
+    render();
+  }catch(err){
+    console.error(err);
+    setStatus("Não carregou as ofertas: " + err.message, true);
+  }
+}
+load();
 </script>
-<body>  
-
+</body>
 </html>
