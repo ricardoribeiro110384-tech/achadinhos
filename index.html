@@ -17,6 +17,7 @@
       --shadow:0 10px 30px rgba(0,0,0,.08);
       --radius:18px;
       --danger:#b00020;
+      --danger2:#ff2d2d;
     }
     *{box-sizing:border-box}
     body{
@@ -202,7 +203,7 @@
       align-items:flex-end;
       justify-content:space-between;
       gap:10px;
-      margin:16px 0 10px;
+      margin:18px 0 10px;
     }
     .sectionHead h3{
       margin:0;
@@ -213,6 +214,18 @@
     .sectionHead small{
       color:var(--muted);
       font-weight:750;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:#111;
+      color:#fff;
+      border-radius:999px;
+      padding:8px 10px;
+      font-weight:950;
+      font-size:12px;
+      white-space:nowrap;
     }
 
     /* GRID */
@@ -291,12 +304,13 @@
       50%{transform:scale(1.06)}
       100%{transform:scale(1)}
     }
+
     .content{
       padding:12px;
       display:flex;
       flex-direction:column;
       gap:8px;
-      min-height:170px;
+      min-height:175px;
     }
     .title{
       font-weight:900;
@@ -308,15 +322,50 @@
       overflow:hidden;
       min-height:50px;
     }
+
+    /* META (rating / cupom / timer) */
     .meta{
       display:flex;
       align-items:center;
+      justify-content:space-between;
       gap:10px;
       color:var(--muted);
       font-weight:750;
       font-size:13px;
-      min-height:18px;
+      min-height:20px;
     }
+    .metaLeft{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    /* TIMER (relâmpago) */
+    .timer{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:linear-gradient(135deg,var(--danger),var(--danger2));
+      color:#fff;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:950;
+      letter-spacing:.2px;
+      box-shadow:0 10px 18px rgba(176,0,32,.22);
+      white-space:nowrap;
+      animation: timerPulse 1.25s infinite;
+    }
+    .timer span{
+      font-variant-numeric: tabular-nums;
+    }
+    @keyframes timerPulse{
+      0%{transform:scale(1); filter:brightness(1)}
+      50%{transform:scale(1.05); filter:brightness(1.05)}
+      100%{transform:scale(1); filter:brightness(1)}
+    }
+
     .prices{
       display:flex;
       align-items:baseline;
@@ -434,7 +483,7 @@
         <span>⚙️</span>
         <select id="preset" aria-label="Modo">
           <option value="home" selected>🏠 Home (4 blocos)</option>
-          <option value="all">📦 Ver tudo (sem blocos)</option>
+          <option value="all">📦 Ver tudo (lista)</option>
         </select>
       </div>
 
@@ -460,7 +509,7 @@
       <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
     </div>
 
-    <!-- 4 blocos (HOME) -->
+    <!-- HOME: 4 blocos -->
     <section id="homeBlocks" style="display:none;">
       <section id="topBlock">
         <div class="sectionHead">
@@ -481,7 +530,7 @@
       <section id="relampagoBlock">
         <div class="sectionHead">
           <h3>⚡ OFERTAS RELÂMPAGO</h3>
-          <small id="relampagoCount"></small>
+          <small class="chip">⏰ termina em breve</small>
         </div>
         <div class="grid" id="gridRelampago"></div>
       </section>
@@ -495,7 +544,7 @@
       </section>
     </section>
 
-    <!-- Ver tudo (uma lista só) -->
+    <!-- LISTA ÚNICA -->
     <section class="grid" id="gridAll" style="display:none;"></section>
 
     <footer>
@@ -524,10 +573,10 @@
 
     const topCount = document.getElementById("topCount");
     const ate99Count = document.getElementById("ate99Count");
-    const relampagoCount = document.getElementById("relampagoCount");
     const maisCount = document.getElementById("maisCount");
 
     let ALL = [];
+    let timerIntervalId = null;
 
     function showStatus(msg, type="info"){
       elStatus.textContent = msg;
@@ -620,7 +669,7 @@
     }
 
     // Cache local (10 min)
-    const CACHE_KEY = "achadinhos_csv_cache_home_v1";
+    const CACHE_KEY = "achadinhos_csv_cache_home_v2";
     const CACHE_TTL_MS = 10 * 60 * 1000;
 
     async function fetchCSVFast(){
@@ -678,6 +727,82 @@
       return out;
     }
 
+    // ---------- TIMER RELÂMPAGO (persistente por produto) ----------
+    function hashStr(str){
+      // hash simples p/ gerar um número consistente
+      let h = 0;
+      for(let i=0;i<str.length;i++){
+        h = (h * 31 + str.charCodeAt(i)) >>> 0;
+      }
+      return h;
+    }
+
+    function relampagoKey(link){
+      return "rel_end_" + hashStr(link);
+    }
+
+    function getRelampagoEnd(link){
+      const key = relampagoKey(link);
+      const now = Date.now();
+      const saved = Number(localStorage.getItem(key) || 0);
+
+      if(saved && saved > now + 1000){
+        return saved;
+      }
+
+      // gera uma duração “realista” (45–120 min) e varia por produto
+      const base = 45 * 60 * 1000;
+      const extra = (hashStr(link) % (75 * 60 * 1000)); // até +75min
+      const end = now + base + extra;
+
+      try{ localStorage.setItem(key, String(end)); }catch(e){}
+      return end;
+    }
+
+    function setRelampagoEnd(link, end){
+      const key = relampagoKey(link);
+      try{ localStorage.setItem(key, String(end)); }catch(e){}
+    }
+
+    function fmtHMS(ms){
+      const t = Math.max(0, ms);
+      const h = Math.floor(t / 3600000);
+      const m = Math.floor((t % 3600000) / 60000);
+      const s = Math.floor((t % 60000) / 1000);
+      return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+    }
+
+    function startTimers(){
+      // garante 1 intervalo só
+      if(timerIntervalId) clearInterval(timerIntervalId);
+
+      const tick = () => {
+        const nodes = document.querySelectorAll("[data-timer-end]");
+        const now = Date.now();
+
+        nodes.forEach(node=>{
+          const end = Number(node.dataset.timerEnd || 0);
+          let diff = end - now;
+
+          if(diff <= 0){
+            // renova (novo ciclo)
+            const link = node.dataset.timerLink || "";
+            const base = 45 * 60 * 1000;
+            const extra = (hashStr(link + String(now)) % (75 * 60 * 1000));
+            const newEnd = Date.now() + base + extra;
+            node.dataset.timerEnd = String(newEnd);
+            if(link) setRelampagoEnd(link, newEnd);
+            diff = newEnd - Date.now();
+          }
+
+          node.textContent = fmtHMS(diff);
+        });
+      };
+
+      tick();
+      timerIntervalId = setInterval(tick, 1000);
+    }
+
     // ---------- RENDER ----------
     function escapeHtml(s){
       return String(s)
@@ -688,13 +813,17 @@
         .replaceAll("'","&#039;");
     }
 
-    function renderCard(p){
+    function renderCard(p, opts = {}){
+      const isRelampago = !!opts.relampago;
       const card = document.createElement("article");
       card.className = "card";
 
       const soldTxt = p.sold ? (p.sold >= 1000 ? (Math.round(p.sold/1000) + ".000 vendidos") : (p.sold + " vendidos")) : "";
       const discTxt = p.discountP ? (p.discountP + "% OFF") : "";
       const ratingTxt = Number.isFinite(p.rating) ? p.rating.toFixed(1).replace(".",",") : "";
+
+      // timer end (só no relâmpago)
+      const timerEnd = isRelampago ? getRelampagoEnd(p.link) : 0;
 
       card.innerHTML = `
         <div class="imgWrap">
@@ -709,8 +838,16 @@
           <div class="title">${escapeHtml(p.title)}</div>
 
           <div class="meta">
-            ${ratingTxt ? `⭐ ${ratingTxt}` : ``}
-            ${p.coupon ? `• 🎟️ cupom` : ``}
+            <div class="metaLeft">
+              ${ratingTxt ? `⭐ ${ratingTxt}` : ``}
+              ${p.coupon ? `• 🎟️ cupom` : ``}
+            </div>
+
+            ${isRelampago ? `
+              <div class="timer" title="Oferta relâmpago">
+                ⏰ <span data-timer-end="${timerEnd}" data-timer-link="${escapeHtml(p.link)}"></span>
+              </div>
+            ` : ``}
           </div>
 
           <div class="prices">
@@ -727,11 +864,11 @@
       return card;
     }
 
-    function renderList(container, list, limit){
+    function renderList(container, list, limit, opts = {}){
       container.innerHTML = "";
       const out = (typeof limit === "number") ? list.slice(0, limit) : list;
       out.forEach((p, idx)=>{
-        const c = renderCard(p);
+        const c = renderCard(p, opts);
         c.style.animationDelay = Math.min(idx * 10, 180) + "ms";
         container.appendChild(c);
       });
@@ -743,7 +880,6 @@
       const q = elQ.value.trim().toLowerCase();
       let list = [...ALL];
 
-      // busca global (aplica em todos blocos)
       if(q){
         list = list.filter(p => p.title.toLowerCase().includes(q));
       }
@@ -751,15 +887,13 @@
       // 1) TOP OFERTAS DO DIA (6) — score por: vendidos + desconto + nota
       const scored = list.map(p=>{
         const score =
-          (Math.min((p.sold||0)/100, 200)) +     // vendidos pesa bastante
-          ((p.discountP||0) * 2.2) +            // desconto
+          (Math.min((p.sold||0)/100, 200)) +             // vendidos (peso alto)
+          ((p.discountP||0) * 2.2) +                      // desconto
           (Number.isFinite(p.rating) ? p.rating * 8 : 0); // rating
         return { p, score };
       }).sort((a,b)=> b.score - a.score).map(x=>x.p);
 
       const top6 = scored.slice(0, 6);
-
-      // remove os top6 do pool pra não repetir tanto
       const topLinks = new Set(top6.map(x=>x.link));
       const remaining = list.filter(x => !topLinks.has(x.link));
 
@@ -781,27 +915,28 @@
       const relLinks = new Set(relampago.map(x=>x.link));
       const remaining3 = remaining2.filter(x => !relLinks.has(x.link));
 
-      // 4) MAIS OFERTAS (12–15) — resto organizado
+      // 4) MAIS OFERTAS (15) — resto organizado
       const mais = remaining3
         .slice()
         .sort((a,b)=> (b.sold||0) - (a.sold||0))
         .slice(0, 15);
 
-      // render
-      const nTop = renderList(elTop, top6);
-      const nAte = renderList(elAte99, ate99);
-      const nRel = renderList(elRelampago, relampago);
-      const nMais = renderList(elMais, mais);
+      const nTop = renderList(elTop, top6, undefined, { relampago:false });
+      const nAte = renderList(elAte99, ate99, undefined, { relampago:false });
+      const nRel = renderList(elRelampago, relampago, undefined, { relampago:true });
+      const nMais = renderList(elMais, mais, undefined, { relampago:false });
 
       topCount.textContent = nTop ? `${nTop} destaques` : ``;
       ate99Count.textContent = nAte ? `${nAte} ofertas` : ``;
-      relampagoCount.textContent = nRel ? `${nRel} descontos altos` : ``;
       maisCount.textContent = nMais ? `${nMais} opções` : ``;
 
-      // esconder bloco se estiver vazio (ex: sem produtos <=99)
+      // esconder bloco se vazio
       document.getElementById("ate99Block").style.display = nAte ? "" : "none";
       document.getElementById("relampagoBlock").style.display = nRel ? "" : "none";
       document.getElementById("maisBlock").style.display = nMais ? "" : "none";
+
+      // liga timers (somente se tiver relâmpago renderizado)
+      startTimers();
     }
 
     // ---------- ALL (lista única) ----------
@@ -809,9 +944,9 @@
       const q = elQ.value.trim().toLowerCase();
       let list = [...ALL];
       if(q) list = list.filter(p => p.title.toLowerCase().includes(q));
-      // ordena por vendidos (melhor p/ conversão)
       list.sort((a,b)=> (b.sold||0) - (a.sold||0));
-      renderList(elAll, list, 30); // limita a 30 na tela pra não cansar
+      renderList(elAll, list, 30, { relampago:false });
+      startTimers(); // ok chamar — se não tiver timer, não muda nada
     }
 
     function applyView(){
